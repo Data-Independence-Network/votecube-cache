@@ -1,3 +1,3 @@
-pub const NUM_TIMEZONES: usize = 38;
-pub const NUM_TIMEZONES_WITH_GLOBAL_CATEGORY: usize = NUM_TIMEZONES + 1;
-pub const GLOBAL_CATEGORY_TZ_INDEX: usize = 38;
+pub const POLL_TYPE_1D: u8 = 1;
+pub const POLL_TYPE_2D: u8 = 2;
+pub const POLL_TYPE_3D: u8 = 3;

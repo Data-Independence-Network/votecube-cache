@@ -1,4 +1,4 @@
-use super::super::super::super::cache::cache::PollId;
+use common::model::types::PollId;
 
 #[inline]
 pub fn get2ByteRecentPollIds(

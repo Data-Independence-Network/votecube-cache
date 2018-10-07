@@ -12,7 +12,6 @@ use super::request::Request;
 use super::http::Http;
 use super::codes;
 
-use super::super::logic::cache_manager::CacheManager;
 use super::super::logic::serve::rankings::category;
 use super::super::logic::serve::rankings::location;
 use super::super::logic::serve::rankings::location_category;

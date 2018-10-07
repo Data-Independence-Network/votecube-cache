@@ -1,14 +1,15 @@
 use int_hash::IntHashMap;
 
+use common::model::types::CategoryId;
+use common::model::types::DayId;
+use common::model::types::LocationId;
+use common::model::types::MonthId;
+use common::model::types::PollId;
+use common::model::types::TimezoneId;
+use common::model::types::WeekId;
+
 use super::super::super::super::cache::cache;
-use super::super::super::super::cache::cache::CategoryId;
-use super::super::super::super::cache::cache::DayId;
-use super::super::super::super::cache::cache::LocationId;
-use super::super::super::super::cache::cache::LocationPollPrependLists;
-use super::super::super::super::cache::cache::MonthId;
-use super::super::super::super::cache::cache::PollId;
-use super::super::super::super::cache::cache::TimezoneId;
-use super::super::super::super::cache::cache::WeekId;
+use super::super::super::super::cache::model::LocationPollPrependLists;
 
 use super::super::super::super::server::codes;
 
