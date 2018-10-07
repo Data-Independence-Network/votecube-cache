@@ -4,11 +4,11 @@ pub mod byte_counts;
 
 
 static CACHE_TICK: u32 = 1 * 60 * 1000;
-static mut checkCacheTick: u32 = 0;
+static mut CHECK_CACHE_TICK: u32 = 0;
 
-fn cacheTicker () {
+fn cache_cicker() {
     loop {
         thread::sleep_ms(CACHE_TICK);
-        checkCacheTick += 1;
+        CHECK_CACHE_TICK += 1;
     }
 }

@@ -25,24 +25,24 @@ use super::location_and_loc_category::INITIAL_RESPONSE_VECTOR_SIZE_5_POLL_BYTES;
 use super::location_and_loc_category::INITIAL_RESPONSE_VECTOR_SIZE_6_POLL_BYTES;
 use super::location_and_loc_category::INITIAL_RESPONSE_VECTOR_SIZE_7_POLL_BYTES;
 use super::location_and_loc_category::INITIAL_RESPONSE_VECTOR_SIZE_8_POLL_BYTES;
-use super::location_and_loc_category::get2ByteRecentPolls;
-use super::location_and_loc_category::get3ByteRecentPolls;
-use super::location_and_loc_category::get4ByteRecentPolls;
-use super::location_and_loc_category::get4ByteRecentPolls;
-use super::location_and_loc_category::get5ByteRecentPolls;
-use super::location_and_loc_category::get6ByteRecentPolls;
-use super::location_and_loc_category::get7ByteRecentPolls;
-use super::location_and_loc_category::get8ByteRecentPolls;
+use super::location_and_loc_category::get_2_byte_recent_polls;
+use super::location_and_loc_category::get_3_byte_recent_polls;
+use super::location_and_loc_category::get_4_byte_recent_polls;
+use super::location_and_loc_category::get_4_byte_recent_polls;
+use super::location_and_loc_category::get_5_byte_recent_polls;
+use super::location_and_loc_category::get_6_byte_recent_polls;
+use super::location_and_loc_category::get_7_byte_recent_polls;
+use super::location_and_loc_category::get_8_byte_recent_polls;
 
 pub fn get_todays_location_category_rankings_by_global_ids(
-    vcDayId: DayId,
-    timezoneId: TimezoneId,
-    blockIndex: u32,
-    globalLocationId: LocationId,
-    globalCategoryId: CategoryId,
+    vc_day_id: DayId,
+    timezone_id: TimezoneId,
+    block_index: u32,
+    global_location_id: LocationId,
+    global_category_id: CategoryId,
 ) -> Vec<u8> {
-    let currentPeriodIds: cache::CachePeriodIds =
-        match cache::PER_TIMEZONE__CACHE_PERIOD_IDS(timezoneId) {
+    let current_period_ids: cache::CachePeriodIds =
+        match cache::PER_TIMEZONE__CACHE_PERIOD_IDS(timezone_id) {
             None => {
                 return codes::INVALID_TIMEZONE_ID_RESPONSE;
             }
@@ -52,27 +52,27 @@ pub fn get_todays_location_category_rankings_by_global_ids(
         };
 
     return get_location_category_rankings_by_global_ids(
-        currentPeriodIds.todaysVcDayId,
-        vcDayId,
-        timezoneId,
+        current_period_ids.todaysVcDayId,
+        vc_day_id,
+        timezone_id,
         cache::LOCATION_TODAYS_INDEX_MAP,
         cache::TODAYS_LOCATION_POLL_RANKINGS,
-        globalLocationId,
-        globalCategoryId,
-        blockIndex,
-        cache::TODAYS_POLL_ID_BYTE_COUNTS[timezoneId],
+        global_location_id,
+        global_category_id,
+        block_index,
+        cache::TODAYS_POLL_ID_BYTE_COUNTS[timezone_id],
     );
 }
 
 pub fn get_todays_location_category_rankings_by_location_cache_index_and_global_category_ids(
-    vcDayId: DayId,
-    timezoneId: TimezoneId,
-    blockIndex: u32,
-    locationCacheIndex: LocationCacheIndex,
-    globalCategoryId: CategoryId,
+    vc_day_id: DayId,
+    timezone_id: TimezoneId,
+    block_index: u32,
+    location_cache_index: LocationCacheIndex,
+    global_category_id: CategoryId,
 ) -> Vec<u8> {
-    let currentPeriodIds: cache::CachePeriodIds =
-        match cache::PER_TIMEZONE__CACHE_PERIOD_IDS(timezoneId) {
+    let current_period_ids: cache::CachePeriodIds =
+        match cache::PER_TIMEZONE__CACHE_PERIOD_IDS(timezone_id) {
             None => {
                 return codes::INVALID_TIMEZONE_ID_RESPONSE;
             }
@@ -82,27 +82,27 @@ pub fn get_todays_location_category_rankings_by_location_cache_index_and_global_
         };
 
     return get_location_category_rankings_by_location_cache_index_and_global_category_id(
-        currentPeriodIds.todaysVcDayId,
-        vcDayId,
-        timezoneId,
+        current_period_ids.todaysVcDayId,
+        vc_day_id,
+        timezone_id,
         cache::LOCATION_CATEGORY_TODAYS_INDEX_MAP,
         cache::TODAYS_LOCATION_POLL_RANKINGS,
-        locationCacheIndex,
-        globalCategoryId,
-        blockIndex,
-        cache::TODAYS_POLL_ID_BYTE_COUNTS[timezoneId],
+        location_cache_index,
+        global_category_id,
+        block_index,
+        cache::TODAYS_POLL_ID_BYTE_COUNTS[timezone_id],
     );
 }
 
 pub fn get_todays_location_category_rankings_by_cache_indexes(
-    vcDayId: DayId,
-    timezoneId: TimezoneId,
-    blockIndex: u32,
-    locationCacheIndex: LocationCacheIndex,
-    locationCategoryCacheIndex: LocationCategoryCacheIndex,
+    vc_day_id: DayId,
+    timezone_id: TimezoneId,
+    block_index: u32,
+    location_cache_index: LocationCacheIndex,
+    location_category_cache_index: LocationCategoryCacheIndex,
 ) -> Vec<u8> {
-    let currentPeriodIds: cache::CachePeriodIds =
-        match cache::PER_TIMEZONE__CACHE_PERIOD_IDS(timezoneId) {
+    let current_period_ids: cache::CachePeriodIds =
+        match cache::PER_TIMEZONE__CACHE_PERIOD_IDS(timezone_id) {
             None => {
                 return codes::INVALID_TIMEZONE_ID_RESPONSE;
             }
@@ -112,26 +112,26 @@ pub fn get_todays_location_category_rankings_by_cache_indexes(
         };
 
     return get_location_category_rankings_by_cache_indexes(
-        currentPeriodIds.todaysVcDayId,
-        vcDayId,
-        timezoneId,
+        current_period_ids.todaysVcDayId,
+        vc_day_id,
+        timezone_id,
         cache::TODAYS_LOCATION_POLL_RANKINGS,
-        locationCacheIndex,
-        locationCategoryCacheIndex,
-        blockIndex,
-        cache::TODAYS_POLL_ID_BYTE_COUNTS[timezoneId],
+        location_cache_index,
+        location_category_cache_index,
+        block_index,
+        cache::TODAYS_POLL_ID_BYTE_COUNTS[timezone_id],
     );
 }
 
 pub fn get_yesterdays_location_category_rankings_by_global_ids(
-    vcDayId: DayId,
-    timezoneId: TimezoneId,
-    blockIndex: u32,
-    globalLocationId: LocationId,
-    globalCategoryId: CategoryId,
+    vc_day_id: DayId,
+    timezone_id: TimezoneId,
+    block_index: u32,
+    global_location_id: LocationId,
+    global_category_id: CategoryId,
 ) -> Vec<u8> {
-    let currentPeriodIds: cache::CachePeriodIds =
-        match cache::PER_TIMEZONE__CACHE_PERIOD_IDS(timezoneId) {
+    let current_period_ids: cache::CachePeriodIds =
+        match cache::PER_TIMEZONE__CACHE_PERIOD_IDS(timezone_id) {
             None => {
                 return codes::INVALID_TIMEZONE_ID_RESPONSE;
             }
@@ -141,27 +141,27 @@ pub fn get_yesterdays_location_category_rankings_by_global_ids(
         };
 
     return get_location_category_rankings_by_global_ids(
-        currentPeriodIds.yesterdaysVcDayId,
-        vcDayId,
-        timezoneId,
+        current_period_ids.yesterdaysVcDayId,
+        vc_day_id,
+        timezone_id,
         cache::LOCATION_YESTERDAYS_INDEX_MAP,
         cache::YESTERDAYS_LOCATION_POLL_RANKINGS,
-        globalLocationId,
-        globalCategoryId,
-        blockIndex,
-        cache::YESTERDAYS_POLL_ID_BYTE_COUNTS[timezoneId],
+        global_location_id,
+        global_category_id,
+        block_index,
+        cache::YESTERDAYS_POLL_ID_BYTE_COUNTS[timezone_id],
     );
 }
 
 pub fn get_yesterdays_location_category_rankings_by_location_cache_index_and_global_category_ids(
-    vcDayId: DayId,
-    timezoneId: TimezoneId,
-    blockIndex: u32,
-    locationCacheIndex: LocationCacheIndex,
-    globalCategoryId: CategoryId,
+    vc_day_id: DayId,
+    timezone_id: TimezoneId,
+    block_index: u32,
+    location_cache_index: LocationCacheIndex,
+    global_category_id: CategoryId,
 ) -> Vec<u8> {
-    let currentPeriodIds: cache::CachePeriodIds =
-        match cache::PER_TIMEZONE__CACHE_PERIOD_IDS(timezoneId) {
+    let current_period_ids: cache::CachePeriodIds =
+        match cache::PER_TIMEZONE__CACHE_PERIOD_IDS(timezone_id) {
             None => {
                 return codes::INVALID_TIMEZONE_ID_RESPONSE;
             }
@@ -171,27 +171,27 @@ pub fn get_yesterdays_location_category_rankings_by_location_cache_index_and_glo
         };
 
     return get_location_category_rankings_by_location_cache_index_and_global_category_id(
-        currentPeriodIds.yesterdaysVcDayId,
-        vcDayId,
-        timezoneId,
+        current_period_ids.yesterdaysVcDayId,
+        vc_day_id,
+        timezone_id,
         cache::LOCATION_CATEGORY_YESTERDAYS_INDEX_MAP,
         cache::YESTERDAYS_LOCATION_POLL_RANKINGS,
-        locationCacheIndex,
-        globalCategoryId,
-        blockIndex,
-        cache::YESTERDAYS_POLL_ID_BYTE_COUNTS[timezoneId],
+        location_cache_index,
+        global_category_id,
+        block_index,
+        cache::YESTERDAYS_POLL_ID_BYTE_COUNTS[timezone_id],
     );
 }
 
 pub fn get_yesterdays_location_category_rankings_by_cache_indexes(
-    vcDayId: DayId,
-    timezoneId: TimezoneId,
-    blockIndex: u32,
-    locationCacheIndex: LocationCacheIndex,
-    locationCategoryCacheIndex: LocationCategoryCacheIndex,
+    vc_day_id: DayId,
+    timezone_id: TimezoneId,
+    block_index: u32,
+    location_cache_index: LocationCacheIndex,
+    location_category_cache_index: LocationCategoryCacheIndex,
 ) -> Vec<u8> {
-    let currentPeriodIds: cache::CachePeriodIds =
-        match cache::PER_TIMEZONE__CACHE_PERIOD_IDS(timezoneId) {
+    let current_period_ids: cache::CachePeriodIds =
+        match cache::PER_TIMEZONE__CACHE_PERIOD_IDS(timezone_id) {
             None => {
                 return codes::INVALID_TIMEZONE_ID_RESPONSE;
             }
@@ -201,26 +201,26 @@ pub fn get_yesterdays_location_category_rankings_by_cache_indexes(
         };
 
     return get_location_category_rankings_by_cache_indexes(
-        currentPeriodIds.yesterdaysVcDayId,
-        vcDayId,
-        timezoneId,
+        current_period_ids.yesterdaysVcDayId,
+        vc_day_id,
+        timezone_id,
         cache::YESTERDAYS_LOCATION_POLL_RANKINGS,
-        locationCacheIndex,
-        locationCategoryCacheIndex,
-        blockIndex,
-        cache::YESTERDAYS_POLL_ID_BYTE_COUNTS[timezoneId],
+        location_cache_index,
+        location_category_cache_index,
+        block_index,
+        cache::YESTERDAYS_POLL_ID_BYTE_COUNTS[timezone_id],
     );
 }
 
 pub fn get_day_b4_yesterdays_location_category_rankings_by_global_ids(
-    vcDayId: DayId,
-    timezoneId: TimezoneId,
-    blockIndex: u32,
-    globalLocationId: LocationId,
-    globalCategoryId: CategoryId,
+    vc_day_id: DayId,
+    timezone_id: TimezoneId,
+    block_index: u32,
+    global_location_id: LocationId,
+    global_category_id: CategoryId,
 ) -> Vec<u8> {
-    let currentPeriodIds: cache::CachePeriodIds =
-        match cache::PER_TIMEZONE__CACHE_PERIOD_IDS(timezoneId) {
+    let current_period_ids: cache::CachePeriodIds =
+        match cache::PER_TIMEZONE__CACHE_PERIOD_IDS(timezone_id) {
             None => {
                 return codes::INVALID_TIMEZONE_ID_RESPONSE;
             }
@@ -230,26 +230,26 @@ pub fn get_day_b4_yesterdays_location_category_rankings_by_global_ids(
         };
 
     return get_location_category_rankings_by_global_ids(
-        currentPeriodIds.dayB4YesterdaysVcDayId,
-        vcDayId,
-        timezoneId,
+        current_period_ids.dayB4YesterdaysVcDayId,
+        vc_day_id,
+        timezone_id,
         cache::LOCATION_DAY_B4_YESTERDAYS_INDEX_MAP,
         cache::DAY_B4_YESTERDAYS_LOCATION_POLL_RANKINGS,
-        globalLocationId,
-        globalCategoryId,
-        blockIndex,
-        cache::DAY_B4_YESTERDAYS_POLL_ID_BYTE_COUNTS[timezoneId],
+        global_location_id,
+        global_category_id,
+        block_index,
+        cache::DAY_B4_YESTERDAYS_POLL_ID_BYTE_COUNTS[timezone_id],
     );
 }
 pub fn get_day_b4_yesterdays_location_category_rankings_by_location_cache_index_and_global_category_ids(
-    vcDayId: DayId,
-    timezoneId: TimezoneId,
-    blockIndex: u32,
-    locationCacheIndex: LocationCacheIndex,
-    globalCategoryId: CategoryId,
+    vc_day_id: DayId,
+    timezone_id: TimezoneId,
+    block_index: u32,
+    location_cache_index: LocationCacheIndex,
+    global_category_id: CategoryId,
 ) -> Vec<u8> {
-    let currentPeriodIds: cache::CachePeriodIds =
-        match cache::PER_TIMEZONE__CACHE_PERIOD_IDS(timezoneId) {
+    let current_period_ids: cache::CachePeriodIds =
+        match cache::PER_TIMEZONE__CACHE_PERIOD_IDS(timezone_id) {
             None => {
                 return codes::INVALID_TIMEZONE_ID_RESPONSE;
             }
@@ -259,27 +259,27 @@ pub fn get_day_b4_yesterdays_location_category_rankings_by_location_cache_index_
         };
 
     return get_location_category_rankings_by_location_cache_index_and_global_category_id(
-        currentPeriodIds.dayB4YesterdaysVcDayId,
-        vcDayId,
-        timezoneId,
+        current_period_ids.dayB4YesterdaysVcDayId,
+        vc_day_id,
+        timezone_id,
         cache::LOCATION_CATEGORY_DAY_B4_YESTERDAYS_INDEX_MAP,
         cache::DAY_B4_YESTERDAYS_LOCATION_POLL_RANKINGS,
-        locationCacheIndex,
-        globalCategoryId,
-        blockIndex,
-        cache::DAY_B4_YESTERDAYS_POLL_ID_BYTE_COUNTS[timezoneId],
+        location_cache_index,
+        global_category_id,
+        block_index,
+        cache::DAY_B4_YESTERDAYS_POLL_ID_BYTE_COUNTS[timezone_id],
     );
 }
 
 pub fn get_day_b4_yesterdays_location_category_rankings_by_cache_indexes(
-    vcDayId: DayId,
-    timezoneId: TimezoneId,
-    blockIndex: u32,
-    locationCacheIndex: LocationCacheIndex,
-    locationCategoryCacheIndex: LocationCategoryCacheIndex,
+    vc_day_id: DayId,
+    timezone_id: TimezoneId,
+    block_index: u32,
+    location_cache_index: LocationCacheIndex,
+    location_category_cache_index: LocationCategoryCacheIndex,
 ) -> Vec<u8> {
-    let currentPeriodIds: cache::CachePeriodIds =
-        match cache::PER_TIMEZONE__CACHE_PERIOD_IDS(timezoneId) {
+    let current_period_ids: cache::CachePeriodIds =
+        match cache::PER_TIMEZONE__CACHE_PERIOD_IDS(timezone_id) {
             None => {
                 return codes::INVALID_TIMEZONE_ID_RESPONSE;
             }
@@ -289,580 +289,580 @@ pub fn get_day_b4_yesterdays_location_category_rankings_by_cache_indexes(
         };
 
     return get_location_category_rankings_by_cache_indexes(
-        currentPeriodIds.dayB4YesterdaysVcDayId,
-        vcDayId,
-        timezoneId,
+        current_period_ids.dayB4YesterdaysVcDayId,
+        vc_day_id,
+        timezone_id,
         cache::DAY_B4_YESTERDAYS_LOCATION_POLL_RANKINGS,
-        locationCacheIndex,
-        locationCategoryCacheIndex,
-        blockIndex,
-        cache::DAY_B4_YESTERDAYS_POLL_ID_BYTE_COUNTS[timezoneId],
+        location_cache_index,
+        location_category_cache_index,
+        block_index,
+        cache::DAY_B4_YESTERDAYS_POLL_ID_BYTE_COUNTS[timezone_id],
     );
 }
 
 pub fn get_this_weeks_location_category_rankings_by_global_ids(
-    vcWeekId: WeekId,
-    timezoneId: TimezoneId,
-    blockIndex: u32,
-    globalLocationId: LocationId,
-    globalCategoryId: CategoryId,
+    vc_week_id: WeekId,
+    timezone_id: TimezoneId,
+    block_index: u32,
+    global_location_id: LocationId,
+    global_category_id: CategoryId,
 ) -> Vec<u8> {
-    let currentPeriodIds: cache::CachePeriodIds =
-        match cache::PER_TIMEZONE__CACHE_PERIOD_IDS(timezoneId) {
+    let current_period_ids: cache::CachePeriodIds =
+        match cache::PER_TIMEZONE__CACHE_PERIOD_IDS(timezone_id) {
             None => {
                 return codes::INVALID_TIMEZONE_ID_RESPONSE;
             }
-            Some(cachePeriodIds) => {
-                cachePeriodIds
+            Some(cache_period_ids) => {
+                cache_period_ids
             }
         };
 
     return get_location_category_rankings_by_global_ids(
-        currentPeriodIds.thisWeeksVcWeekId,
-        vcDayId,
-        timezoneId,
+        current_period_ids.thisWeeksVcWeekId,
+        vc_week_id,
+        timezone_id,
         cache::LOCATION_THIS_WEEKS_INDEX_MAP,
         cache::THIS_WEEKS_LOCATION_POLL_RANKINGS,
-        globalLocationId,
-        globalCategoryId,
-        blockIndex,
-        cache::THIS_WEEKS_POLL_ID_BYTE_COUNTS[timezoneId],
+        global_location_id,
+        global_category_id,
+        block_index,
+        cache::THIS_WEEKS_POLL_ID_BYTE_COUNTS[timezone_id],
     );
 }
 
 pub fn get_this_weeks_location_category_rankings_by_location_cache_index_and_global_category_ids(
-    vcWeekId: WeekId,
-    timezoneId: TimezoneId,
-    blockIndex: u32,
-    locationCacheIndex: LocationCacheIndex,
-    globalCategoryId: CategoryId,
+    vc_week_id: WeekId,
+    timezone_id: TimezoneId,
+    block_index: u32,
+    location_cache_index: LocationCacheIndex,
+    global_category_id: CategoryId,
 ) -> Vec<u8> {
-    let currentPeriodIds: cache::CachePeriodIds =
-        match cache::PER_TIMEZONE__CACHE_PERIOD_IDS(timezoneId) {
+    let current_period_ids: cache::CachePeriodIds =
+        match cache::PER_TIMEZONE__CACHE_PERIOD_IDS(timezone_id) {
             None => {
                 return codes::INVALID_TIMEZONE_ID_RESPONSE;
             }
-            Some(cachePeriodIds) => {
-                cachePeriodIds
+            Some(cache_period_ids) => {
+                cache_period_ids
             }
         };
 
     return get_location_category_rankings_by_location_cache_index_and_global_category_id(
-        currentPeriodIds.thisWeeksVcWeekId,
-        vcDayId,
-        timezoneId,
+        current_period_ids.thisWeeksVcWeekId,
+        vc_week_id,
+        timezone_id,
         cache::LOCATION_CATEGORY_THIS_WEEKS_INDEX_MAP,
         cache::THIS_WEEKS_LOCATION_POLL_RANKINGS,
-        locationCacheIndex,
-        globalCategoryId,
-        blockIndex,
-        cache::THIS_WEEKS_POLL_ID_BYTE_COUNTS[timezoneId],
+        location_cache_index,
+        global_category_id,
+        block_index,
+        cache::THIS_WEEKS_POLL_ID_BYTE_COUNTS[timezone_id],
     );
 }
 
 pub fn get_this_weeks_location_category_rankings_by_cache_indexes(
-    vcWeekId: WeekId,
-    timezoneId: TimezoneId,
-    blockIndex: u32,
-    locationCacheIndex: LocationCacheIndex,
-    locationCategoryCacheIndex: LocationCategoryCacheIndex,
+    vc_week_id: WeekId,
+    timezone_id: TimezoneId,
+    block_index: u32,
+    location_cache_index: LocationCacheIndex,
+    location_category_cache_index: LocationCategoryCacheIndex,
 ) -> Vec<u8> {
-    let currentPeriodIds: cache::CachePeriodIds =
-        match cache::PER_TIMEZONE__CACHE_PERIOD_IDS(timezoneId) {
+    let current_period_ids: cache::CachePeriodIds =
+        match cache::PER_TIMEZONE__CACHE_PERIOD_IDS(timezone_id) {
             None => {
                 return codes::INVALID_TIMEZONE_ID_RESPONSE;
             }
-            Some(cachePeriodIds) => {
-                cachePeriodIds
+            Some(cache_period_ids) => {
+                cache_period_ids
             }
         };
 
     return get_location_category_rankings_by_cache_indexes(
-        currentPeriodIds.thisWeeksVcWeekId,
-        vcDayId,
-        timezoneId,
+        current_period_ids.thisWeeksVcWeekId,
+        vc_week_id,
+        timezone_id,
         cache::THIS_WEEKS_LOCATION_POLL_RANKINGS,
-        locationCacheIndex,
-        locationCategoryCacheIndex,
-        blockIndex,
-        cache::THIS_WEEKS_POLL_ID_BYTE_COUNTS[timezoneId],
+        location_cache_index,
+        location_category_cache_index,
+        block_index,
+        cache::THIS_WEEKS_POLL_ID_BYTE_COUNTS[timezone_id],
     );
 }
 
 pub fn get_last_weeks_location_category_rankings_by_global_ids(
-    vcWeekId: WeekId,
-    timezoneId: TimezoneId,
-    blockIndex: u32,
-    globalLocationId: LocationId,
-    globalCategoryId: CategoryId,
+    vc_week_id: WeekId,
+    timezone_id: TimezoneId,
+    block_index: u32,
+    global_location_id: LocationId,
+    global_category_id: CategoryId,
 ) -> Vec<u8> {
-    let currentPeriodIds: cache::CachePeriodIds =
-        match cache::PER_TIMEZONE__CACHE_PERIOD_IDS(timezoneId) {
+    let current_period_ids: cache::CachePeriodIds =
+        match cache::PER_TIMEZONE__CACHE_PERIOD_IDS(timezone_id) {
             None => {
                 return codes::INVALID_TIMEZONE_ID_RESPONSE;
             }
-            Some(cachePeriodIds) => {
-                cachePeriodIds
+            Some(cache_period_ids) => {
+                cache_period_ids
             }
         };
 
     return get_location_category_rankings_by_global_ids(
-        currentPeriodIds.lastWeeksVcWeekId,
-        vcDayId,
-        timezoneId,
+        current_period_ids.lastWeeksVcWeekId,
+        vc_week_id,
+        timezone_id,
         cache::LOCATION_LAST_WEEKS_INDEX_MAP,
         cache::LAST_WEEKS_LOCATION_POLL_RANKINGS,
-        globalLocationId,
-        globalCategoryId,
-        blockIndex,
-        cache::LAST_WEEKS_POLL_ID_BYTE_COUNTS[timezoneId],
+        global_location_id,
+        global_category_id,
+        block_index,
+        cache::LAST_WEEKS_POLL_ID_BYTE_COUNTS[timezone_id],
     );
 }
 
 pub fn get_last_weeks_location_category_rankings_by_location_cache_index_and_global_category_ids(
-    vcWeekId: WeekId,
-    timezoneId: TimezoneId,
-    blockIndex: u32,
-    locationCacheIndex: LocationCacheIndex,
-    globalCategoryId: CategoryId,
+    vc_week_id: WeekId,
+    timezone_id: TimezoneId,
+    block_index: u32,
+    location_cache_index: LocationCacheIndex,
+    global_category_id: CategoryId,
 ) -> Vec<u8> {
-    let currentPeriodIds: cache::CachePeriodIds =
-        match cache::PER_TIMEZONE__CACHE_PERIOD_IDS(timezoneId) {
+    let current_period_ids: cache::CachePeriodIds =
+        match cache::PER_TIMEZONE__CACHE_PERIOD_IDS(timezone_id) {
             None => {
                 return codes::INVALID_TIMEZONE_ID_RESPONSE;
             }
-            Some(cachePeriodIds) => {
-                cachePeriodIds
+            Some(cache_period_ids) => {
+                cache_period_ids
             }
         };
 
     return get_location_category_rankings_by_location_cache_index_and_global_category_id(
-        currentPeriodIds.lastWeeksVcWeekId,
-        vcDayId,
-        timezoneId,
+        current_period_ids.lastWeeksVcWeekId,
+        vc_week_id,
+        timezone_id,
         cache::LOCATION_CATEGORY_LAST_WEEKS_INDEX_MAP,
         cache::LAST_WEEKS_LOCATION_POLL_RANKINGS,
-        locationCacheIndex,
-        globalCategoryId,
-        blockIndex,
-        cache::LAST_WEEKS_POLL_ID_BYTE_COUNTS[timezoneId],
+        location_cache_index,
+        global_category_id,
+        block_index,
+        cache::LAST_WEEKS_POLL_ID_BYTE_COUNTS[timezone_id],
     );
 }
 
 pub fn get_last_weeks_location_category_rankings_by_cache_indexes(
-    vcWeekId: WeekId,
-    timezoneId: TimezoneId,
-    blockIndex: u32,
-    locationCacheIndex: LocationCacheIndex,
-    locationCategoryCacheIndex: LocationCategoryCacheIndex,
+    vc_week_id: WeekId,
+    timezone_id: TimezoneId,
+    block_index: u32,
+    location_cache_index: LocationCacheIndex,
+    location_category_cache_index: LocationCategoryCacheIndex,
 ) -> Vec<u8> {
-    let currentPeriodIds: cache::CachePeriodIds =
-        match cache::PER_TIMEZONE__CACHE_PERIOD_IDS(timezoneId) {
+    let current_period_ids: cache::CachePeriodIds =
+        match cache::PER_TIMEZONE__CACHE_PERIOD_IDS(timezone_id) {
             None => {
                 return codes::INVALID_TIMEZONE_ID_RESPONSE;
             }
-            Some(cachePeriodIds) => {
-                cachePeriodIds
+            Some(cache_period_ids) => {
+                cache_period_ids
             }
         };
 
     return get_location_category_rankings_by_cache_indexes(
-        currentPeriodIds.lastWeeksVcWeekId,
-        vcDayId,
-        timezoneId,
+        current_period_ids.lastWeeksVcWeekId,
+        vc_week_id,
+        timezone_id,
         cache::LAST_WEEKS_LOCATION_POLL_RANKINGS,
-        locationCacheIndex,
-        locationCategoryCacheIndex,
-        blockIndex,
-        cache::LAST_WEEKS_POLL_ID_BYTE_COUNTS[timezoneId],
+        location_cache_index,
+        location_category_cache_index,
+        block_index,
+        cache::LAST_WEEKS_POLL_ID_BYTE_COUNTS[timezone_id],
     );
 }
 
 pub fn get_this_months_location_category_rankings_by_global_ids(
-    vcMonthId: MonthId,
-    timezoneId: TimezoneId,
-    blockIndex: u32,
-    globalLocationId: LocationId,
-    globalCategoryId: CategoryId,
+    vc_month_id: MonthId,
+    timezone_id: TimezoneId,
+    block_index: u32,
+    global_location_id: LocationId,
+    global_category_id: CategoryId,
 ) -> Vec<u8> {
-    let currentPeriodIds: cache::CachePeriodIds =
-        match cache::PER_TIMEZONE__CACHE_PERIOD_IDS(timezoneId) {
+    let current_period_ids: cache::CachePeriodIds =
+        match cache::PER_TIMEZONE__CACHE_PERIOD_IDS(timezone_id) {
             None => {
                 return codes::INVALID_TIMEZONE_ID_RESPONSE;
             }
-            Some(cachePeriodIds) => {
-                cachePeriodIds
+            Some(cache_period_ids) => {
+                cache_period_ids
             }
         };
 
     return get_location_category_rankings_by_global_ids(
-        currentPeriodIds.thisMonthsVcMonthId,
-        vcDayId,
-        timezoneId,
+        current_period_ids.thisMonthsVcMonthId,
+        vc_month_d,
+        timezone_id,
         cache::LOCATION_THIS_MONTHS_INDEX_MAP,
         cache::THIS_MONTHS_LOCATION_POLL_RANKINGS,
-        globalLocationId,
-        globalCategoryId,
-        blockIndex,
-        cache::THIS_MONTHS_POLL_ID_BYTE_COUNTS[timezoneId],
+        global_location_id,
+        global_category_id,
+        block_index,
+        cache::THIS_MONTHS_POLL_ID_BYTE_COUNTS[timezone_id],
     );
 }
 
 pub fn get_this_months_location_category_rankings_by_location_cache_index_and_global_category_ids(
-    vcMonthId: MonthId,
-    timezoneId: TimezoneId,
-    blockIndex: u32,
-    locationCacheIndex: LocationCacheIndex,
-    globalCategoryId: CategoryId,
+    vc_month_id: MonthId,
+    timezone_id: TimezoneId,
+    block_index: u32,
+    location_cache_index: LocationCacheIndex,
+    global_category_id: CategoryId,
 ) -> Vec<u8> {
-    let currentPeriodIds: cache::CachePeriodIds =
-        match cache::PER_TIMEZONE__CACHE_PERIOD_IDS(timezoneId) {
+    let current_period_ids: cache::CachePeriodIds =
+        match cache::PER_TIMEZONE__CACHE_PERIOD_IDS(timezone_id) {
             None => {
                 return codes::INVALID_TIMEZONE_ID_RESPONSE;
             }
-            Some(cachePeriodIds) => {
-                cachePeriodIds
+            Some(cache_period_ids) => {
+                cache_period_ids
             }
         };
 
     return get_location_category_rankings_by_location_cache_index_and_global_category_id(
-        currentPeriodIds.thisMonthsVcMonthId,
-        vcDayId,
-        timezoneId,
+        current_period_ids.thisMonthsVcMonthId,
+        vc_month_id,
+        timezone_id,
         cache::LOCATION_CATEGORY_THIS_MONTHS_INDEX_MAP,
         cache::THIS_MONTHS_LOCATION_POLL_RANKINGS,
-        locationCacheIndex,
-        globalCategoryId,
-        blockIndex,
-        cache::THIS_MONTHS_POLL_ID_BYTE_COUNTS[timezoneId],
+        location_cache_index,
+        global_category_id,
+        block_index,
+        cache::THIS_MONTHS_POLL_ID_BYTE_COUNTS[timezone_id],
     );
 }
 
 pub fn get_this_months_location_category_rankings_by_cache_indexes(
-    vcMonthId: MonthId,
-    timezoneId: TimezoneId,
-    blockIndex: u32,
-    locationCacheIndex: LocationCacheIndex,
-    locationCategoryCacheIndex: u32,
+    vc_month_id: MonthId,
+    timezone_id: TimezoneId,
+    block_index: u32,
+    location_cache_index: LocationCacheIndex,
+    location_category_cache_index: u32,
 ) -> Vec<u8> {
-    let currentPeriodIds: cache::CachePeriodIds =
-        match cache::PER_TIMEZONE__CACHE_PERIOD_IDS(timezoneId) {
+    let current_period_ids: cache::CachePeriodIds =
+        match cache::PER_TIMEZONE__CACHE_PERIOD_IDS(timezone_id) {
             None => {
                 return codes::INVALID_TIMEZONE_ID_RESPONSE;
             }
-            Some(cachePeriodIds) => {
-                cachePeriodIds
+            Some(cache_period_ids) => {
+                cache_period_ids
             }
         };
 
     return get_location_category_rankings_by_cache_indexes(
-        currentPeriodIds.thisMonthsVcMonthId,
-        vcDayId,
-        timezoneId,
+        current_period_ids.thisMonthsVcMonthId,
+        vc_week_id,
+        timezone_id,
         cache::THIS_MONTHS_LOCATION_POLL_RANKINGS,
-        locationCacheIndex,
-        locationCategoryCacheIndex,
-        blockIndex,
-        cache::THIS_MONTHS_POLL_ID_BYTE_COUNTS[timezoneId],
+        location_cache_index,
+        location_category_cache_index,
+        block_index,
+        cache::THIS_MONTHS_POLL_ID_BYTE_COUNTS[timezone_id],
     );
 }
 
 pub fn get_last_months_location_category_rankings_by_global_ids(
-    vcMonthId: MonthId,
-    timezoneId: TimezoneId,
-    blockIndex: u32,
-    globalLocationId: LocationId,
-    globalCategoryId: CategoryId,
+    vc_month_id: MonthId,
+    timezone_id: TimezoneId,
+    block_index: u32,
+    global_location_id: LocationId,
+    global_category_id: CategoryId,
 ) -> Vec<u8> {
-    let currentPeriodIds: cache::CachePeriodIds =
-        match cache::PER_TIMEZONE__CACHE_PERIOD_IDS(timezoneId) {
+    let current_period_ids: cache::CachePeriodIds =
+        match cache::PER_TIMEZONE__CACHE_PERIOD_IDS(timezone_id) {
             None => {
                 return codes::INVALID_TIMEZONE_ID_RESPONSE;
             }
-            Some(cachePeriodIds) => {
-                cachePeriodIds
+            Some(cache_period_ids) => {
+                cache_period_ids
             }
         };
 
     return get_location_category_rankings_by_global_ids(
-        currentPeriodIds.lastMonthsVcMonthId,
-        vcDayId,
-        timezoneId,
+        current_period_ids.lastMonthsVcMonthId,
+        vc_month_id,
+        timezone_id,
         cache::LOCATION_LAST_MONTHS_INDEX_MAP,
         cache::LAST_MONTHS_LOCATION_POLL_RANKINGS,
-        globalLocationId,
-        globalCategoryId,
-        blockIndex,
-        cache::LAST_MONTHS_POLL_ID_BYTE_COUNTS[timezoneId],
+        global_location_id,
+        global_category_id,
+        block_index,
+        cache::LAST_MONTHS_POLL_ID_BYTE_COUNTS[timezone_id],
     );
 }
 
 pub fn get_last_months_location_category_rankings_by_location_cache_index_and_global_category_ids(
-    vcMonthId: MonthId,
-    timezoneId: TimezoneId,
-    blockIndex: u32,
-    locationCacheIndex: LocationCacheIndex,
-    globalCategoryId: CategoryId,
+    vc_month_id: MonthId,
+    timezone_id: TimezoneId,
+    block_index: u32,
+    location_cache_index: LocationCacheIndex,
+    global_category_id: CategoryId,
 ) -> Vec<u8> {
-    let currentPeriodIds: cache::CachePeriodIds =
-        match cache::PER_TIMEZONE__CACHE_PERIOD_IDS(timezoneId) {
+    let current_period_ids: cache::CachePeriodIds =
+        match cache::PER_TIMEZONE__CACHE_PERIOD_IDS(timezone_id) {
             None => {
                 return codes::INVALID_TIMEZONE_ID_RESPONSE;
             }
-            Some(cachePeriodIds) => {
-                cachePeriodIds
+            Some(cache_period_ids) => {
+                cache_period_ids
             }
         };
 
     return get_location_category_rankings_by_location_cache_index_and_global_category_id(
-        currentPeriodIds.lastMonthsVcMonthId,
-        vcDayId,
-        timezoneId,
+        current_period_ids.lastMonthsVcMonthId,
+        vc_month_id,
+        timezone_id,
         cache::LOCATION_CATEGORY_LAST_MONTHS_INDEX_MAP,
         cache::LAST_MONTHS_LOCATION_POLL_RANKINGS,
-        locationCacheIndex,
-        globalCategoryId,
-        blockIndex,
-        cache::LAST_MONTHS_POLL_ID_BYTE_COUNTS[timezoneId],
+        location_cache_index,
+        global_category_id,
+        block_index,
+        cache::LAST_MONTHS_POLL_ID_BYTE_COUNTS[timezone_id],
     );
 }
 
 pub fn get_last_months_location_category_rankings_by_cache_indexes(
-    vcMonthId: MonthId,
-    timezoneId: TimezoneId,
-    blockIndex: u32,
-    locationCacheIndex: LocationCacheIndex,
-    locationCategoryCacheIndex: LocationCategoryCacheIndex,
+    vc_month_id: MonthId,
+    timezone_id: TimezoneId,
+    block_index: u32,
+    location_cache_index: LocationCacheIndex,
+    location_category_cache_index: LocationCategoryCacheIndex,
 ) -> Vec<u8> {
-    let currentPeriodIds: cache::CachePeriodIds =
-        match cache::PER_TIMEZONE__CACHE_PERIOD_IDS(timezoneId) {
+    let current_period_ids: cache::CachePeriodIds =
+        match cache::PER_TIMEZONE__CACHE_PERIOD_IDS(timezone_id) {
             None => {
                 return codes::INVALID_TIMEZONE_ID_RESPONSE;
             }
-            Some(cachePeriodIds) => {
-                cachePeriodIds
+            Some(cache_period_ids) => {
+                cache_period_ids
             }
         };
 
     return get_location_category_rankings_by_cache_indexes(
-        currentPeriodIds.lastMonthsVcMonthId,
-        vcDayId,
-        timezoneId,
+        current_period_ids.lastMonthsVcMonthId,
+        vc_month_id,
+        timezone_id,
         cache::LAST_MONTHS_LOCATION_POLL_RANKINGS,
-        locationCacheIndex,
-        locationCategoryCacheIndex,
-        blockIndex,
-        cache::LAST_MONTHS_POLL_ID_BYTE_COUNTS[timezoneId],
+        location_cache_index,
+        location_category_cache_index,
+        block_index,
+        cache::LAST_MONTHS_POLL_ID_BYTE_COUNTS[timezone_id],
     );
 }
 
 #[inline]
 fn get_location_category_rankings_by_global_ids(
-    currentPeriodId: u32,
-    expectedPeriodId: u32,
-    timezoneId: TimezoneId,
-    locationIndexMap: IntHashMap<LocationId, cache::LocationPeriodIds>,
-    givenPeriodLocationPollRankings: Vec<Vec<LocationPollRankings>>,
-    globalLocationId: LocationId,
-    globalCategoryId: CategoryId,
-    blockIndex: u32,
-    maxPollNumberBytes: u8,
+    current_period_id: u32,
+    expected_period_id: u32,
+    timezone_id: TimezoneId,
+    location_index_map: IntHashMap<LocationId, cache::LocationPeriodIds>,
+    given_period_location_poll_rankings: Vec<Vec<LocationPollRankings>>,
+    global_location_id: LocationId,
+    global_category_id: CategoryId,
+    block_index: u32,
+    max_poll_number_bytes: u8,
 ) -> Vec<u8> {
-    if currentPeriodId != expectedPeriodId {
+    if current_period_id != expected_period_id {
         return codes::INVALID_PERIOD_ID_RESPONSE;
     }
 
-    let locationPeriodIds: cache::LocationPeriodIds = match locationIndexMap.get(*globalLocationId) {
+    let location_period_ids: cache::LocationPeriodIds = match location_index_map.get(*global_location_id) {
         None => {
             return codes::INVALID_GLOBAL_LOCATION_ID_RESPONSE;
         }
-        Some(locationPeriodIds) => {
-            locationPeriodIds
+        Some(location_period_ids) => {
+            location_period_ids
         }
     };
 
-    let locationCategoryCacheIndex: LocationCategoryCacheIndex = match locationPeriodIds
-        .locationCategoryCacheIndexMap.get(*globalCategoryId) {
+    let location_category_cache_index: LocationCategoryCacheIndex = match location_period_ids
+        .locationCategoryCacheIndexMap.get(*global_category_id) {
         None => {
             return codes::INVALID_GLOBAL_CATEGORY_ID_RESPONSE;
         }
-        Some(categoryCacheIndex) => {
-            categoryCacheIndex
+        Some(category_cache_index) => {
+            category_cache_index
         }
     };
 
 
-    let locationCacheIndex: LocationCacheIndex = locationPeriodIds.locationCacheIndex;
-    let locationPollRankings = givenPeriodLocationPollRankings[timezoneId][locationCacheIndex];
-    let firstRecordIndex = PAGE_SIZE * blockIndex;
+    let location_cache_index: LocationCacheIndex = location_period_ids.locationCacheIndex;
+    let location_poll_rankings = given_period_location_poll_rankings[timezone_id][location_cache_index];
+    let first_record_index = PAGE_SIZE * block_index;
 
     return get_location_category_rankings_with_cache_indexes(
-        timezoneId, firstRecordIndex, locationCacheIndex, locationCategoryCacheIndex,
-        locationPollRankings, maxPollNumberBytes);
+        timezone_id, first_record_index, location_cache_index, location_category_cache_index,
+        location_poll_rankings, max_poll_number_bytes);
 }
 
 #[inline]
 fn get_location_category_rankings_by_location_cache_index_and_global_category_id(
-    currentPeriodId: u32,
-    expectedPeriodId: u32,
-    timezoneId: TimezoneId,
-    locationCategoryIndexMap: IntHashMap<LocationId, cache::LocationPeriodIds>,
-    givenPeriodLocationPollRankings: Vec<Vec<LocationPollRankings>>,
-    locationCacheIndex: LocationCacheIndex,
-    globalCategoryId: CategoryId,
-    blockIndex: u32,
-    maxPollNumberBytes: u8,
+    current_period_id: u32,
+    expected_period_id: u32,
+    timezone_id: TimezoneId,
+    location_category_index_map: IntHashMap<LocationId, cache::LocationPeriodIds>,
+    given_period_location_poll_rankings: Vec<Vec<LocationPollRankings>>,
+    location_cache_index: LocationCacheIndex,
+    global_category_id: CategoryId,
+    block_index: u32,
+    max_poll_number_bytes: u8,
 ) -> Vec<u8> {
-    if currentPeriodId != expectedPeriodId {
+    if current_period_id != expected_period_id {
         return codes::INVALID_PERIOD_ID_RESPONSE;
     }
 
-    let locationPollRankings: LocationPollRankings
-    = match givenPeriodLocationPollRankings[timezoneId].get(locationCacheIndex) {
+    let location_poll_rankings: LocationPollRankings
+    = match given_period_location_poll_rankings[timezone_id].get(location_cache_index) {
         None => {
             return codes::INVALID_LOCATION_CACHE_INDEX_RESPONSE;
         }
-        Some(locationPollRankings) => {
-            locationPollRankings
+        Some(location_poll_rankings) => {
+            location_poll_rankings
         }
     };
 
-    let locationPeriodIds: cache::LocationPeriodIds
-    = matlocationCategoryIndexMap.get(*locationCacheIndex).unwrap();
+    let location_period_ids: cache::LocationPeriodIds
+    = matlocationCategoryIndexMap.get(*location_cache_index).unwrap();
 
-    let locationCategoryCacheIndex: u32 = match locationPeriodIds
-        .locationCategoryCacheIndexMap.get(*globalCategoryId) {
+    let location_category_cache_index: u32 = match location_period_ids
+        .locationCategoryCacheIndexMap.get(*global_category_id) {
         None => {
             return codes::INVALID_GLOBAL_CATEGORY_ID_RESPONSE;
         }
-        Some(categoryCacheIndex) => {
-            categoryCacheIndex
+        Some(category_cache_index) => {
+            category_cache_index
         }
     };
 
-    let locationPollRankings = givenPeriodLocationPollRankings[timezoneId][locationCacheIndex];
-    let firstRecordIndex = PAGE_SIZE * blockIndex;
+    let location_poll_rankings = given_period_location_poll_rankings[timezone_id][location_cache_index];
+    let first_record_index = PAGE_SIZE * block_index;
 
     return get_location_category_rankings_with_category_cache_index(
-        timezoneId, firstRecordIndex, locationCacheIndex, locationCategoryCacheIndex,
-        locationPollRankings, maxPollNumberBytes);
+        timezone_id, first_record_index, location_cache_index, location_category_cache_index,
+        location_poll_rankings, max_poll_number_bytes);
 }
 
 #[inline]
 fn get_location_category_rankings_by_cache_indexes(
-    currentPeriodId: u32,
-    expectedPeriodId: u32,
-    timezoneId: TimezoneId,
-    givenPeriodLocationPollRankings: Vec<Vec<LocationPollRankings>>,
-    locationCacheIndex: LocationCacheIndex,
-    locationCategoryCacheIndex: LocationCategoryCacheIndex,
-    blockIndex: u32,
-    maxPollNumberBytes: u8,
+    current_period_id: u32,
+    expected_period_id: u32,
+    timezone_id: TimezoneId,
+    given_period_location_poll_rankings: Vec<Vec<LocationPollRankings>>,
+    location_cache_index: LocationCacheIndex,
+    location_category_cache_index: LocationCategoryCacheIndex,
+    block_index: u32,
+    max_poll_number_bytes: u8,
 ) -> Vec<u8> {
-    if currentPeriodId != expectedPeriodId {
+    if current_period_id != expected_period_id {
         return codes::INVALID_PERIOD_ID_RESPONSE;
     }
 
-    let locationPollRankings: LocationPollRankings
-    = match givenPeriodLocationPollRankings[timezoneId].get(locationCacheIndex) {
+    let location_poll_rankings: LocationPollRankings
+    = match given_period_location_poll_rankings[timezone_id].get(location_cache_index) {
         None => {
             return codes::INVALID_LOCATION_CACHE_INDEX_RESPONSE;
         }
-        Some(locationPollRankings) => {
-            locationPollRankings
+        Some(location_poll_rankings) => {
+            location_poll_rankings
         }
     };
 
-    let locationCategoryVoteCounts: Vec<VoteCount>
-    = match locationPollRankings.categoryLocations.get(locationCategoryCacheIndex) {
+    let location_category_vote_counts: Vec<VoteCount>
+    = match location_poll_rankings.category_locations.get(location_category_cache_index) {
         None => {
             return codes::INVALID_CATEGORY_CACHE_INDEX_RESPONSE;
         }
-        Some(locationCategoryVoteCounts) => {
-            locationCategoryVoteCounts
+        Some(location_category_vote_counts) => {
+            location_category_vote_counts
         }
     };
 
-    let firstRecordIndex = PAGE_SIZE * blockIndex;
+    let first_record_index = PAGE_SIZE * block_index;
 
     return get_location_category_rankings(
-        firstRecordIndex, locationCategoryVoteCounts,maxPollNumberBytes);
+        first_record_index, location_category_vote_counts,max_poll_number_bytes);
 }
 
 #[inline]
 fn get_location_category_rankings_with_cache_indexes(
-    timezoneId: TimezoneId,
-    firstRecordIndex: usize,
-    locationCacheIndex: LocationCacheIndex,
-    categoryCacheIndex: CategoryCacheIndex,
-    locationPollRankings: LocationPollRankings,
-    maxPollNumberBytes: u8,
+    timezone_id: TimezoneId,
+    first_record_index: usize,
+    location_cache_index: LocationCacheIndex,
+    category_cache_index: CategoryCacheIndex,
+    location_poll_rankings: LocationPollRankings,
+    max_poll_number_bytes: u8,
 ) -> Vec<u8> {
-    let voteCountsForLocation
-    = locationPollRankings.categoryLocations[categoryCacheIndex];
-    let locationCacheIndexBytes: [u8; 4] = unsafe {
-        std::mem::transmute(*locationCacheIndex);
+    let vote_counts_for_location
+    = location_poll_rankings.category_locations[category_cache_index];
+    let location_cache_index_bytes: [u8; 4] = unsafe {
+        std::mem::transmute(*location_cache_index);
     };
-    let categoryCacheIndexBytes: [u8; 4] = unsafe {
-        std::mem::transmute(*categoryCacheIndex);
+    let category_cache_index_bytes: [u8; 4] = unsafe {
+        std::mem::transmute(*category_cache_index);
     };
 
-    match maxPollNumberBytes {
+    match max_poll_number_bytes {
         2 => {
             let mut response: Vec<u8> = Vec::with_capacity(INITIAL_RESPONSE_VECTOR_SIZE_2_POLL_BYTES);
             response.push(0b00000010);
-            response.extend_from_slice(&locationCacheIndexBytes);
-            response.extend_from_slice(&categoryCacheIndexBytes);
+            response.extend_from_slice(&location_cache_index_bytes);
+            response.extend_from_slice(&category_cache_index_bytes);
 
-            return get2ByteRecentPolls(*voteCountsForLocation, firstRecordIndex, response);
+            return get_2_byte_recent_polls(*vote_counts_for_location, first_record_index, response);
         }
         3 => {
             let mut response: Vec<u8> = Vec::with_capacity(INITIAL_RESPONSE_VECTOR_SIZE_3_POLL_BYTES);
             response.push(0b00000011);
-            response.extend_from_slice(&locationCacheIndexBytes);
-            response.extend_from_slice(&categoryCacheIndexBytes);
+            response.extend_from_slice(&location_cache_index_bytes);
+            response.extend_from_slice(&category_cache_index_bytes);
 
-            return get3ByteRecentPolls(*voteCountsForLocation, firstRecordIndex, response);
+            return get_3_byte_recent_polls(*vote_counts_for_location, first_record_index, response);
         }
         4 => {
             let mut response: Vec<u8> = Vec::with_capacity(INITIAL_RESPONSE_VECTOR_SIZE_4_POLL_BYTES);
             response.push(0b00000100);
-            response.extend_from_slice(&locationCacheIndexBytes);
-            response.extend_from_slice(&categoryCacheIndexBytes);
+            response.extend_from_slice(&location_cache_index_bytes);
+            response.extend_from_slice(&category_cache_index_bytes);
 
-            return get4ByteRecentPolls(*voteCountsForLocation, firstRecordIndex, response);
+            return get_4_byte_recent_polls(*vote_counts_for_location, first_record_index, response);
         }
         5 => {
             let mut response: Vec<u8> = Vec::with_capacity(INITIAL_RESPONSE_VECTOR_SIZE_5_POLL_BYTES);
             response.push(0b00000101);
-            response.extend_from_slice(&locationCacheIndexBytes);
-            response.extend_from_slice(&categoryCacheIndexBytes);
+            response.extend_from_slice(&location_cache_index_bytes);
+            response.extend_from_slice(&category_cache_index_bytes);
 
-            return get4ByteRecentPolls(*voteCountsForLocation, firstRecordIndex, response);
+            return get_4_byte_recent_polls(*vote_counts_for_location, first_record_index, response);
         }
         6 => {
             let mut response: Vec<u8> = Vec::with_capacity(INITIAL_RESPONSE_VECTOR_SIZE_6_POLL_BYTES);
             response.push(0b00000110);
-            response.extend_from_slice(&locationCacheIndexBytes);
-            response.extend_from_slice(&categoryCacheIndexBytes);
+            response.extend_from_slice(&location_cache_index_bytes);
+            response.extend_from_slice(&category_cache_index_bytes);
 
-            return get4ByteRecentPolls(*voteCountsForLocation, firstRecordIndex, response);
+            return get_4_byte_recent_polls(*vote_counts_for_location, first_record_index, response);
         }
         7 => {
             let mut response: Vec<u8> = Vec::with_capacity(INITIAL_RESPONSE_VECTOR_SIZE_7_POLL_BYTES);
             response.push(0b00000111);
-            response.extend_from_slice(&locationCacheIndexBytes);
-            response.extend_from_slice(&categoryCacheIndexBytes);
+            response.extend_from_slice(&location_cache_index_bytes);
+            response.extend_from_slice(&category_cache_index_bytes);
 
-            return get4ByteRecentPolls(*voteCountsForLocation, firstRecordIndex, response);
+            return get_4_byte_recent_polls(*vote_counts_for_location, first_record_index, response);
         }
         8 => {
             let mut response: Vec<u8> = Vec::with_capacity(INITIAL_RESPONSE_VECTOR_SIZE_8_POLL_BYTES);
             response.push(0b00000000);
-            response.extend_from_slice(&locationCacheIndexBytes);
-            response.extend_from_slice(&categoryCacheIndexBytes);
+            response.extend_from_slice(&location_cache_index_bytes);
+            response.extend_from_slice(&category_cache_index_bytes);
 
-            return get4ByteRecentPolls(*voteCountsForLocation, firstRecordIndex, response);
+            return get_4_byte_recent_polls(*vote_counts_for_location, first_record_index, response);
         }
     }
 //            return codes::INVALID_CATEGORY_RESPONSE;
@@ -870,68 +870,68 @@ fn get_location_category_rankings_with_cache_indexes(
 
 #[inline]
 fn get_location_category_rankings_with_category_cache_index(
-    timezoneId: TimezoneId,
-    firstRecordIndex: usize,
-    locationCacheIndex: LocationCacheIndex,
-    categoryCacheIndex: CategoryCacheIndex,
-    locationPollRankings: LocationPollRankings,
-    maxPollNumberBytes: u8,
+    timezone_id: TimezoneId,
+    first_record_index: usize,
+    location_cache_index: LocationCacheIndex,
+    category_cache_index: CategoryCacheIndex,
+    location_poll_rankings: LocationPollRankings,
+    max_poll_number_bytes: u8,
 ) -> Vec<u8> {
-    let voteCountsForLocation
-    = locationPollRankings.categoryLocations[categoryCacheIndex];
-    let categoryCacheIndexBytes: [u8; 4] = unsafe {
-        std::mem::transmute(*categoryCacheIndex);
+    let vote_counts_for_location
+    = location_poll_rankings.category_locations[category_cache_index];
+    let category_cache_index_bytes: [u8; 4] = unsafe {
+        std::mem::transmute(*category_cache_index);
     };
 
-    match maxPollNumberBytes {
+    match max_poll_number_bytes {
         2 => {
             let mut response: Vec<u8> = Vec::with_capacity(INITIAL_RESPONSE_VECTOR_SIZE_2_POLL_BYTES);
             response.push(0b00000010);
-            response.extend_from_slice(&categoryCacheIndexBytes);
+            response.extend_from_slice(&category_cache_index_bytes);
 
-            return get2ByteRecentPolls(*voteCountsForLocation, firstRecordIndex, response);
+            return get_2_byte_recent_polls(*vote_counts_for_location, first_record_index, response);
         }
         3 => {
             let mut response: Vec<u8> = Vec::with_capacity(INITIAL_RESPONSE_VECTOR_SIZE_3_POLL_BYTES);
             response.push(0b00000011);
-            response.extend_from_slice(&categoryCacheIndexBytes);
+            response.extend_from_slice(&category_cache_index_bytes);
 
-            return get3ByteRecentPolls(*voteCountsForLocation, firstRecordIndex, response);
+            return get_3_byte_recent_polls(*vote_counts_for_location, first_record_index, response);
         }
         4 => {
             let mut response: Vec<u8> = Vec::with_capacity(INITIAL_RESPONSE_VECTOR_SIZE_4_POLL_BYTES);
             response.push(0b00000100);
-            response.extend_from_slice(&categoryCacheIndexBytes);
+            response.extend_from_slice(&category_cache_index_bytes);
 
-            return get4ByteRecentPolls(*voteCountsForLocation, firstRecordIndex, response);
+            return get_4_byte_recent_polls(*vote_counts_for_location, first_record_index, response);
         }
         5 => {
             let mut response: Vec<u8> = Vec::with_capacity(INITIAL_RESPONSE_VECTOR_SIZE_5_POLL_BYTES);
             response.push(0b00000101);
-            response.extend_from_slice(&categoryCacheIndexBytes);
+            response.extend_from_slice(&category_cache_index_bytes);
 
-            return get4ByteRecentPolls(*voteCountsForLocation, firstRecordIndex, response);
+            return get_4_byte_recent_polls(*vote_counts_for_location, first_record_index, response);
         }
         6 => {
             let mut response: Vec<u8> = Vec::with_capacity(INITIAL_RESPONSE_VECTOR_SIZE_6_POLL_BYTES);
             response.push(0b00000110);
-            response.extend_from_slice(&categoryCacheIndexBytes);
+            response.extend_from_slice(&category_cache_index_bytes);
 
-            return get4ByteRecentPolls(*voteCountsForLocation, firstRecordIndex, response);
+            return get_4_byte_recent_polls(*vote_counts_for_location, first_record_index, response);
         }
         7 => {
             let mut response: Vec<u8> = Vec::with_capacity(INITIAL_RESPONSE_VECTOR_SIZE_7_POLL_BYTES);
             response.push(0b00000111);
-            response.extend_from_slice(&categoryCacheIndexBytes);
+            response.extend_from_slice(&category_cache_index_bytes);
 
-            return get4ByteRecentPolls(*voteCountsForLocation, firstRecordIndex, response);
+            return get_4_byte_recent_polls(*vote_counts_for_location, first_record_index, response);
         }
         8 => {
             let mut response: Vec<u8> = Vec::with_capacity(INITIAL_RESPONSE_VECTOR_SIZE_8_POLL_BYTES);
             response.push(0b00000000);
-            response.extend_from_slice(&categoryCacheIndexBytes);
+            response.extend_from_slice(&category_cache_index_bytes);
 
-            return get4ByteRecentPolls(*voteCountsForLocation, firstRecordIndex, response);
+            return get_4_byte_recent_polls(*vote_counts_for_location, first_record_index, response);
         }
     }
 //            return codes::INVALID_CATEGORY_RESPONSE;
@@ -939,54 +939,54 @@ fn get_location_category_rankings_with_category_cache_index(
 
 #[inline]
 fn get_location_category_rankings(
-    firstRecordIndex: usize,
-    locationCategoryVoteCounts: Vec<VoteCount>,
-    maxPollNumberBytes: u8,
+    first_record_index: usize,
+    location_category_vote_counts: Vec<VoteCount>,
+    max_poll_number_bytes: u8,
 ) -> Vec<u8> {
-    let voteCountsForLocation = locationPollRankings.location;
+    let vote_counts_for_location = locationPollRankings.location;
 
-    match maxPollNumberBytes {
+    match max_poll_number_bytes {
         2 => {
             let mut response: Vec<u8> = Vec::with_capacity(INITIAL_RESPONSE_VECTOR_SIZE_2_POLL_BYTES);
             response.push(0b00000010);
 
-            return get2ByteRecentPolls(locationCategoryVoteCounts, firstRecordIndex, response);
+            return get_2_byte_recent_polls(location_category_vote_counts, first_record_index, response);
         }
         3 => {
             let mut response: Vec<u8> = Vec::with_capacity(INITIAL_RESPONSE_VECTOR_SIZE_3_POLL_BYTES);
             response.push(0b00000011);
 
-            return get3ByteRecentPolls(locationCategoryVoteCounts, firstRecordIndex, response);
+            return get_3_byte_recent_polls(location_category_vote_counts, first_record_index, response);
         }
         4 => {
             let mut response: Vec<u8> = Vec::with_capacity(INITIAL_RESPONSE_VECTOR_SIZE_4_POLL_BYTES);
             response.push(0b00000100);
 
-            return get4ByteRecentPolls(locationCategoryVoteCounts, firstRecordIndex, response);
+            return get_4_byte_recent_polls(location_category_vote_counts, first_record_index, response);
         }
         5 => {
             let mut response: Vec<u8> = Vec::with_capacity(INITIAL_RESPONSE_VECTOR_SIZE_5_POLL_BYTES);
             response.push(0b00000101);
 
-            return get4ByteRecentPolls(locationCategoryVoteCounts, firstRecordIndex, response);
+            return get_4_byte_recent_polls(location_category_vote_counts, first_record_index, response);
         }
         6 => {
             let mut response: Vec<u8> = Vec::with_capacity(INITIAL_RESPONSE_VECTOR_SIZE_6_POLL_BYTES);
             response.push(0b00000110);
 
-            return get4ByteRecentPolls(locationCategoryVoteCounts, firstRecordIndex, response);
+            return get_4_byte_recent_polls(location_category_vote_counts, first_record_index, response);
         }
         7 => {
             let mut response: Vec<u8> = Vec::with_capacity(INITIAL_RESPONSE_VECTOR_SIZE_7_POLL_BYTES);
             response.push(0b00000111);
 
-            return get4ByteRecentPolls(locationCategoryVoteCounts, firstRecordIndex, response);
+            return get_4_byte_recent_polls(location_category_vote_counts, first_record_index, response);
         }
         8 => {
             let mut response: Vec<u8> = Vec::with_capacity(INITIAL_RESPONSE_VECTOR_SIZE_8_POLL_BYTES);
             response.push(0b00000000);
 
-            return get4ByteRecentPolls(locationCategoryVoteCounts, firstRecordIndex, response);
+            return get_4_byte_recent_polls(location_category_vote_counts, first_record_index, response);
         }
     }
 //            return codes::INVALID_CATEGORY_RESPONSE;

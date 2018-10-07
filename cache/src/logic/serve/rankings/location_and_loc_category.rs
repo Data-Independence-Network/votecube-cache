@@ -120,414 +120,414 @@ pub const INITIAL_RESPONSE_VECTOR_SIZE_2_POLL_BYTES: usize =
         2;
 
 #[inline]
-pub fn get8ByteRecentPolls(
-    pollRankings: Vec<VoteCount>,
-    startingIndex: usize,
+pub fn get_8_byte_recent_polls(
+    poll_rankings: Vec<VoteCount>,
+    starting_index: usize,
     mut response: Vec<u8>,
 ) -> Vec<u8> {
-    let mut iterator = pollRankings.iter().skip(startingIndex);
-    let mut voteCountsSizes = ByteCounts::new(PAGE_SIZE);
-    let mut pollTypes = ByteCounts::new(PAGE_SIZE);
+    let mut iterator = poll_rankings.iter().skip(starting_index);
+    let mut vote_counts_sizes = ByteCounts::new(PAGE_SIZE);
+    let mut poll_types = ByteCounts::new(PAGE_SIZE);
 
     for x in 0...PAGE_SIZE {
         match iterator.next() {
             None => break,
             Some(voteCount) => {
                 // Get the poll type
-                match voteCount.pollTypeAndTz & 0b00000011 {
+                match voteCount.poll_type_and_tz & 0b00000011 {
                     codes::POLL_TYPE_1D => {
-                        pollTypes.add1();
+                        poll_types.add1();
                     }
                     codes::POLL_TYPE_2D => {
-                        pollTypes.add2();
+                        poll_types.add2();
                     }
                     codes::POLL_TYPE_3D => {
-                        pollTypes.add3();
+                        poll_types.add3();
                     }
                 }
 
-                let pollIdBytes: [u8; 8] = unsafe {
+                let poll_id_bytes: [u8; 8] = unsafe {
                     // Poll Id in the period of a given time zone
-                    std::mem::transmute(*voteCount.pollId);
+                    std::mem::transmute(*voteCount.poll_id);
                 };
                 // TODO: ALWAYS verify Big fs Little Endianness
-                response.extend_from_slice(&pollIdBytes);
+                response.extend_from_slice(&poll_id_bytes);
 
-                let countBytes: [u8; 4] = unsafe {
+                let count_bytes: [u8; 4] = unsafe {
                     std::mem::transmute(*voteCount.count);
                 };
-                if countBytes[0] != 0 {
-                    response.extend_from_slice(&countBytes);
-                    voteCountsSizes.add4();
-                } else if countBytes[1] != 0 {
-                    response.extend_from_slice(&countBytes[1..3]);
-                    voteCountsSizes.add3();
-                } else if countBytes[2] != 0 {
-                    response.extend_from_slice(&countBytes[2..3]);
-                    voteCountsSizes.add2();
+                if count_bytes[0] != 0 {
+                    response.extend_from_slice(&count_bytes);
+                    vote_counts_sizes.add4();
+                } else if count_bytes[1] != 0 {
+                    response.extend_from_slice(&count_bytes[1..3]);
+                    vote_counts_sizes.add3();
+                } else if count_bytes[2] != 0 {
+                    response.extend_from_slice(&count_bytes[2..3]);
+                    vote_counts_sizes.add2();
                 } else {
-                    response.push(countBytes[3]);
-                    voteCountsSizes.add1();
+                    response.push(count_bytes[3]);
+                    vote_counts_sizes.add1();
                 }
             }
         }
     }
-    byteCounts.appendData(response);
-    pollTypes.append(response);
+    vote_counts_sizes.append_data(response);
+    poll_types.append(response);
 
     return response;
 }
 
 #[inline]
-pub fn get7ByteRecentPolls(
-    pollRankings: Vec<VoteCount>,
-    startingIndex: usize,
+pub fn get_7_byte_recent_polls(
+    poll_rankings: Vec<VoteCount>,
+    starting_index: usize,
     mut response: Vec<u8>,
 ) -> Vec<u8> {
-    let mut iterator = pollRankings.iter().skip(startingIndex);
-    let mut voteCountsSizes = ByteCounts::new(PAGE_SIZE);
-    let mut pollTypes = ByteCounts::new(PAGE_SIZE);
+    let mut iterator = poll_rankings.iter().skip(starting_index);
+    let mut vote_counts_sizes = ByteCounts::new(PAGE_SIZE);
+    let mut poll_types = ByteCounts::new(PAGE_SIZE);
 
     for x in 0...PAGE_SIZE {
         match iterator.next() {
             None => break,
             Some(voteCount) => {
                 // Get the poll type
-                match voteCount.pollTypeAndTz & 0b00000011 {
+                match voteCount.poll_type_and_tz & 0b00000011 {
                     codes::POLL_TYPE_1D => {
-                        pollTypes.add1();
+                        poll_types.add1();
                     }
                     codes::POLL_TYPE_2D => {
-                        pollTypes.add2();
+                        poll_types.add2();
                     }
                     codes::POLL_TYPE_3D => {
-                        pollTypes.add3();
+                        poll_types.add3();
                     }
                 }
 
-                let pollIdBytes: [u8; 8] = unsafe {
+                let poll_id_bytes: [u8; 8] = unsafe {
                     // Poll Id in the period of a given time zone
                     std::mem::transmute(*voteCount.tzAndPeriodPollId);
                 };
                 // TODO: ALWAYS verify Big fs Little Endianness
-                response.extend_from_slice(&pollIdBytes[1..7]);
+                response.extend_from_slice(&poll_id_bytes[1..7]);
 
-                let countBytes: [u8; 4] = unsafe {
+                let count_bytes: [u8; 4] = unsafe {
                     std::mem::transmute(*voteCount.count);
                 };
-                if countBytes[0] != 0 {
-                    response.extend_from_slice(&countBytes);
-                    voteCountsSizes.add4();
-                } else if countBytes[1] != 0 {
-                    response.extend_from_slice(&countBytes[1..3]);
-                    voteCountsSizes.add3();
-                } else if countBytes[2] != 0 {
-                    response.extend_from_slice(&countBytes[2..3]);
-                    voteCountsSizes.add2();
+                if count_bytes[0] != 0 {
+                    response.extend_from_slice(&count_bytes);
+                    vote_counts_sizes.add4();
+                } else if count_bytes[1] != 0 {
+                    response.extend_from_slice(&count_bytes[1..3]);
+                    vote_counts_sizes.add3();
+                } else if count_bytes[2] != 0 {
+                    response.extend_from_slice(&count_bytes[2..3]);
+                    vote_counts_sizes.add2();
                 } else {
-                    response.push(countBytes[3]);
-                    voteCountsSizes.add1();
+                    response.push(count_bytes[3]);
+                    vote_counts_sizes.add1();
                 }
             }
         }
     }
-    byteCounts.appendData(response);
-    pollTypes.append(response);
+    vote_counts_sizes.append_data(response);
+    poll_types.append(response);
 
     return response;
 }
 
 #[inline]
-pub fn get6ByteRecentPolls(
-    pollRankings: Vec<VoteCount>,
-    startingIndex: usize,
+pub fn get_6_byte_recent_polls(
+    poll_rankings: Vec<VoteCount>,
+    starting_index: usize,
     mut response: Vec<u8>,
 ) -> Vec<u8> {
-    let mut iterator = pollRankings.iter().skip(startingIndex);
-    let mut voteCountsSizes = ByteCounts::new(PAGE_SIZE);
-    let mut pollTypes = ByteCounts::new(PAGE_SIZE);
+    let mut iterator = poll_rankings.iter().skip(starting_index);
+    let mut vote_counts_sizes = ByteCounts::new(PAGE_SIZE);
+    let mut poll_types = ByteCounts::new(PAGE_SIZE);
 
     for x in 0...PAGE_SIZE {
         match iterator.next() {
             None => break,
             Some(voteCount) => {
                 // Get the poll type
-                match voteCount.pollTypeAndTz & 0b00000011 {
+                match voteCount.poll_type_and_tz & 0b00000011 {
                     codes::POLL_TYPE_1D => {
-                        pollTypes.add1();
+                        poll_types.add1();
                     }
                     codes::POLL_TYPE_2D => {
-                        pollTypes.add2();
+                        poll_types.add2();
                     }
                     codes::POLL_TYPE_3D => {
-                        pollTypes.add3();
+                        poll_types.add3();
                     }
                 }
 
-                let pollIdBytes: [u8; 8] = unsafe {
+                let poll_id_bytes: [u8; 8] = unsafe {
                     // Poll Id in the period of a given time zone
                     std::mem::transmute(*voteCount.tzAndPeriodPollId);
                 };
                 // TODO: ALWAYS verify Big fs Little Endianness
-                response.extend_from_slice(&pollIdBytes[2..7]);
+                response.extend_from_slice(&poll_id_bytes[2..7]);
 
-                let countBytes: [u8; 4] = unsafe {
+                let count_bytes: [u8; 4] = unsafe {
                     std::mem::transmute(*voteCount.count);
                 };
-                if countBytes[0] != 0 {
-                    response.extend_from_slice(&countBytes);
-                    voteCountsSizes.add4();
-                } else if countBytes[1] != 0 {
-                    response.extend_from_slice(&countBytes[1..3]);
-                    voteCountsSizes.add3();
-                } else if countBytes[2] != 0 {
-                    response.extend_from_slice(&countBytes[2..3]);
-                    voteCountsSizes.add2();
+                if count_bytes[0] != 0 {
+                    response.extend_from_slice(&count_bytes);
+                    vote_counts_sizes.add4();
+                } else if count_bytes[1] != 0 {
+                    response.extend_from_slice(&count_bytes[1..3]);
+                    vote_counts_sizes.add3();
+                } else if count_bytes[2] != 0 {
+                    response.extend_from_slice(&count_bytes[2..3]);
+                    vote_counts_sizes.add2();
                 } else {
-                    response.push(countBytes[3]);
-                    voteCountsSizes.add1();
+                    response.push(count_bytes[3]);
+                    vote_counts_sizes.add1();
                 }
             }
         }
     }
-    byteCounts.appendData(response);
-    pollTypes.append(response);
+    vote_counts_sizes.append_data(response);
+    poll_types.append(response);
 
     return response;
 }
 
 #[inline]
-pub fn get5ByteRecentPolls(
-    pollRankings: Vec<VoteCount>,
-    startingIndex: usize,
+pub fn get_5_byte_recent_polls(
+    poll_rankings: Vec<VoteCount>,
+    starting_index: usize,
     mut response: Vec<u8>,
 ) -> Vec<u8> {
-    let mut iterator = pollRankings.iter().skip(startingIndex);
-    let mut voteCountsSizes = ByteCounts::new(PAGE_SIZE);
-    let mut pollTypes = ByteCounts::new(PAGE_SIZE);
+    let mut iterator = poll_rankings.iter().skip(starting_index);
+    let mut vote_counts_sizes = ByteCounts::new(PAGE_SIZE);
+    let mut poll_types = ByteCounts::new(PAGE_SIZE);
 
     for x in 0...PAGE_SIZE {
         match iterator.next() {
             None => break,
             Some(voteCount) => {
                 // Get the poll type
-                match voteCount.pollTypeAndTz & 0b00000011 {
+                match voteCount.poll_type_and_tz & 0b00000011 {
                     codes::POLL_TYPE_1D => {
-                        pollTypes.add1();
+                        poll_types.add1();
                     }
                     codes::POLL_TYPE_2D => {
-                        pollTypes.add2();
+                        poll_types.add2();
                     }
                     codes::POLL_TYPE_3D => {
-                        pollTypes.add3();
+                        poll_types.add3();
                     }
                 }
 
-                let pollIdBytes: [u8; 8] = unsafe {
+                let poll_id_bytes: [u8; 8] = unsafe {
                     // Poll Id in the period of a given time zone
                     std::mem::transmute(*voteCount.tzAndPeriodPollId);
                 };
                 // TODO: ALWAYS verify Big fs Little Endianness
-                response.extend_from_slice(&pollIdBytes[3..7]);
+                response.extend_from_slice(&poll_id_bytes[3..7]);
 
-                let countBytes: [u8; 4] = unsafe {
+                let count_bytes: [u8; 4] = unsafe {
                     std::mem::transmute(*voteCount.count);
                 };
-                if countBytes[0] != 0 {
-                    response.extend_from_slice(&countBytes);
-                    voteCountsSizes.add4();
-                } else if countBytes[1] != 0 {
-                    response.extend_from_slice(&countBytes[1..3]);
-                    voteCountsSizes.add3();
-                } else if countBytes[2] != 0 {
-                    response.extend_from_slice(&countBytes[2..3]);
-                    voteCountsSizes.add2();
+                if count_bytes[0] != 0 {
+                    response.extend_from_slice(&count_bytes);
+                    vote_counts_sizes.add4();
+                } else if count_bytes[1] != 0 {
+                    response.extend_from_slice(&count_bytes[1..3]);
+                    vote_counts_sizes.add3();
+                } else if count_bytes[2] != 0 {
+                    response.extend_from_slice(&count_bytes[2..3]);
+                    vote_counts_sizes.add2();
                 } else {
-                    response.push(countBytes[3]);
-                    voteCountsSizes.add1();
+                    response.push(count_bytes[3]);
+                    vote_counts_sizes.add1();
                 }
             }
         }
     }
-    byteCounts.appendData(response);
-    pollTypes.append(response);
+    vote_counts_sizes.append_data(response);
+    poll_types.append(response);
 
     return response;
 }
 
 #[inline]
-pub fn get4ByteRecentPolls(
-    pollRankings: Vec<VoteCount>,
-    startingIndex: usize,
+pub fn get_4_byte_recent_polls(
+    poll_rankings: Vec<VoteCount>,
+    starting_index: usize,
     mut response: Vec<u8>,
 ) -> Vec<u8> {
-    let mut iterator = pollRankings.iter().skip(startingIndex);
-    let mut voteCountsSizes = ByteCounts::new(PAGE_SIZE);
-    let mut pollTypes = ByteCounts::new(PAGE_SIZE);
+    let mut iterator = poll_rankings.iter().skip(starting_index);
+    let mut vote_counts_sizes = ByteCounts::new(PAGE_SIZE);
+    let mut poll_types = ByteCounts::new(PAGE_SIZE);
 
     for x in 0...PAGE_SIZE {
         match iterator.next() {
             None => break,
             Some(voteCount) => {
                 // Get the poll type
-                match voteCount.pollTypeAndTz & 0b00000011 {
+                match voteCount.poll_type_and_tz & 0b00000011 {
                     codes::POLL_TYPE_1D => {
-                        pollTypes.add1();
+                        poll_types.add1();
                     }
                     codes::POLL_TYPE_2D => {
-                        pollTypes.add2();
+                        poll_types.add2();
                     }
                     codes::POLL_TYPE_3D => {
-                        pollTypes.add3();
+                        poll_types.add3();
                     }
                 }
 
-                let pollIdBytes: [u8; 8] = unsafe {
+                let poll_id_bytes: [u8; 8] = unsafe {
                     // Poll Id in the period of a given time zone
                     std::mem::transmute(*voteCount.tzAndPeriodPollId);
                 };
                 // TODO: ALWAYS verify Big fs Little Endianness
-                response.extend_from_slice(&pollIdBytes[4..7]);
+                response.extend_from_slice(&poll_id_bytes[4..7]);
 
-                let countBytes: [u8; 4] = unsafe {
+                let count_bytes: [u8; 4] = unsafe {
                     std::mem::transmute(*voteCount.count);
                 };
-                if countBytes[0] != 0 {
-                    response.extend_from_slice(&countBytes);
-                    voteCountsSizes.add4();
-                } else if countBytes[1] != 0 {
-                    response.extend_from_slice(&countBytes[1..3]);
-                    voteCountsSizes.add3();
-                } else if countBytes[2] != 0 {
-                    response.extend_from_slice(&countBytes[2..3]);
-                    voteCountsSizes.add2();
+                if count_bytes[0] != 0 {
+                    response.extend_from_slice(&count_bytes);
+                    vote_counts_sizes.add4();
+                } else if count_bytes[1] != 0 {
+                    response.extend_from_slice(&count_bytes[1..3]);
+                    vote_counts_sizes.add3();
+                } else if count_bytes[2] != 0 {
+                    response.extend_from_slice(&count_bytes[2..3]);
+                    vote_counts_sizes.add2();
                 } else {
-                    response.push(countBytes[3]);
-                    voteCountsSizes.add1();
+                    response.push(count_bytes[3]);
+                    vote_counts_sizes.add1();
                 }
             }
         }
     }
-    byteCounts.appendData(response);
-    pollTypes.append(response);
+    vote_counts_sizes.append_data(response);
+    poll_types.append(response);
 
     return response;
 }
 
 #[inline]
-pub fn get3ByteRecentPolls(
-    pollRankings: Vec<VoteCount>,
-    startingIndex: usize,
+pub fn get_3_byte_recent_polls(
+    poll_rankings: Vec<VoteCount>,
+    starting_index: usize,
     mut response: Vec<u8>,
 ) -> Vec<u8> {
-    let mut iterator = pollRankings.iter().skip(startingIndex);
-    let mut voteCountsSizes = ByteCounts::new(PAGE_SIZE);
-    let mut pollTypes = ByteCounts::new(PAGE_SIZE);
+    let mut iterator = poll_rankings.iter().skip(starting_index);
+    let mut vote_counts_sizes = ByteCounts::new(PAGE_SIZE);
+    let mut poll_types = ByteCounts::new(PAGE_SIZE);
 
     for x in 0...PAGE_SIZE {
         match iterator.next() {
             None => break,
             Some(voteCount) => {
                 // Get the poll type
-                match voteCount.pollTypeAndTz & 0b00000011 {
+                match voteCount.poll_type_and_tz & 0b00000011 {
                     codes::POLL_TYPE_1D => {
-                        pollTypes.add1();
+                        poll_types.add1();
                     }
                     codes::POLL_TYPE_2D => {
-                        pollTypes.add2();
+                        poll_types.add2();
                     }
                     codes::POLL_TYPE_3D => {
-                        pollTypes.add3();
+                        poll_types.add3();
                     }
                 }
 
-                let pollIdBytes: [u8; 8] = unsafe {
+                let poll_id_bytes: [u8; 8] = unsafe {
                     // Poll Id in the period of a given time zone
                     std::mem::transmute(*voteCount.tzAndPeriodPollId);
                 };
                 // TODO: ALWAYS verify Big fs Little Endianness
-                response.extend_from_slice(&pollIdBytes[5..7]);
+                response.extend_from_slice(&poll_id_bytes[5..7]);
 
-                let countBytes: [u8; 4] = unsafe {
+                let count_bytes: [u8; 4] = unsafe {
                     std::mem::transmute(*voteCount.count);
                 };
-                if countBytes[0] != 0 {
-                    response.extend_from_slice(&countBytes);
-                    voteCountsSizes.add4();
-                } else if countBytes[1] != 0 {
-                    response.extend_from_slice(&countBytes[1..3]);
-                    voteCountsSizes.add3();
-                } else if countBytes[2] != 0 {
-                    response.extend_from_slice(&countBytes[2..3]);
-                    voteCountsSizes.add2();
+                if count_bytes[0] != 0 {
+                    response.extend_from_slice(&count_bytes);
+                    vote_counts_sizes.add4();
+                } else if count_bytes[1] != 0 {
+                    response.extend_from_slice(&count_bytes[1..3]);
+                    vote_counts_sizes.add3();
+                } else if count_bytes[2] != 0 {
+                    response.extend_from_slice(&count_bytes[2..3]);
+                    vote_counts_sizes.add2();
                 } else {
-                    response.push(countBytes[3]);
-                    voteCountsSizes.add1();
+                    response.push(count_bytes[3]);
+                    vote_counts_sizes.add1();
                 }
             }
         }
     }
-    byteCounts.appendData(response);
-    pollTypes.append(response);
+    vote_counts_sizes.append_data(response);
+    poll_types.append(response);
 
     return response;
 }
 
 #[inline]
-pub fn get2ByteRecentPolls(
-    pollRankings: Vec<VoteCount>,
-    startingIndex: usize,
+pub fn get_2_byte_recent_polls(
+    poll_rankings: Vec<VoteCount>,
+    starting_index: usize,
     mut response: Vec<u8>,
 ) -> Vec<u8> {
-    let mut iterator = pollRankings.iter().skip(startingIndex);
-    let mut voteCountsSizes = ByteCounts::new(PAGE_SIZE);
-    let mut pollTypes = ByteCounts::new(PAGE_SIZE);
+    let mut iterator = poll_rankings.iter().skip(starting_index);
+    let mut vote_counts_sizes = ByteCounts::new(PAGE_SIZE);
+    let mut poll_types = ByteCounts::new(PAGE_SIZE);
 
     for x in 0...PAGE_SIZE {
         match iterator.next() {
             None => break,
             Some(voteCount) => {
                 // Get the poll type
-                match voteCount.pollTypeAndTz & 0b00000011 {
+                match voteCount.poll_type_and_tz & 0b00000011 {
                     codes::POLL_TYPE_1D => {
-                        pollTypes.add1();
+                        poll_types.add1();
                     }
                     codes::POLL_TYPE_2D => {
-                        pollTypes.add2();
+                        poll_types.add2();
                     }
                     codes::POLL_TYPE_3D => {
-                        pollTypes.add3();
+                        poll_types.add3();
                     }
                 }
 
-                let pollIdBytes: [u8; 8] = unsafe {
+                let poll_id_bytes: [u8; 8] = unsafe {
                     // Poll Id in the period of a given time zone
                     std::mem::transmute(*voteCount.tzAndPeriodPollId);
                 };
                 // TODO: ALWAYS verify Big fs Little Endianness
-                response.extend_from_slice(&pollIdBytes[6..7]);
+                response.extend_from_slice(&poll_id_bytes[6..7]);
 
-                let countBytes: [u8; 4] = unsafe {
+                let count_bytes: [u8; 4] = unsafe {
                     std::mem::transmute(*voteCount.count);
                 };
-                if countBytes[0] != 0 {
-                    response.extend_from_slice(&countBytes);
-                    voteCountsSizes.add4();
-                } else if countBytes[1] != 0 {
-                    response.extend_from_slice(&countBytes[1..3]);
-                    voteCountsSizes.add3();
-                } else if countBytes[2] != 0 {
-                    response.extend_from_slice(&countBytes[2..3]);
-                    voteCountsSizes.add2();
+                if count_bytes[0] != 0 {
+                    response.extend_from_slice(&count_bytes);
+                    vote_counts_sizes.add4();
+                } else if count_bytes[1] != 0 {
+                    response.extend_from_slice(&count_bytes[1..3]);
+                    vote_counts_sizes.add3();
+                } else if count_bytes[2] != 0 {
+                    response.extend_from_slice(&count_bytes[2..3]);
+                    vote_counts_sizes.add2();
                 } else {
-                    response.push(countBytes[3]);
-                    voteCountsSizes.add1();
+                    response.push(count_bytes[3]);
+                    vote_counts_sizes.add1();
                 }
             }
         }
     }
-    byteCounts.appendData(response);
-    pollTypes.append(response);
+    vote_counts_sizes.append_data(response);
+    poll_types.append(response);
 
     return response;
 }

@@ -10,54 +10,54 @@ use common::model::types::PollId;
 use common::model::types::WeekId;
 
 pub struct CachePeriodIds {
-    pub dayAfterTomorrowsVcDayId: DayId,
-    pub dayB4YesterdaysVcDayId: DayId,
-    pub thisMonthsVcMonthId: MonthId,
-    pub thisWeeksVcWeekId: WeekId,
-    pub lastMonthsVcMonthId: MonthId,
-    pub lastWeeksVcWeekId: WeekId,
-    pub nextMonthsVcMonthId: WeekId,
-    pub nextWeeksVcWeekId: WeekId,
-    pub todaysVcDayId: DayId,
-    pub tomorrowsVcDayId: DayId,
-    pub yesterdaysVcDayId: DayId,
+    pub day_after_tomorrows_vc_day_id: DayId,
+    pub day_b4_yesterdays_vc_day_id: DayId,
+    pub this_months_vc_month_id: MonthId,
+    pub this_weeks_vc_week_id: WeekId,
+    pub last_months_vc_month_id: MonthId,
+    pub last_weeks_vc_week_id: WeekId,
+    pub next_months_vc_month_id: WeekId,
+    pub next_weeks_vc_week_id: WeekId,
+    pub todays_vc_day_id: DayId,
+    pub tomorrows_vc_day_id: DayId,
+    pub yesterdays_vc_day_id: DayId,
 }
 
 impl CachePeriodIds {
     pub fn new() -> CachePeriodIds {
         // FIXME: implement based on current day (day of creation)
         CachePeriodIds {
-            dayAfterTomorrowsVcDayId: 0,
-            dayB4YesterdaysVcDayId: 0,
-            thisMonthsVcMonthId: 0,
-            thisWeeksVcWeekId: 0,
-            lastMonthsVcMonthId: 0,
-            lastWeeksVcWeekId: 0,
-            nextMonthsVcMonthId: 0,
-            nextWeeksVcWeekId: 0,
-            todaysVcDayId: 0,
-            tomorrowsVcDayId: 0,
-            yesterdaysVcDayId: 0,
-        };
+            day_after_tomorrows_vc_day_id: 0,
+            day_b4_yesterdays_vc_day_id: 0,
+            this_months_vc_month_id: 0,
+            this_weeks_vc_week_id: 0,
+            last_months_vc_month_id: 0,
+            last_weeks_vc_week_id: 0,
+            next_months_vc_month_id: 0,
+            next_weeks_vc_week_id: 0,
+            todays_vc_day_id: 0,
+            tomorrows_vc_day_id: 0,
+            yesterdays_vc_day_id: 0,
+        }
     }
 }
 
 pub struct CategoryPeriodPollRankings {
-    pub maxPollNumberBytes: u32,
-    pub numPollsInPeriod: u32,
-    pub voteCountsByCategoryIndex: Vec<Vec<VoteCount>>,
+    pub max_poll_number_bytes: u32,
+    pub num_polls_in_period: u32,
+    pub vote_counts_by_category_index: Vec<Vec<VoteCount>>,
 }
 
 impl CategoryPeriodPollRankings {
     pub fn new(
-        maxPollNumberBytes: u32,
-        numPollsInPeriod: u32,
-        numCategoriesInPeriod: usize,
+        max_poll_number_bytes: u32,
+        num_polls_in_period: u32,
+        num_categories_in_period: usize,
     ) -> CategoryPeriodPollRankings {
         CategoryPeriodPollRankings {
-            maxPollNumberBytes,
-            numPollsInPeriod,
-            voteCountsByCategoryIndex: Vec::with_capacity(numCategoriesInPeriod),
+            max_poll_number_bytes,
+            num_polls_in_period,
+            vote_counts_by_category_index: Vec::with_capacity(num_categories_in_period),
         }
     }
 }
@@ -68,18 +68,18 @@ impl CategoryPeriodPollRankings {
  *      and a map (by Global Id) of the category indexes for same time period
  */
 pub struct LocationPeriodIds {
-    pub locationCategoryCacheIndexMap: IntHashMap<CategoryId, LocationCategoryCacheIndex>,
-    pub locationCacheIndex: CategoryCacheIndex,
+    pub location_category_cache_index_map: IntHashMap<CategoryId, LocationCategoryCacheIndex>,
+    pub location_cache_index: CategoryCacheIndex,
 }
 
 impl LocationPeriodIds {
     pub fn new(
-        locationIndex: LocationCacheIndex,
-        numCategories: usize,
+        location_cache_index: LocationCacheIndex,
+        num_categories: usize,
     ) -> LocationPeriodIds {
         LocationPeriodIds {
-            locationCacheIndex: locationIndex,
-            locationCategoryCacheIndexMap: IntHashMap::with_capacity(numCategories),
+            location_cache_index,
+            location_category_cache_index_map: IntHashMap::with_capacity(num_categories),
         }
     }
 }
@@ -97,7 +97,7 @@ Split by timezone:
  */
 pub struct LocationPollRankings {
     pub location: Vec<VoteCount>,
-    pub categoryLocations: Vec<Vec<VoteCount>>,
+    pub category_locations: Vec<Vec<VoteCount>>,
 }
 
 /**
@@ -110,7 +110,7 @@ pub struct LocationPollPrependLists {
     pub location: Vec<Vec<PollId>>,
     // Custom fast no rehashing, fast insert datastructure
     // for managing an unknown number of categories in a given location
-    pub categoryLocations: IntHashMap<CategoryId, Vec<Vec<PollId>>>,
+    pub category_locations: IntHashMap<CategoryId, Vec<Vec<PollId>>>,
 }
 
 
@@ -162,8 +162,8 @@ pub struct VoteCount {
     /**
     First 5 bits are for timezone, last 2 for for Type
     */
-    pub pollTypeAndTz: u8,
-    pub pollId: PollId,
+    pub poll_type_and_tz: u8,
+    pub poll_id: PollId,
     pub count: u32,
 }
 
@@ -171,43 +171,43 @@ pub struct VoteCount {
  * Poll sums and counts for a 3 dimensional poll.
  */
 pub struct ThreeDPoll {
-    dim1dir1Over: u8,
-    dim1dir2Over: u8,
-    dim2dir1Over: u8,
-    dim2dir2Over: u8,
-    dim3dir1Over: u8,
-    dim3dir2Over: u8,
-    dim1dir1Sum: u32,
-    dim1dir2Sum: u32,
-    dim2dir1Sum: u32,
-    dim2dir2Sum: u32,
-    dim3dir1Sum: u32,
-    dim3dir2Sum: u32,
-    voteCount: VoteCount,
+    dim_1_dir_1_over: u8,
+    dim_1_dir_2_over: u8,
+    dim_2_dir_1_over: u8,
+    dim_2_dir_2_over: u8,
+    dim_3_dir_1_over: u8,
+    dim_3_dir_2_over: u8,
+    dim_1_dir_1_sum: u32,
+    dim_1_dir_2_sum: u32,
+    dim_2_dir_1_sum: u32,
+    dim_2_dir_2_sum: u32,
+    dim_3_dir_1_sum: u32,
+    dim_3_dir_2_sum: u32,
+    vote_count: VoteCount,
 }
 
 /*
  * Poll sums and counts for a 2 dimensional poll.
  */
 pub struct TwoDPoll {
-    dim1dir1Over: u8,
-    dim1dir2Over: u8,
-    dim2dir1Over: u8,
-    dim2dir2Over: u8,
-    dim1dir1Sum: u32,
-    dim1dir2Sum: u32,
-    dim2dir1Sum: u32,
-    dim2dir2Sum: u32,
-    voteCount: VoteCount,
+    dim_1_dir_1_over: u8,
+    dim_1_dir_2_over: u8,
+    dim_2_dir_1_over: u8,
+    dim_2_dir_2_over: u8,
+    dim_1_dir_1_sum: u32,
+    dim_1_dir_2_sum: u32,
+    dim_2_dir_1_sum: u32,
+    dim_2_dir_2_sum: u32,
+    vote_count: VoteCount,
 }
 
 /*
  * Poll sums and counts for a 1 dimensional poll.
  */
 pub struct OneDPoll {
-    dim1dir1Over: u8,
-    dim1dir2Over: u8,
-    dim1dir1Sum: u32,
-    dim1dir2Sum: u32,
-    voteCount: VoteCount,
+    dim_1_dir_1_over: u8,
+    dim_1_dir_2_over: u8,
+    dim_1_dir_1_sum: u32,
+    dim_1_dir_2_sum: u32,
+    vote_count: VoteCount,
 }

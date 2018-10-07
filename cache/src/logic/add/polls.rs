@@ -1,21 +1,11 @@
 use int_hash::IntHashMap;
 
+use common::model::types::CategoryId;
 use common::model::types::DayId;
 use common::model::types::LocationId;
+use common::model::types::MonthId;
 use common::model::types::PollId;
 use common::model::types::WeekId;
-
-use super::super::super::cache::cache;
-use super::super::super::cache::cache::CategoryId;
-use super::super::super::cache::cache::DayId;
-use super::super::super::cache::cache::LocationId;
-use super::super::super::cache::cache::LocationPollPrependLists;
-use super::super::super::cache::cache::MonthId;
-use super::super::super::cache::cache::PollId;
-use super::super::super::cache::cache::TimezoneId;
-use super::super::super::cache::cache::WeekId;
-
-
 
 /**
  *
@@ -31,34 +21,34 @@ use super::super::super::cache::cache::WeekId;
  *          - not as high
  */
 pub fn add_polls(
-    rawData: &[u8]
+    raw_data: &[u8]
 ) {
 
 }
 
 fn add_day_poll(
-    vcDayId: DayId,
-    globalPollId: PollId,
-    globalLocationId: LocationId,
-    globalCategoryIds: Vec<u64>,
+    vc_day_id: DayId,
+    global_poll_id: PollId,
+    global_location_id: LocationId,
+    global_category_ids: Vec<CategoryId>,
 ) {
 
 }
 
 fn add_week_poll(
-    vcWeekId: WeekId,
-    globalPollId: PollId,
-    globalLocationId: LocationId,
-    globalCategoryIds: Vec<u64>,
+    vc_week_id: WeekId,
+    global_poll_id: PollId,
+    global_location_id: LocationId,
+    global_category_ids: Vec<CategoryId>,
 ) {
 
 }
 
 fn add_month_poll(
-    vcMonthId: MonthId,
-    globalPollId: PollId,
-    globalLocationId: LocationId,
-    globalCategoryIds: Vec<u64>,
+    vc_month_id: MonthId,
+    global_poll_id: PollId,
+    global_location_id: LocationId,
+    global_category_ids: Vec<CategoryId>,
 ) {
 
 }
