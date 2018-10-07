@@ -1,0 +1,16 @@
+[package]
+name = "cache"
+version = "0.1.0"
+authors = ["russoturisto <russoturisto@gmail.com>"]
+
+[dependencies]
+common = { path = "../common" }
+byteorder = "1"
+bytes = "^0"
+int_hash="^0"
+futures = "^0"
+smallvec = "^0"
+tokio = "^0"
+tokio-codec = "^0"
+tokio-core = "^0"
+tokio-io = "^0"

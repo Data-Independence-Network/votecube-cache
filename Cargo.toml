@@ -1,0 +1,11 @@
+[workspace]
+name = "votecube"
+version = "0.1.0"
+authors = ["russoturisto <russoturisto@gmail.com>"]
+
+members = [
+    "cache",
+    "common",
+    "server",
+    "ui"
+]
