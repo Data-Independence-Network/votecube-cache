@@ -1,3 +1,9 @@
+
+use common::model::types::DayId;
+use common::model::types::PollId;
+use common::model::types::MonthId;
+use common::model::types::WeekId;
+
 pub fn add_votes(
     dataStream: &[u8]
 ) {
@@ -5,24 +11,24 @@ pub fn add_votes(
 }
 
 fn add_day_poll_vote(
-    vcDayId: u32,
-    globalPollId: u64,
+    vcDayId: DayId,
+    globalPollId: PollId,
     voteCount: u32
 ) {
 
 }
 
 fn add_week_poll_vote(
-    vcWeekId: u32,
-    globalPollId: u64,
+    vcWeekId: WeekId,
+    globalPollId: PollId,
     voteCount: u32
 ) {
 
 }
 
 fn add_month_poll_vote(
-    vcMonthId: u32,
-    globalPollId: u64,
+    vcMonthId: MonthId,
+    globalPollId: PollId,
     voteCount: u32
 ) {
 

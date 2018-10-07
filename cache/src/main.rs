@@ -8,6 +8,8 @@ extern crate tokio_core;
 extern crate tokio_io;
 extern crate core;
 
+extern crate common;
+
 
 pub mod cache;
 pub mod data;

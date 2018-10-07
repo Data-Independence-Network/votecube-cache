@@ -1,21 +1,21 @@
 use std::mem::transmute;
 use int_hash::IntHashMap;
 
+use common::model::types::CategoryId;
+use common::model::types::CategoryCacheIndex;
+use common::model::types::DayId;
+use common::model::types::LocationId;
+use common::model::types::LocationCacheIndex;
+use common::model::types::LocationCategoryCacheIndex;
+use common::model::types::MonthId;
+use common::model::types::TimezoneId;
+use common::model::types::WeekId;
+
+
 use super::super::super::super::server::codes;
 use super::super::super::super::cache::cache;
-use super::super::super::super::cache::cache::CategoryCacheIndex;
-use super::super::super::super::cache::cache::CategoryId;
-use super::super::super::super::cache::cache::CategoryPollRankings;
-use super::super::super::super::cache::cache::DayId;
-use super::super::super::super::cache::cache::LocationCacheIndex;
-use super::super::super::super::cache::cache::LocationCategoryCacheIndex;
-use super::super::super::super::cache::cache::LocationId;
-use super::super::super::super::cache::cache::LocationPollRankings;
-use super::super::super::super::cache::cache::MonthId;
-use super::super::super::super::cache::cache::TimezoneId;
-use super::super::super::super::cache::cache::VoteCount;
-use super::super::super::super::cache::cache::WeekId;
-use super::super::super::super::cache::cache::LocationPollRankings;
+use super::super::super::super::cache::model::LocationPollRankings;
+use super::super::super::super::cache::model::VoteCount;
 use super::super::super::super::data::byte_counts::ByteCounts;
 
 use super::location_and_loc_category::INITIAL_RESPONSE_VECTOR_SIZE_2_POLL_BYTES;

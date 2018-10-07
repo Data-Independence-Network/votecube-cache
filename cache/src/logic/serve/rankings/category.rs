@@ -1,14 +1,16 @@
 use std::mem::transmute;
 use int_hash::IntHashMap;
 
+use common::model::consts;
+use common::model::types::CategoryId;
+use common::model::types::CategoryCacheIndex;
+use common::model::types::DayId;
+use common::model::types::MonthId;
+use common::model::types::WeekId;
+
+use super::super::super::super::cache::model::VoteCount;
 use super::super::super::super::cache::cache;
-use super::super::super::super::cache::cache::CategoryCacheIndex;
-use super::super::super::super::cache::cache::CategoryId;
 use super::super::super::super::cache::cache::CategoryPeriodPollRankings;
-use super::super::super::super::cache::cache::DayId;
-use super::super::super::super::cache::cache::MonthId;
-use super::super::super::super::cache::cache::VoteCount;
-use super::super::super::super::cache::cache::WeekId;
 use super::super::super::super::server::codes;
 use super::super::super::super::data::byte_counts::ByteCounts;
 

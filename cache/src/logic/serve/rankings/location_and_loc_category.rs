@@ -1,7 +1,7 @@
 use std::mem::transmute;
 
 use super::super::super::super::server::codes;
-use super::super::super::super::cache::cache::VoteCount;
+use super::super::super::super::cache::model::VoteCount;
 use super::super::super::super::data::byte_counts::ByteCounts;
 
 // NOTE: max page size must fin into u16

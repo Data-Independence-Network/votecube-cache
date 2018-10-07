@@ -1,5 +1,9 @@
 use int_hash::IntHashMap;
 
+use common::model::types::DayId;
+use common::model::types::LocationId;
+use common::model::types::PollId;
+use common::model::types::WeekId;
 
 use super::super::super::cache::cache;
 use super::super::super::cache::cache::CategoryId;

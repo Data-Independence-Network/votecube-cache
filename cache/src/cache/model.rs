@@ -1,3 +1,14 @@
+use int_hash::IntHashMap;
+
+use common::model::types::CategoryCacheIndex;
+use common::model::types::CategoryId;
+use common::model::types::DayId;
+use common::model::types::LocationCacheIndex;
+use common::model::types::LocationCategoryCacheIndex;
+use common::model::types::MonthId;
+use common::model::types::PollId;
+use common::model::types::WeekId;
+
 pub struct CachePeriodIds {
     pub dayAfterTomorrowsVcDayId: DayId,
     pub dayB4YesterdaysVcDayId: DayId,

@@ -1,6 +1,20 @@
 use int_hash::IntHashMap;
 
 use common::model::consts::NUM_TIMEZONES;
+use common::model::consts::NUM_TIMEZONES_WITH_GLOBAL_CATEGORY;
+use common::model::types::CategoryCacheIndex;
+use common::model::types::CategoryId;
+use common::model::types::LocationId;
+use common::model::types::PollId;
+
+use super::model::CachePeriodIds;
+use super::model::LocationPeriodIds;
+use super::model::LocationPollPrependLists;
+use super::model::LocationPollRankings;
+use super::model::OneDPoll;
+use super::model::ThreeDPoll;
+use super::model::TwoDPoll;
+use super::model::VoteCount;
 
 /**
  * Global time period ids across timezones, maintained at the same time as data is moved
