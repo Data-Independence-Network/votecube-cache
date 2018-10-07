@@ -40,7 +40,7 @@ pub fn get_tomorrows_location_category_polls(
     );
 }
 
-pub fn get_day_after_tomorrows_category_location_polls(
+pub fn get_day_after_tomorrows_location_category_polls(
     vc_day_id: DayId,
     timezone_id: TimezoneId,
     block_index: u32,
@@ -59,7 +59,7 @@ pub fn get_day_after_tomorrows_category_location_polls(
     );
 }
 
-pub fn get_next_weeks_category_location_polls(
+pub fn get_next_weeks_location_category_polls(
     vc_week_id: WeekId,
     timezone_id: TimezoneId,
     block_index: u32,
@@ -78,7 +78,7 @@ pub fn get_next_weeks_category_location_polls(
     );
 }
 
-pub fn get_next_months_category_location_polls(
+pub fn get_next_months_location_category_polls(
     vc_month_id: MonthId,
     timezone_id: TimezoneId,
     block_index: u32,
