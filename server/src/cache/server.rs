@@ -1,14 +1,22 @@
+use futures::future;
+use futures::Future;
+use net2::TcpBuilder;
+#[cfg(not(windows))]
+use net2::unix::UnixTcpBuilderExt;
+use num_cpus;
 use std::sync::Arc;
 use std::io;
 use std::thread;
+use tokio;
 use tokio::net::{TcpStream, TcpListener};
-use tokio_codec::Framed;
 use tokio::prelude::*;
+use tokio_codec::Framed;
 
-use super::http::Http;
-use super::request::Request;
-use super::codes;
-use super::response::Response;
+
+use super::super::http::Http;
+use super::super::request::Request;
+use super::super::codes;
+use super::super::response::Response;
 
 
 pub trait App {
@@ -52,7 +60,7 @@ impl<T: Context + Send>  Server<T> {
 //        let arc_app = Arc::new(app);
 
         for _ in 0..num_cpus::get() {
-            let arc_app = arc_app.clone();
+//            let arc_app = arc_app.clone();
             threads.push(thread::spawn(move || {
                 let mut runtime = tokio::runtime::current_thread::Runtime::new().unwrap();
 
@@ -70,10 +78,18 @@ impl<T: Context + Send>  Server<T> {
 
                     listener.incoming().for_each(move |socket| {
 //                        process(Arc::clone(&arc_app), socket);
-                        process(socket);
+//                        process(socket);
+                        let framed = Framed::new(socket, Http);
+                        let (tx, rx) = framed.split();
+
+                        let task = tx.send_all(rx.and_then(move |request: Request| {
+                            self.resolve(request)
+                        })).then(|_| future::ok(()));
+
+                        // Spawn the task that handles the connection.
+                        tokio::spawn(task);
                         Ok(())
-                    })
-                        .map_err(|err| eprintln!("accept error = {:?}", err))
+                    }).map_err(|err| eprintln!("accept error = {:?}", err))
                 });
 
                 runtime.spawn(server);
@@ -88,17 +104,17 @@ impl<T: Context + Send>  Server<T> {
         }
 
 //        fn process<T: Context + Send>(app: Arc<Server<T>>, socket: TcpStream) {
-        fn process<T: Context + Send>(socket: TcpStream) {
-            let framed = Framed::new(socket, Http);
-            let (tx, rx) = framed.split();
-
-            let task = tx.send_all(rx.and_then(move |request: Request| {
-                resolve(request)
-            })).then(|_| future::ok(()));
-
-            // Spawn the task that handles the connection.
-            tokio::spawn(task);
-        }
+//        fn process<T: Context + Send>(socket: TcpStream) {
+//            let framed = Framed::new(socket, Http);
+//            let (tx, rx) = framed.split();
+//
+//            let task = tx.send_all(rx.and_then(move |request: Request| {
+//                self.resolve(request)
+//            })).then(|_| future::ok(()));
+//
+//            // Spawn the task that handles the connection.
+//            tokio::spawn(task);
+//        }
     }
 
     #[inline]
