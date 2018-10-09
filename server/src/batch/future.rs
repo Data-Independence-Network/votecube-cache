@@ -1,26 +1,32 @@
 use futures::Async;
 use futures::Future;
+use std::io;
 
-pub struct BatchedFuture {
-    index: usize
+use super::server::App;
+use super::batch::BatchedRequest;
+use super::super::response::Response;
+
+pub struct BatchedFuture<'a, I> {
+    request: &'a BatchedRequest<I>,
 }
 
-impl BatchedFuture {
+impl<I, O> BatchedFuture<I> {
 
     pub fn new(
-        index: usize
-    ) -> BatchedFuture {
+        request: &BatchedRequest<I>
+    ) -> BatchedFuture<I> {
         BatchedFuture {
+            request
         }
     }
 
 }
 
-impl Future for BatchedFuture {
-    type Item = ();
-    type Error = ();
+impl Future for BatchedFuture<I> {
+    type Item = Response;
+    type Error = io::Error;
 
     fn poll(&mut self) -> Result<Async<<Self as Future>::Item>, <Self as Future>::Error> {
-        unimplemented!()
+        Async::Ready(self.request.output)
     }
 }

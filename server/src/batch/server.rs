@@ -8,37 +8,36 @@ use num_cpus;
 use std::sync::Arc;
 use std::io;
 use std::thread;
+use std::time::{Duration, Instant};
 use tokio;
 use tokio::net::{TcpStream, TcpListener};
 use tokio::prelude::*;
+use tokio::timer::Interval;
 use tokio_codec::Framed;
-
 
 use super::super::http::Http;
 use super::super::request::Request;
 use super::super::codes;
 use super::super::response::Response;
 use super::batch::BatchedRequest;
-use super::batch::CURRENT_BATCH;
+use super::batch::BatchedRequestData;
+use super::batch::INCOMING_BATCH;
+use super::future::BatchedFuture;
 
-pub trait App<T> {
+pub trait App<I> {
 
-    fn get_response(
-        &self,
-        path: str,
-        request_body: &[u8],
-    ) -> Vec<u8>;
+    fn preprocess(&self, mut request: Request) -> BatchedRequestData<T>;
 
-    fn preprocess(&self, mut request: Request) -> BatchedRequest<T>;
+    fn process_batch(&mut self, mut batch_in_processing: Vec<BatchedRequest<I>>);
 
 }
 
 /**
  *
- *  Right now a single batch server is assumed to server only one type of request.
- *  This allows for the simplest possible solution, with one OS process per server.
+ *  Right now a single batch app is assumed to app only one type of request.
+ *  This allows for the simplest possible solution, with one OS process per app.
  *  This also allows for very simple up-scaling.  Once a given request is known
- *  to be running too hot for too long, another server can simply be stood up (and
+ *  to be running too hot for too long, another app can simply be stood up (and
  *  added to the load balancer) for that type of request.
  *  This also makes upgrading a bit easier - if code is changed for one type of
  *  request then only that type of request is affected by the upgrade.  All the
@@ -59,139 +58,100 @@ pub trait App<T> {
  *
  *
  */
-pub struct Server<T: 'static + Context + Send> {
-
-    app: &'static App<T>,
+pub struct Server<I: 'static + Context + Send> {
+    app: &'static App<I>,
 }
 
-impl<T: Context + Send>  Server<T> {
+impl<T: Context + Send> Server<I> {
 
-    pub fn new (app: &App<T>) -> Server<T> {
+    pub fn new(app: &App<I>) -> Server<I> {
         Server {
             app
         }
     }
 
-    ///
-    /// Starts the app with a thread pool optimized for small requests and quick timeouts. This
-    /// is done internally by spawning a separate thread for each reactor core. This is valuable
-    /// if all server endpoints are similar in their load, as work is divided evenly among threads.
-    /// As seanmonstar points out though, this is a very specific use case and might not be useful
-    /// for everyday work loads.alloc
-    ///
-    /// See the discussion here for more information:
-    ///
-    /// https://users.rust-lang.org/t/getting-tokio-to-match-actix-web-performance/18659/7
-    ///
     pub fn start_single_threaded(mut self, host: &str, port: u16) {
         let addr = (host, port).to_socket_addrs().unwrap().next().unwrap();
-//        let mut threads = Vec::new();
-//        app._route_parser.optimize();
-//        let arc_app = Arc::new(app);
 
-//        for _ in 0..num_cpus::get() {
-//            let arc_app = arc_app.clone();
-            let thread = thread::spawn(move || {
-                let mut runtime = tokio::runtime::current_thread::Runtime::new().unwrap();
+        let thread = thread::spawn(move || {
+            let mut runtime = tokio::runtime::current_thread::Runtime::new().unwrap();
 
-                let server = future::lazy(move || {
-                    let listener = {
-                        let builder = TcpBuilder::new_v4().unwrap();
-                        #[cfg(not(windows))]
-                            builder.reuse_address(true).unwrap();
-                        #[cfg(not(windows))]
-                            builder.reuse_port(true).unwrap();
-                        builder.bind(addr).unwrap();
-                        builder.listen(2048).unwrap()
-                    };
-                    let listener = TcpListener::from_std(listener, &tokio::reactor::Handle::current()).unwrap();
+            let server = future::lazy(move || {
+                let listener = {
+                    let builder = TcpBuilder::new_v4().unwrap();
+                    #[cfg(not(windows))]
+                        builder.reuse_address(true).unwrap();
+                    #[cfg(not(windows))]
+                        builder.reuse_port(true).unwrap();
+                    builder.bind(addr).unwrap();
+                    builder.listen(2048).unwrap()
+                };
+                let listener = TcpListener::from_std(listener, &tokio::reactor::Handle::current()).unwrap();
 
-                    listener.incoming().for_each(move |socket| {
-//                        process(Arc::clone(&arc_app), socket);
-//                        process(socket);
-                        let framed = Framed::new(socket, Http);
-                        let (tx, rx) = framed.split();
+                listener.incoming().for_each(move |socket| {
+                    let framed = Framed::new(socket, Http);
+                    let (tx, rx) = framed.split();
 
-                        let task = tx.send_all(rx.and_then(move |request: Request| {
-                            self.resolve(request)
-                        })).then(|_| future::ok(()));
+                    let task = tx.send_all(rx.and_then(move |request: Request| {
+                        self.resolve(request)
+                    })).then(|_| future::ok(()));
 
-                        // Spawn the task that handles the connection.
-                        tokio::spawn(task);
-                        Ok(())
-                    }).map_err(|err| eprintln!("accept error = {:?}", err))
-                });
-
-                runtime.spawn(server);
-                runtime.run().unwrap();
+                    // Spawn the task that handles the connection.
+                    tokio::spawn(task);
+                    Ok(())
+                }).map_err(|err| eprintln!("accept error = {:?}", err))
             });
-//        }
+
+            runtime.spawn(server);
+            runtime.run().unwrap();
+        });
 
         println!("Server running on {}", addr);
 
-//        for thread in threads {
-            thread.join().unwrap();
-//        }
+        thread.join().unwrap();
 
-        //        fn process<T: Context + Send>(app: Arc<Server<T>>, socket: TcpStream) {
-//        fn process<T: Context + Send>(socket: TcpStream) {
-//            let framed = Framed::new(socket, Http);
-//            let (tx, rx) = framed.split();
-//
-//            let task = tx.send_all(rx.and_then(move |request: Request| {
-//                resolve(request)
-//            })).then(|_| future::ok(()));
-//
-//            // Spawn the task that handles the connection.
-//            tokio::spawn(task);
-//        }
-    }
+        // Setup the batching process
+        let task
+        = Interval::new(Instant::now(), Duration::from_millis(2000))
+            .for_each(|instant| {
+                println!("fire; instant={:?}", instant);
 
-    #[inline]
-    fn get_response(&self, request: &Request) -> Response {
-        let mut response = Response::new();
+                let batch_in_processing: Vec<BatchedRequest<I>> = INCOMING_BATCH;
 
-        if request.method() != "PUT" {
-            response.body_vec(codes::INVALID_DATA_FORMAT_RESPONSE);
-            return response;
-        }
+                INCOMING_BATCH = Vec::with_capacity(2048);
 
-        let path = request.path().as_ref();
-        let request_body = request.raw_body();
+                self.app.process_batch(batch_in_processing);
 
-        let data = self.app.get_response(path, request_body);
+                for batchRequest in &batch_in_processing {
+                    batchRequest.task.notify();
+                }
 
-        response.body_vec(data);
+                Ok(())
+            })
+            .map_err(|e| panic!("interval errored; err={:?}", e));
 
-        response
+        // Start the batching process
+        tokio::run(task);
     }
 
     /// Resolves a request, returning a future that is processable into a Response
-
     fn resolve(&self, mut request: Request) -> impl Future<Item=Response, Error=io::Error> + Send {
-//        let response = self.get_response(&request);
-//        request.set_params(matched_route.params);
-
-//        let context = (self.context_generator)(request);
-//        let return_value = Box::new(future::ok(context));
-
-//        return_value
-//            .and_then(|context| {
-
         let data = self.app.preprocess(request);
 
-        if data.is
+        if data.is_not_valid {
+            return future::ok(data.output);
+        }
 
-//
-
-        // Park the request until the batch job timer wakes up
-        CURRENT_BATCH.push(BatchedRequest {
-            data: self.app.preprocess(request),
+        let request = BatchedRequest {
+            input: data.input,
+            // Park the request until the batch job timer wakes up
+            // Should work as park and suspend the task
             task: task::current(),
-        });
+            output: data.output,
+        };
 
-        future::ok(response)
-//            })
+        INCOMING_BATCH.push(request);
+
+        BatchedFuture::new(request)
     }
-
 }

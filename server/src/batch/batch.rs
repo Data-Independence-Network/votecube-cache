@@ -1,15 +1,18 @@
 use futures::task;
 use futures::task::Task;
 
-pub static mut PROCESSING_BATCH: Vec<BatchRequest> = Vec::new();
-pub static mut INCOMING_BATCH: Vec<BatchRequest> = Vec::new();
+use super::super::response::Response;
 
-pub struct BatchRequestData<T> {
-    isValid: boolean,
-    input: T
+pub static mut INCOMING_BATCH: Vec<BatchRequest> = Vec::with_capacity(2048);
+
+pub struct BatchedRequestData<I> {
+    pub input: I,
+    pub is_not_valid: boolean,
+    pub output: Response,
 }
 
-pub struct BatchedRequest<T> {
-    input: T,
-    task: Task,
+pub struct BatchedRequest<I> {
+    pub input: I,
+    pub output: Response,
+    pub task: Task,
 }

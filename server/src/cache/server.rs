@@ -45,7 +45,7 @@ impl<T: Context + Send>  Server<T> {
     ///
     /// Starts the app with a thread pool optimized for small requests and quick timeouts. This
     /// is done internally by spawning a separate thread for each reactor core. This is valuable
-    /// if all server endpoints are similar in their load, as work is divided evenly among threads.
+    /// if all app endpoints are similar in their load, as work is divided evenly among threads.
     /// As seanmonstar points out though, this is a very specific use case and might not be useful
     /// for everyday work loads.alloc
     ///

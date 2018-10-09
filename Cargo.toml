@@ -6,6 +6,6 @@ authors = ["russoturisto <russoturisto@gmail.com>"]
 members = [
     "cache",
     "common",
-    "server",
+    "app",
     "ui"
 ]

@@ -10,9 +10,13 @@ extern crate server;
 pub mod cache;
 pub mod data;
 pub mod logic;
-pub mod server;
+pub mod app;
 
-use server::app::App;
+use server::
+
+use app::app::App;
+
+
 
 fn main() {
     println!("Hello, world!");
