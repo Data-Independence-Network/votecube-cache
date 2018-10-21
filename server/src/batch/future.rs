@@ -22,7 +22,7 @@ impl<I, O> BatchedFuture<I> {
 
 }
 
-impl Future for BatchedFuture<I> {
+impl<I, O> Future for BatchedFuture<I> {
     type Item = Response;
     type Error = io::Error;
 

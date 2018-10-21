@@ -16,6 +16,7 @@ extern crate common;
 pub mod batch;
 pub mod cache;
 pub mod codes;
+pub mod context;
 pub mod http;
 pub mod read;
 pub mod request;

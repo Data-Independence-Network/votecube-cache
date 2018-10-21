@@ -1,3 +1,4 @@
+use context::Context;
 use futures::Future;
 use futures::future;
 use futures::task;
@@ -21,7 +22,7 @@ use super::super::codes;
 use super::super::response::Response;
 use super::batch::BatchedRequest;
 use super::batch::BatchedRequestData;
-use super::batch::INCOMING_BATCH;
+// use super::batch::INCOMING_BATCH;
 use super::future::BatchedFuture;
 
 pub trait App<I> {
@@ -29,6 +30,10 @@ pub trait App<I> {
     fn preprocess(&self, mut request: Request) -> BatchedRequestData<I>;
 
     fn process_batch(&mut self, mut batch_in_processing: Vec<BatchedRequest<I>>);
+
+    fn get_incoming_batch(&mut self) -> &mut Vec<BatchedRequest<I>>;
+
+    fn set_incoming_batch(&mut self, mut new_incoming_batch: Vec<BatchedRequest<I>>);
 
 }
 

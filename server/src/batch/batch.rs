@@ -3,7 +3,7 @@ use futures::task::Task;
 
 use super::super::response::Response;
 
-pub static mut INCOMING_BATCH: Vec<BatchedRequest<I>> = Vec::with_capacity(2048);
+// pub static mut INCOMING_BATCH: Vec<BatchedRequest<I>> = Vec::with_capacity(2048);
 
 pub struct BatchedRequestData<I> {
     pub input: I,
