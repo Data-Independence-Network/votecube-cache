@@ -12,16 +12,18 @@ pub mod data;
 pub mod logic;
 pub mod app;
 
-use server::
+use server::cache::server::Server;
 
-use app::app::App;
-
-
+use app::App;
 
 fn main() {
     println!("Hello, world!");
 
     let test: Vec<u32> = Vec::with_capacity(4);
 
-    App::start_small_load_optimized(app, "0.0.0.0", 4321);
+    let app: App = App::new();
+
+    let server: Server = Server::new();
+
+    server::start_small_load_optimized(app, "0.0.0.0", 4321);
 }

@@ -1,10 +1,11 @@
 [package]
-name = "cache"
+name = "vc-cache-all"
 version = "0.1.0"
 authors = ["russoturisto <russoturisto@gmail.com>"]
 
 [dependencies]
 common = { path = "../common" }
+server = { path = "../server" }
 byteorder = "1"
 bytes = "^0"
 int_hash="^0"

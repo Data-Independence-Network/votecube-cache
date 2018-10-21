@@ -4,8 +4,8 @@ version = "0.1.0"
 authors = ["russoturisto <russoturisto@gmail.com>"]
 
 members = [
+    "batch/auth/google",
     "cache",
     "common",
-    "app",
-    "ui"
+    "server"
 ]

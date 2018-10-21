@@ -1,5 +1,8 @@
 extern crate byteorder;
+extern crate bytes;
 extern crate futures;
+extern crate httparse;
+extern crate http as httplib;
 extern crate net2;
 extern crate num_cpus;
 extern crate smallvec;

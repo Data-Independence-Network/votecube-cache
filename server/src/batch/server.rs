@@ -26,7 +26,7 @@ use super::future::BatchedFuture;
 
 pub trait App<I> {
 
-    fn preprocess(&self, mut request: Request) -> BatchedRequestData<T>;
+    fn preprocess(&self, mut request: Request) -> BatchedRequestData<I>;
 
     fn process_batch(&mut self, mut batch_in_processing: Vec<BatchedRequest<I>>);
 
@@ -34,11 +34,11 @@ pub trait App<I> {
 
 /**
  *
- *  Right now a single batch app is assumed to app only one type of request.
- *  This allows for the simplest possible solution, with one OS process per app.
+ *  Right now a single batch service is assumed to server only one type of request.
+ *  This allows for the simplest possible solution, with one OS process per service.
  *  This also allows for very simple up-scaling.  Once a given request is known
- *  to be running too hot for too long, another app can simply be stood up (and
- *  added to the load balancer) for that type of request.
+ *  to be running too hot for too long, another service instance can simply be stood
+ *  up (and added to the load balancer) for that type of request.
  *  This also makes upgrading a bit easier - if code is changed for one type of
  *  request then only that type of request is affected by the upgrade.  All the
  *  rest of the services can continue running without any interruption.
@@ -111,8 +111,7 @@ impl<T: Context + Send> Server<I> {
         thread.join().unwrap();
 
         // Setup the batching process
-        let task
-        = Interval::new(Instant::now(), Duration::from_millis(2000))
+        let task = Interval::new(Instant::now(), Duration::from_millis(2000))
             .for_each(|instant| {
                 println!("fire; instant={:?}", instant);
 
@@ -154,4 +153,5 @@ impl<T: Context + Send> Server<I> {
 
         BatchedFuture::new(request)
     }
+    
 }

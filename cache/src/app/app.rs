@@ -40,6 +40,10 @@ pub struct App<T: 'static + Context + Send> {
 
 impl<T: Context + Send> App<T> {
 
+    fn new() -> App {
+        App {}
+    }
+
     fn get_response_internal(
         &self,
         path: str,
