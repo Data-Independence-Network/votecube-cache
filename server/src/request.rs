@@ -16,7 +16,7 @@ pub struct Request {
     version: u8,
     // TODO: use a small vec to avoid this unconditional allocation
     pub headers: SmallVec<[(Slice, Slice); 8]>,
-//    data: BytesMut,
+    data: BytesMut,
 //    pub params: HashMap<String, String>
 }
 
@@ -30,7 +30,7 @@ impl Request {
         path: (0,0),
         version: 0,
         headers: SmallVec::new(),
-//        data: BytesMut::new(),
+        data: BytesMut::new(),
 //        params: HashMap::new(),
       }
     }
@@ -70,17 +70,17 @@ impl Request {
 //        serde_json::from_str(body)
 //    }
 
-//    fn slice(&self, slice: &Slice) -> &[u8] {
-//        &self.data[slice.0..slice.1]
-//    }
+   fn slice(&self, slice: &Slice) -> &[u8] {
+       &self.data[slice.0..slice.1]
+   }
 
-    pub fn params(&self) -> &HashMap<String, String> {
-        &self.params
-    }
+    // pub fn params(&self) -> &HashMap<String, String> {
+    //     &self.params
+    // }
 
-    pub fn set_params(&mut self, params: HashMap<String, String>) {
-        self.params = params;
-    }
+    // pub fn set_params(&mut self, params: HashMap<String, String>) {
+    //     self.params = params;
+    // }
 }
 
 impl fmt::Debug for Request {
@@ -136,7 +136,7 @@ pub fn decode(buf: &mut BytesMut) -> io::Result<Option<Request>> {
         path: path,
         version: version,
         headers: headers,
-//        data: buf.split_to(amt + body_len),
+        data: buf.split_to(amt + body_len),
         body: (amt, amt + body_len),
 //        params: HashMap::new()
     }.into())

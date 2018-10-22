@@ -6,6 +6,7 @@ use net2::unix::UnixTcpBuilderExt;
 use num_cpus;
 // use std::sync::Arc;
 use std::io;
+use std::net::ToSocketAddrs;
 use std::thread;
 use tokio;
 use tokio::net::{TcpListener};
@@ -31,6 +32,48 @@ pub trait App {
 
 }
 
+pub struct Runner {
+    app: &'static App,
+}
+
+impl Runner {
+
+    /// Resolves a request, returning a future that is processable into a Response
+
+    fn resolve(&self, mut request: Request) -> impl Future<Item=Response, Error=io::Error> + Send {
+        let response = self.get_response(&request);
+//        request.set_params(matched_route.params);
+
+//        let context = (self.context_generator)(request);
+//        let return_value = Box::new(future::ok(context));
+
+//        return_value
+//            .and_then(|context| {
+//
+        future::ok(response)
+//            })
+    }
+    
+    #[inline]
+    fn get_response(&self, request: &Request) -> Response {
+        let mut response = Response::new();
+
+        if request.method() != "PUT" {
+            response.body_vec(codes::INVALID_DATA_FORMAT_RESPONSE);
+            return response;
+        }
+
+        let path = request.path().as_ref();
+        let request_body = request.raw_body();
+
+        let data = self.app.get_response(*path, request_body);
+
+        response.body_vec(data);
+
+        response
+    }
+}
+
 pub struct Server {
 
     app: &'static App,
@@ -39,6 +82,9 @@ pub struct Server {
 impl Server {
 
     pub fn new (app: &'static App) -> Server {
+
+        
+
         Server {
             app
         }
@@ -55,11 +101,11 @@ impl Server {
     ///
     /// https://users.rust-lang.org/t/getting-tokio-to-match-actix-web-performance/18659/7
     ///
-    pub fn start_small_load_optimized(mut self, host: &str, port: u16) {
+    pub fn start_small_load_optimized(mut self, mut resolver: Runner, host: &str, port: u16) {
         let addr = (host, port).to_socket_addrs().unwrap().next().unwrap();
         let mut threads = Vec::new();
 //        app._route_parser.optimize();
-//        let arc_app = Arc::new(app);
+       let arc_app = Arc::new(app);
 
         for _ in 0..num_cpus::get() {
 //            let arc_app = arc_app.clone();
@@ -91,7 +137,8 @@ impl Server {
                         // Spawn the task that handles the connection.
                         tokio::spawn(task);
                         Ok(())
-                    }).map_err(|err| eprintln!("accept error = {:?}", err))
+                    })
+                    .map_err(|err| eprintln!("accept error = {:?}", err))
                 });
 
                 runtime.spawn(server);

@@ -7,6 +7,7 @@ use net2::unix::UnixTcpBuilderExt;
 // use num_cpus;
 // use std::sync::Arc;
 use std::io;
+use std::net::ToSocketAddrs;
 use std::thread;
 use std::time::{Duration, Instant};
 use tokio;
@@ -25,12 +26,13 @@ use super::batch::BatchedRequest;
 use super::batch::BatchedRequestData;
 // use super::batch::INCOMING_BATCH;
 use super::future::BatchedFuture;
+use super::future::MiddlewareReturnValue;
 
-pub trait App<I> {
+pub trait App<'b, T> {
 
-    fn preprocess(&self, request: Request) -> BatchedRequestData<I>;
+    fn preprocess(&self, request: &'b Request) -> BatchedRequestData<T>;
 
-    fn process_batch(&mut self, batch_in_processing: Vec<BatchedRequest<I>>);
+    fn process_batch(&mut self, batch_in_processing: &'b Vec<&'b BatchedRequest<T>>);
 
 }
 
@@ -60,18 +62,18 @@ pub trait App<I> {
  *
  *
  */
-pub struct Server<T: 'static + Context + Send> {
-    app: &'static App<T>,
-    incoming_batch: &'static Vec<BatchedRequest<T>>,
+pub struct Server<'b, T: 'b + Context + Send + Sync> {
+    app: &'b App<'b, T>,
+    incoming_batch: Vec<&'b BatchedRequest<'b, T>>,
 }
 
-impl<T: 'static + Context + Send> Server<T> {
+impl<'a, 'b, T: 'b + Context + Send + Sync> Server<'b, T> {
 
-    pub fn new(app: &'static App<T>) -> Server<T> {
+    pub fn new(app: &'static App<'b, T>) -> Server<'b, T> {
         let incoming_batch = Vec::with_capacity(2048);
         Server {
             app,
-            incoming_batch: &incoming_batch
+            incoming_batch
         }
     }
 
@@ -120,13 +122,11 @@ impl<T: 'static + Context + Send> Server<T> {
             .for_each(|instant| {
                 println!("fire; instant={:?}", instant);
 
-                let batch_in_processing: Vec<BatchedRequest<T>> = *self.incoming_batch;
+                let batch_in_processing: Vec<&'b BatchedRequest<T>> = self.incoming_batch;
 
-                let incoming_batch = Vec::with_capacity(2048);
+                self.incoming_batch = Vec::with_capacity(2048);
 
-                self.incoming_batch = &incoming_batch; 
-
-                self.app.process_batch(batch_in_processing);
+                self.app.process_batch(&batch_in_processing);
 
                 for batchRequest in &batch_in_processing {
                     batchRequest.task.notify();
@@ -140,29 +140,43 @@ impl<T: 'static + Context + Send> Server<T> {
         tokio::run(task);
     }
 
+    pub fn next(&self, batchedFuture: BatchedFuture<'static, 'static, T>) -> MiddlewareReturnValue<Response> {
+      Box::new(batchedFuture)
+    }
+
     /// Resolves a request, returning a future that is processable into a Response
-    fn resolve(&mut self, mut request: Request) -> impl Future<Item=Response, Error=io::Error> + Send {
-        let data = self.app.preprocess(request);
+    pub fn resolve(&self, mut request: Request) -> impl Future<Item=Response, Error=io::Error> + Send {
+        let data = self.app.preprocess(&request);
 
         if data.is_not_valid {
-            return future::ok(data.output);
+            return future::ok(*data.output);
         }
 
         let request = BatchedRequest {
             input: data.input,
             // Park the request until the batch job timer wakes up
             // Should work as park and suspend the task
-            task: task::current(),
+            task: &task::current(),
             output: data.output,
         };
 
-        self.incoming_batch.push(request);
+        self.incoming_batch.push(&request);
 
-        let request_reference: &mut BatchedRequest<T> = &mut request;
+        // let request_reference: &'a mut BatchedRequest<'b, T> = &mut request;
 
-        BatchedFuture::new(request).and_then(|response| {
-            future::ok(response)
-        })
+        // let future = BatchedFuture {
+        //     request: request_reference
+        // };
+
+        // let boxed_future: MiddlewareReturnValue<Response> = self.next(future);
+
+        // future.and_then(|_| {
+            future::ok(*data.output)
+        // })
+
+        // boxed_future.and_then(|response| {
+        //     future::ok(response)
+        // })
     }
     
 }
