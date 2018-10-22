@@ -1,5 +1,6 @@
 use futures::Async;
 use futures::Future;
+use futures::Poll;
 use std::io;
 
 // use super::server::App;
@@ -26,7 +27,7 @@ impl<'a, 'b, I> Future for BatchedFuture<'a, 'b, I> {
     type Item = Response;
     type Error = io::Error;
 
-    fn poll(&mut self) -> Result<Async<<Self as Future>::Item>, <Self as Future>::Error> {
+    fn poll(&mut self) -> Poll<Self::Item, Self::Error> {
         Ok(Async::Ready(self.request.output))
     }
 }

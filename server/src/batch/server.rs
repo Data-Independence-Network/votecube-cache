@@ -158,8 +158,10 @@ impl<T: 'static + Context + Send> Server<T> {
 
         self.incoming_batch.push(request);
 
-        BatchedFuture::new(&mut request).and_then(|context| {
-            future::ok(context.get_response())
+        let request_reference: &mut BatchedRequest<T> = &mut request;
+
+        BatchedFuture::new(request).and_then(|response| {
+            future::ok(response)
         })
     }
     
