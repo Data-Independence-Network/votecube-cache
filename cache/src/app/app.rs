@@ -30,11 +30,11 @@ use super::super::logic::serve::recent::location_category::get_tomorrows_locatio
 
 pub struct App<T: 'static + Context + Send> {
     //    pub _route_parser: RouteParser<T>,
-    ///
-    /// Generate context is common to all `App`s. It's the function that's called upon receiving a request
-    /// that translates an acutal `Request` struct to your custom Context type. It should be noted that
-    /// the context_generator should be as fast as possible as this is called with every request, including
-    /// 404s.
+    //
+    // Generate context is common to all `App`s. It's the function that's called upon receiving a request
+    // that translates an acutal `Request` struct to your custom Context type. It should be noted that
+    // the context_generator should be as fast as possible as this is called with every request, including
+    // 404s.
 //    pub context_generator: fn(Request) -> T
 }
 

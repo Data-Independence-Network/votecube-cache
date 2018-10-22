@@ -1,7 +1,7 @@
 [workspace]
-name = "votecube"
-version = "0.1.0"
-authors = ["russoturisto <russoturisto@gmail.com>"]
+#name = "votecube"
+#version = "0.1.0"
+#authors = ["russoturisto <russoturisto@gmail.com>"]
 
 members = [
     "batch/auth/google",

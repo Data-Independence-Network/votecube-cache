@@ -1,24 +1,25 @@
-use context::Context;
 use futures::Future;
 use futures::future;
 use futures::task;
 use net2::TcpBuilder;
 #[cfg(not(windows))]
 use net2::unix::UnixTcpBuilderExt;
-use num_cpus;
-use std::sync::Arc;
+// use num_cpus;
+// use std::sync::Arc;
 use std::io;
 use std::thread;
 use std::time::{Duration, Instant};
 use tokio;
-use tokio::net::{TcpStream, TcpListener};
+use tokio::net::{TcpListener};
+// use tokio::net::{TcpStream, TcpListener};
 use tokio::prelude::*;
 use tokio::timer::Interval;
 use tokio_codec::Framed;
 
+use super::super::context::Context;
 use super::super::http::Http;
 use super::super::request::Request;
-use super::super::codes;
+// use super::super::codes;
 use super::super::response::Response;
 use super::batch::BatchedRequest;
 use super::batch::BatchedRequestData;
@@ -27,13 +28,9 @@ use super::future::BatchedFuture;
 
 pub trait App<I> {
 
-    fn preprocess(&self, mut request: Request) -> BatchedRequestData<I>;
+    fn preprocess(&self, request: Request) -> BatchedRequestData<I>;
 
-    fn process_batch(&mut self, mut batch_in_processing: Vec<BatchedRequest<I>>);
-
-    fn get_incoming_batch(&mut self) -> &mut Vec<BatchedRequest<I>>;
-
-    fn set_incoming_batch(&mut self, mut new_incoming_batch: Vec<BatchedRequest<I>>);
+    fn process_batch(&mut self, batch_in_processing: Vec<BatchedRequest<I>>);
 
 }
 
@@ -63,15 +60,18 @@ pub trait App<I> {
  *
  *
  */
-pub struct Server<I: 'static + Context + Send> {
-    app: &'static App<I>,
+pub struct Server<T: 'static + Context + Send> {
+    app: &'static App<T>,
+    incoming_batch: &'static Vec<BatchedRequest<T>>,
 }
 
-impl<T: Context + Send> Server<I> {
+impl<T: 'static + Context + Send> Server<T> {
 
-    pub fn new(app: &App<I>) -> Server<I> {
+    pub fn new(app: &'static App<T>) -> Server<T> {
+        let incoming_batch = Vec::with_capacity(2048);
         Server {
-            app
+            app,
+            incoming_batch: &incoming_batch
         }
     }
 
@@ -120,9 +120,11 @@ impl<T: Context + Send> Server<I> {
             .for_each(|instant| {
                 println!("fire; instant={:?}", instant);
 
-                let batch_in_processing: Vec<BatchedRequest<I>> = INCOMING_BATCH;
+                let batch_in_processing: Vec<BatchedRequest<T>> = *self.incoming_batch;
 
-                INCOMING_BATCH = Vec::with_capacity(2048);
+                let incoming_batch = Vec::with_capacity(2048);
+
+                self.incoming_batch = &incoming_batch; 
 
                 self.app.process_batch(batch_in_processing);
 
@@ -139,7 +141,7 @@ impl<T: Context + Send> Server<I> {
     }
 
     /// Resolves a request, returning a future that is processable into a Response
-    fn resolve(&self, mut request: Request) -> impl Future<Item=Response, Error=io::Error> + Send {
+    fn resolve(&mut self, mut request: Request) -> impl Future<Item=Response, Error=io::Error> + Send {
         let data = self.app.preprocess(request);
 
         if data.is_not_valid {
@@ -154,9 +156,11 @@ impl<T: Context + Send> Server<I> {
             output: data.output,
         };
 
-        INCOMING_BATCH.push(request);
+        self.incoming_batch.push(request);
 
-        BatchedFuture::new(request)
+        BatchedFuture::new(&mut request).and_then(|context| {
+            future::ok(context.get_response())
+        })
     }
     
 }

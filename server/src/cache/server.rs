@@ -4,15 +4,17 @@ use net2::TcpBuilder;
 #[cfg(not(windows))]
 use net2::unix::UnixTcpBuilderExt;
 use num_cpus;
-use std::sync::Arc;
+// use std::sync::Arc;
 use std::io;
 use std::thread;
 use tokio;
-use tokio::net::{TcpStream, TcpListener};
+use tokio::net::{TcpListener};
+// use tokio::net::{TcpStream, TcpListener};
 use tokio::prelude::*;
 use tokio_codec::Framed;
 
 
+use super::super::context::Context;
 use super::super::http::Http;
 use super::super::request::Request;
 use super::super::codes;
@@ -29,14 +31,14 @@ pub trait App {
 
 }
 
-pub struct Server<T: 'static + Context + Send> {
+pub struct Server {
 
     app: &'static App,
 }
 
-impl<T: Context + Send>  Server<T> {
+impl Server {
 
-    pub fn new (app: &App) -> Server<T> {
+    pub fn new (app: &'static App) -> Server {
         Server {
             app
         }
@@ -129,7 +131,7 @@ impl<T: Context + Send>  Server<T> {
         let path = request.path().as_ref();
         let request_body = request.raw_body();
 
-        let data = self.app.get_response(path, request_body);
+        let data = self.app.get_response(*path, request_body);
 
         response.body_vec(data);
 

@@ -2,27 +2,27 @@ use std::io::Cursor;
 use byteorder::{BigEndian, ReadBytesExt};
 
 #[inline]
-fn wrong_request_length_12(request_body: &[u8]) -> boolean {
+fn wrong_request_length_12(request_body: &[u8]) -> bool {
     request_body.len() != 12
 }
 
 #[inline]
-fn wrong_request_length_16(request_body: &[u8]) -> boolean {
+fn wrong_request_length_16(request_body: &[u8]) -> bool {
     request_body.len() != 16
 }
 
 #[inline]
-fn wrong_request_length_20(request_body: &[u8]) -> boolean {
+fn wrong_request_length_20(request_body: &[u8]) -> bool {
     request_body.len() != 20
 }
 
 #[inline]
-fn wrong_request_length_24(request_body: &[u8]) -> boolean {
+fn wrong_request_length_24(request_body: &[u8]) -> bool {
     request_body.len() != 24
 }
 
 #[inline]
-fn wrong_request_length_28(request_body: &[u8]) -> boolean {
+fn wrong_request_length_28(request_body: &[u8]) -> bool {
     request_body.len() != 28
 }
 
