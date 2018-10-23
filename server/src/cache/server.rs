@@ -4,13 +4,12 @@ use net2::TcpBuilder;
 #[cfg(not(windows))]
 use net2::unix::UnixTcpBuilderExt;
 use num_cpus;
-// use std::sync::Arc;
 use std::io;
 use std::net::ToSocketAddrs;
-use std::thread;
+use std::sync::Arc;
 use tokio;
-use tokio::net::{TcpListener};
-// use tokio::net::{TcpStream, TcpListener};
+use std::thread;
+use tokio::net::{TcpStream, TcpListener};
 use tokio::prelude::*;
 use tokio_codec::Framed;
 
@@ -40,7 +39,7 @@ impl Runner {
 
     /// Resolves a request, returning a future that is processable into a Response
 
-    fn resolve(&self, mut request: Request) -> impl Future<Item=Response, Error=io::Error> + Send {
+    pub fn resolve(&self, mut request: Request) -> impl Future<Item=Response, Error=io::Error> + Send {
         let response = self.get_response(&request);
 //        request.set_params(matched_route.params);
 
@@ -82,9 +81,6 @@ pub struct Server {
 impl Server {
 
     pub fn new (app: &'static App) -> Server {
-
-        
-
         Server {
             app
         }
@@ -101,13 +97,14 @@ impl Server {
     ///
     /// https://users.rust-lang.org/t/getting-tokio-to-match-actix-web-performance/18659/7
     ///
-    pub fn start_small_load_optimized(mut self, mut resolver: Runner, host: &str, port: u16) {
+    pub fn start_small_load_optimized(mut self, mut runner: Runner, host: &str, port: u16) {
         let addr = (host, port).to_socket_addrs().unwrap().next().unwrap();
         let mut threads = Vec::new();
 //        app._route_parser.optimize();
-       let arc_app = Arc::new(app);
+       let arc_runner = Arc::new(runner);
 
         for _ in 0..num_cpus::get() {
+            let arc_runner = arc_runner.clone();
 //            let arc_app = arc_app.clone();
             threads.push(thread::spawn(move || {
                 let mut runtime = tokio::runtime::current_thread::Runtime::new().unwrap();
@@ -125,18 +122,9 @@ impl Server {
                     let listener = TcpListener::from_std(listener, &tokio::reactor::Handle::current()).unwrap();
 
                     listener.incoming().for_each(move |socket| {
-//                        process(Arc::clone(&arc_app), socket);
-//                        process(socket);
-                        let framed = Framed::new(socket, Http);
-                        let (tx, rx) = framed.split();
-
-                        let task = tx.send_all(rx.and_then(move |request: Request| {
-                            self.resolve(request)
+                        process(runner, socket);
+                            Ok(())
                         })).then(|_| future::ok(()));
-
-                        // Spawn the task that handles the connection.
-                        tokio::spawn(task);
-                        Ok(())
                     })
                     .map_err(|err| eprintln!("accept error = {:?}", err))
                 });
@@ -152,18 +140,17 @@ impl Server {
             thread.join().unwrap();
         }
 
-//        fn process<T: Context + Send>(app: Arc<Server<T>>, socket: TcpStream) {
-//        fn process<T: Context + Send>(socket: TcpStream) {
-//            let framed = Framed::new(socket, Http);
-//            let (tx, rx) = framed.split();
-//
-//            let task = tx.send_all(rx.and_then(move |request: Request| {
-//                self.resolve(request)
-//            })).then(|_| future::ok(()));
-//
-//            // Spawn the task that handles the connection.
-//            tokio::spawn(task);
-//        }
+       fn process(arc_runner: Arc<Runner>, socket: TcpStream) {
+           let framed = Framed::new(socket, Http);
+           let (tx, rx) = framed.split();
+
+           let task = tx.send_all(rx.and_then(move |request: Request| {
+               arc_runner.resolve(request)
+           })).then(|_| future::ok(()));
+
+           // Spawn the task that handles the connection.
+           tokio::spawn(task);
+       }
     }
 
     #[inline]

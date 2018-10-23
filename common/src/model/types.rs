@@ -12,4 +12,3 @@ pub type TimezoneId = u32;
 pub type DayId = u32;
 pub type WeekId = u32;
 pub type MonthId = u32;
-

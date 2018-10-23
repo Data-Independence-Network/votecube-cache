@@ -4,12 +4,12 @@ pub const NUM_TIMEZONES_WITH_GLOBAL_CATEGORY: usize = NUM_TIMEZONES + 1;
 /**  Time zones **/
 //UTC Offset	Locations	Example Name	Example Location
 pub const UTC_PLUS_14: usize = 0; //	Christmas Island/Kiribati	LINT	Kiritimati
-pub const UTC_PLUS_13: usize = 1;	// Tonga and 3 more	TOT	Nukualofa
-pub const UTC_PLUS_12_45: usize = 2;	// Chatham Islands/New Zealand	CHAST	Chatham Islands
-pub const UTC_PLUS_12: usize = 3;	// New Zealand with exceptions and 9 more	ANAT	Anadyr
-pub const UTC_PLUS_11: usize = 4;	// small region of Russia and 6 more	SBT	Honiara
-pub const UTC_PLUS_10_30: usize = 5;	// Lord Howe Island/Australia	LHST	Lord Howe Island
-pub const UTC_PLUS_10: usize = 6;	// much of Australia and 6 more	AEST	Melbourne
+pub const UTC_PLUS_13: usize = 1; // Tonga and 3 more	TOT	Nukualofa
+pub const UTC_PLUS_12_45: usize = 2; // Chatham Islands/New Zealand	CHAST	Chatham Islands
+pub const UTC_PLUS_12: usize = 3; // New Zealand with exceptions and 9 more	ANAT	Anadyr
+pub const UTC_PLUS_11: usize = 4; // small region of Russia and 6 more	SBT	Honiara
+pub const UTC_PLUS_10_30: usize = 5; // Lord Howe Island/Australia	LHST	Lord Howe Island
+pub const UTC_PLUS_10: usize = 6; // much of Australia and 6 more	AEST	Melbourne
 pub const UTC_PLUS_9_30: usize = 7; // some regions of Australia	ACST	Adelaide
 pub const UTC_PLUS_9: usize = 8; // Japan, South Korea and 5 more	JST	Tokyo
 pub const UTC_PLUS_8_45: usize = 9; // Western Australia/Australia	ACWST	Eucla
@@ -19,7 +19,7 @@ pub const UTC_PLUS_6_30: usize = 12; // Myanmar and Cocos Islands	MMT	Yangon
 pub const UTC_PLUS_6: usize = 13; // Bangladesh and 6 more	BST	Dhaka
 pub const UTC_PLUS_5_45: usize = 14; // Nepal	NPT	Kathmandu
 pub const UTC_PLUS_5_30: usize = 15; // India and Sri Lanka	IST	New Delhi
-pub const UTC_PLUS_5: usize = 16;	// Pakistan and 8 more	UZT	Tashkent
+pub const UTC_PLUS_5: usize = 16; // Pakistan and 8 more	UZT	Tashkent
 pub const UTC_PLUS_4_30: usize = 17; // Afghanistan	AFT	Kabul
 pub const UTC_PLUS_4: usize = 18; // Azerbaijan and 8 more	GST	Dubai
 pub const UTC_PLUS_3_30: usize = 19; // Iran	IRST	Tehran

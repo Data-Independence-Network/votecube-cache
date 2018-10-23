@@ -1,7 +1,6 @@
 pub mod model;
 pub mod url;
 
-
 #[cfg(test)]
 mod tests {
     #[test]
