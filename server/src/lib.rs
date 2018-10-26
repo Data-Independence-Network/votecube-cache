@@ -1,8 +1,12 @@
+// #![feature(const_vec_new)]
+
 extern crate byteorder;
 extern crate bytes;
 extern crate futures;
 extern crate httparse;
 extern crate http as httplib;
+#[macro_use]
+extern crate lazy_static;
 extern crate net2;
 extern crate num_cpus;
 extern crate smallvec;
