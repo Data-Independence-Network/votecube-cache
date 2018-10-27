@@ -2,20 +2,20 @@ use context::Context;
 use futures::Future;
 use futures::future;
 use futures::task;
-use net2::TcpBuilder;
+// use net2::TcpBuilder;
 #[cfg(not(windows))]
-use net2::unix::UnixTcpBuilderExt;
+// use net2::unix::UnixTcpBuilderExt;
 // use num_cpus;
-// use std::sync::Arc;
 use std::io;
 use std::net::ToSocketAddrs;
 use std::sync::Arc;
 use std::thread;
-use std::time::{Duration, Instant};
+use std::time::{Duration};
+// use std::time::{Duration, Instant};
 use tokio;
 use tokio::net::{TcpStream, TcpListener};
 use tokio::prelude::*;
-use tokio::timer::Interval;
+// use tokio::timer::Interval;
 use tokio_codec::Framed;
 
 use super::super::http::Http;
@@ -31,9 +31,9 @@ use super::batch::BatchedRequestData;
 //     pub batch: Vec<Box<BatchedRequest<'static>>>,
 // }
 
-trait App<T: 'static + Context + Send> {
+pub trait App<T: 'static + Context + Send> {
     fn preprocess (&self, request: Box<Request>) -> BatchedRequestData<'static>;
-    fn process_batch (&mut self, batch_in_processing: &Vec<&BatchedRequest>);
+    fn process_batch (&self, batch_in_processing: &Box<Vec<Box<BatchedRequest>>>);
 }
 
 // pub fn new_vec<'a, 'b>() -> Vec<&'a BatchedRequest<'b>> {
@@ -70,28 +70,57 @@ trait App<T: 'static + Context + Send> {
  */
 pub struct Server<T: 'static + Context + Send> {
 
-    pub app: Box<App<T>>,
+    pub app: Box<App<T> + Send + Sync>,
 
-    pub batch: Vec<Box<BatchedRequest<'static>>>,
+    pub batch: Box<Vec<Box<BatchedRequest<'static>>>>,
 }
 
 impl<T: 'static + Context + Send> Server<T> {
 
     pub fn new(
-        app: Box<App<T>>
+        app: Box<App<T> + Send + Sync>
     ) -> Server<T> {
-        let batch = Vec::with_capacity(2048);
+        let batch = Box::new(Vec::with_capacity(2048));
         Server {
             app,
             batch
         }
     }
 
-    pub fn start_single_threaded(mut server: Server<T>, host: &str, port: u16) {
+    pub fn start_single_threaded(server: Server<T>, host: &str, port: u16) {
+        
+        let tcp_server = server.configure(host, port);
+
+        thread::spawn(move || {
+            server.start_batch();
+        }); 
+
+            tokio::run(tcp_server);
+
+            // let copy_server = batch_arc_server.clone();
+        // Setup the batching process
+
+        // Start the batching process
+        // tokio::run(task);
+    //   });
+    }
+
+    fn configure(&self, host: &str, port: u16) {
         let addr = (host, port).to_socket_addrs().unwrap().next().unwrap();
     
         let listener = TcpListener::bind(&addr).unwrap();
-        let arc_server = Arc::new(server);
+        let arc_server = Arc::new(*self);
+        let batch_arc_server = arc_server.clone();
+        
+        let tcp_server = listener.incoming()
+            .map_err(|e| println!("error = {:?}", e))
+            .for_each(move |socket| {
+                let _ = socket.set_nodelay(true);
+                process(arc_server.clone(), socket);
+                Ok(())
+        });   
+        
+        println!("Server running on {}", addr);    
 
        fn process<T: Context + Send>(server: Arc<Server<T>>, socket: TcpStream) {
            let framed = Framed::new(socket, Http);
@@ -105,43 +134,25 @@ impl<T: 'static + Context + Send> Server<T> {
            tokio::spawn(task);
        }
 
-       let server = listener.incoming()
-        .map_err(|e| println!("error = {:?}", e))
-        .for_each(move |socket| {
-            let _ = socket.set_nodelay(true);
-            process(arc_server.clone(), socket);
-            Ok(())
-        });
+       tcp_server
+    }
 
+    fn start_batch(mut self) {
+        loop {
+                let batch_in_processing = self.batch;
 
+                self.batch = Box::new(Vec::with_capacity(2048));
 
+                self.app.process_batch(&batch_in_processing);
 
-      thread::spawn(move || {
-        // Setup the batching process
-        let task = Interval::new(Instant::now(), Duration::from_millis(2000))
-            .for_each(|instant| {
-                println!("fire; instant={:?}", instant);
-
-                let batch_in_processing = server.batch;
-
-                server.batch = Vec::with_capacity(2048);
-
-                server.app.process_batch(&batch_in_processing);
-
-                for batchRequest in &batch_in_processing {
+                for batchRequest in (*batch_in_processing).iter() {
                     batchRequest.task.notify();
                 }
 
-                Ok(())
-            })
-            .map_err(|e| panic!("interval errored; err={:?}", e));
+                drop(batch_in_processing);
 
-        // Start the batching process
-        tokio::run(task);
-      });
-
-        println!("Server running on {}", addr);
-        tokio::run(server);
+            thread::sleep(Duration::from_millis(1000));
+        }
     }
 
     /// Resolves a request, returning a future that is processable into a Response
@@ -149,22 +160,23 @@ impl<T: 'static + Context + Send> Server<T> {
         &self, 
         mut request: Request,
         ) -> impl Future<Item=Response, Error=io::Error> + Send {
-        
-        let data = self.app.preprocess(&request);
+        let boxed_request = Box::new(request);
+
+        let data = self.app.preprocess(boxed_request);
 
         if data.is_not_valid {
             return future::ok(*data.output);
         }
 
-        let request = &BatchedRequest {
+        let batched_request = Box::new(BatchedRequest {
             input: data.input,
             // Park the request until the batch job timer wakes up
             // Should work as park and suspend the task
             task: &task::current(),
             output: data.output,
-        };
+        });
 
-        self.batch.push(request);
+        self.batch.push(batched_request);
 
         // let request_reference: &'a mut BatchedRequest<'b, T> = &mut request;
 
