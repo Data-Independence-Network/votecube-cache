@@ -1,10 +1,14 @@
-
 pub struct ByteCounts {
-    pub current_bits: usize,
+    pub current_bits: u8,
     pub current_byte: u8,
     pub data: Vec<u8>,
 }
 
+/*
+Counts of bytes in the actual data, supports entries from 1 to 4 bytes.
+Used to determine exactly how the actual data bytes where structured, in
+a serialized stream (where different data can have different byte counts).
+*/
 impl ByteCounts {
 
     pub fn new(
@@ -112,25 +116,32 @@ impl ByteCounts {
         self,
         mut response: Vec<u8>
     ) {
-        self.append_data(response);
+        let num_entries_in_list_bytes = self.append_data(response);
         // NOTE: max page size is assumed to fin into u16
-        response.extend_from_slice(&numEntriesInListBytes[6..7]);
+        response.extend_from_slice(&num_entries_in_list_bytes[6..7]);
     }
 
+/*
+    Append the byte counts and return the size of the byte counts
+    (which itself is broken into a byte array).
+*/
     #[inline]
     pub fn append_data(
         self,
         mut response: Vec<u8>
-    ) {
-        let mut num_byte_counts_bytes = self.data.len();
+    ) -> [u8; 8] {
+        let mut num_byte_counts_bytes: u64 = self.data.len() as u64;
+        
         response.extend(self.data);
         if self.current_bits != 0 {
-            response.push(this.currentBits);
+            response.push(self.current_bits);
             num_byte_counts_bytes += 1;
         }
 
         let num_entries_in_list_bytes: [u8; 8] = unsafe {
-            std::mem::transmute(*num_byte_counts_bytes);
+            std::mem::transmute(num_byte_counts_bytes.to_be())
         };
+
+        num_entries_in_list_bytes
     }
 }

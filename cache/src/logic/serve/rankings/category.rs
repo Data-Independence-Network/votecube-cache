@@ -15,9 +15,9 @@ use super::super::super::super::data::byte_counts::ByteCounts;
 use super::super::super::super::server::codes;
 
 // NOTE: max page size must fin into u16
-const PAGE_SIZE: usize = 1024;
+const PAGE_SIZE: u64 = 1024;
 
-const INITIAL_RESPONSE_VECTOR_SIZE_8_POLL_BYTES: usize =
+const INITIAL_RESPONSE_VECTOR_SIZE_8_POLL_BYTES: u64 =
 // space for the leading header byte
     1 +
         // space for category cache index (if any
@@ -30,7 +30,7 @@ const INITIAL_RESPONSE_VECTOR_SIZE_8_POLL_BYTES: usize =
         // space for trailing size bytes
         2;
 
-const INITIAL_RESPONSE_VECTOR_SIZE_7_POLL_BYTES: usize =
+const INITIAL_RESPONSE_VECTOR_SIZE_7_POLL_BYTES: u64 =
 // space for the leading header byte
     1 +
         // space for category cache index (if any
@@ -43,7 +43,7 @@ const INITIAL_RESPONSE_VECTOR_SIZE_7_POLL_BYTES: usize =
         // space for trailing size bytes
         2;
 
-const INITIAL_RESPONSE_VECTOR_SIZE_6_POLL_BYTES: usize =
+const INITIAL_RESPONSE_VECTOR_SIZE_6_POLL_BYTES: u64 =
 // space for the leading header byte
     1 +
         // space for category cache index (if any
@@ -56,7 +56,7 @@ const INITIAL_RESPONSE_VECTOR_SIZE_6_POLL_BYTES: usize =
         // space for trailing size bytes
         2;
 
-const INITIAL_RESPONSE_VECTOR_SIZE_5_POLL_BYTES: usize =
+const INITIAL_RESPONSE_VECTOR_SIZE_5_POLL_BYTES: u64 =
 // space for the leading header byte
     1 +
         // space for category cache index (if any
@@ -69,7 +69,7 @@ const INITIAL_RESPONSE_VECTOR_SIZE_5_POLL_BYTES: usize =
         // space for trailing size bytes
         2;
 
-const INITIAL_RESPONSE_VECTOR_SIZE_4_POLL_BYTES: usize =
+const INITIAL_RESPONSE_VECTOR_SIZE_4_POLL_BYTES: u64 =
 // space for the leading header byte
     1 +
         // space for category cache index (if any
@@ -82,7 +82,7 @@ const INITIAL_RESPONSE_VECTOR_SIZE_4_POLL_BYTES: usize =
         // space for trailing size bytes
         2;
 
-const INITIAL_RESPONSE_VECTOR_SIZE_3_POLL_BYTES: usize =
+const INITIAL_RESPONSE_VECTOR_SIZE_3_POLL_BYTES: u64 =
 // space for the leading header byte
     1 +
         // space for category cache index (if any
@@ -94,7 +94,7 @@ const INITIAL_RESPONSE_VECTOR_SIZE_3_POLL_BYTES: usize =
         // space for trailing size bytes
         2;
 
-const INITIAL_RESPONSE_VECTOR_SIZE_2_POLL_BYTES: usize =
+const INITIAL_RESPONSE_VECTOR_SIZE_2_POLL_BYTES: u64 =
 // space for the leading header byte
     1 +
         // space for category cache index (if any
@@ -131,7 +131,7 @@ pub fn get_todays_category_rankings_by_cache_index(
         cache::CATEGORY_CACHE_PERIOD_IDS.todays_vc_day_id,
         vc_day_id,
         cache::TODAYS_CATEGORY_POLL_RANKINGS,
-        categoryCacheIndex,
+        category_cache_index,
         block_index,
         cache::TODAYS_POLL_ID_BYTE_COUNTS[38],
     );
@@ -333,7 +333,7 @@ fn get_category_rankings_by_global_id(
     max_poll_number_bytes: u8,
 ) -> Vec<u8> {
     if current_period_id != expected_period_id {
-        return codes::INVALID_PERIOD_ID_RESPONSE;
+        return codes::INVALID_PERIOD_ID_RESPONSE.to_vec();
     }
 
     let first_record_index = PAGE_SIZE * block_index;
@@ -501,7 +501,7 @@ fn get_8_byte_recent_polls(
     let mut iterator = poll_rankings.iter().skip(starting_index);
     let mut vote_counts_sizes = ByteCounts::new(PAGE_SIZE);
 
-    for x in 0...PAGE_SIZE {
+    for x in 0..PAGE_SIZE {
         match iterator.next() {
             None => break,
             Some(voteCount) => {
@@ -547,7 +547,7 @@ fn get_7_byte_recent_polls(
     let mut iterator = poll_rankings.iter().skip(starting_index);
     let mut vote_counts_sizes = ByteCounts::new(PAGE_SIZE);
 
-    for x in 0...PAGE_SIZE {
+    for x in 0..PAGE_SIZE {
         match iterator.next() {
             None => break,
             Some(voteCount) => {
@@ -593,7 +593,7 @@ fn get_6_byte_recent_polls(
     let mut iterator = poll_rankings.iter().skip(starting_index);
     let mut vote_counts_sizes = ByteCounts::new(PAGE_SIZE);
 
-    for x in 0...PAGE_SIZE {
+    for x in 0..PAGE_SIZE {
         match iterator.next() {
             None => break,
             Some(voteCount) => {
@@ -639,7 +639,7 @@ fn get_5_byte_recent_polls(
     let mut iterator = poll_rankings.iter().skip(starting_index);
     let mut vote_counts_sizes = ByteCounts::new(PAGE_SIZE);
 
-    for x in 0...PAGE_SIZE {
+    for x in 0..PAGE_SIZE {
         match iterator.next() {
             None => break,
             Some(voteCount) => {
@@ -685,7 +685,7 @@ fn get_4_byte_recent_polls(
     let mut iterator = poll_rankings.iter().skip(starting_index);
     let mut vote_counts_sizes = ByteCounts::new(PAGE_SIZE);
 
-    for x in 0...PAGE_SIZE {
+    for x in 0..PAGE_SIZE {
         match iterator.next() {
             None => break,
             Some(voteCount) => {
@@ -731,7 +731,7 @@ fn get_3_byte_recent_polls(
     let mut iterator = poll_rankings.iter().skip(starting_index);
     let mut vote_counts_sizes = ByteCounts::new(PAGE_SIZE);
 
-    for x in 0...PAGE_SIZE {
+    for x in 0..PAGE_SIZE {
         match iterator.next() {
             None => break,
             Some(voteCount) => {
@@ -777,7 +777,7 @@ fn get_2_byte_recent_polls(
     let mut iterator = poll_rankings.iter().skip(starting_index);
     let mut vote_counts_sizes = ByteCounts::new(PAGE_SIZE);
 
-    for x in 0...PAGE_SIZE {
+    for x in 0..PAGE_SIZE {
         match iterator.next() {
             None => break,
             Some(voteCount) => {

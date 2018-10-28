@@ -1,8 +1,0 @@
-[package]
-name = "vc-auth-google"
-version = "0.1.0"
-authors = ["russoturisto <russoturisto@gmail.com>"]
-
-[dependencies]
-common = { path = "../../../common" }
-server = { path = "../../../server" }

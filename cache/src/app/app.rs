@@ -1,7 +1,22 @@
-
 use common::url::cache::serve;
 
-use super::codes;
+use server::codes;
+use server::cache::server::App;
+
+
+use server::read::read_five_ints;
+use server::read::read_four_ints;
+use server::read::read_four_ints_and_long;
+use server::read::read_three_ints;
+use server::read::read_three_ints_and_long;
+use server::read::read_three_ints_and_two_longs;
+use server::read::read_two_ints_and_long;
+
+use server::read::wrong_request_length_12;
+use server::read::wrong_request_length_16;
+use server::read::wrong_request_length_20;
+use server::read::wrong_request_length_24;
+use server::read::wrong_request_length_28;
 
 use super::super::logic::serve::rankings::category;
 use super::super::logic::serve::rankings::location;
@@ -12,10 +27,10 @@ use super::super::logic::serve::recent::category::get_next_months_category_polls
 use super::super::logic::serve::recent::category::get_next_weeks_category_polls;
 use super::super::logic::serve::recent::category::get_tomorrows_category_polls;
 
-use super::super::logic::serve::recent::category::get_day_after_tomorrows_category_polls;
-use super::super::logic::serve::recent::category::get_next_months_category_polls;
-use super::super::logic::serve::recent::category::get_next_weeks_category_polls;
-use super::super::logic::serve::recent::category::get_tomorrows_category_polls;
+// use super::super::logic::serve::recent::location_and_loc_category::get_day_after_tomorrows_category_polls;
+// use super::super::logic::serve::recent::location_and_loc_category::get_next_months_category_polls;
+// use super::super::logic::serve::recent::location_and_loc_category::get_next_weeks_category_polls;
+// use super::super::logic::serve::recent::location_and_loc_category::get_tomorrows_category_polls;
 
 use super::super::logic::serve::recent::location::get_day_after_tomorrows_location_polls;
 use super::super::logic::serve::recent::location::get_next_months_location_polls;
@@ -28,25 +43,31 @@ use super::super::logic::serve::recent::location_category::get_next_weeks_locati
 use super::super::logic::serve::recent::location_category::get_tomorrows_location_category_polls;
 
 
-pub struct App<T: 'static + Context + Send> {
-    //    pub _route_parser: RouteParser<T>,
-    //
-    // Generate context is common to all `App`s. It's the function that's called upon receiving a request
-    // that translates an acutal `Request` struct to your custom Context type. It should be noted that
-    // the context_generator should be as fast as possible as this is called with every request, including
-    // 404s.
-//    pub context_generator: fn(Request) -> T
+pub struct CompleteCacheApp<T: 'static + Send> {
+
+    cache: T,
+
 }
 
-impl<T: Context + Send> App<T> {
 
-    fn new() -> App {
-        App {}
+impl<T: Send> CompleteCacheApp<T> {
+
+    pub fn new(
+        cache: T
+    ) -> CompleteCacheApp<T> {
+        CompleteCacheApp {
+            cache
+        }
     }
 
-    fn get_response_internal(
+}
+
+
+impl<T: Send> App<T> for CompleteCacheApp<T> {
+
+    fn get_response(
         &self,
-        path: str,
+        path: &str,
         request_body: &[u8],
     ) -> Vec<u8> {
         match *path {

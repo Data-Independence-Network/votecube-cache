@@ -1,13 +1,15 @@
 use std::mem::transmute;
 
+use common::model::consts;
+
 use super::super::super::super::server::codes;
 use super::super::super::super::cache::model::VoteCount;
 use super::super::super::super::data::byte_counts::ByteCounts;
 
 // NOTE: max page size must fin into u16
-const PAGE_SIZE: usize = 1024;
+const PAGE_SIZE: u64 = 1024;
 
-pub const INITIAL_RESPONSE_VECTOR_SIZE_8_POLL_BYTES: usize =
+pub const INITIAL_RESPONSE_VECTOR_SIZE_8_POLL_BYTES: u64 =
 // space for the leading header byte
     1 +
         // space for location cache index (if any
@@ -23,7 +25,7 @@ pub const INITIAL_RESPONSE_VECTOR_SIZE_8_POLL_BYTES: usize =
         // space for trailing size bytes
         2;
 
-pub const INITIAL_RESPONSE_VECTOR_SIZE_7_POLL_BYTES: usize =
+pub const INITIAL_RESPONSE_VECTOR_SIZE_7_POLL_BYTES: u64 =
 // space for the leading header byte
     1 +
         // space for location cache index (if any
@@ -39,7 +41,7 @@ pub const INITIAL_RESPONSE_VECTOR_SIZE_7_POLL_BYTES: usize =
         // space for trailing size bytes
         2;
 
-pub const INITIAL_RESPONSE_VECTOR_SIZE_6_POLL_BYTES: usize =
+pub const INITIAL_RESPONSE_VECTOR_SIZE_6_POLL_BYTES: u64 =
 // space for the leading header byte
     1 +
         // space for location cache index (if any
@@ -55,7 +57,7 @@ pub const INITIAL_RESPONSE_VECTOR_SIZE_6_POLL_BYTES: usize =
         // space for trailing size bytes
         2;
 
-pub const INITIAL_RESPONSE_VECTOR_SIZE_5_POLL_BYTES: usize =
+pub const INITIAL_RESPONSE_VECTOR_SIZE_5_POLL_BYTES: u64 =
 // space for the leading header byte
     1 +
         // space for location cache index (if any
@@ -71,7 +73,7 @@ pub const INITIAL_RESPONSE_VECTOR_SIZE_5_POLL_BYTES: usize =
         // space for trailing size bytes
         2;
 
-pub const INITIAL_RESPONSE_VECTOR_SIZE_4_POLL_BYTES: usize =
+pub const INITIAL_RESPONSE_VECTOR_SIZE_4_POLL_BYTES: u64 =
 // space for the leading header byte
     1 +
         // space for location cache index (if any
@@ -87,7 +89,7 @@ pub const INITIAL_RESPONSE_VECTOR_SIZE_4_POLL_BYTES: usize =
         // space for trailing size bytes
         2;
 
-pub const INITIAL_RESPONSE_VECTOR_SIZE_3_POLL_BYTES: usize =
+pub const INITIAL_RESPONSE_VECTOR_SIZE_3_POLL_BYTES: u64 =
 // space for the leading header byte
     1 +
         // space for location cache index (if any
@@ -103,7 +105,7 @@ pub const INITIAL_RESPONSE_VECTOR_SIZE_3_POLL_BYTES: usize =
         // space for trailing size bytes
         2;
 
-pub const INITIAL_RESPONSE_VECTOR_SIZE_2_POLL_BYTES: usize =
+pub const INITIAL_RESPONSE_VECTOR_SIZE_2_POLL_BYTES: u64 =
 // space for the leading header byte
     1 +
         // space for location cache index (if any
@@ -129,19 +131,19 @@ pub fn get_8_byte_recent_polls(
     let mut vote_counts_sizes = ByteCounts::new(PAGE_SIZE);
     let mut poll_types = ByteCounts::new(PAGE_SIZE);
 
-    for x in 0...PAGE_SIZE {
+    for x in 0..PAGE_SIZE {
         match iterator.next() {
             None => break,
             Some(voteCount) => {
                 // Get the poll type
                 match voteCount.poll_type_and_tz & 0b00000011 {
-                    codes::POLL_TYPE_1D => {
+                    consts::POLL_TYPE_1D => {
                         poll_types.add1();
                     }
-                    codes::POLL_TYPE_2D => {
+                    consts::POLL_TYPE_2D => {
                         poll_types.add2();
                     }
-                    codes::POLL_TYPE_3D => {
+                    consts::POLL_TYPE_3D => {
                         poll_types.add3();
                     }
                 }
@@ -188,19 +190,19 @@ pub fn get_7_byte_recent_polls(
     let mut vote_counts_sizes = ByteCounts::new(PAGE_SIZE);
     let mut poll_types = ByteCounts::new(PAGE_SIZE);
 
-    for x in 0...PAGE_SIZE {
+    for x in 0..PAGE_SIZE {
         match iterator.next() {
             None => break,
             Some(voteCount) => {
                 // Get the poll type
                 match voteCount.poll_type_and_tz & 0b00000011 {
-                    codes::POLL_TYPE_1D => {
+                    consts::POLL_TYPE_1D => {
                         poll_types.add1();
                     }
-                    codes::POLL_TYPE_2D => {
+                    consts::POLL_TYPE_2D => {
                         poll_types.add2();
                     }
-                    codes::POLL_TYPE_3D => {
+                    consts::POLL_TYPE_3D => {
                         poll_types.add3();
                     }
                 }
@@ -247,19 +249,19 @@ pub fn get_6_byte_recent_polls(
     let mut vote_counts_sizes = ByteCounts::new(PAGE_SIZE);
     let mut poll_types = ByteCounts::new(PAGE_SIZE);
 
-    for x in 0...PAGE_SIZE {
+    for x in 0..PAGE_SIZE {
         match iterator.next() {
             None => break,
             Some(voteCount) => {
                 // Get the poll type
                 match voteCount.poll_type_and_tz & 0b00000011 {
-                    codes::POLL_TYPE_1D => {
+                    consts::POLL_TYPE_1D => {
                         poll_types.add1();
                     }
-                    codes::POLL_TYPE_2D => {
+                    consts::POLL_TYPE_2D => {
                         poll_types.add2();
                     }
-                    codes::POLL_TYPE_3D => {
+                    consts::POLL_TYPE_3D => {
                         poll_types.add3();
                     }
                 }
@@ -306,19 +308,19 @@ pub fn get_5_byte_recent_polls(
     let mut vote_counts_sizes = ByteCounts::new(PAGE_SIZE);
     let mut poll_types = ByteCounts::new(PAGE_SIZE);
 
-    for x in 0...PAGE_SIZE {
+    for x in 0..PAGE_SIZE {
         match iterator.next() {
             None => break,
             Some(voteCount) => {
                 // Get the poll type
                 match voteCount.poll_type_and_tz & 0b00000011 {
-                    codes::POLL_TYPE_1D => {
+                    consts::POLL_TYPE_1D => {
                         poll_types.add1();
                     }
-                    codes::POLL_TYPE_2D => {
+                    consts::POLL_TYPE_2D => {
                         poll_types.add2();
                     }
-                    codes::POLL_TYPE_3D => {
+                    consts::POLL_TYPE_3D => {
                         poll_types.add3();
                     }
                 }
@@ -365,19 +367,19 @@ pub fn get_4_byte_recent_polls(
     let mut vote_counts_sizes = ByteCounts::new(PAGE_SIZE);
     let mut poll_types = ByteCounts::new(PAGE_SIZE);
 
-    for x in 0...PAGE_SIZE {
+    for x in 0..PAGE_SIZE {
         match iterator.next() {
             None => break,
             Some(voteCount) => {
                 // Get the poll type
                 match voteCount.poll_type_and_tz & 0b00000011 {
-                    codes::POLL_TYPE_1D => {
+                    consts::POLL_TYPE_1D => {
                         poll_types.add1();
                     }
-                    codes::POLL_TYPE_2D => {
+                    consts::POLL_TYPE_2D => {
                         poll_types.add2();
                     }
-                    codes::POLL_TYPE_3D => {
+                    consts::POLL_TYPE_3D => {
                         poll_types.add3();
                     }
                 }
@@ -424,19 +426,19 @@ pub fn get_3_byte_recent_polls(
     let mut vote_counts_sizes = ByteCounts::new(PAGE_SIZE);
     let mut poll_types = ByteCounts::new(PAGE_SIZE);
 
-    for x in 0...PAGE_SIZE {
+    for x in 0..PAGE_SIZE {
         match iterator.next() {
             None => break,
             Some(voteCount) => {
                 // Get the poll type
                 match voteCount.poll_type_and_tz & 0b00000011 {
-                    codes::POLL_TYPE_1D => {
+                    consts::POLL_TYPE_1D => {
                         poll_types.add1();
                     }
-                    codes::POLL_TYPE_2D => {
+                    consts::POLL_TYPE_2D => {
                         poll_types.add2();
                     }
-                    codes::POLL_TYPE_3D => {
+                    consts::POLL_TYPE_3D => {
                         poll_types.add3();
                     }
                 }
@@ -483,19 +485,19 @@ pub fn get_2_byte_recent_polls(
     let mut vote_counts_sizes = ByteCounts::new(PAGE_SIZE);
     let mut poll_types = ByteCounts::new(PAGE_SIZE);
 
-    for x in 0...PAGE_SIZE {
+    for x in 0..PAGE_SIZE {
         match iterator.next() {
             None => break,
             Some(voteCount) => {
                 // Get the poll type
                 match voteCount.poll_type_and_tz & 0b00000011 {
-                    codes::POLL_TYPE_1D => {
+                    consts::POLL_TYPE_1D => {
                         poll_types.add1();
                     }
-                    codes::POLL_TYPE_2D => {
+                    consts::POLL_TYPE_2D => {
                         poll_types.add2();
                     }
-                    codes::POLL_TYPE_3D => {
+                    consts::POLL_TYPE_3D => {
                         poll_types.add3();
                     }
                 }

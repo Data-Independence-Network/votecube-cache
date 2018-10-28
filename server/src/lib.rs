@@ -5,7 +5,6 @@ extern crate bytes;
 extern crate futures;
 extern crate httparse;
 extern crate http as httplib;
-#[macro_use]
 extern crate lazy_static;
 extern crate net2;
 extern crate num_cpus;
@@ -17,10 +16,8 @@ extern crate tokio_io;
 
 extern crate common;
 
-pub mod batch;
 pub mod cache;
 pub mod codes;
-pub mod context;
 pub mod http;
 pub mod read;
 pub mod request;

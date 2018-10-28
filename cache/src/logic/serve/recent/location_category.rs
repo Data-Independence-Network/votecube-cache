@@ -21,6 +21,8 @@ use super::utils::get_6_byte_recent_poll_ids;
 use super::utils::get_7_byte_recent_poll_ids;
 use super::utils::get_8_byte_recent_poll_ids;
 
+const NO_RESULTS: Vec<u8> = Vec::new();
+
 pub fn get_tomorrows_location_category_polls(
     vc_day_id: DayId,
     timezone_id: TimezoneId,
@@ -28,7 +30,7 @@ pub fn get_tomorrows_location_category_polls(
     global_location_id: LocationId,
     global_category_id: CategoryId,
 ) -> Vec<u8> {
-    return get_global_location_polls(
+    return get_global_location_category_polls(
         cache::CATEGORY_CACHE_PERIOD_IDS.tomorrows_vc_day_id,
         vc_day_id,
         timezone_id,
@@ -47,7 +49,7 @@ pub fn get_day_after_tomorrows_location_category_polls(
     global_location_id: LocationId,
     global_category_id: CategoryId,
 ) -> Vec<u8> {
-    return get_global_location_polls(
+    return get_global_location_category_polls(
         cache::CATEGORY_CACHE_PERIOD_IDS.day_after_tomorrows_vc_day_id,
         vc_day_id,
         timezone_id,
@@ -66,7 +68,7 @@ pub fn get_next_weeks_location_category_polls(
     global_location_id: LocationId,
     global_category_id: CategoryId,
 ) -> Vec<u8> {
-    return get_global_location_polls(
+    return get_global_location_category_polls(
         cache::CATEGORY_CACHE_PERIOD_IDS.next_weeks_vc_week_id,
         vc_week_id,
         timezone_id,
@@ -85,7 +87,7 @@ pub fn get_next_months_location_category_polls(
     global_location_id: LocationId,
     global_category_id: CategoryId,
 ) -> Vec<u8> {
-    return get_global_location_polls(
+    return get_global_location_category_polls(
         cache::CATEGORY_CACHE_PERIOD_IDS.next_months_vc_month_id,
         vc_month_id,
         timezone_id,
@@ -125,7 +127,7 @@ fn get_global_location_category_polls(
 
     let location_polls: LocationPollPrependLists = match location_polls_by_timezone.get(*global_location_id) {
         None => {
-            return noResults;
+            return NO_RESULTS;
         }
         Some(locationPolls) => {
             locationPolls
@@ -134,7 +136,7 @@ fn get_global_location_category_polls(
 
     let location_category_polls: LocationPollPrependLists = match location_polls.category_locations.get(*global_category_id) {
         None => {
-            return noResults;
+            return NO_RESULTS;
         }
         Some(locationCategoryPolls) => {
             locationCategoryPolls
@@ -143,7 +145,7 @@ fn get_global_location_category_polls(
 
     let polls_block: Vec<PollId> = match location_category_polls.get(location_polls.len() - block_number) {
         None => {
-            return noResults;
+            return NO_RESULTS;
         }
         Some(block) => {
             block

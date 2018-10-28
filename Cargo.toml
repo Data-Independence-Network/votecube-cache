@@ -4,7 +4,6 @@
 #authors = ["russoturisto <russoturisto@gmail.com>"]
 
 members = [
-    "batch/auth/google",
     "cache",
     "common",
     "server"

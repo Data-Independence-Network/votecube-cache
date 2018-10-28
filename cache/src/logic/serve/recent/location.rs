@@ -20,6 +20,8 @@ use super::utils::get_6_byte_recent_poll_ids;
 use super::utils::get_7_byte_recent_poll_ids;
 use super::utils::get_8_byte_recent_poll_ids;
 
+const NO_RESULTS: Vec<u8> = Vec::new();
+
 pub fn get_tomorrows_location_polls(
     vc_day_id: DayId,
     timezone_id: TimezoneId,
@@ -115,7 +117,7 @@ fn get_global_location_polls(
 
     let location_polls: LocationPollPrependLists = match location_polls_by_timezone.get(*global_location_id) {
         None => {
-            return noResults;
+            return NO_RESULTS;
         }
         Some(locationPolls) => {
             locationPolls
@@ -124,7 +126,7 @@ fn get_global_location_polls(
 
     let polls_block: Vec<PollId> = match location_polls.location.get(location_polls.len() - block_number) {
         None => {
-            return noResults;
+            return NO_RESULTS;
         }
         Some(block) => {
             block

@@ -14,16 +14,17 @@ pub mod app;
 
 use server::cache::server::Server;
 
-use app::App;
+use app::app::CompleteCacheApp;
+use cache::cache::Cache;
 
 fn main() {
     println!("Hello, world!");
 
     let test: Vec<u32> = Vec::with_capacity(4);
 
-    let app: App = App::new();
+    let app = Box::new(CompleteCacheApp::new(Cache{}));
 
-    let server: Server = Server::new();
+    let server: Server<Cache> = Server::new(app);
 
-    server::start_small_load_optimized(app, "0.0.0.0", 4321);
+    Server::start_small_load_optimized(server, "0.0.0.0", 4321);
 }

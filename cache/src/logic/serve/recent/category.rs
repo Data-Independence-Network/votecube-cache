@@ -1,6 +1,6 @@
 use int_hash::IntHashMap;
 
-use common::model::consts::GLOBAL_CATEGORY_TZ_INDEX;
+use common::model::consts::GLOBAL_TZ_INDEX;
 
 use common::model::types::CategoryId;
 use common::model::types::DayId;
@@ -32,7 +32,7 @@ pub fn get_tomorrows_category_polls(
         vc_day_id,
         cache::TOMORROWS_POLLS_BY_CATEGORY,
         block_number, global_category_id,
-        cache::TOMORROWS_POLL_ID_BYTE_COUNTS[GLOBAL_CATEGORY_TZ_INDEX]);
+        cache::TOMORROWS_POLL_ID_BYTE_COUNTS[GLOBAL_TZ_INDEX]);
 }
 
 pub fn get_day_after_tomorrows_category_polls(
@@ -46,7 +46,7 @@ pub fn get_day_after_tomorrows_category_polls(
         vc_day_id,
         cache::DAY_AFTER_TOMORROWS_POLLS_BY_CATEGORY,
         block_number, global_category_id,
-        cache::DAY_AFTER_TOMORROWS_POLL_ID_BYTE_COUNTS[GLOBAL_CATEGORY_TZ_INDEX]);
+        cache::DAY_AFTER_TOMORROWS_POLL_ID_BYTE_COUNTS[GLOBAL_TZ_INDEX]);
 }
 
 pub fn get_next_weeks_category_polls(
@@ -60,7 +60,7 @@ pub fn get_next_weeks_category_polls(
         vc_week_id,
         cache::NEXT_WEEKS_POLLS_BY_CATEGORY,
         block_number, global_category_id,
-        cache::NEXT_WEEKS_POLL_ID_BYTE_COUNTS[GLOBAL_CATEGORY_TZ_INDEX]);
+        cache::NEXT_WEEKS_POLL_ID_BYTE_COUNTS[GLOBAL_TZ_INDEX]);
 }
 
 pub fn get_next_months_category_polls(
@@ -74,7 +74,7 @@ pub fn get_next_months_category_polls(
         vc_month_id,
         cache::NEXT_MONTHS_POLLS_BY_CATEGORY,
         block_number, global_category_id,
-        cache::NEXT_MONTHS_POLL_ID_BYTE_COUNTS[GLOBAL_CATEGORY_TZ_INDEX]);
+        cache::NEXT_MONTHS_POLL_ID_BYTE_COUNTS[GLOBAL_TZ_INDEX]);
 }
 
 
