@@ -128,8 +128,8 @@ pub fn get_8_byte_recent_polls(
     mut response: Vec<u8>,
 ) -> Vec<u8> {
     let mut iterator = poll_rankings.iter().skip(starting_index);
-    let mut vote_counts_sizes = ByteCounts::new(PAGE_SIZE);
-    let mut poll_types = ByteCounts::new(PAGE_SIZE);
+    let mut vote_counts_sizes = ByteCounts::new(PAGE_SIZE as usize);
+    let mut poll_types = ByteCounts::new(PAGE_SIZE as usize);
 
     for x in 0..PAGE_SIZE {
         match iterator.next() {
@@ -150,13 +150,13 @@ pub fn get_8_byte_recent_polls(
 
                 let poll_id_bytes: [u8; 8] = unsafe {
                     // Poll Id in the period of a given time zone
-                    std::mem::transmute(*voteCount.poll_id);
+                    std::mem::transmute(voteCount.poll_id)
                 };
                 // TODO: ALWAYS verify Big fs Little Endianness
                 response.extend_from_slice(&poll_id_bytes);
 
                 let count_bytes: [u8; 4] = unsafe {
-                    std::mem::transmute(*voteCount.count);
+                    std::mem::transmute(voteCount.count)
                 };
                 if count_bytes[0] != 0 {
                     response.extend_from_slice(&count_bytes);
@@ -187,8 +187,8 @@ pub fn get_7_byte_recent_polls(
     mut response: Vec<u8>,
 ) -> Vec<u8> {
     let mut iterator = poll_rankings.iter().skip(starting_index);
-    let mut vote_counts_sizes = ByteCounts::new(PAGE_SIZE);
-    let mut poll_types = ByteCounts::new(PAGE_SIZE);
+    let mut vote_counts_sizes = ByteCounts::new(PAGE_SIZE as usize);
+    let mut poll_types = ByteCounts::new(PAGE_SIZE as usize);
 
     for x in 0..PAGE_SIZE {
         match iterator.next() {
@@ -209,13 +209,13 @@ pub fn get_7_byte_recent_polls(
 
                 let poll_id_bytes: [u8; 8] = unsafe {
                     // Poll Id in the period of a given time zone
-                    std::mem::transmute(*voteCount.tzAndPeriodPollId);
+                    std::mem::transmute(voteCount.poll_id)
                 };
                 // TODO: ALWAYS verify Big fs Little Endianness
                 response.extend_from_slice(&poll_id_bytes[1..7]);
 
                 let count_bytes: [u8; 4] = unsafe {
-                    std::mem::transmute(*voteCount.count);
+                    std::mem::transmute(voteCount.count)
                 };
                 if count_bytes[0] != 0 {
                     response.extend_from_slice(&count_bytes);
@@ -246,8 +246,8 @@ pub fn get_6_byte_recent_polls(
     mut response: Vec<u8>,
 ) -> Vec<u8> {
     let mut iterator = poll_rankings.iter().skip(starting_index);
-    let mut vote_counts_sizes = ByteCounts::new(PAGE_SIZE);
-    let mut poll_types = ByteCounts::new(PAGE_SIZE);
+    let mut vote_counts_sizes = ByteCounts::new(PAGE_SIZE as usize);
+    let mut poll_types = ByteCounts::new(PAGE_SIZE as usize);
 
     for x in 0..PAGE_SIZE {
         match iterator.next() {
@@ -268,13 +268,13 @@ pub fn get_6_byte_recent_polls(
 
                 let poll_id_bytes: [u8; 8] = unsafe {
                     // Poll Id in the period of a given time zone
-                    std::mem::transmute(*voteCount.tzAndPeriodPollId);
+                    std::mem::transmute(voteCount.poll_id)
                 };
                 // TODO: ALWAYS verify Big fs Little Endianness
                 response.extend_from_slice(&poll_id_bytes[2..7]);
 
                 let count_bytes: [u8; 4] = unsafe {
-                    std::mem::transmute(*voteCount.count);
+                    std::mem::transmute(voteCount.count)
                 };
                 if count_bytes[0] != 0 {
                     response.extend_from_slice(&count_bytes);
@@ -305,8 +305,8 @@ pub fn get_5_byte_recent_polls(
     mut response: Vec<u8>,
 ) -> Vec<u8> {
     let mut iterator = poll_rankings.iter().skip(starting_index);
-    let mut vote_counts_sizes = ByteCounts::new(PAGE_SIZE);
-    let mut poll_types = ByteCounts::new(PAGE_SIZE);
+    let mut vote_counts_sizes = ByteCounts::new(PAGE_SIZE as usize);
+    let mut poll_types = ByteCounts::new(PAGE_SIZE as usize);
 
     for x in 0..PAGE_SIZE {
         match iterator.next() {
@@ -327,13 +327,13 @@ pub fn get_5_byte_recent_polls(
 
                 let poll_id_bytes: [u8; 8] = unsafe {
                     // Poll Id in the period of a given time zone
-                    std::mem::transmute(*voteCount.tzAndPeriodPollId);
+                    std::mem::transmute(voteCount.poll_id)
                 };
                 // TODO: ALWAYS verify Big fs Little Endianness
                 response.extend_from_slice(&poll_id_bytes[3..7]);
 
                 let count_bytes: [u8; 4] = unsafe {
-                    std::mem::transmute(*voteCount.count);
+                    std::mem::transmute(voteCount.count)
                 };
                 if count_bytes[0] != 0 {
                     response.extend_from_slice(&count_bytes);
@@ -364,8 +364,8 @@ pub fn get_4_byte_recent_polls(
     mut response: Vec<u8>,
 ) -> Vec<u8> {
     let mut iterator = poll_rankings.iter().skip(starting_index);
-    let mut vote_counts_sizes = ByteCounts::new(PAGE_SIZE);
-    let mut poll_types = ByteCounts::new(PAGE_SIZE);
+    let mut vote_counts_sizes = ByteCounts::new(PAGE_SIZE as usize);
+    let mut poll_types = ByteCounts::new(PAGE_SIZE as usize);
 
     for x in 0..PAGE_SIZE {
         match iterator.next() {
@@ -386,13 +386,13 @@ pub fn get_4_byte_recent_polls(
 
                 let poll_id_bytes: [u8; 8] = unsafe {
                     // Poll Id in the period of a given time zone
-                    std::mem::transmute(*voteCount.tzAndPeriodPollId);
+                    std::mem::transmute(voteCount.poll_id)
                 };
                 // TODO: ALWAYS verify Big fs Little Endianness
                 response.extend_from_slice(&poll_id_bytes[4..7]);
 
                 let count_bytes: [u8; 4] = unsafe {
-                    std::mem::transmute(*voteCount.count);
+                    std::mem::transmute(voteCount.count)
                 };
                 if count_bytes[0] != 0 {
                     response.extend_from_slice(&count_bytes);
@@ -423,8 +423,8 @@ pub fn get_3_byte_recent_polls(
     mut response: Vec<u8>,
 ) -> Vec<u8> {
     let mut iterator = poll_rankings.iter().skip(starting_index);
-    let mut vote_counts_sizes = ByteCounts::new(PAGE_SIZE);
-    let mut poll_types = ByteCounts::new(PAGE_SIZE);
+    let mut vote_counts_sizes = ByteCounts::new(PAGE_SIZE as usize);
+    let mut poll_types = ByteCounts::new(PAGE_SIZE as usize);
 
     for x in 0..PAGE_SIZE {
         match iterator.next() {
@@ -445,13 +445,13 @@ pub fn get_3_byte_recent_polls(
 
                 let poll_id_bytes: [u8; 8] = unsafe {
                     // Poll Id in the period of a given time zone
-                    std::mem::transmute(*voteCount.tzAndPeriodPollId);
+                    std::mem::transmute(voteCount.poll_id)
                 };
                 // TODO: ALWAYS verify Big fs Little Endianness
                 response.extend_from_slice(&poll_id_bytes[5..7]);
 
                 let count_bytes: [u8; 4] = unsafe {
-                    std::mem::transmute(*voteCount.count);
+                    std::mem::transmute(voteCount.count)
                 };
                 if count_bytes[0] != 0 {
                     response.extend_from_slice(&count_bytes);
@@ -482,8 +482,8 @@ pub fn get_2_byte_recent_polls(
     mut response: Vec<u8>,
 ) -> Vec<u8> {
     let mut iterator = poll_rankings.iter().skip(starting_index);
-    let mut vote_counts_sizes = ByteCounts::new(PAGE_SIZE);
-    let mut poll_types = ByteCounts::new(PAGE_SIZE);
+    let mut vote_counts_sizes = ByteCounts::new(PAGE_SIZE as usize);
+    let mut poll_types = ByteCounts::new(PAGE_SIZE as usize);
 
     for x in 0..PAGE_SIZE {
         match iterator.next() {
@@ -504,13 +504,13 @@ pub fn get_2_byte_recent_polls(
 
                 let poll_id_bytes: [u8; 8] = unsafe {
                     // Poll Id in the period of a given time zone
-                    std::mem::transmute(*voteCount.tzAndPeriodPollId);
+                    std::mem::transmute(voteCount.poll_id)
                 };
                 // TODO: ALWAYS verify Big fs Little Endianness
                 response.extend_from_slice(&poll_id_bytes[6..7]);
 
                 let count_bytes: [u8; 4] = unsafe {
-                    std::mem::transmute(*voteCount.count);
+                    std::mem::transmute(voteCount.count)
                 };
                 if count_bytes[0] != 0 {
                     response.extend_from_slice(&count_bytes);

@@ -46,14 +46,14 @@ impl CachePeriodIds {
 }
 
 pub struct CategoryPeriodPollRankings {
-    pub max_poll_number_bytes: u32,
+    pub max_poll_number_bytes: u8,
     pub num_polls_in_period: u32,
     pub vote_counts_by_category_index: Vec<Vec<VoteCount>>,
 }
 
 impl CategoryPeriodPollRankings {
     pub fn new(
-        max_poll_number_bytes: u32,
+        max_poll_number_bytes: u8,
         num_polls_in_period: u32,
         num_categories_in_period: usize,
     ) -> CategoryPeriodPollRankings {
@@ -101,6 +101,7 @@ Split by timezone:
  *          ranked vote counts
  */
 pub struct LocationPollRankings {
+    pub max_poll_number_bytes: u8,
     pub location: Vec<VoteCount>,
     pub category_locations: Vec<Vec<VoteCount>>,
 }
