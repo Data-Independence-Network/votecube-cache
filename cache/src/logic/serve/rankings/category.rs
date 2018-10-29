@@ -108,7 +108,7 @@ const INITIAL_RESPONSE_VECTOR_SIZE_2_POLL_BYTES: u64 =
 
 pub fn get_todays_category_rankings_by_global_id(
     vc_day_id: DayId,
-    block_index: u32,
+    block_index: u64,
     global_category_id: CategoryId,
 ) -> Vec<u8> {
     return get_category_rankings_by_global_id(
@@ -124,7 +124,7 @@ pub fn get_todays_category_rankings_by_global_id(
 
 pub fn get_todays_category_rankings_by_cache_index(
     vc_day_id: DayId,
-    block_index: u32,
+    block_index: u64,
     category_cache_index: CategoryCacheIndex,
 ) -> Vec<u8> {
     return get_category_rankings_by_cache_index(
@@ -139,7 +139,7 @@ pub fn get_todays_category_rankings_by_cache_index(
 
 pub fn get_yesterdays_category_rankings_by_global_id(
     vc_day_id: DayId,
-    block_index: u32,
+    block_index: u64,
     global_category_id: CategoryId,
 ) -> Vec<u8> {
     return get_category_rankings_by_global_id(
@@ -155,7 +155,7 @@ pub fn get_yesterdays_category_rankings_by_global_id(
 
 pub fn get_yesterdays_category_rankings_by_cache_index(
     vc_day_id: DayId,
-    block_index: u32,
+    block_index: u64,
     category_cache_index: CategoryCacheIndex,
 ) -> Vec<u8> {
     return get_category_rankings_by_cache_index(
@@ -170,7 +170,7 @@ pub fn get_yesterdays_category_rankings_by_cache_index(
 
 pub fn get_day_b4_yesterdays_category_rankings_by_global_id(
     vc_day_id: DayId,
-    block_index: u32,
+    block_index: u64,
     global_category_id: CategoryId,
 ) -> Vec<u8> {
     return get_category_rankings_by_global_id(
@@ -186,7 +186,7 @@ pub fn get_day_b4_yesterdays_category_rankings_by_global_id(
 
 pub fn get_day_b4_yesterdays_category_rankings_by_cache_index(
     vc_day_id: DayId,
-    block_index: u32,
+    block_index: u64,
     category_cache_index: CategoryCacheIndex,
 ) -> Vec<u8> {
     return get_category_rankings_by_cache_index(
@@ -201,7 +201,7 @@ pub fn get_day_b4_yesterdays_category_rankings_by_cache_index(
 
 pub fn get_this_weeks_category_rankings_by_global_id(
     vc_week_id: WeekId,
-    block_index: u32,
+    block_index: u64,
     global_category_id: CategoryId,
 ) -> Vec<u8> {
     return get_category_rankings_by_global_id(
@@ -217,7 +217,7 @@ pub fn get_this_weeks_category_rankings_by_global_id(
 
 pub fn get_this_weeks_category_rankings_by_cache_index(
     vc_week_id: WeekId,
-    block_index: u32,
+    block_index: u64,
     category_cache_index: CategoryCacheIndex,
 ) -> Vec<u8> {
     return get_category_rankings_by_cache_index(
@@ -232,7 +232,7 @@ pub fn get_this_weeks_category_rankings_by_cache_index(
 
 pub fn get_last_weeks_category_rankings_by_global_id(
     vc_week_id: WeekId,
-    block_index: u32,
+    block_index: u64,
     global_category_id: CategoryId,
 ) -> Vec<u8> {
     return get_category_rankings_by_global_id(
@@ -248,7 +248,7 @@ pub fn get_last_weeks_category_rankings_by_global_id(
 
 pub fn get_last_weeks_category_rankings_by_cache_index(
     vc_week_id: WeekId,
-    block_index: u32,
+    block_index: u64,
     category_cache_index: CategoryCacheIndex,
 ) -> Vec<u8> {
     return get_category_rankings_by_cache_index(
@@ -263,7 +263,7 @@ pub fn get_last_weeks_category_rankings_by_cache_index(
 
 pub fn get_this_months_category_rankings_by_global_id(
     vc_month_id: MonthId,
-    block_index: u32,
+    block_index: u64,
     global_category_id: CategoryId,
 ) -> Vec<u8> {
     return get_category_rankings_by_global_id(
@@ -279,7 +279,7 @@ pub fn get_this_months_category_rankings_by_global_id(
 
 pub fn get_this_months_category_rankings_by_cache_index(
     vc_month_id: MonthId,
-    block_index: u32,
+    block_index: u64,
     category_cache_index: CategoryCacheIndex,
 ) -> Vec<u8> {
     return get_category_rankings_by_cache_index(
@@ -294,7 +294,7 @@ pub fn get_this_months_category_rankings_by_cache_index(
 
 pub fn get_last_months_category_rankings_by_global_id(
     vc_month_id: MonthId,
-    block_index: u32,
+    block_index: u64,
     global_category_id: CategoryId,
 ) -> Vec<u8> {
     return get_category_rankings_by_global_id(
@@ -310,7 +310,7 @@ pub fn get_last_months_category_rankings_by_global_id(
 
 pub fn get_last_months_category_rankings_by_cache_index(
     vc_month_id: MonthId,
-    block_index: u32,
+    block_index: u64,
     category_cache_index: CategoryCacheIndex,
 ) -> Vec<u8> {
     return get_category_rankings_by_cache_index(
@@ -329,7 +329,7 @@ fn get_category_rankings_by_global_id(
     category_index_map: IntHashMap<CategoryId, CategoryCacheIndex>,
     given_period_category_poll_rankings: Vec<Vec<VoteCount>>,
     global_category_id: CategoryId,
-    block_index: u32,
+    block_index: u64,
     max_poll_number_bytes: u8,
 ) -> Vec<u8> {
     if current_period_id != expected_period_id {
@@ -340,7 +340,7 @@ fn get_category_rankings_by_global_id(
 
     match category_index_map.get(&global_category_id) {
         None => {
-            return codes::INVALID_GLOBAL_CATEGORY_ID_RESPONSE;
+            return codes::INVALID_GLOBAL_CATEGORY_ID_RESPONSE.to_vec();
         }
         Some(categoryCacheIndex) => {
             return get_category_rankings_with_category_cache_index(
@@ -353,99 +353,99 @@ fn get_category_rankings_by_global_id(
 fn get_category_rankings_by_cache_index(
     current_period_id: u32,
     expected_period_id: u32,
-    given_period_category_poll_rankings: Vec<Vec<VoteCount>>,
+    vote_counts_by_category_index: Vec<Vec<VoteCount>>,
     category_cache_index: CategoryCacheIndex,
-    block_index: u32,
+    block_index: u64,
     max_poll_number_bytes: u8,
 ) -> Vec<u8> {
     if current_period_id != expected_period_id {
-        return codes::INVALID_PERIOD_ID_RESPONSE;
+        return codes::INVALID_PERIOD_ID_RESPONSE.to_vec();
     }
 
     let first_record_index = PAGE_SIZE * block_index;
 
-    match given_period_category_poll_rankings.voteCountsByCategoryIndex.get(category_cache_index) {
+    match vote_counts_by_category_index.get(category_cache_index) {
         None => {
-            return codes::INVALID_CATEGORY_CACHE_INDEX_RESPONSE;
+            return codes::INVALID_CATEGORY_CACHE_INDEX_RESPONSE.to_vec();
         }
         Some(_) => {
             return get_category_rankings(
                 first_record_index, category_cache_index,
-                given_period_category_poll_rankings, max_poll_number_bytes);
+                vote_counts_by_category_index, max_poll_number_bytes);
         }
     }
 }
 
 #[inline]
 fn get_category_rankings_with_category_cache_index(
-    first_record_index: usize,
+    first_record_index: u64,
     category_cache_index: CategoryCacheIndex,
-    given_period_category_poll_rankings: Vec<Vec<VoteCount>>,
+    vote_counts_by_category_index: Vec<Vec<VoteCount>>,
     max_poll_number_bytes: u8,
 ) -> Vec<u8> {
-    let vote_counts_for_category = given_period_category_poll_rankings[category_cache_index];
+    let vote_counts_for_category = vote_counts_by_category_index[category_cache_index as usize];
     let category_cache_index_bytes: [u8; 4] = unsafe {
-        std::mem::transmute(*category_cache_index);
+        std::mem::transmute(category_cache_index)
     };
 
 
     match max_poll_number_bytes {
         3 => {
-            let mut response: Vec<u8> = Vec::with_capacity(INITIAL_RESPONSE_VECTOR_SIZE_3_POLL_BYTES);
+            let mut response: Vec<u8> = Vec::with_capacity(INITIAL_RESPONSE_VECTOR_SIZE_3_POLL_BYTES as usize);
             response.push(0b00000011);
             response.extend_from_slice(&category_cache_index_bytes);
 
             return get_3_byte_recent_polls(vote_counts_for_category, first_record_index, response);
         }
         4 => {
-            let mut response: Vec<u8> = Vec::with_capacity(INITIAL_RESPONSE_VECTOR_SIZE_4_POLL_BYTES);
+            let mut response: Vec<u8> = Vec::with_capacity(INITIAL_RESPONSE_VECTOR_SIZE_4_POLL_BYTES as usize);
             response.push(0b00000100);
             response.extend_from_slice(&category_cache_index_bytes);
 
             return get_4_byte_recent_polls(vote_counts_for_category, first_record_index, response);
         }
         2 => {
-            let mut response: Vec<u8> = Vec::with_capacity(INITIAL_RESPONSE_VECTOR_SIZE_2_POLL_BYTES);
+            let mut response: Vec<u8> = Vec::with_capacity(INITIAL_RESPONSE_VECTOR_SIZE_2_POLL_BYTES as usize);
             response.push(0b00000010);
             response.extend_from_slice(&category_cache_index_bytes);
 
             return get_2_byte_recent_polls(vote_counts_for_category, first_record_index, response);
         }
         5 => {
-            let mut response: Vec<u8> = Vec::with_capacity(INITIAL_RESPONSE_VECTOR_SIZE_5_POLL_BYTES);
+            let mut response: Vec<u8> = Vec::with_capacity(INITIAL_RESPONSE_VECTOR_SIZE_5_POLL_BYTES as usize);
             response.push(0b00000101);
             response.extend_from_slice(&category_cache_index_bytes);
 
             return get_4_byte_recent_polls(vote_counts_for_category, first_record_index, response);
         }
         6 => {
-            let mut response: Vec<u8> = Vec::with_capacity(INITIAL_RESPONSE_VECTOR_SIZE_6_POLL_BYTES);
+            let mut response: Vec<u8> = Vec::with_capacity(INITIAL_RESPONSE_VECTOR_SIZE_6_POLL_BYTES as usize);
             response.push(0b00000110);
             response.extend_from_slice(&category_cache_index_bytes);
 
             return get_4_byte_recent_polls(vote_counts_for_category, first_record_index, response);
         }
         7 => {
-            let mut response: Vec<u8> = Vec::with_capacity(INITIAL_RESPONSE_VECTOR_SIZE_7_POLL_BYTES);
+            let mut response: Vec<u8> = Vec::with_capacity(INITIAL_RESPONSE_VECTOR_SIZE_7_POLL_BYTES as usize);
             response.push(0b00000111);
             response.extend_from_slice(&category_cache_index_bytes);
 
             return get_4_byte_recent_polls(vote_counts_for_category, first_record_index, response);
         }
         8 => {
-            let mut response: Vec<u8> = Vec::with_capacity(INITIAL_RESPONSE_VECTOR_SIZE_8_POLL_BYTES);
+            let mut response: Vec<u8> = Vec::with_capacity(INITIAL_RESPONSE_VECTOR_SIZE_8_POLL_BYTES as usize);
             response.push(0b00000000);
             response.extend_from_slice(&category_cache_index_bytes);
 
             return get_4_byte_recent_polls(vote_counts_for_category, first_record_index, response);
         }
     }
-//            return codes::INVALID_CATEGORY_RESPONSE;
+//            return codes::INVALID_CATEGORY_RESPONSE.to_vec();
 }
 
 #[inline]
 fn get_category_rankings(
-    first_record_index: usize,
+    first_record_index: u64,
     category_cache_index: CategoryCacheIndex,
     given_period_category_poll_rankings: Vec<Vec<VoteCount>>,
     max_poll_number_bytes: u8,
@@ -454,42 +454,42 @@ fn get_category_rankings(
 
     match max_poll_number_bytes {
         3 => {
-            let mut response: Vec<u8> = Vec::with_capacity(INITIAL_RESPONSE_VECTOR_SIZE_3_POLL_BYTES);
+            let mut response: Vec<u8> = Vec::with_capacity(INITIAL_RESPONSE_VECTOR_SIZE_3_POLL_BYTES as usize);
             response.push(0b00000011);
             return get_3_byte_recent_polls(vote_counts_for_category, first_record_index, response);
         }
         4 => {
-            let mut response: Vec<u8> = Vec::with_capacity(INITIAL_RESPONSE_VECTOR_SIZE_4_POLL_BYTES);
+            let mut response: Vec<u8> = Vec::with_capacity(INITIAL_RESPONSE_VECTOR_SIZE_4_POLL_BYTES as usize);
             response.push(0b00000100);
             return get_4_byte_recent_polls(vote_counts_for_category, first_record_index, response);
         }
         2 => {
-            let mut response: Vec<u8> = Vec::with_capacity(INITIAL_RESPONSE_VECTOR_SIZE_2_POLL_BYTES);
+            let mut response: Vec<u8> = Vec::with_capacity(INITIAL_RESPONSE_VECTOR_SIZE_2_POLL_BYTES as usize);
             response.push(0b00000010);
             return get_2_byte_recent_polls(vote_counts_for_category, first_record_index, response);
         }
         5 => {
-            let mut response: Vec<u8> = Vec::with_capacity(INITIAL_RESPONSE_VECTOR_SIZE_5_POLL_BYTES);
+            let mut response: Vec<u8> = Vec::with_capacity(INITIAL_RESPONSE_VECTOR_SIZE_5_POLL_BYTES as usize);
             response.push(0b00000101);
             return get_4_byte_recent_polls(vote_counts_for_category, first_record_index, response);
         }
         6 => {
-            let mut response: Vec<u8> = Vec::with_capacity(INITIAL_RESPONSE_VECTOR_SIZE_6_POLL_BYTES);
+            let mut response: Vec<u8> = Vec::with_capacity(INITIAL_RESPONSE_VECTOR_SIZE_6_POLL_BYTES as usize);
             response.push(0b00000110);
             return get_4_byte_recent_polls(vote_counts_for_category, first_record_index, response);
         }
         7 => {
-            let mut response: Vec<u8> = Vec::with_capacity(INITIAL_RESPONSE_VECTOR_SIZE_7_POLL_BYTES);
+            let mut response: Vec<u8> = Vec::with_capacity(INITIAL_RESPONSE_VECTOR_SIZE_7_POLL_BYTES as usize);
             response.push(0b00000111);
             return get_4_byte_recent_polls(vote_counts_for_category, first_record_index, response);
         }
         8 => {
-            let mut response: Vec<u8> = Vec::with_capacity(INITIAL_RESPONSE_VECTOR_SIZE_8_POLL_BYTES);
+            let mut response: Vec<u8> = Vec::with_capacity(INITIAL_RESPONSE_VECTOR_SIZE_8_POLL_BYTES as usize);
             response.push(0b00000000);
             return get_4_byte_recent_polls(vote_counts_for_category, first_record_index, response);
         }
     }
-//            return codes::INVALID_CATEGORY_RESPONSE;
+//            return codes::INVALID_CATEGORY_RESPONSE.to_vec();
 }
 
 #[inline]
