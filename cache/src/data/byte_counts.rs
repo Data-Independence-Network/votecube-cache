@@ -1,3 +1,5 @@
+use std::mem::transmute;
+
 pub struct ByteCounts {
     pub current_bits: u8,
     pub current_byte: u8,
@@ -139,7 +141,7 @@ impl ByteCounts {
         }
 
         let num_entries_in_list_bytes: [u8; 8] = unsafe {
-            std::mem::transmute(num_byte_counts_bytes.to_be())
+            transmute(num_byte_counts_bytes.to_be())
         };
 
         num_entries_in_list_bytes

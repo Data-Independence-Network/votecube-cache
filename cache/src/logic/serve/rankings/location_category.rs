@@ -686,7 +686,7 @@ fn get_location_category_rankings_by_global_ids(
     };
 
     let location_category_cache_index: LocationCategoryCacheIndex = match location_period_ids
-        .locationCategoryCacheIndexMap.get(&global_category_id) {
+        .location_category_cache_index_map.get(&global_category_id) {
         None => {
             return codes::INVALID_GLOBAL_CATEGORY_ID_RESPONSE.to_vec();
         }
@@ -733,10 +733,10 @@ fn get_location_category_rankings_by_location_cache_index_and_global_category_id
     };
 
     let location_period_ids: LocationPeriodIds
-    = location_category_index_map.get(*location_cache_index).unwrap();
+    = *location_category_index_map.get(&(location_cache_index as u64)).unwrap();
 
     let location_category_cache_index: u32 = match location_period_ids
-        .locationCategoryCacheIndexMap.get(&global_category_id) {
+        .location_category_cache_index_map.get(&global_category_id) {
         None => {
             return codes::INVALID_GLOBAL_CATEGORY_ID_RESPONSE.to_vec();
         }
@@ -780,7 +780,7 @@ fn get_location_category_rankings_by_cache_indexes(
     };
 
     let location_category_vote_counts: Vec<VoteCount>
-    = match location_poll_rankings.category_locations.get(location_category_cache_index) {
+    = match location_poll_rankings.category_locations.get(location_category_cache_index as usize) {
         None => {
             return codes::INVALID_CATEGORY_CACHE_INDEX_RESPONSE.to_vec();
         }
@@ -792,7 +792,7 @@ fn get_location_category_rankings_by_cache_indexes(
     let first_record_index = PAGE_SIZE * block_index;
 
     return get_location_category_rankings(
-        first_record_index, location_category_vote_counts,max_poll_number_bytes);
+        first_record_index as usize, location_category_vote_counts,max_poll_number_bytes);
 }
 
 #[inline]
@@ -805,12 +805,12 @@ fn get_location_category_rankings_with_cache_indexes(
     max_poll_number_bytes: u8,
 ) -> Vec<u8> {
     let vote_counts_for_location
-    = location_poll_rankings.category_locations[category_cache_index];
+    = location_poll_rankings.category_locations[category_cache_index as usize];
     let location_cache_index_bytes: [u8; 4] = unsafe {
-        std::mem::transmute(location_cache_index)
+        transmute(location_cache_index)
     };
     let category_cache_index_bytes: [u8; 4] = unsafe {
-        std::mem::transmute(category_cache_index)
+        transmute(category_cache_index)
     };
 
     match max_poll_number_bytes {
@@ -884,9 +884,9 @@ fn get_location_category_rankings_with_category_cache_index(
     max_poll_number_bytes: u8,
 ) -> Vec<u8> {
     let vote_counts_for_location
-    = location_poll_rankings.category_locations[category_cache_index];
+    = location_poll_rankings.category_locations[category_cache_index as usize];
     let category_cache_index_bytes: [u8; 4] = unsafe {
-        std::mem::transmute(category_cache_index)
+        transmute(category_cache_index)
     };
 
     match max_poll_number_bytes {

@@ -465,7 +465,7 @@ fn get_location_rankings_by_cache_index(
     }
 
     let location_poll_rankings: LocationPollRankings
-    = match given_period_location_poll_rankings.get(timezone_id as usize).unwrap().get(location_cache_index) {
+    = match given_period_location_poll_rankings.get(timezone_id as usize).unwrap().get(location_cache_index as usize) {
         None => {
             return codes::INVALID_LOCATION_CACHE_INDEX_RESPONSE.to_vec();
         }
@@ -491,7 +491,7 @@ fn get_location_rankings_with_location_cache_index(
 ) -> Vec<u8> {
     let vote_counts_for_location = location_poll_rankings.location;
     let location_cache_index_bytes: [u8; 4] = unsafe {
-        std::mem::transmute(location_cache_index)
+        transmute(location_cache_index)
     };
 
     match max_poll_number_bytes {
