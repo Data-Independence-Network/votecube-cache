@@ -491,7 +491,7 @@ fn get_location_rankings_with_location_cache_index(
 ) -> Vec<u8> {
     let vote_counts_for_location = location_poll_rankings.location;
     let location_cache_index_bytes: [u8; 4] = unsafe {
-        transmute(location_cache_index)
+        std::mem::transmute(location_cache_index)
     };
 
     match max_poll_number_bytes {

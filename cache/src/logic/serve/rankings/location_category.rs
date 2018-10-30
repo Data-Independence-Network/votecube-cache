@@ -820,7 +820,7 @@ fn get_location_category_rankings_with_cache_indexes(
             response.extend_from_slice(&location_cache_index_bytes);
             response.extend_from_slice(&category_cache_index_bytes);
 
-            return get_3_byte_recent_polls(*vote_counts_for_location, first_record_index as usize, response);
+            return get_3_byte_recent_polls(vote_counts_for_location, first_record_index as usize, response);
         }
         4 => {
             let mut response: Vec<u8> = Vec::with_capacity(INITIAL_RESPONSE_VECTOR_SIZE_4_POLL_BYTES as usize);;
@@ -828,7 +828,7 @@ fn get_location_category_rankings_with_cache_indexes(
             response.extend_from_slice(&location_cache_index_bytes);
             response.extend_from_slice(&category_cache_index_bytes);
 
-            return get_4_byte_recent_polls(*vote_counts_for_location, first_record_index as usize, response);
+            return get_4_byte_recent_polls(vote_counts_for_location, first_record_index as usize, response);
         }
         5 => {
             let mut response: Vec<u8> = Vec::with_capacity(INITIAL_RESPONSE_VECTOR_SIZE_5_POLL_BYTES as usize);;
@@ -836,7 +836,7 @@ fn get_location_category_rankings_with_cache_indexes(
             response.extend_from_slice(&location_cache_index_bytes);
             response.extend_from_slice(&category_cache_index_bytes);
 
-            return get_5_byte_recent_polls(*vote_counts_for_location, first_record_index as usize, response);
+            return get_5_byte_recent_polls(vote_counts_for_location, first_record_index as usize, response);
         }
         6 => {
             let mut response: Vec<u8> = Vec::with_capacity(INITIAL_RESPONSE_VECTOR_SIZE_6_POLL_BYTES as usize);;
@@ -844,7 +844,7 @@ fn get_location_category_rankings_with_cache_indexes(
             response.extend_from_slice(&location_cache_index_bytes);
             response.extend_from_slice(&category_cache_index_bytes);
 
-            return get_6_byte_recent_polls(*vote_counts_for_location, first_record_index as usize, response);
+            return get_6_byte_recent_polls(vote_counts_for_location, first_record_index as usize, response);
         }
         7 => {
             let mut response: Vec<u8> = Vec::with_capacity(INITIAL_RESPONSE_VECTOR_SIZE_7_POLL_BYTES as usize);;
@@ -852,7 +852,7 @@ fn get_location_category_rankings_with_cache_indexes(
             response.extend_from_slice(&location_cache_index_bytes);
             response.extend_from_slice(&category_cache_index_bytes);
 
-            return get_7_byte_recent_polls(*vote_counts_for_location, first_record_index as usize, response);
+            return get_7_byte_recent_polls(vote_counts_for_location, first_record_index as usize, response);
         }
         8 => {
             let mut response: Vec<u8> = Vec::with_capacity(INITIAL_RESPONSE_VECTOR_SIZE_8_POLL_BYTES as usize);;
@@ -860,7 +860,7 @@ fn get_location_category_rankings_with_cache_indexes(
             response.extend_from_slice(&location_cache_index_bytes);
             response.extend_from_slice(&category_cache_index_bytes);
 
-            return get_8_byte_recent_polls(*vote_counts_for_location, first_record_index as usize, response);
+            return get_8_byte_recent_polls(vote_counts_for_location, first_record_index as usize, response);
         }
         2 => {
             let mut response: Vec<u8> = Vec::with_capacity(INITIAL_RESPONSE_VECTOR_SIZE_2_POLL_BYTES as usize);;
@@ -868,7 +868,7 @@ fn get_location_category_rankings_with_cache_indexes(
             response.extend_from_slice(&location_cache_index_bytes);
             response.extend_from_slice(&category_cache_index_bytes);
 
-            return get_2_byte_recent_polls(*vote_counts_for_location, first_record_index as usize, response);
+            return get_2_byte_recent_polls(vote_counts_for_location, first_record_index as usize, response);
         }
        }
 //            return codes::INVALID_CATEGORY_RESPONSE.to_vec();
@@ -895,49 +895,49 @@ fn get_location_category_rankings_with_category_cache_index(
             response.push(0b00000011);
             response.extend_from_slice(&category_cache_index_bytes);
 
-            return get_3_byte_recent_polls(*vote_counts_for_location, first_record_index as usize, response);
+            return get_3_byte_recent_polls(vote_counts_for_location, first_record_index as usize, response);
         }
         4 => {
             let mut response: Vec<u8> = Vec::with_capacity(INITIAL_RESPONSE_VECTOR_SIZE_4_POLL_BYTES as usize);;
             response.push(0b00000100);
             response.extend_from_slice(&category_cache_index_bytes);
 
-            return get_4_byte_recent_polls(*vote_counts_for_location, first_record_index as usize, response);
+            return get_4_byte_recent_polls(vote_counts_for_location, first_record_index as usize, response);
         }
         5 => {
             let mut response: Vec<u8> = Vec::with_capacity(INITIAL_RESPONSE_VECTOR_SIZE_5_POLL_BYTES as usize);;
             response.push(0b00000101);
             response.extend_from_slice(&category_cache_index_bytes);
 
-            return get_5_byte_recent_polls(*vote_counts_for_location, first_record_index as usize, response);
+            return get_5_byte_recent_polls(vote_counts_for_location, first_record_index as usize, response);
         }
         6 => {
             let mut response: Vec<u8> = Vec::with_capacity(INITIAL_RESPONSE_VECTOR_SIZE_6_POLL_BYTES as usize);;
             response.push(0b00000110);
             response.extend_from_slice(&category_cache_index_bytes);
 
-            return get_6_byte_recent_polls(*vote_counts_for_location, first_record_index as usize, response);
+            return get_6_byte_recent_polls(vote_counts_for_location, first_record_index as usize, response);
         }
         7 => {
             let mut response: Vec<u8> = Vec::with_capacity(INITIAL_RESPONSE_VECTOR_SIZE_7_POLL_BYTES as usize);;
             response.push(0b00000111);
             response.extend_from_slice(&category_cache_index_bytes);
 
-            return get_7_byte_recent_polls(*vote_counts_for_location, first_record_index as usize, response);
+            return get_7_byte_recent_polls(vote_counts_for_location, first_record_index as usize, response);
         }
         8 => {
             let mut response: Vec<u8> = Vec::with_capacity(INITIAL_RESPONSE_VECTOR_SIZE_8_POLL_BYTES as usize);;
             response.push(0b00000000);
             response.extend_from_slice(&category_cache_index_bytes);
 
-            return get_8_byte_recent_polls(*vote_counts_for_location, first_record_index as usize, response);
+            return get_8_byte_recent_polls(vote_counts_for_location, first_record_index as usize, response);
         }
         2 => {
             let mut response: Vec<u8> = Vec::with_capacity(INITIAL_RESPONSE_VECTOR_SIZE_2_POLL_BYTES as usize);;
             response.push(0b00000010);
             response.extend_from_slice(&category_cache_index_bytes);
 
-            return get_2_byte_recent_polls(*vote_counts_for_location, first_record_index as usize, response);
+            return get_2_byte_recent_polls(vote_counts_for_location, first_record_index as usize, response);
         }
     }
 //            return codes::INVALID_CATEGORY_RESPONSE.to_vec();

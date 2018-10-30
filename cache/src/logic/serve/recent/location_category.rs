@@ -38,7 +38,7 @@ pub fn get_tomorrows_location_category_polls(
         block_index,
         global_location_id,
         global_category_id,
-        cache::TOMORROWS_POLL_ID_BYTE_COUNTS[timezone_id],
+        cache::TOMORROWS_POLL_ID_BYTE_COUNTS[timezone_id as usize],
     );
 }
 
@@ -57,7 +57,7 @@ pub fn get_day_after_tomorrows_location_category_polls(
         block_index,
         global_location_id,
         global_category_id,
-        cache::DAY_AFTER_TOMORROWS_POLL_ID_BYTE_COUNTS[timezone_id],
+        cache::DAY_AFTER_TOMORROWS_POLL_ID_BYTE_COUNTS[timezone_id as usize],
     );
 }
 
@@ -76,7 +76,7 @@ pub fn get_next_weeks_location_category_polls(
         block_index,
         global_location_id,
         global_category_id,
-        cache::NEXT_WEEKS_POLL_ID_BYTE_COUNTS[timezone_id],
+        cache::NEXT_WEEKS_POLL_ID_BYTE_COUNTS[timezone_id as usize],
     );
 }
 
@@ -95,7 +95,7 @@ pub fn get_next_months_location_category_polls(
         block_index,
         global_location_id,
         global_category_id,
-        cache::NEXT_MONTHS_POLL_ID_BYTE_COUNTS[timezone_id],
+        cache::NEXT_MONTHS_POLL_ID_BYTE_COUNTS[timezone_id as usize],
     );
 }
 
@@ -112,46 +112,46 @@ fn get_global_location_category_polls(
     max_poll_number_bytes: u8,
 ) -> Vec<u8> {
     if current_period_id != expected_period_id {
-        return codes::INVALID_PERIOD_ID_RESPONSE;
+        return codes::INVALID_PERIOD_ID_RESPONSE.to_vec();
     }
 
     let location_polls_for_timezone: IntHashMap<LocationId, LocationPollPrependLists> =
-        match location_polls_by_timezone.get(timezone_id) {
+        match location_polls_by_timezone.get(timezone_id as usize) {
             None => {
-                return codes::INVALID_TIMEZONE_ID_RESPONSE;
+                return codes::INVALID_TIMEZONE_ID_RESPONSE.to_vec();
             }
             Some(futurePolls) => {
-                futurePolls
+                *futurePolls
             }
         };
 
-    let location_polls: LocationPollPrependLists = match location_polls_by_timezone.get(*global_location_id) {
+    let location_polls: LocationPollPrependLists = match location_polls_for_timezone.get(&(timezone_id as u64)) {
         None => {
             return NO_RESULTS;
         }
         Some(locationPolls) => {
-            locationPolls
+            *locationPolls
         }
     };
 
-    let location_category_polls: LocationPollPrependLists = match location_polls.category_locations.get(*global_category_id) {
+    let location_category_polls: Vec<Vec<PollId>> = match location_polls.category_locations.get(&global_category_id) {
         None => {
             return NO_RESULTS;
         }
         Some(locationCategoryPolls) => {
-            locationCategoryPolls
+            *locationCategoryPolls
         }
     };
 
-    let polls_block: Vec<PollId> = match location_category_polls.get(location_polls.len() - block_number) {
+    let polls_block: Vec<PollId> = match location_category_polls.get(location_category_polls.len() - block_number as usize) {
         None => {
             return NO_RESULTS;
         }
         Some(block) => {
-            block
+            *block
         }
     };
-    let mut response: Vec<u8> = Vec::with_capacity(max_poll_number_bytes * polls_block.len() + 1);
+    let mut response: Vec<u8> = Vec::with_capacity(max_poll_number_bytes as usize * polls_block.len() + 1);
 
     match max_poll_number_bytes {
         3 => {

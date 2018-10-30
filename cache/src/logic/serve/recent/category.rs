@@ -32,7 +32,7 @@ pub fn get_tomorrows_category_polls(
         vc_day_id,
         cache::TOMORROWS_POLLS_BY_CATEGORY,
         block_number, global_category_id,
-        cache::TOMORROWS_POLL_ID_BYTE_COUNTS[GLOBAL_TZ_INDEX]);
+        cache::TOMORROWS_POLL_ID_BYTE_COUNTS[GLOBAL_TZ_INDEX as usize]);
 }
 
 pub fn get_day_after_tomorrows_category_polls(
@@ -46,7 +46,7 @@ pub fn get_day_after_tomorrows_category_polls(
         vc_day_id,
         cache::DAY_AFTER_TOMORROWS_POLLS_BY_CATEGORY,
         block_number, global_category_id,
-        cache::DAY_AFTER_TOMORROWS_POLL_ID_BYTE_COUNTS[GLOBAL_TZ_INDEX]);
+        cache::DAY_AFTER_TOMORROWS_POLL_ID_BYTE_COUNTS[GLOBAL_TZ_INDEX as usize]);
 }
 
 pub fn get_next_weeks_category_polls(
@@ -60,7 +60,7 @@ pub fn get_next_weeks_category_polls(
         vc_week_id,
         cache::NEXT_WEEKS_POLLS_BY_CATEGORY,
         block_number, global_category_id,
-        cache::NEXT_WEEKS_POLL_ID_BYTE_COUNTS[GLOBAL_TZ_INDEX]);
+        cache::NEXT_WEEKS_POLL_ID_BYTE_COUNTS[GLOBAL_TZ_INDEX as usize]);
 }
 
 pub fn get_next_months_category_polls(
@@ -74,7 +74,7 @@ pub fn get_next_months_category_polls(
         vc_month_id,
         cache::NEXT_MONTHS_POLLS_BY_CATEGORY,
         block_number, global_category_id,
-        cache::NEXT_MONTHS_POLL_ID_BYTE_COUNTS[GLOBAL_TZ_INDEX]);
+        cache::NEXT_MONTHS_POLL_ID_BYTE_COUNTS[GLOBAL_TZ_INDEX as usize]);
 }
 
 
@@ -88,26 +88,26 @@ fn get_global_category_polls(
     max_poll_number_bytes: u8,
 ) -> Vec<u8> {
     if current_period_id != expected_period_id {
-        return codes::INVALID_PERIOD_ID_RESPONSE;
+        return codes::INVALID_PERIOD_ID_RESPONSE.to_vec();
     }
 
-    let category_polls: Vec<Vec<PollId>> = match global_category_polls.get(*global_category_id) {
+    let category_polls: Vec<Vec<PollId>> = match global_category_polls.get(&global_category_id) {
         None => {
             return NO_RESULTS;
         }
         Some(polls) => {
-            polls
+            *polls
         }
     };
-    let polls_block: Vec<PollId> = match category_polls.get(category_polls.len() - block_number) {
+    let polls_block: Vec<PollId> = match category_polls.get(category_polls.len() - (block_number as usize)) {
         None => {
             return NO_RESULTS;
         }
         Some(block) => {
-            block
+            *block
         }
     };
-    let mut response: Vec<u8> = Vec::with_capacity(max_poll_number_bytes * polls_block.len() + 1);
+    let mut response: Vec<u8> = Vec::with_capacity(max_poll_number_bytes as usize * polls_block.len()  + 1);
 
     match max_poll_number_bytes {
         3 => {
