@@ -1,7 +1,9 @@
 extern crate byteorder;
 extern crate bytes;
-extern crate int_hash;
 extern crate core;
+extern crate int_hash;
+#[macro_use]
+extern crate lazy_static;
 
 extern crate common;
 extern crate server;

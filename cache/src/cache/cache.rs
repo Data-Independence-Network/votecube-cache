@@ -37,46 +37,668 @@ pub static mut THIS_WEEK_IDS: [u32; NUM_TIMEZONES] = [0, 0, 0, 0, 0, 0, 0, 0, 0,
 pub static mut NEXT_WEEK_IDS: [u32; NUM_TIMEZONES] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 pub static mut DAY_B4_YESTERDAY_IDS: [u32; NUM_TIMEZONES] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 pub static mut YESTERDAY_IDS: [u32; NUM_TIMEZONES] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+pub static mut TODAY_IDS: [u32; NUM_TIMEZONES] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 pub static mut TOMORROW_IDS: [u32; NUM_TIMEZONES] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 pub static mut DAY_AFTER_TOMORROW_IDS: [u32; NUM_TIMEZONES] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+
+pub unsafe fn get_last_month_id(
+    timezone_index: u32
+) -> u32 {
+    LAST_MONTH_IDS[timezone_index as usize]
+}
+pub unsafe fn get_this_month_id(
+    timezone_index: u32
+) -> u32 {
+    THIS_MONTH_IDS[timezone_index as usize]
+}
+pub unsafe fn get_next_month_id(
+    timezone_index: u32
+) -> u32 {
+    NEXT_MONTH_IDS[timezone_index as usize]
+}
+pub unsafe fn get_last_week_id(
+    timezone_index: u32
+) -> u32 {
+    LAST_WEEK_IDS[timezone_index as usize]
+}
+pub unsafe fn get_this_week_id(
+    timezone_index: u32
+) -> u32 {
+    THIS_WEEK_IDS[timezone_index as usize]
+}
+pub unsafe fn get_next_week_id(
+    timezone_index: u32
+) -> u32 {
+    NEXT_WEEK_IDS[timezone_index as usize]
+}
+pub unsafe fn get_day_b4_yesterday_id(
+    timezone_index: u32
+) -> u32 {
+    DAY_B4_YESTERDAY_IDS[timezone_index as usize]
+}
+pub unsafe fn get_yesterday_id(
+    timezone_index: u32
+) -> u32 {
+    YESTERDAY_IDS[timezone_index as usize]
+}
+pub unsafe fn get_today_id(
+    timezone_index: u32
+) -> u32 {
+    TODAY_IDS[timezone_index as usize]
+}
+pub unsafe fn get_tomorrow_id(
+    timezone_index: u32
+) -> u32 {
+    TOMORROW_IDS[timezone_index as usize]
+}
+pub unsafe fn get_day_after_tomorrow_id(
+    timezone_index: u32
+) -> u32 {
+    DAY_AFTER_TOMORROW_IDS[timezone_index as usize]
+}
 
 /**
  *  Maximum number of bytes taken by poll ids of a given current of future cache period.
  */
-pub static mut LAST_MONTHS_POLL_ID_BYTE_COUNTS: Vec<u8>
-= Vec::with_capacity(NUM_TIMEZONES_WITH_GLOBAL_CATEGORY);
-pub static mut THIS_MONTHS_POLL_ID_BYTE_COUNTS: Vec<u8>
-= Vec::with_capacity(NUM_TIMEZONES_WITH_GLOBAL_CATEGORY);
-pub static mut NEXT_MONTHS_POLL_ID_BYTE_COUNTS: Vec<u8>
-= Vec::with_capacity(NUM_TIMEZONES_WITH_GLOBAL_CATEGORY);
+pub static mut LAST_MONTHS_POLL_ID_BYTE_COUNTS: [u32; NUM_TIMEZONES_WITH_GLOBAL_CATEGORY] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+pub static mut THIS_MONTHS_POLL_ID_BYTE_COUNTS: [u32; NUM_TIMEZONES_WITH_GLOBAL_CATEGORY] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+pub static mut NEXT_MONTHS_POLL_ID_BYTE_COUNTS: [u32; NUM_TIMEZONES_WITH_GLOBAL_CATEGORY] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
-pub static mut LAST_WEEKS_POLL_ID_BYTE_COUNTS: Vec<u8>
-= Vec::with_capacity(NUM_TIMEZONES_WITH_GLOBAL_CATEGORY);
-pub static mut THIS_WEEKS_POLL_ID_BYTE_COUNTS: Vec<u8>
-= Vec::with_capacity(NUM_TIMEZONES_WITH_GLOBAL_CATEGORY);
-pub static mut NEXT_WEEKS_POLL_ID_BYTE_COUNTS: Vec<u8>
-= Vec::with_capacity(NUM_TIMEZONES_WITH_GLOBAL_CATEGORY);
+pub static mut LAST_WEEKS_POLL_ID_BYTE_COUNTS: [u32; NUM_TIMEZONES_WITH_GLOBAL_CATEGORY] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+pub static mut THIS_WEEKS_POLL_ID_BYTE_COUNTS: [u32; NUM_TIMEZONES_WITH_GLOBAL_CATEGORY] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+pub static mut NEXT_WEEKS_POLL_ID_BYTE_COUNTS: [u32; NUM_TIMEZONES_WITH_GLOBAL_CATEGORY] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
-pub static mut DAY_B4_YESTERDAYS_POLL_ID_BYTE_COUNTS: Vec<u8>
-= Vec::with_capacity(NUM_TIMEZONES_WITH_GLOBAL_CATEGORY);
-pub static mut YESTERDAYS_POLL_ID_BYTE_COUNTS: Vec<u8>
-= Vec::with_capacity(NUM_TIMEZONES_WITH_GLOBAL_CATEGORY);
-pub static mut TODAYS_POLL_ID_BYTE_COUNTS: Vec<u8>
-= Vec::with_capacity(NUM_TIMEZONES_WITH_GLOBAL_CATEGORY);
-pub static mut TOMORROWS_POLL_ID_BYTE_COUNTS: Vec<u8>
-= Vec::with_capacity(NUM_TIMEZONES_WITH_GLOBAL_CATEGORY);
-pub static mut DAY_AFTER_TOMORROWS_POLL_ID_BYTE_COUNTS: Vec<u8>
-= Vec::with_capacity(NUM_TIMEZONES_WITH_GLOBAL_CATEGORY);
+pub static mut DAY_B4_YESTERDAYS_POLL_ID_BYTE_COUNTS: [u32; NUM_TIMEZONES_WITH_GLOBAL_CATEGORY] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+pub static mut YESTERDAYS_POLL_ID_BYTE_COUNTS: [u32; NUM_TIMEZONES_WITH_GLOBAL_CATEGORY] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+pub static mut TODAYS_POLL_ID_BYTE_COUNTS: [u32; NUM_TIMEZONES_WITH_GLOBAL_CATEGORY] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+pub static mut TOMORROWS_POLL_ID_BYTE_COUNTS: [u32; NUM_TIMEZONES_WITH_GLOBAL_CATEGORY] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+pub static mut DAY_AFTER_TOMORROWS_POLL_ID_BYTE_COUNTS: [u32; NUM_TIMEZONES_WITH_GLOBAL_CATEGORY] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+
+pub unsafe fn get_last_months_poll_id_byte_count(
+    timezone_index: u32
+) -> u32 {
+    LAST_MONTHS_POLL_ID_BYTE_COUNTS[timezone_index as usize]
+}
+pub unsafe fn get_this_months_poll_id_byte_count(
+    timezone_index: u32
+) -> u32 {
+    THIS_MONTHS_POLL_ID_BYTE_COUNTS[timezone_index as usize]
+}
+pub unsafe fn get_next_months_poll_id_byte_count(
+    timezone_index: u32
+) -> u32 {
+    NEXT_MONTHS_POLL_ID_BYTE_COUNTS[timezone_index as usize]
+}
+pub unsafe fn get_last_weeks_poll_id_byte_count(
+    timezone_index: u32
+) -> u32 {
+    LAST_WEEKS_POLL_ID_BYTE_COUNTS[timezone_index as usize]
+}
+pub unsafe fn get_this_weeks_poll_id_byte_count(
+    timezone_index: u32
+) -> u32 {
+    THIS_WEEKS_POLL_ID_BYTE_COUNTS[timezone_index as usize]
+}
+pub unsafe fn get_next_weeks_poll_id_byte_count(
+    timezone_index: u32
+) -> u32 {
+    NEXT_WEEKS_POLL_ID_BYTE_COUNTS[timezone_index as usize]
+}
+pub unsafe fn get_day_b4_yesterdays_poll_id_byte_count(
+    timezone_index: u32
+) -> u32 {
+    DAY_B4_YESTERDAYS_POLL_ID_BYTE_COUNTS[timezone_index as usize]
+}
+pub unsafe fn get_yesterdays_poll_id_byte_count(
+    timezone_index: u32
+) -> u32 {
+    YESTERDAYS_POLL_ID_BYTE_COUNTS[timezone_index as usize]
+}
+pub unsafe fn get_todays_poll_id_byte_count(
+    timezone_index: u32
+) -> u32 {
+    TODAYS_POLL_ID_BYTE_COUNTS[timezone_index as usize]
+}
+pub unsafe fn get_tomorrows_poll_id_byte_count(
+    timezone_index: u32
+) -> u32 {
+    TOMORROWS_POLL_ID_BYTE_COUNTS[timezone_index as usize]
+}
+pub unsafe fn get_day_after_tomorrows_poll_id_byte_count(
+    timezone_index: u32
+) -> u32 {
+    DAY_AFTER_TOMORROWS_POLL_ID_BYTE_COUNTS[timezone_index as usize]
+}
+
 
 /**
  * Ids of currently cached time periods, across all timezones
  */
-pub static mut CATEGORY_CACHE_PERIOD_IDS: CachePeriodIds = CachePeriodIds::new();
+pub static mut CATEGORY_CACHE_PERIOD_IDS: CachePeriodIds = CachePeriodIds {
+        day_after_tomorrows_vc_day_id: 0,
+        day_b4_yesterdays_vc_day_id: 0,
+        this_months_vc_month_id: 0,
+        this_weeks_vc_week_id: 0,
+        last_months_vc_month_id: 0,
+        last_weeks_vc_week_id: 0,
+        next_months_vc_month_id: 0,
+        next_weeks_vc_week_id: 0,
+        todays_vc_day_id: 0,
+        tomorrows_vc_day_id: 0,
+        yesterdays_vc_day_id: 0,
+    };
+
+pub unsafe fn get_category_cache_period_ids(
+    timezone_index: u32
+) -> &'static CachePeriodIds {
+    &CATEGORY_CACHE_PERIOD_IDS
+}
 
 /**
  * Ids of currently cached time periods, per timezone
  */
-pub static mut PER_TIMEZONE__CACHE_PERIOD_IDS: Vec<CachePeriodIds> = Vec::with_capacity(NUM_TIMEZONES);
+pub static mut PER_TIMEZONE__CACHE_PERIOD_IDS: [CachePeriodIds; NUM_TIMEZONES] = [
+    CachePeriodIds {
+        day_after_tomorrows_vc_day_id: 0,
+        day_b4_yesterdays_vc_day_id: 0,
+        this_months_vc_month_id: 0,
+        this_weeks_vc_week_id: 0,
+        last_months_vc_month_id: 0,
+        last_weeks_vc_week_id: 0,
+        next_months_vc_month_id: 0,
+        next_weeks_vc_week_id: 0,
+        todays_vc_day_id: 0,
+        tomorrows_vc_day_id: 0,
+        yesterdays_vc_day_id: 0,
+    },
+    CachePeriodIds {
+        day_after_tomorrows_vc_day_id: 0,
+        day_b4_yesterdays_vc_day_id: 0,
+        this_months_vc_month_id: 0,
+        this_weeks_vc_week_id: 0,
+        last_months_vc_month_id: 0,
+        last_weeks_vc_week_id: 0,
+        next_months_vc_month_id: 0,
+        next_weeks_vc_week_id: 0,
+        todays_vc_day_id: 0,
+        tomorrows_vc_day_id: 0,
+        yesterdays_vc_day_id: 0,
+    },
+    CachePeriodIds {
+        day_after_tomorrows_vc_day_id: 0,
+        day_b4_yesterdays_vc_day_id: 0,
+        this_months_vc_month_id: 0,
+        this_weeks_vc_week_id: 0,
+        last_months_vc_month_id: 0,
+        last_weeks_vc_week_id: 0,
+        next_months_vc_month_id: 0,
+        next_weeks_vc_week_id: 0,
+        todays_vc_day_id: 0,
+        tomorrows_vc_day_id: 0,
+        yesterdays_vc_day_id: 0,
+    },
+    CachePeriodIds {
+        day_after_tomorrows_vc_day_id: 0,
+        day_b4_yesterdays_vc_day_id: 0,
+        this_months_vc_month_id: 0,
+        this_weeks_vc_week_id: 0,
+        last_months_vc_month_id: 0,
+        last_weeks_vc_week_id: 0,
+        next_months_vc_month_id: 0,
+        next_weeks_vc_week_id: 0,
+        todays_vc_day_id: 0,
+        tomorrows_vc_day_id: 0,
+        yesterdays_vc_day_id: 0,
+    },
+    CachePeriodIds {
+        day_after_tomorrows_vc_day_id: 0,
+        day_b4_yesterdays_vc_day_id: 0,
+        this_months_vc_month_id: 0,
+        this_weeks_vc_week_id: 0,
+        last_months_vc_month_id: 0,
+        last_weeks_vc_week_id: 0,
+        next_months_vc_month_id: 0,
+        next_weeks_vc_week_id: 0,
+        todays_vc_day_id: 0,
+        tomorrows_vc_day_id: 0,
+        yesterdays_vc_day_id: 0,
+    },
+    CachePeriodIds {
+        day_after_tomorrows_vc_day_id: 0,
+        day_b4_yesterdays_vc_day_id: 0,
+        this_months_vc_month_id: 0,
+        this_weeks_vc_week_id: 0,
+        last_months_vc_month_id: 0,
+        last_weeks_vc_week_id: 0,
+        next_months_vc_month_id: 0,
+        next_weeks_vc_week_id: 0,
+        todays_vc_day_id: 0,
+        tomorrows_vc_day_id: 0,
+        yesterdays_vc_day_id: 0,
+    },
+    CachePeriodIds {
+        day_after_tomorrows_vc_day_id: 0,
+        day_b4_yesterdays_vc_day_id: 0,
+        this_months_vc_month_id: 0,
+        this_weeks_vc_week_id: 0,
+        last_months_vc_month_id: 0,
+        last_weeks_vc_week_id: 0,
+        next_months_vc_month_id: 0,
+        next_weeks_vc_week_id: 0,
+        todays_vc_day_id: 0,
+        tomorrows_vc_day_id: 0,
+        yesterdays_vc_day_id: 0,
+    },
+    CachePeriodIds {
+        day_after_tomorrows_vc_day_id: 0,
+        day_b4_yesterdays_vc_day_id: 0,
+        this_months_vc_month_id: 0,
+        this_weeks_vc_week_id: 0,
+        last_months_vc_month_id: 0,
+        last_weeks_vc_week_id: 0,
+        next_months_vc_month_id: 0,
+        next_weeks_vc_week_id: 0,
+        todays_vc_day_id: 0,
+        tomorrows_vc_day_id: 0,
+        yesterdays_vc_day_id: 0,
+    },
+    CachePeriodIds {
+        day_after_tomorrows_vc_day_id: 0,
+        day_b4_yesterdays_vc_day_id: 0,
+        this_months_vc_month_id: 0,
+        this_weeks_vc_week_id: 0,
+        last_months_vc_month_id: 0,
+        last_weeks_vc_week_id: 0,
+        next_months_vc_month_id: 0,
+        next_weeks_vc_week_id: 0,
+        todays_vc_day_id: 0,
+        tomorrows_vc_day_id: 0,
+        yesterdays_vc_day_id: 0,
+    },
+    CachePeriodIds {
+        day_after_tomorrows_vc_day_id: 0,
+        day_b4_yesterdays_vc_day_id: 0,
+        this_months_vc_month_id: 0,
+        this_weeks_vc_week_id: 0,
+        last_months_vc_month_id: 0,
+        last_weeks_vc_week_id: 0,
+        next_months_vc_month_id: 0,
+        next_weeks_vc_week_id: 0,
+        todays_vc_day_id: 0,
+        tomorrows_vc_day_id: 0,
+        yesterdays_vc_day_id: 0,
+    },
+    CachePeriodIds {
+        day_after_tomorrows_vc_day_id: 0,
+        day_b4_yesterdays_vc_day_id: 0,
+        this_months_vc_month_id: 0,
+        this_weeks_vc_week_id: 0,
+        last_months_vc_month_id: 0,
+        last_weeks_vc_week_id: 0,
+        next_months_vc_month_id: 0,
+        next_weeks_vc_week_id: 0,
+        todays_vc_day_id: 0,
+        tomorrows_vc_day_id: 0,
+        yesterdays_vc_day_id: 0,
+    },
+    CachePeriodIds {
+        day_after_tomorrows_vc_day_id: 0,
+        day_b4_yesterdays_vc_day_id: 0,
+        this_months_vc_month_id: 0,
+        this_weeks_vc_week_id: 0,
+        last_months_vc_month_id: 0,
+        last_weeks_vc_week_id: 0,
+        next_months_vc_month_id: 0,
+        next_weeks_vc_week_id: 0,
+        todays_vc_day_id: 0,
+        tomorrows_vc_day_id: 0,
+        yesterdays_vc_day_id: 0,
+    },
+    CachePeriodIds {
+        day_after_tomorrows_vc_day_id: 0,
+        day_b4_yesterdays_vc_day_id: 0,
+        this_months_vc_month_id: 0,
+        this_weeks_vc_week_id: 0,
+        last_months_vc_month_id: 0,
+        last_weeks_vc_week_id: 0,
+        next_months_vc_month_id: 0,
+        next_weeks_vc_week_id: 0,
+        todays_vc_day_id: 0,
+        tomorrows_vc_day_id: 0,
+        yesterdays_vc_day_id: 0,
+    },
+    CachePeriodIds {
+        day_after_tomorrows_vc_day_id: 0,
+        day_b4_yesterdays_vc_day_id: 0,
+        this_months_vc_month_id: 0,
+        this_weeks_vc_week_id: 0,
+        last_months_vc_month_id: 0,
+        last_weeks_vc_week_id: 0,
+        next_months_vc_month_id: 0,
+        next_weeks_vc_week_id: 0,
+        todays_vc_day_id: 0,
+        tomorrows_vc_day_id: 0,
+        yesterdays_vc_day_id: 0,
+    },
+    CachePeriodIds {
+        day_after_tomorrows_vc_day_id: 0,
+        day_b4_yesterdays_vc_day_id: 0,
+        this_months_vc_month_id: 0,
+        this_weeks_vc_week_id: 0,
+        last_months_vc_month_id: 0,
+        last_weeks_vc_week_id: 0,
+        next_months_vc_month_id: 0,
+        next_weeks_vc_week_id: 0,
+        todays_vc_day_id: 0,
+        tomorrows_vc_day_id: 0,
+        yesterdays_vc_day_id: 0,
+    },
+    CachePeriodIds {
+        day_after_tomorrows_vc_day_id: 0,
+        day_b4_yesterdays_vc_day_id: 0,
+        this_months_vc_month_id: 0,
+        this_weeks_vc_week_id: 0,
+        last_months_vc_month_id: 0,
+        last_weeks_vc_week_id: 0,
+        next_months_vc_month_id: 0,
+        next_weeks_vc_week_id: 0,
+        todays_vc_day_id: 0,
+        tomorrows_vc_day_id: 0,
+        yesterdays_vc_day_id: 0,
+    },
+    CachePeriodIds {
+        day_after_tomorrows_vc_day_id: 0,
+        day_b4_yesterdays_vc_day_id: 0,
+        this_months_vc_month_id: 0,
+        this_weeks_vc_week_id: 0,
+        last_months_vc_month_id: 0,
+        last_weeks_vc_week_id: 0,
+        next_months_vc_month_id: 0,
+        next_weeks_vc_week_id: 0,
+        todays_vc_day_id: 0,
+        tomorrows_vc_day_id: 0,
+        yesterdays_vc_day_id: 0,
+    },
+    CachePeriodIds {
+        day_after_tomorrows_vc_day_id: 0,
+        day_b4_yesterdays_vc_day_id: 0,
+        this_months_vc_month_id: 0,
+        this_weeks_vc_week_id: 0,
+        last_months_vc_month_id: 0,
+        last_weeks_vc_week_id: 0,
+        next_months_vc_month_id: 0,
+        next_weeks_vc_week_id: 0,
+        todays_vc_day_id: 0,
+        tomorrows_vc_day_id: 0,
+        yesterdays_vc_day_id: 0,
+    },
+    CachePeriodIds {
+        day_after_tomorrows_vc_day_id: 0,
+        day_b4_yesterdays_vc_day_id: 0,
+        this_months_vc_month_id: 0,
+        this_weeks_vc_week_id: 0,
+        last_months_vc_month_id: 0,
+        last_weeks_vc_week_id: 0,
+        next_months_vc_month_id: 0,
+        next_weeks_vc_week_id: 0,
+        todays_vc_day_id: 0,
+        tomorrows_vc_day_id: 0,
+        yesterdays_vc_day_id: 0,
+    },
+    CachePeriodIds {
+        day_after_tomorrows_vc_day_id: 0,
+        day_b4_yesterdays_vc_day_id: 0,
+        this_months_vc_month_id: 0,
+        this_weeks_vc_week_id: 0,
+        last_months_vc_month_id: 0,
+        last_weeks_vc_week_id: 0,
+        next_months_vc_month_id: 0,
+        next_weeks_vc_week_id: 0,
+        todays_vc_day_id: 0,
+        tomorrows_vc_day_id: 0,
+        yesterdays_vc_day_id: 0,
+    },
+    CachePeriodIds {
+        day_after_tomorrows_vc_day_id: 0,
+        day_b4_yesterdays_vc_day_id: 0,
+        this_months_vc_month_id: 0,
+        this_weeks_vc_week_id: 0,
+        last_months_vc_month_id: 0,
+        last_weeks_vc_week_id: 0,
+        next_months_vc_month_id: 0,
+        next_weeks_vc_week_id: 0,
+        todays_vc_day_id: 0,
+        tomorrows_vc_day_id: 0,
+        yesterdays_vc_day_id: 0,
+    },
+    CachePeriodIds {
+        day_after_tomorrows_vc_day_id: 0,
+        day_b4_yesterdays_vc_day_id: 0,
+        this_months_vc_month_id: 0,
+        this_weeks_vc_week_id: 0,
+        last_months_vc_month_id: 0,
+        last_weeks_vc_week_id: 0,
+        next_months_vc_month_id: 0,
+        next_weeks_vc_week_id: 0,
+        todays_vc_day_id: 0,
+        tomorrows_vc_day_id: 0,
+        yesterdays_vc_day_id: 0,
+    },
+    CachePeriodIds {
+        day_after_tomorrows_vc_day_id: 0,
+        day_b4_yesterdays_vc_day_id: 0,
+        this_months_vc_month_id: 0,
+        this_weeks_vc_week_id: 0,
+        last_months_vc_month_id: 0,
+        last_weeks_vc_week_id: 0,
+        next_months_vc_month_id: 0,
+        next_weeks_vc_week_id: 0,
+        todays_vc_day_id: 0,
+        tomorrows_vc_day_id: 0,
+        yesterdays_vc_day_id: 0,
+    },
+    CachePeriodIds {
+        day_after_tomorrows_vc_day_id: 0,
+        day_b4_yesterdays_vc_day_id: 0,
+        this_months_vc_month_id: 0,
+        this_weeks_vc_week_id: 0,
+        last_months_vc_month_id: 0,
+        last_weeks_vc_week_id: 0,
+        next_months_vc_month_id: 0,
+        next_weeks_vc_week_id: 0,
+        todays_vc_day_id: 0,
+        tomorrows_vc_day_id: 0,
+        yesterdays_vc_day_id: 0,
+    },
+    CachePeriodIds {
+        day_after_tomorrows_vc_day_id: 0,
+        day_b4_yesterdays_vc_day_id: 0,
+        this_months_vc_month_id: 0,
+        this_weeks_vc_week_id: 0,
+        last_months_vc_month_id: 0,
+        last_weeks_vc_week_id: 0,
+        next_months_vc_month_id: 0,
+        next_weeks_vc_week_id: 0,
+        todays_vc_day_id: 0,
+        tomorrows_vc_day_id: 0,
+        yesterdays_vc_day_id: 0,
+    },
+    CachePeriodIds {
+        day_after_tomorrows_vc_day_id: 0,
+        day_b4_yesterdays_vc_day_id: 0,
+        this_months_vc_month_id: 0,
+        this_weeks_vc_week_id: 0,
+        last_months_vc_month_id: 0,
+        last_weeks_vc_week_id: 0,
+        next_months_vc_month_id: 0,
+        next_weeks_vc_week_id: 0,
+        todays_vc_day_id: 0,
+        tomorrows_vc_day_id: 0,
+        yesterdays_vc_day_id: 0,
+    },
+    CachePeriodIds {
+        day_after_tomorrows_vc_day_id: 0,
+        day_b4_yesterdays_vc_day_id: 0,
+        this_months_vc_month_id: 0,
+        this_weeks_vc_week_id: 0,
+        last_months_vc_month_id: 0,
+        last_weeks_vc_week_id: 0,
+        next_months_vc_month_id: 0,
+        next_weeks_vc_week_id: 0,
+        todays_vc_day_id: 0,
+        tomorrows_vc_day_id: 0,
+        yesterdays_vc_day_id: 0,
+    },
+    CachePeriodIds {
+        day_after_tomorrows_vc_day_id: 0,
+        day_b4_yesterdays_vc_day_id: 0,
+        this_months_vc_month_id: 0,
+        this_weeks_vc_week_id: 0,
+        last_months_vc_month_id: 0,
+        last_weeks_vc_week_id: 0,
+        next_months_vc_month_id: 0,
+        next_weeks_vc_week_id: 0,
+        todays_vc_day_id: 0,
+        tomorrows_vc_day_id: 0,
+        yesterdays_vc_day_id: 0,
+    },
+    CachePeriodIds {
+        day_after_tomorrows_vc_day_id: 0,
+        day_b4_yesterdays_vc_day_id: 0,
+        this_months_vc_month_id: 0,
+        this_weeks_vc_week_id: 0,
+        last_months_vc_month_id: 0,
+        last_weeks_vc_week_id: 0,
+        next_months_vc_month_id: 0,
+        next_weeks_vc_week_id: 0,
+        todays_vc_day_id: 0,
+        tomorrows_vc_day_id: 0,
+        yesterdays_vc_day_id: 0,
+    },
+    CachePeriodIds {
+        day_after_tomorrows_vc_day_id: 0,
+        day_b4_yesterdays_vc_day_id: 0,
+        this_months_vc_month_id: 0,
+        this_weeks_vc_week_id: 0,
+        last_months_vc_month_id: 0,
+        last_weeks_vc_week_id: 0,
+        next_months_vc_month_id: 0,
+        next_weeks_vc_week_id: 0,
+        todays_vc_day_id: 0,
+        tomorrows_vc_day_id: 0,
+        yesterdays_vc_day_id: 0,
+    },
+    CachePeriodIds {
+        day_after_tomorrows_vc_day_id: 0,
+        day_b4_yesterdays_vc_day_id: 0,
+        this_months_vc_month_id: 0,
+        this_weeks_vc_week_id: 0,
+        last_months_vc_month_id: 0,
+        last_weeks_vc_week_id: 0,
+        next_months_vc_month_id: 0,
+        next_weeks_vc_week_id: 0,
+        todays_vc_day_id: 0,
+        tomorrows_vc_day_id: 0,
+        yesterdays_vc_day_id: 0,
+    },
+    CachePeriodIds {
+        day_after_tomorrows_vc_day_id: 0,
+        day_b4_yesterdays_vc_day_id: 0,
+        this_months_vc_month_id: 0,
+        this_weeks_vc_week_id: 0,
+        last_months_vc_month_id: 0,
+        last_weeks_vc_week_id: 0,
+        next_months_vc_month_id: 0,
+        next_weeks_vc_week_id: 0,
+        todays_vc_day_id: 0,
+        tomorrows_vc_day_id: 0,
+        yesterdays_vc_day_id: 0,
+    },
+    CachePeriodIds {
+        day_after_tomorrows_vc_day_id: 0,
+        day_b4_yesterdays_vc_day_id: 0,
+        this_months_vc_month_id: 0,
+        this_weeks_vc_week_id: 0,
+        last_months_vc_month_id: 0,
+        last_weeks_vc_week_id: 0,
+        next_months_vc_month_id: 0,
+        next_weeks_vc_week_id: 0,
+        todays_vc_day_id: 0,
+        tomorrows_vc_day_id: 0,
+        yesterdays_vc_day_id: 0,
+    },
+    CachePeriodIds {
+        day_after_tomorrows_vc_day_id: 0,
+        day_b4_yesterdays_vc_day_id: 0,
+        this_months_vc_month_id: 0,
+        this_weeks_vc_week_id: 0,
+        last_months_vc_month_id: 0,
+        last_weeks_vc_week_id: 0,
+        next_months_vc_month_id: 0,
+        next_weeks_vc_week_id: 0,
+        todays_vc_day_id: 0,
+        tomorrows_vc_day_id: 0,
+        yesterdays_vc_day_id: 0,
+    },
+    CachePeriodIds {
+        day_after_tomorrows_vc_day_id: 0,
+        day_b4_yesterdays_vc_day_id: 0,
+        this_months_vc_month_id: 0,
+        this_weeks_vc_week_id: 0,
+        last_months_vc_month_id: 0,
+        last_weeks_vc_week_id: 0,
+        next_months_vc_month_id: 0,
+        next_weeks_vc_week_id: 0,
+        todays_vc_day_id: 0,
+        tomorrows_vc_day_id: 0,
+        yesterdays_vc_day_id: 0,
+    },
+    CachePeriodIds {
+        day_after_tomorrows_vc_day_id: 0,
+        day_b4_yesterdays_vc_day_id: 0,
+        this_months_vc_month_id: 0,
+        this_weeks_vc_week_id: 0,
+        last_months_vc_month_id: 0,
+        last_weeks_vc_week_id: 0,
+        next_months_vc_month_id: 0,
+        next_weeks_vc_week_id: 0,
+        todays_vc_day_id: 0,
+        tomorrows_vc_day_id: 0,
+        yesterdays_vc_day_id: 0,
+    },
+    CachePeriodIds {
+        day_after_tomorrows_vc_day_id: 0,
+        day_b4_yesterdays_vc_day_id: 0,
+        this_months_vc_month_id: 0,
+        this_weeks_vc_week_id: 0,
+        last_months_vc_month_id: 0,
+        last_weeks_vc_week_id: 0,
+        next_months_vc_month_id: 0,
+        next_weeks_vc_week_id: 0,
+        todays_vc_day_id: 0,
+        tomorrows_vc_day_id: 0,
+        yesterdays_vc_day_id: 0,
+    },
+    CachePeriodIds {
+        day_after_tomorrows_vc_day_id: 0,
+        day_b4_yesterdays_vc_day_id: 0,
+        this_months_vc_month_id: 0,
+        this_weeks_vc_week_id: 0,
+        last_months_vc_month_id: 0,
+        last_weeks_vc_week_id: 0,
+        next_months_vc_month_id: 0,
+        next_weeks_vc_week_id: 0,
+        todays_vc_day_id: 0,
+        tomorrows_vc_day_id: 0,
+        yesterdays_vc_day_id: 0,
+    },
+];
+
+pub unsafe fn get_timezone_cache_period_ids(
+    timezone_index: u32
+) -> &'static CachePeriodIds {
+    &PER_TIMEZONE__CACHE_PERIOD_IDS[timezone_index]
+}
 
 //pub static mut LOCATION_TIMEZONE_MAP: LsbShiftTree<usize> = LsbShiftTree::new();
 //pub static mut LOCATIONS_BY_TIMEZONE: Vec<u32> = Vec::new();
