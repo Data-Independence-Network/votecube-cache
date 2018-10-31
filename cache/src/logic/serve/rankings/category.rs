@@ -15,9 +15,9 @@ use super::super::super::super::data::byte_counts::ByteCounts;
 use super::super::super::super::server::codes;
 
 // NOTE: max page size must fin into u16
-const PAGE_SIZE: u64 = 1024;
+const PAGE_SIZE: u32 = 1024;
 
-const INITIAL_RESPONSE_VECTOR_SIZE_8_POLL_BYTES: u64 =
+const INITIAL_RESPONSE_VECTOR_SIZE_8_POLL_BYTES: u32 =
 // space for the leading header byte
     1 +
         // space for category cache index (if any
@@ -30,7 +30,7 @@ const INITIAL_RESPONSE_VECTOR_SIZE_8_POLL_BYTES: u64 =
         // space for trailing size bytes
         2;
 
-const INITIAL_RESPONSE_VECTOR_SIZE_7_POLL_BYTES: u64 =
+const INITIAL_RESPONSE_VECTOR_SIZE_7_POLL_BYTES: u32 =
 // space for the leading header byte
     1 +
         // space for category cache index (if any
@@ -43,7 +43,7 @@ const INITIAL_RESPONSE_VECTOR_SIZE_7_POLL_BYTES: u64 =
         // space for trailing size bytes
         2;
 
-const INITIAL_RESPONSE_VECTOR_SIZE_6_POLL_BYTES: u64 =
+const INITIAL_RESPONSE_VECTOR_SIZE_6_POLL_BYTES: u32 =
 // space for the leading header byte
     1 +
         // space for category cache index (if any
@@ -56,7 +56,7 @@ const INITIAL_RESPONSE_VECTOR_SIZE_6_POLL_BYTES: u64 =
         // space for trailing size bytes
         2;
 
-const INITIAL_RESPONSE_VECTOR_SIZE_5_POLL_BYTES: u64 =
+const INITIAL_RESPONSE_VECTOR_SIZE_5_POLL_BYTES: u32 =
 // space for the leading header byte
     1 +
         // space for category cache index (if any
@@ -69,7 +69,7 @@ const INITIAL_RESPONSE_VECTOR_SIZE_5_POLL_BYTES: u64 =
         // space for trailing size bytes
         2;
 
-const INITIAL_RESPONSE_VECTOR_SIZE_4_POLL_BYTES: u64 =
+const INITIAL_RESPONSE_VECTOR_SIZE_4_POLL_BYTES: u32 =
 // space for the leading header byte
     1 +
         // space for category cache index (if any
@@ -82,7 +82,7 @@ const INITIAL_RESPONSE_VECTOR_SIZE_4_POLL_BYTES: u64 =
         // space for trailing size bytes
         2;
 
-const INITIAL_RESPONSE_VECTOR_SIZE_3_POLL_BYTES: u64 =
+const INITIAL_RESPONSE_VECTOR_SIZE_3_POLL_BYTES: u32 =
 // space for the leading header byte
     1 +
         // space for category cache index (if any
@@ -94,7 +94,7 @@ const INITIAL_RESPONSE_VECTOR_SIZE_3_POLL_BYTES: u64 =
         // space for trailing size bytes
         2;
 
-const INITIAL_RESPONSE_VECTOR_SIZE_2_POLL_BYTES: u64 =
+const INITIAL_RESPONSE_VECTOR_SIZE_2_POLL_BYTES: u32 =
 // space for the leading header byte
     1 +
         // space for category cache index (if any
@@ -108,7 +108,7 @@ const INITIAL_RESPONSE_VECTOR_SIZE_2_POLL_BYTES: u64 =
 
 pub fn get_todays_category_rankings_by_global_id(
     vc_day_id: DayId,
-    block_index: u64,
+    block_index: u32,
     global_category_id: CategoryId,
 ) -> Vec<u8> {
     return get_category_rankings_by_global_id(
@@ -124,7 +124,7 @@ pub fn get_todays_category_rankings_by_global_id(
 
 pub fn get_todays_category_rankings_by_cache_index(
     vc_day_id: DayId,
-    block_index: u64,
+    block_index: u32,
     category_cache_index: CategoryCacheIndex,
 ) -> Vec<u8> {
     return get_category_rankings_by_cache_index(
@@ -139,7 +139,7 @@ pub fn get_todays_category_rankings_by_cache_index(
 
 pub fn get_yesterdays_category_rankings_by_global_id(
     vc_day_id: DayId,
-    block_index: u64,
+    block_index: u32,
     global_category_id: CategoryId,
 ) -> Vec<u8> {
     return get_category_rankings_by_global_id(
@@ -155,7 +155,7 @@ pub fn get_yesterdays_category_rankings_by_global_id(
 
 pub fn get_yesterdays_category_rankings_by_cache_index(
     vc_day_id: DayId,
-    block_index: u64,
+    block_index: u32,
     category_cache_index: CategoryCacheIndex,
 ) -> Vec<u8> {
     return get_category_rankings_by_cache_index(
@@ -170,7 +170,7 @@ pub fn get_yesterdays_category_rankings_by_cache_index(
 
 pub fn get_day_b4_yesterdays_category_rankings_by_global_id(
     vc_day_id: DayId,
-    block_index: u64,
+    block_index: u32,
     global_category_id: CategoryId,
 ) -> Vec<u8> {
     return get_category_rankings_by_global_id(
@@ -186,7 +186,7 @@ pub fn get_day_b4_yesterdays_category_rankings_by_global_id(
 
 pub fn get_day_b4_yesterdays_category_rankings_by_cache_index(
     vc_day_id: DayId,
-    block_index: u64,
+    block_index: u32,
     category_cache_index: CategoryCacheIndex,
 ) -> Vec<u8> {
     return get_category_rankings_by_cache_index(
@@ -201,7 +201,7 @@ pub fn get_day_b4_yesterdays_category_rankings_by_cache_index(
 
 pub fn get_this_weeks_category_rankings_by_global_id(
     vc_week_id: WeekId,
-    block_index: u64,
+    block_index: u32,
     global_category_id: CategoryId,
 ) -> Vec<u8> {
     return get_category_rankings_by_global_id(
@@ -217,7 +217,7 @@ pub fn get_this_weeks_category_rankings_by_global_id(
 
 pub fn get_this_weeks_category_rankings_by_cache_index(
     vc_week_id: WeekId,
-    block_index: u64,
+    block_index: u32,
     category_cache_index: CategoryCacheIndex,
 ) -> Vec<u8> {
     return get_category_rankings_by_cache_index(
@@ -232,7 +232,7 @@ pub fn get_this_weeks_category_rankings_by_cache_index(
 
 pub fn get_last_weeks_category_rankings_by_global_id(
     vc_week_id: WeekId,
-    block_index: u64,
+    block_index: u32,
     global_category_id: CategoryId,
 ) -> Vec<u8> {
     return get_category_rankings_by_global_id(
@@ -248,7 +248,7 @@ pub fn get_last_weeks_category_rankings_by_global_id(
 
 pub fn get_last_weeks_category_rankings_by_cache_index(
     vc_week_id: WeekId,
-    block_index: u64,
+    block_index: u32,
     category_cache_index: CategoryCacheIndex,
 ) -> Vec<u8> {
     return get_category_rankings_by_cache_index(
@@ -263,7 +263,7 @@ pub fn get_last_weeks_category_rankings_by_cache_index(
 
 pub fn get_this_months_category_rankings_by_global_id(
     vc_month_id: MonthId,
-    block_index: u64,
+    block_index: u32,
     global_category_id: CategoryId,
 ) -> Vec<u8> {
     return get_category_rankings_by_global_id(
@@ -279,7 +279,7 @@ pub fn get_this_months_category_rankings_by_global_id(
 
 pub fn get_this_months_category_rankings_by_cache_index(
     vc_month_id: MonthId,
-    block_index: u64,
+    block_index: u32,
     category_cache_index: CategoryCacheIndex,
 ) -> Vec<u8> {
     return get_category_rankings_by_cache_index(
@@ -294,7 +294,7 @@ pub fn get_this_months_category_rankings_by_cache_index(
 
 pub fn get_last_months_category_rankings_by_global_id(
     vc_month_id: MonthId,
-    block_index: u64,
+    block_index: u32,
     global_category_id: CategoryId,
 ) -> Vec<u8> {
     return get_category_rankings_by_global_id(
@@ -310,7 +310,7 @@ pub fn get_last_months_category_rankings_by_global_id(
 
 pub fn get_last_months_category_rankings_by_cache_index(
     vc_month_id: MonthId,
-    block_index: u64,
+    block_index: u32,
     category_cache_index: CategoryCacheIndex,
 ) -> Vec<u8> {
     return get_category_rankings_by_cache_index(
@@ -329,7 +329,7 @@ fn get_category_rankings_by_global_id(
     category_index_map: IntHashMap<CategoryId, CategoryCacheIndex>,
     given_period_category_poll_rankings: Vec<Vec<VoteCount>>,
     global_category_id: CategoryId,
-    block_index: u64,
+    block_index: u32,
     max_poll_number_bytes: u8,
 ) -> Vec<u8> {
     if current_period_id != expected_period_id {
@@ -355,7 +355,7 @@ fn get_category_rankings_by_cache_index(
     expected_period_id: u32,
     vote_counts_by_category_index: Vec<Vec<VoteCount>>,
     category_cache_index: CategoryCacheIndex,
-    block_index: u64,
+    block_index: u32,
     max_poll_number_bytes: u8,
 ) -> Vec<u8> {
     if current_period_id != expected_period_id {
@@ -378,7 +378,7 @@ fn get_category_rankings_by_cache_index(
 
 #[inline]
 fn get_category_rankings_with_category_cache_index(
-    first_record_index: u64,
+    first_record_index: u32,
     category_cache_index: CategoryCacheIndex,
     vote_counts_by_category_index: Vec<Vec<VoteCount>>,
     max_poll_number_bytes: u8,
@@ -439,13 +439,16 @@ fn get_category_rankings_with_category_cache_index(
 
             return get_2_byte_recent_polls(vote_counts_for_category, first_record_index as usize, response);
         }
+        _ => {
+            panic!("Unexpected number of bytes {}", max_poll_number_bytes)
+        }
     }
 //            return codes::INVALID_CATEGORY_RESPONSE.to_vec();
 }
 
 #[inline]
 fn get_category_rankings(
-    first_record_index: u64,
+    first_record_index: u32,
     category_cache_index: CategoryCacheIndex,
     given_period_category_poll_rankings: Vec<Vec<VoteCount>>,
     max_poll_number_bytes: u8,
@@ -487,6 +490,9 @@ fn get_category_rankings(
             let mut response: Vec<u8> = Vec::with_capacity(INITIAL_RESPONSE_VECTOR_SIZE_2_POLL_BYTES as usize);
             response.push(0b00000010);
             return get_2_byte_recent_polls(vote_counts_for_category, first_record_index as usize, response);
+        }
+        _ => {
+            panic!("Unexpected number of bytes {}", max_poll_number_bytes)
         }
     }
 //            return codes::INVALID_CATEGORY_RESPONSE.to_vec();

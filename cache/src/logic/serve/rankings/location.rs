@@ -32,12 +32,12 @@ use super::location_and_loc_category::get_7_byte_recent_polls;
 use super::location_and_loc_category::get_8_byte_recent_polls;
 
 // NOTE: max page size must fin into u16
-const PAGE_SIZE: u64 = 1024;
+const PAGE_SIZE: u32 = 1024;
 
 pub fn get_todays_location_rankings_by_global_id(
     vc_day_id: DayId,
     timezone_id: TimezoneId,
-    block_index: u64,
+    block_index: u32,
     global_location_id: LocationId,
 ) -> Vec<u8> {
     let current_period_ids: CachePeriodIds =
@@ -65,7 +65,7 @@ pub fn get_todays_location_rankings_by_global_id(
 pub fn get_todays_location_rankings_by_cache_index(
     vc_day_id: DayId,
     timezone_id: TimezoneId,
-    block_index: u64,
+    block_index: u32,
     location_cache_index: LocationCacheIndex,
 ) -> Vec<u8> {
     let current_period_ids: CachePeriodIds =
@@ -92,7 +92,7 @@ pub fn get_todays_location_rankings_by_cache_index(
 pub fn get_yesterdays_location_rankings_by_global_id(
     vc_day_id: DayId,
     timezone_id: TimezoneId,
-    block_index: u64,
+    block_index: u32,
     global_location_id: LocationId,
 ) -> Vec<u8> {
     let current_period_ids: CachePeriodIds =
@@ -120,7 +120,7 @@ pub fn get_yesterdays_location_rankings_by_global_id(
 pub fn get_yesterdays_location_rankings_by_cache_index(
     vc_day_id: DayId,
     timezone_id: TimezoneId,
-    block_index: u64,
+    block_index: u32,
     location_cache_index: LocationCacheIndex,
 ) -> Vec<u8> {
     let current_period_ids: CachePeriodIds =
@@ -147,7 +147,7 @@ pub fn get_yesterdays_location_rankings_by_cache_index(
 pub fn get_day_b4_yesterdays_location_rankings_by_global_id(
     vc_day_id: DayId,
     timezone_id: TimezoneId,
-    block_index: u64,
+    block_index: u32,
     global_location_id: LocationId,
 ) -> Vec<u8> {
     let current_period_ids: CachePeriodIds =
@@ -175,7 +175,7 @@ pub fn get_day_b4_yesterdays_location_rankings_by_global_id(
 pub fn get_day_b4_yesterdays_location_rankings_by_cache_index(
     vc_day_id: DayId,
     timezone_id: TimezoneId,
-    block_index: u64,
+    block_index: u32,
     location_cache_index: LocationCacheIndex,
 ) -> Vec<u8> {
     let current_period_ids: CachePeriodIds =
@@ -202,7 +202,7 @@ pub fn get_day_b4_yesterdays_location_rankings_by_cache_index(
 pub fn get_this_weeks_location_rankings_by_global_id(
     vc_week_id: WeekId,
     timezone_id: TimezoneId,
-    block_index: u64,
+    block_index: u32,
     global_location_id: LocationId,
 ) -> Vec<u8> {
     let current_period_ids: CachePeriodIds =
@@ -230,7 +230,7 @@ pub fn get_this_weeks_location_rankings_by_global_id(
 pub fn get_this_weeks_location_rankings_by_cache_index(
     vc_week_id: WeekId,
     timezone_id: TimezoneId,
-    block_index: u64,
+    block_index: u32,
     location_cache_index: LocationCacheIndex,
 ) -> Vec<u8> {
     let current_period_ids: CachePeriodIds =
@@ -257,7 +257,7 @@ pub fn get_this_weeks_location_rankings_by_cache_index(
 pub fn get_last_weeks_location_rankings_by_global_id(
     vc_week_id: WeekId,
     timezone_id: TimezoneId,
-    block_index: u64,
+    block_index: u32,
     global_location_id: LocationId,
 ) -> Vec<u8> {
     let current_period_ids: CachePeriodIds =
@@ -285,7 +285,7 @@ pub fn get_last_weeks_location_rankings_by_global_id(
 pub fn get_last_weeks_location_rankings_by_cache_index(
     vc_week_id: WeekId,
     timezone_id: TimezoneId,
-    block_index: u64,
+    block_index: u32,
     location_cache_index: LocationCacheIndex,
 ) -> Vec<u8> {
     let current_period_ids: CachePeriodIds =
@@ -312,7 +312,7 @@ pub fn get_last_weeks_location_rankings_by_cache_index(
 pub fn get_this_months_location_rankings_by_global_id(
     vc_month_id: MonthId,
     timezone_id: TimezoneId,
-    block_index: u64,
+    block_index: u32,
     global_location_id: LocationId,
 ) -> Vec<u8> {
     let current_period_ids: CachePeriodIds =
@@ -340,7 +340,7 @@ pub fn get_this_months_location_rankings_by_global_id(
 pub fn get_this_months_location_rankings_by_cache_index(
     vc_month_id: MonthId,
     timezone_id: TimezoneId,
-    block_index: u64,
+    block_index: u32,
     location_cache_index: LocationCacheIndex,
 ) -> Vec<u8> {
     let current_period_ids: CachePeriodIds =
@@ -367,7 +367,7 @@ pub fn get_this_months_location_rankings_by_cache_index(
 pub fn get_last_months_location_rankings_by_global_id(
     vc_month_id: MonthId,
     timezone_id: TimezoneId,
-    block_index: u64,
+    block_index: u32,
     global_location_id: LocationId,
 ) -> Vec<u8> {
     let current_period_ids: CachePeriodIds =
@@ -395,7 +395,7 @@ pub fn get_last_months_location_rankings_by_global_id(
 pub fn get_last_months_location_rankings_by_cache_index(
     vc_month_id: MonthId,
     timezone_id: TimezoneId,
-    block_index: u64,
+    block_index: u32,
     location_cache_index: LocationCacheIndex,
 ) -> Vec<u8> {
     let current_period_ids: CachePeriodIds =
@@ -426,7 +426,7 @@ fn get_location_rankings_by_global_id(
     location_index_map: IntHashMap<LocationId, LocationPeriodIds>,
     given_period_location_poll_rankings: Vec<Vec<LocationPollRankings>>,
     global_location_id: LocationId,
-    block_index: u64,
+    block_index: u32,
     max_poll_number_bytes: u8,
 ) -> Vec<u8> {
     if current_period_id != expected_period_id {
@@ -457,7 +457,7 @@ fn get_location_rankings_by_cache_index(
     timezone_id: TimezoneId,
     given_period_location_poll_rankings: Vec<Vec<LocationPollRankings>>,
     location_cache_index: LocationCacheIndex,
-    block_index: u64,
+    block_index: u32,
     max_poll_number_bytes: u8,
 ) -> Vec<u8> {
     if current_period_id != expected_period_id {
@@ -491,7 +491,7 @@ fn get_location_rankings_with_location_cache_index(
 ) -> Vec<u8> {
     let vote_counts_for_location = location_poll_rankings.location;
     let location_cache_index_bytes: [u8; 4] = unsafe {
-        std::mem::transmute(location_cache_index)
+        transmute(location_cache_index)
     };
 
     match max_poll_number_bytes {
@@ -543,6 +543,9 @@ fn get_location_rankings_with_location_cache_index(
             response.extend_from_slice(&location_cache_index_bytes);
 
             return get_2_byte_recent_polls(vote_counts_for_location, first_record_index as usize, response);
+        }
+        _ => {
+            panic!("Unexpected number of bytes {}", max_poll_number_bytes)
         }
     }
 //            return codes::INVALID_CATEGORY_RESPONSE.to_vec();
@@ -600,6 +603,9 @@ fn get_location_rankings(
             response.push(0b00000010);
 
             return get_2_byte_recent_polls(vote_counts_for_location, first_record_index as usize, response);
+        }
+        _ => {
+            panic!("Unexpected number of bytes {}", max_poll_number_bytes)
         }
     }
 //            return codes::INVALID_CATEGORY_RESPONSE.to_vec();

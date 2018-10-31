@@ -70,7 +70,7 @@ impl<T: Send> App<T> for CompleteCacheApp<T> {
         path: &str,
         request_body: &[u8],
     ) -> Vec<u8> {
-        match *path {
+        match path {
             /**
              *
              *  POLL RANKINGS
@@ -81,7 +81,7 @@ impl<T: Send> App<T> for CompleteCacheApp<T> {
 
             serve::URL_THIS_MONTHS_CATEGORY_POLL_RANKINGS_BY_GLOBAL_ID => {
                 if wrong_request_length_16(request_body) {
-                    codes::INVALID_DATA_FORMAT_RESPONSE
+                    codes::INVALID_DATA_FORMAT_RESPONSE.to_vec()
                 } else {
                     let (vc_month_id, block_index, global_category_id)
                     = read_two_ints_and_long(request_body);
@@ -91,7 +91,7 @@ impl<T: Send> App<T> for CompleteCacheApp<T> {
             }
             serve::URL_THIS_MONTHS_CATEGORY_POLL_RANKINGS_BY_CACHE_INDEX => {
                 if wrong_request_length_12(request_body) {
-                    codes::INVALID_DATA_FORMAT_RESPONSE
+                    codes::INVALID_DATA_FORMAT_RESPONSE.to_vec()
                 } else {
                     let (vc_month_id, block_index, category_cache_index)
                     = read_three_ints(request_body);
@@ -101,7 +101,7 @@ impl<T: Send> App<T> for CompleteCacheApp<T> {
             }
             serve::URL_THIS_WEEKS_CATEGORY_POLL_RANKINGS_BY_GLOBAL_ID => {
                 if wrong_request_length_16(request_body) {
-                    codes::INVALID_DATA_FORMAT_RESPONSE
+                    codes::INVALID_DATA_FORMAT_RESPONSE.to_vec()
                 } else {
                     let (vc_week_id, block_index, global_category_id)
                     = read_two_ints_and_long(request_body);
@@ -111,7 +111,7 @@ impl<T: Send> App<T> for CompleteCacheApp<T> {
             }
             serve::URL_THIS_WEEKS_CATEGORY_POLL_RANKINGS_BY_CACHE_INDEX => {
                 if wrong_request_length_12(request_body) {
-                    codes::INVALID_DATA_FORMAT_RESPONSE
+                    codes::INVALID_DATA_FORMAT_RESPONSE.to_vec()
                 } else {
                     let (vc_week_id, block_index, category_cache_index)
                     = read_three_ints(request_body);
@@ -121,7 +121,7 @@ impl<T: Send> App<T> for CompleteCacheApp<T> {
             }
             serve::URL_TODAYS_CATEGORY_POLL_RANKINGS_BY_GLOBAL_ID => {
                 if wrong_request_length_16(request_body) {
-                    codes::INVALID_DATA_FORMAT_RESPONSE
+                    codes::INVALID_DATA_FORMAT_RESPONSE.to_vec()
                 } else {
                     let (vc_day_id, block_index, global_category_id)
                     = read_two_ints_and_long(request_body);
@@ -131,7 +131,7 @@ impl<T: Send> App<T> for CompleteCacheApp<T> {
             }
             serve::URL_TODAYS_CATEGORY_POLL_RANKINGS_BY_CACHE_INDEX => {
                 if wrong_request_length_12(request_body) {
-                    codes::INVALID_DATA_FORMAT_RESPONSE
+                    codes::INVALID_DATA_FORMAT_RESPONSE.to_vec()
                 } else {
                     let (vc_day_id, block_index, category_cache_index)
                     = read_three_ints(request_body);
@@ -141,7 +141,7 @@ impl<T: Send> App<T> for CompleteCacheApp<T> {
             }
             serve::URL_LAST_MONTHS_CATEGORY_POLL_RANKINGS_BY_GLOBAL_ID => {
                 if wrong_request_length_16(request_body) {
-                    codes::INVALID_DATA_FORMAT_RESPONSE
+                    codes::INVALID_DATA_FORMAT_RESPONSE.to_vec()
                 } else {
                     let (vc_month_id, block_index, global_category_id)
                     = read_two_ints_and_long(request_body);
@@ -151,7 +151,7 @@ impl<T: Send> App<T> for CompleteCacheApp<T> {
             }
             serve::URL_LAST_MONTHS_CATEGORY_POLL_RANKINGS_BY_CACHE_INDEX => {
                 if wrong_request_length_12(request_body) {
-                    codes::INVALID_DATA_FORMAT_RESPONSE
+                    codes::INVALID_DATA_FORMAT_RESPONSE.to_vec()
                 } else {
                     let (vc_month_id, block_index, category_cache_index)
                     = read_three_ints(request_body);
@@ -161,7 +161,7 @@ impl<T: Send> App<T> for CompleteCacheApp<T> {
             }
             serve::URL_LAST_WEEKS_CATEGORY_POLL_RANKINGS_BY_GLOBAL_ID => {
                 if wrong_request_length_16(request_body) {
-                    codes::INVALID_DATA_FORMAT_RESPONSE
+                    codes::INVALID_DATA_FORMAT_RESPONSE.to_vec()
                 } else {
                     let (vc_week_id, block_index, global_category_id)
                     = read_two_ints_and_long(request_body);
@@ -171,7 +171,7 @@ impl<T: Send> App<T> for CompleteCacheApp<T> {
             }
             serve::URL_LAST_WEEKS_CATEGORY_POLL_RANKINGS_BY_CACHE_INDEX => {
                 if wrong_request_length_12(request_body) {
-                    codes::INVALID_DATA_FORMAT_RESPONSE
+                    codes::INVALID_DATA_FORMAT_RESPONSE.to_vec()
                 } else {
                     let (vc_week_id, block_index, category_cache_index)
                     = read_three_ints(request_body);
@@ -181,7 +181,7 @@ impl<T: Send> App<T> for CompleteCacheApp<T> {
             }
             serve::URL_YESTERDAYS_CATEGORY_POLL_RANKINGS_BY_GLOBAL_ID => {
                 if wrong_request_length_16(request_body) {
-                    codes::INVALID_DATA_FORMAT_RESPONSE
+                    codes::INVALID_DATA_FORMAT_RESPONSE.to_vec()
                 } else {
                     let (vc_day_id, block_index, global_category_id)
                     = read_two_ints_and_long(request_body);
@@ -191,7 +191,7 @@ impl<T: Send> App<T> for CompleteCacheApp<T> {
             }
             serve::URL_YESTERDAYS_CATEGORY_POLL_RANKINGS_BY_CACHE_INDEX => {
                 if wrong_request_length_12(request_body) {
-                    codes::INVALID_DATA_FORMAT_RESPONSE
+                    codes::INVALID_DATA_FORMAT_RESPONSE.to_vec()
                 } else {
                     let (vc_day_id, block_index, category_cache_index)
                     = read_three_ints(request_body);
@@ -201,7 +201,7 @@ impl<T: Send> App<T> for CompleteCacheApp<T> {
             }
             serve::URL_DAY_B4_YESTERDAY_CATEGORY_POLL_RANKINGS_BY_GLOBAL_ID => {
                 if wrong_request_length_16(request_body) {
-                    codes::INVALID_DATA_FORMAT_RESPONSE
+                    codes::INVALID_DATA_FORMAT_RESPONSE.to_vec()
                 } else {
                     let (vc_day_id, block_index, global_category_id)
                     = read_two_ints_and_long(request_body);
@@ -211,7 +211,7 @@ impl<T: Send> App<T> for CompleteCacheApp<T> {
             }
             serve::URL_DAY_B4_YESTERDAY_CATEGORY_POLL_RANKINGS_BY_CACHE_INDEX => {
                 if wrong_request_length_12(request_body) {
-                    codes::INVALID_DATA_FORMAT_RESPONSE
+                    codes::INVALID_DATA_FORMAT_RESPONSE.to_vec()
                 } else {
                     let (vc_day_id, block_index, category_cache_index)
                     = read_three_ints(request_body);
@@ -224,7 +224,7 @@ impl<T: Send> App<T> for CompleteCacheApp<T> {
 
             serve::URL_THIS_MONTHS_LOCATION_POLL_RANKINGS_BY_GLOBAL_ID => {
                 if wrong_request_length_20(request_body) {
-                    codes::INVALID_DATA_FORMAT_RESPONSE
+                    codes::INVALID_DATA_FORMAT_RESPONSE.to_vec()
                 } else {
                     let (vc_month_id, timezone_id, block_index, global_location_id)
                     = read_three_ints_and_long(request_body);
@@ -234,7 +234,7 @@ impl<T: Send> App<T> for CompleteCacheApp<T> {
             }
             serve::URL_THIS_MONTHS_LOCATION_POLL_RANKINGS_BY_CACHE_INDEX => {
                 if wrong_request_length_16(request_body) {
-                    codes::INVALID_DATA_FORMAT_RESPONSE
+                    codes::INVALID_DATA_FORMAT_RESPONSE.to_vec()
                 } else {
                     let (vc_month_id, timezone_id, block_index, location_cache_index)
                     = read_four_ints(request_body);
@@ -244,7 +244,7 @@ impl<T: Send> App<T> for CompleteCacheApp<T> {
             }
             serve::URL_THIS_WEEKS_LOCATION_POLL_RANKINGS_BY_GLOBAL_ID => {
                 if wrong_request_length_20(request_body) {
-                    codes::INVALID_DATA_FORMAT_RESPONSE
+                    codes::INVALID_DATA_FORMAT_RESPONSE.to_vec()
                 } else {
                     let (vc_week_id, timezone_id, block_index, global_location_id)
                     = read_three_ints_and_long(request_body);
@@ -254,7 +254,7 @@ impl<T: Send> App<T> for CompleteCacheApp<T> {
             }
             serve::URL_THIS_WEEKS_LOCATION_POLL_RANKINGS_BY_CACHE_INDEX => {
                 if wrong_request_length_16(request_body) {
-                    codes::INVALID_DATA_FORMAT_RESPONSE
+                    codes::INVALID_DATA_FORMAT_RESPONSE.to_vec()
                 } else {
                     let (vc_week_id, timezone_id, block_index, location_cache_index)
                     = read_four_ints(request_body);
@@ -264,7 +264,7 @@ impl<T: Send> App<T> for CompleteCacheApp<T> {
             }
             serve::URL_TODAYS_LOCATION_POLL_RANKINGS_BY_GLOBAL_ID => {
                 if wrong_request_length_20(request_body) {
-                    codes::INVALID_DATA_FORMAT_RESPONSE
+                    codes::INVALID_DATA_FORMAT_RESPONSE.to_vec()
                 } else {
                     let (vc_day_id, timezone_id, block_index, global_location_id)
                     = read_three_ints_and_long(request_body);
@@ -274,7 +274,7 @@ impl<T: Send> App<T> for CompleteCacheApp<T> {
             }
             serve::URL_TODAYS_LOCATION_POLL_RANKINGS_BY_CACHE_INDEX => {
                 if wrong_request_length_16(request_body) {
-                    codes::INVALID_DATA_FORMAT_RESPONSE
+                    codes::INVALID_DATA_FORMAT_RESPONSE.to_vec()
                 } else {
                     let (vc_day_id, timezone_id, block_index, location_cache_index)
                     = read_four_ints(request_body);
@@ -284,7 +284,7 @@ impl<T: Send> App<T> for CompleteCacheApp<T> {
             }
             serve::URL_LAST_MONTHS_LOCATION_POLL_RANKINGS_BY_GLOBAL_ID => {
                 if wrong_request_length_20(request_body) {
-                    codes::INVALID_DATA_FORMAT_RESPONSE
+                    codes::INVALID_DATA_FORMAT_RESPONSE.to_vec()
                 } else {
                     let (vc_month_id, timezone_id, block_index, global_location_id)
                     = read_three_ints_and_long(request_body);
@@ -294,7 +294,7 @@ impl<T: Send> App<T> for CompleteCacheApp<T> {
             }
             serve::URL_LAST_MONTHS_LOCATION_POLL_RANKINGS_BY_CACHE_INDEX => {
                 if wrong_request_length_16(request_body) {
-                    codes::INVALID_DATA_FORMAT_RESPONSE
+                    codes::INVALID_DATA_FORMAT_RESPONSE.to_vec()
                 } else {
                     let (vc_month_id, timezone_id, block_index, location_cache_index)
                     = read_four_ints(request_body);
@@ -304,7 +304,7 @@ impl<T: Send> App<T> for CompleteCacheApp<T> {
             }
             serve::URL_LAST_WEEKS_LOCATION_POLL_RANKINGS_BY_GLOBAL_ID => {
                 if wrong_request_length_20(request_body) {
-                    codes::INVALID_DATA_FORMAT_RESPONSE
+                    codes::INVALID_DATA_FORMAT_RESPONSE.to_vec()
                 } else {
                     let (vc_week_id, timezone_id, block_index, global_location_id)
                     = read_three_ints_and_long(request_body);
@@ -314,7 +314,7 @@ impl<T: Send> App<T> for CompleteCacheApp<T> {
             }
             serve::URL_LAST_WEEKS_LOCATION_POLL_RANKINGS_BY_CACHE_INDEX => {
                 if wrong_request_length_16(request_body) {
-                    codes::INVALID_DATA_FORMAT_RESPONSE
+                    codes::INVALID_DATA_FORMAT_RESPONSE.to_vec()
                 } else {
                     let (vc_week_id, timezone_id, block_index, location_cache_index)
                     = read_four_ints(request_body);
@@ -324,7 +324,7 @@ impl<T: Send> App<T> for CompleteCacheApp<T> {
             }
             serve::URL_YESTERDAYS_LOCATION_POLL_RANKINGS_BY_GLOBAL_ID => {
                 if wrong_request_length_20(request_body) {
-                    codes::INVALID_DATA_FORMAT_RESPONSE
+                    codes::INVALID_DATA_FORMAT_RESPONSE.to_vec()
                 } else {
                     let (vc_day_id, timezone_id, block_index, global_location_id)
                     = read_three_ints_and_long(request_body);
@@ -334,7 +334,7 @@ impl<T: Send> App<T> for CompleteCacheApp<T> {
             }
             serve::URL_YESTERDAYS_LOCATION_POLL_RANKINGS_BY_CACHE_INDEX => {
                 if wrong_request_length_16(request_body) {
-                    codes::INVALID_DATA_FORMAT_RESPONSE
+                    codes::INVALID_DATA_FORMAT_RESPONSE.to_vec()
                 } else {
                     let (vc_day_id, timezone_id, block_index, location_cache_index)
                     = read_four_ints(request_body);
@@ -344,7 +344,7 @@ impl<T: Send> App<T> for CompleteCacheApp<T> {
             }
             serve::URL_DAY_B4_YESTERDAY_LOCATION_POLL_RANKINGS_BY_GLOBAL_ID => {
                 if wrong_request_length_20(request_body) {
-                    codes::INVALID_DATA_FORMAT_RESPONSE
+                    codes::INVALID_DATA_FORMAT_RESPONSE.to_vec()
                 } else {
                     let (vc_day_id, timezone_id, block_index, global_location_id)
                     = read_three_ints_and_long(request_body);
@@ -354,7 +354,7 @@ impl<T: Send> App<T> for CompleteCacheApp<T> {
             }
             serve::URL_DAY_B4_YESTERDAY_LOCATION_POLL_RANKINGS_BY_CACHE_INDEX => {
                 if wrong_request_length_16(request_body) {
-                    codes::INVALID_DATA_FORMAT_RESPONSE
+                    codes::INVALID_DATA_FORMAT_RESPONSE.to_vec()
                 } else {
                     let (vc_day_id, timezone_id, block_index, location_cache_index)
                     = read_four_ints(request_body);
@@ -367,7 +367,7 @@ impl<T: Send> App<T> for CompleteCacheApp<T> {
 
             serve::URL_THIS_MONTHS_LOCATION_CATEGORY_POLL_RANKINGS_BY_GLOBAL_IDS => {
                 if wrong_request_length_28(request_body) {
-                    codes::INVALID_DATA_FORMAT_RESPONSE
+                    codes::INVALID_DATA_FORMAT_RESPONSE.to_vec()
                 } else {
                     let (vc_day_id, timezone_id, block_index, global_location_id, global_category_id)
                     = read_three_ints_and_two_longs(request_body);
@@ -377,7 +377,7 @@ impl<T: Send> App<T> for CompleteCacheApp<T> {
             }
             serve::URL_THIS_MONTHS_LOCATION_CATEGORY_POLL_RANKINGS_BY_LOCATION_CACHE_INDEX_AND_GLOBAL_CATEGORY_ID => {
                 if wrong_request_length_24(request_body) {
-                    codes::INVALID_DATA_FORMAT_RESPONSE
+                    codes::INVALID_DATA_FORMAT_RESPONSE.to_vec()
                 } else {
                     let (vc_day_id, timezone_id, block_index, location_cache_index, global_category_id)
                     = read_four_ints_and_long(request_body);
@@ -387,7 +387,7 @@ impl<T: Send> App<T> for CompleteCacheApp<T> {
             }
             serve::URL_THIS_MONTHS_LOCATION_CATEGORY_POLL_RANKINGS_BY_CACHE_INDEXES => {
                 if wrong_request_length_20(request_body) {
-                    codes::INVALID_DATA_FORMAT_RESPONSE
+                    codes::INVALID_DATA_FORMAT_RESPONSE.to_vec()
                 } else {
                     let (vc_day_id, timezone_id, block_index, location_cache_index, location_category_cache_index)
                     = read_five_ints(request_body);
@@ -397,7 +397,7 @@ impl<T: Send> App<T> for CompleteCacheApp<T> {
             }
             serve::URL_THIS_WEEKS_LOCATION_CATEGORY_POLL_RANKINGS_BY_GLOBAL_IDS => {
                 if wrong_request_length_28(request_body) {
-                    codes::INVALID_DATA_FORMAT_RESPONSE
+                    codes::INVALID_DATA_FORMAT_RESPONSE.to_vec()
                 } else {
                     let (vc_day_id, timezone_id, block_index, global_location_id, global_category_id)
                     = read_three_ints_and_two_longs(request_body);
@@ -407,7 +407,7 @@ impl<T: Send> App<T> for CompleteCacheApp<T> {
             }
             serve::URL_THIS_WEEKS_LOCATION_CATEGORY_POLL_RANKINGS_BY_LOCATION_CACHE_INDEX_AND_GLOBAL_CATEGORY_ID => {
                 if wrong_request_length_24(request_body) {
-                    codes::INVALID_DATA_FORMAT_RESPONSE
+                    codes::INVALID_DATA_FORMAT_RESPONSE.to_vec()
                 } else {
                     let (vc_day_id, timezone_id, block_index, location_cache_index, global_category_id)
                     = read_four_ints_and_long(request_body);
@@ -417,7 +417,7 @@ impl<T: Send> App<T> for CompleteCacheApp<T> {
             }
             serve::URL_THIS_WEEKS_LOCATION_CATEGORY_POLL_RANKINGS_BY_CACHE_INDEXES => {
                 if wrong_request_length_20(request_body) {
-                    codes::INVALID_DATA_FORMAT_RESPONSE
+                    codes::INVALID_DATA_FORMAT_RESPONSE.to_vec()
                 } else {
                     let (vc_day_id, timezone_id, block_index, location_cache_index, location_category_cache_index)
                     = read_five_ints(request_body);
@@ -427,7 +427,7 @@ impl<T: Send> App<T> for CompleteCacheApp<T> {
             }
             serve::URL_TODAYS_LOCATION_CATEGORY_POLL_RANKINGS_BY_GLOBAL_IDS => {
                 if wrong_request_length_28(request_body) {
-                    codes::INVALID_DATA_FORMAT_RESPONSE
+                    codes::INVALID_DATA_FORMAT_RESPONSE.to_vec()
                 } else {
                     let (vc_day_id, timezone_id, block_index, global_location_id, global_category_id)
                     = read_three_ints_and_two_longs(request_body);
@@ -437,7 +437,7 @@ impl<T: Send> App<T> for CompleteCacheApp<T> {
             }
             serve::URL_TODAYS_LOCATION_CATEGORY_POLL_RANKINGS_BY_LOCATION_CACHE_INDEX_AND_GLOBAL_CATEGORY_ID => {
                 if wrong_request_length_24(request_body) {
-                    codes::INVALID_DATA_FORMAT_RESPONSE
+                    codes::INVALID_DATA_FORMAT_RESPONSE.to_vec()
                 } else {
                     let (vc_day_id, timezone_id, block_index, location_cache_index, global_category_id)
                     = read_four_ints_and_long(request_body);
@@ -447,7 +447,7 @@ impl<T: Send> App<T> for CompleteCacheApp<T> {
             }
             serve::URL_TODAYS_LOCATION_CATEGORY_POLL_RANKINGS_BY_CACHE_INDEXES => {
                 if wrong_request_length_20(request_body) {
-                    codes::INVALID_DATA_FORMAT_RESPONSE
+                    codes::INVALID_DATA_FORMAT_RESPONSE.to_vec()
                 } else {
                     let (vc_day_id, timezone_id, block_index, location_cache_index, location_category_cache_index)
                     = read_five_ints(request_body);
@@ -457,7 +457,7 @@ impl<T: Send> App<T> for CompleteCacheApp<T> {
             }
             serve::URL_LAST_MONTHS_LOCATION_CATEGORY_POLL_RANKINGS_BY_GLOBAL_IDS => {
                 if wrong_request_length_28(request_body) {
-                    codes::INVALID_DATA_FORMAT_RESPONSE
+                    codes::INVALID_DATA_FORMAT_RESPONSE.to_vec()
                 } else {
                     let (vc_day_id, timezone_id, block_index, global_location_id, global_category_id)
                     = read_three_ints_and_two_longs(request_body);
@@ -467,7 +467,7 @@ impl<T: Send> App<T> for CompleteCacheApp<T> {
             }
             serve::URL_LAST_MONTHS_LOCATION_CATEGORY_POLL_RANKINGS_BY_LOCATION_CACHE_INDEX_AND_GLOBAL_CATEGORY_ID => {
                 if wrong_request_length_24(request_body) {
-                    codes::INVALID_DATA_FORMAT_RESPONSE
+                    codes::INVALID_DATA_FORMAT_RESPONSE.to_vec()
                 } else {
                     let (vc_day_id, timezone_id, block_index, location_cache_index, global_category_id)
                     = read_four_ints_and_long(request_body);
@@ -477,7 +477,7 @@ impl<T: Send> App<T> for CompleteCacheApp<T> {
             }
             serve::URL_LAST_MONTHS_LOCATION_CATEGORY_POLL_RANKINGS_BY_CACHE_INDEXES => {
                 if wrong_request_length_20(request_body) {
-                    codes::INVALID_DATA_FORMAT_RESPONSE
+                    codes::INVALID_DATA_FORMAT_RESPONSE.to_vec()
                 } else {
                     let (vc_day_id, timezone_id, block_index, location_cache_index, location_category_cache_index)
                     = read_five_ints(request_body);
@@ -487,7 +487,7 @@ impl<T: Send> App<T> for CompleteCacheApp<T> {
             }
             serve::URL_LAST_WEEKS_LOCATION_CATEGORY_POLL_RANKINGS_BY_GLOBAL_IDS => {
                 if wrong_request_length_28(request_body) {
-                    codes::INVALID_DATA_FORMAT_RESPONSE
+                    codes::INVALID_DATA_FORMAT_RESPONSE.to_vec()
                 } else {
                     let (vc_day_id, timezone_id, block_index, global_location_id, global_category_id)
                     = read_three_ints_and_two_longs(request_body);
@@ -497,7 +497,7 @@ impl<T: Send> App<T> for CompleteCacheApp<T> {
             }
             serve::URL_LAST_WEEKS_LOCATION_CATEGORY_POLL_RANKINGS_BY_LOCATION_CACHE_INDEX_AND_GLOBAL_CATEGORY_ID => {
                 if wrong_request_length_24(request_body) {
-                    codes::INVALID_DATA_FORMAT_RESPONSE
+                    codes::INVALID_DATA_FORMAT_RESPONSE.to_vec()
                 } else {
                     let (vc_day_id, timezone_id, block_index, location_cache_index, global_category_id)
                     = read_four_ints_and_long(request_body);
@@ -507,7 +507,7 @@ impl<T: Send> App<T> for CompleteCacheApp<T> {
             }
             serve::URL_LAST_WEEKS_LOCATION_CATEGORY_POLL_RANKINGS_BY_CACHE_INDEXES => {
                 if wrong_request_length_20(request_body) {
-                    codes::INVALID_DATA_FORMAT_RESPONSE
+                    codes::INVALID_DATA_FORMAT_RESPONSE.to_vec()
                 } else {
                     let (vc_day_id, timezone_id, block_index, location_cache_index, location_category_cache_index)
                     = read_five_ints(request_body);
@@ -517,7 +517,7 @@ impl<T: Send> App<T> for CompleteCacheApp<T> {
             }
             serve::URL_YESTERDAYS_LOCATION_CATEGORY_POLL_RANKINGS_BY_GLOBAL_IDS => {
                 if wrong_request_length_28(request_body) {
-                    codes::INVALID_DATA_FORMAT_RESPONSE
+                    codes::INVALID_DATA_FORMAT_RESPONSE.to_vec()
                 } else {
                     let (vc_day_id, timezone_id, block_index, global_location_id, global_category_id)
                     = read_three_ints_and_two_longs(request_body);
@@ -527,7 +527,7 @@ impl<T: Send> App<T> for CompleteCacheApp<T> {
             }
             serve::URL_YESTERDAYS_LOCATION_CATEGORY_POLL_RANKINGS_BY_LOCATION_CACHE_INDEX_AND_GLOBAL_CATEGORY_ID => {
                 if wrong_request_length_24(request_body) {
-                    codes::INVALID_DATA_FORMAT_RESPONSE
+                    codes::INVALID_DATA_FORMAT_RESPONSE.to_vec()
                 } else {
                     let (vc_day_id, timezone_id, block_index, location_cache_index, global_category_id)
                     = read_four_ints_and_long(request_body);
@@ -537,7 +537,7 @@ impl<T: Send> App<T> for CompleteCacheApp<T> {
             }
             serve::URL_YESTERDAYS_LOCATION_CATEGORY_POLL_RANKINGS_BY_CACHE_INDEXES => {
                 if wrong_request_length_20(request_body) {
-                    codes::INVALID_DATA_FORMAT_RESPONSE
+                    codes::INVALID_DATA_FORMAT_RESPONSE.to_vec()
                 } else {
                     let (vc_day_id, timezone_id, block_index, location_cache_index, location_category_cache_index)
                     = read_five_ints(request_body);
@@ -547,7 +547,7 @@ impl<T: Send> App<T> for CompleteCacheApp<T> {
             }
             serve::URL_DAY_B4_YESTERDAY_LOCATION_YESTERDAY_CATEGORY_POLL_RANKINGS_BY_GLOBAL_IDS => {
                 if wrong_request_length_28(request_body) {
-                    codes::INVALID_DATA_FORMAT_RESPONSE
+                    codes::INVALID_DATA_FORMAT_RESPONSE.to_vec()
                 } else {
                     let (vc_day_id, timezone_id, block_index, global_location_id, global_category_id)
                     = read_three_ints_and_two_longs(request_body);
@@ -557,7 +557,7 @@ impl<T: Send> App<T> for CompleteCacheApp<T> {
             }
             serve::URL_DAY_B4_YESTERDAY_LOCATION_YESTERDAY_CATEGORY_POLL_RANKINGS_BY_LOCATION_CACHE_INDEX_AND_GLOBAL_CATEGORY_ID => {
                 if wrong_request_length_24(request_body) {
-                    codes::INVALID_DATA_FORMAT_RESPONSE
+                    codes::INVALID_DATA_FORMAT_RESPONSE.to_vec()
                 } else {
                     let (vc_day_id, timezone_id, block_index, location_cache_index, global_category_id)
                     = read_four_ints_and_long(request_body);
@@ -567,7 +567,7 @@ impl<T: Send> App<T> for CompleteCacheApp<T> {
             }
             serve::URL_DAY_B4_YESTERDAY_LOCATION_YESTERDAY_CATEGORY_POLL_RANKINGS_BY_CACHE_INDEXES => {
                 if wrong_request_length_20(request_body) {
-                    codes::INVALID_DATA_FORMAT_RESPONSE
+                    codes::INVALID_DATA_FORMAT_RESPONSE.to_vec()
                 } else {
                     let (vc_day_id, timezone_id, block_index, location_cache_index, location_category_cache_index)
                     = read_five_ints(request_body);
@@ -586,34 +586,34 @@ impl<T: Send> App<T> for CompleteCacheApp<T> {
 
             serve::URL_NEXT_MONTHS_LOCATION_POLLS => {
                 if wrong_request_length_20(request_body) {
-                    codes::INVALID_DATA_FORMAT_RESPONSE
+                    codes::INVALID_DATA_FORMAT_RESPONSE.to_vec()
                 } else {
                     let (month_id, timezone_id, block_number, global_location_id) = read_three_ints_and_long(request_body);
-                    get_next_months_location_polls(month_id, timezone_id, block_number, global_location_id);
+                    get_next_months_location_polls(month_id, timezone_id, block_number, global_location_id)
                 }
             }
             serve::URL_NEXT_WEEKS_LOCATION_POLLS => {
                 if wrong_request_length_20(request_body) {
-                    codes::INVALID_DATA_FORMAT_RESPONSE
+                    codes::INVALID_DATA_FORMAT_RESPONSE.to_vec()
                 } else {
                     let (week_id, timezone_id, block_number, global_location_id) = read_three_ints_and_long(request_body);
-                    get_next_weeks_location_polls(week_id, timezone_id, block_number, global_location_id);
+                    get_next_weeks_location_polls(week_id, timezone_id, block_number, global_location_id)
                 }
             }
             serve::URL_TOMORROWS_LOCATION_POLLS => {
                 if wrong_request_length_20(request_body) {
-                    codes::INVALID_DATA_FORMAT_RESPONSE
+                    codes::INVALID_DATA_FORMAT_RESPONSE.to_vec()
                 } else {
                     let (day_id, timezone_id, block_number, global_location_id) = read_three_ints_and_long(request_body);
-                    get_tomorrows_location_polls(day_id, timezone_id, block_number, global_location_id);
+                    get_tomorrows_location_polls(day_id, timezone_id, block_number, global_location_id)
                 }
             }
             serve::URL_DAY_AFTER_TOMORROWS_LOCATION_POLLS => {
                 if wrong_request_length_20(request_body) {
-                    codes::INVALID_DATA_FORMAT_RESPONSE
+                    codes::INVALID_DATA_FORMAT_RESPONSE.to_vec()
                 } else {
                     let (day_id, timezone_id, block_number, global_location_id) = read_three_ints_and_long(request_body);
-                    get_day_after_tomorrows_location_polls(day_id, timezone_id, block_number, global_location_id);
+                    get_day_after_tomorrows_location_polls(day_id, timezone_id, block_number, global_location_id)
                 }
             }
 
@@ -621,34 +621,34 @@ impl<T: Send> App<T> for CompleteCacheApp<T> {
 
             serve::URL_NEXT_MONTHS_CATEGORY_POLLS => {
                 if wrong_request_length_16(request_body) {
-                    codes::INVALID_DATA_FORMAT_RESPONSE
+                    codes::INVALID_DATA_FORMAT_RESPONSE.to_vec()
                 } else {
                     let (month_id,block_number, global_category_id) = read_two_ints_and_long(request_body);
-                    get_next_months_category_polls(month_id, block_number, global_category_id);
+                    get_next_months_category_polls(month_id, block_number, global_category_id)
                 }
             }
             serve::URL_NEXT_WEEKS_CATEGORY_POLLS => {
                 if wrong_request_length_16(request_body) {
-                    codes::INVALID_DATA_FORMAT_RESPONSE
+                    codes::INVALID_DATA_FORMAT_RESPONSE.to_vec()
                 } else {
                     let (week_id,block_number, global_category_id) = read_two_ints_and_long(request_body);
-                    get_next_weeks_category_polls(week_id, block_number, global_category_id);
+                    get_next_weeks_category_polls(week_id, block_number, global_category_id)
                 }
             }
             serve::URL_TOMORROWS_CATEGORY_POLLS => {
                 if wrong_request_length_16(request_body) {
-                    codes::INVALID_DATA_FORMAT_RESPONSE
+                    codes::INVALID_DATA_FORMAT_RESPONSE.to_vec()
                 } else {
                     let (day_id,block_number, global_category_id) = read_two_ints_and_long(request_body);
-                    get_tomorrows_category_polls(day_id, block_number, global_category_id);
+                    get_tomorrows_category_polls(day_id, block_number, global_category_id)
                 }
             }
             serve::URL_DAY_AFTER_TOMORROWS_CATEGORY_POLLS => {
                 if wrong_request_length_16(request_body) {
-                    codes::INVALID_DATA_FORMAT_RESPONSE
+                    codes::INVALID_DATA_FORMAT_RESPONSE.to_vec()
                 } else {
                     let (day_id,block_number, global_category_id) = read_two_ints_and_long(request_body);
-                    get_day_after_tomorrows_category_polls(day_id, block_number, global_category_id);
+                    get_day_after_tomorrows_category_polls(day_id, block_number, global_category_id)
                 }
             }
 
@@ -656,39 +656,39 @@ impl<T: Send> App<T> for CompleteCacheApp<T> {
 
             serve::URL_NEXT_MONTHS_LOCATION_CATEGORY_POLLS => {
                 if wrong_request_length_28(request_body) {
-                    codes::INVALID_DATA_FORMAT_RESPONSE
+                    codes::INVALID_DATA_FORMAT_RESPONSE.to_vec()
                 } else {
                     let (month_id, timezone_id, block_number, global_location_id, global_category_id) = read_three_ints_and_two_longs(request_body);
-                    get_next_months_location_category_polls(month_id, timezone_id, block_number, global_location_id, global_category_id);
+                    get_next_months_location_category_polls(month_id, timezone_id, block_number, global_location_id, global_category_id)
                 }
             }
             serve::URL_NEXT_WEEKS_LOCATION_CATEGORY_POLLS => {
                 if wrong_request_length_28(request_body) {
-                    codes::INVALID_DATA_FORMAT_RESPONSE
+                    codes::INVALID_DATA_FORMAT_RESPONSE.to_vec()
                 } else {
                     let (week_id, timezone_id, block_number, global_location_id, global_category_id) = read_three_ints_and_two_longs(request_body);
-                    get_next_weeks_location_category_polls(week_id, timezone_id, block_number, global_location_id, global_category_id);
+                    get_next_weeks_location_category_polls(week_id, timezone_id, block_number, global_location_id, global_category_id)
                 }
             }
             serve::URL_TOMORROWS_LOCATION_CATEGORY_POLLS => {
                 if wrong_request_length_28(request_body) {
-                    codes::INVALID_DATA_FORMAT_RESPONSE
+                    codes::INVALID_DATA_FORMAT_RESPONSE.to_vec()
                 } else {
                     let (day_id, timezone_id, block_number, global_location_id, global_category_id) = read_three_ints_and_two_longs(request_body);
-                    get_tomorrows_location_category_polls(day_id, timezone_id, block_number, global_location_id, global_category_id);
+                    get_tomorrows_location_category_polls(day_id, timezone_id, block_number, global_location_id, global_category_id)
                 }
             }
             serve::URL_DAY_AFTER_TOMORROWS_LOCATION_CATEGORY_POLLS => {
                 if wrong_request_length_28(request_body) {
-                    codes::INVALID_DATA_FORMAT_RESPONSE
+                    codes::INVALID_DATA_FORMAT_RESPONSE.to_vec()
                 } else {
                     let (day_id, timezone_id, block_number, global_location_id, global_category_id) = read_three_ints_and_two_longs(request_body);
-                    get_day_after_tomorrows_location_category_polls(day_id, timezone_id, block_number, global_location_id, global_category_id);
+                    get_day_after_tomorrows_location_category_polls(day_id, timezone_id, block_number, global_location_id, global_category_id)
                 }
             }
 
             _ => {
-                codes::INVALID_DATA_FORMAT_RESPONSE
+                codes::INVALID_DATA_FORMAT_RESPONSE.to_vec()
             }
         }
     }

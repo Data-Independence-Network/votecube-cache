@@ -42,6 +42,9 @@ impl ByteCounts {
                 self.current_byte = 0;
                 self.current_bits = 0;
             }
+            _ => {
+                panic!("Unexpected current bits {}", self.current_bits)
+            }
         }
     }
 
@@ -64,6 +67,9 @@ impl ByteCounts {
                 self.data.push(self.current_byte);
                 self.current_byte = 0;
                 self.current_bits = 0;
+            }
+            _ => {
+                panic!("Unexpected current bits {}", self.current_bits)
             }
         }
     }
@@ -88,6 +94,9 @@ impl ByteCounts {
                 self.current_byte = 0;
                 self.current_bits = 0;
             }
+            _ => {
+                panic!("Unexpected current bits {}", self.current_bits)
+            }
         }
     }
 
@@ -110,6 +119,9 @@ impl ByteCounts {
                 self.data.push(self.current_byte);
                 self.current_byte = 0;
                 self.current_bits = 0;
+            }
+            _ => {
+                panic!("Unexpected current bits {}", self.current_bits)
             }
         }
     }

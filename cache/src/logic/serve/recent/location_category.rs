@@ -162,10 +162,6 @@ fn get_global_location_category_polls(
             response.push(0b00000100);
             return get_4_byte_recent_poll_ids(polls_block, response);
         }
-        2 => {
-            response.push(0b00000010);
-            return get_2_byte_recent_poll_ids(polls_block, response);
-        }
         5 => {
             response.push(0b00000101);
             return get_5_byte_recent_poll_ids(polls_block, response);
@@ -181,6 +177,13 @@ fn get_global_location_category_polls(
         8 => {
             response.push(0b00000000);
             return get_8_byte_recent_poll_ids(polls_block, response);
+        }
+        2 => {
+            response.push(0b00000010);
+            return get_2_byte_recent_poll_ids(polls_block, response);
+        }
+        _ => {
+            panic!("Unexpected number of bytes {}", max_poll_number_bytes)
         }
     }
 

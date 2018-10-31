@@ -7,9 +7,9 @@ use super::super::super::super::cache::model::VoteCount;
 use super::super::super::super::data::byte_counts::ByteCounts;
 
 // NOTE: max page size must fin into u16
-const PAGE_SIZE: u64 = 1024;
+const PAGE_SIZE: u32 = 1024;
 
-pub const INITIAL_RESPONSE_VECTOR_SIZE_8_POLL_BYTES: u64 =
+pub const INITIAL_RESPONSE_VECTOR_SIZE_8_POLL_BYTES: u32 =
 // space for the leading header byte
     1 +
         // space for location cache index (if any
@@ -25,7 +25,7 @@ pub const INITIAL_RESPONSE_VECTOR_SIZE_8_POLL_BYTES: u64 =
         // space for trailing size bytes
         2;
 
-pub const INITIAL_RESPONSE_VECTOR_SIZE_7_POLL_BYTES: u64 =
+pub const INITIAL_RESPONSE_VECTOR_SIZE_7_POLL_BYTES: u32 =
 // space for the leading header byte
     1 +
         // space for location cache index (if any
@@ -41,7 +41,7 @@ pub const INITIAL_RESPONSE_VECTOR_SIZE_7_POLL_BYTES: u64 =
         // space for trailing size bytes
         2;
 
-pub const INITIAL_RESPONSE_VECTOR_SIZE_6_POLL_BYTES: u64 =
+pub const INITIAL_RESPONSE_VECTOR_SIZE_6_POLL_BYTES: u32 =
 // space for the leading header byte
     1 +
         // space for location cache index (if any
@@ -57,7 +57,7 @@ pub const INITIAL_RESPONSE_VECTOR_SIZE_6_POLL_BYTES: u64 =
         // space for trailing size bytes
         2;
 
-pub const INITIAL_RESPONSE_VECTOR_SIZE_5_POLL_BYTES: u64 =
+pub const INITIAL_RESPONSE_VECTOR_SIZE_5_POLL_BYTES: u32 =
 // space for the leading header byte
     1 +
         // space for location cache index (if any
@@ -73,7 +73,7 @@ pub const INITIAL_RESPONSE_VECTOR_SIZE_5_POLL_BYTES: u64 =
         // space for trailing size bytes
         2;
 
-pub const INITIAL_RESPONSE_VECTOR_SIZE_4_POLL_BYTES: u64 =
+pub const INITIAL_RESPONSE_VECTOR_SIZE_4_POLL_BYTES: u32 =
 // space for the leading header byte
     1 +
         // space for location cache index (if any
@@ -89,7 +89,7 @@ pub const INITIAL_RESPONSE_VECTOR_SIZE_4_POLL_BYTES: u64 =
         // space for trailing size bytes
         2;
 
-pub const INITIAL_RESPONSE_VECTOR_SIZE_3_POLL_BYTES: u64 =
+pub const INITIAL_RESPONSE_VECTOR_SIZE_3_POLL_BYTES: u32 =
 // space for the leading header byte
     1 +
         // space for location cache index (if any
@@ -105,7 +105,7 @@ pub const INITIAL_RESPONSE_VECTOR_SIZE_3_POLL_BYTES: u64 =
         // space for trailing size bytes
         2;
 
-pub const INITIAL_RESPONSE_VECTOR_SIZE_2_POLL_BYTES: u64 =
+pub const INITIAL_RESPONSE_VECTOR_SIZE_2_POLL_BYTES: u32 =
 // space for the leading header byte
     1 +
         // space for location cache index (if any
@@ -145,6 +145,9 @@ pub fn get_8_byte_recent_polls(
                     }
                     consts::POLL_TYPE_3D => {
                         poll_types.add3();
+                    }
+                    _ => {
+                        panic!("Unexpected Poll Type {}", voteCount.poll_type_and_tz & 0b00000011)
                     }
                 }
 
@@ -205,6 +208,9 @@ pub fn get_7_byte_recent_polls(
                     consts::POLL_TYPE_3D => {
                         poll_types.add3();
                     }
+                    _ => {
+                        panic!("Unexpected Poll Type {}", voteCount.poll_type_and_tz & 0b00000011)
+                    }
                 }
 
                 let poll_id_bytes: [u8; 8] = unsafe {
@@ -263,6 +269,9 @@ pub fn get_6_byte_recent_polls(
                     }
                     consts::POLL_TYPE_3D => {
                         poll_types.add3();
+                    }
+                    _ => {
+                        panic!("Unexpected Poll Type {}", voteCount.poll_type_and_tz & 0b00000011)
                     }
                 }
 
@@ -323,6 +332,9 @@ pub fn get_5_byte_recent_polls(
                     consts::POLL_TYPE_3D => {
                         poll_types.add3();
                     }
+                    _ => {
+                        panic!("Unexpected Poll Type {}", voteCount.poll_type_and_tz & 0b00000011)
+                    }
                 }
 
                 let poll_id_bytes: [u8; 8] = unsafe {
@@ -381,6 +393,9 @@ pub fn get_4_byte_recent_polls(
                     }
                     consts::POLL_TYPE_3D => {
                         poll_types.add3();
+                    }
+                    _ => {
+                        panic!("Unexpected Poll Type {}", voteCount.poll_type_and_tz & 0b00000011)
                     }
                 }
 
@@ -441,6 +456,9 @@ pub fn get_3_byte_recent_polls(
                     consts::POLL_TYPE_3D => {
                         poll_types.add3();
                     }
+                    _ => {
+                        panic!("Unexpected Poll Type {}", voteCount.poll_type_and_tz & 0b00000011)
+                    }
                 }
 
                 let poll_id_bytes: [u8; 8] = unsafe {
@@ -499,6 +517,9 @@ pub fn get_2_byte_recent_polls(
                     }
                     consts::POLL_TYPE_3D => {
                         poll_types.add3();
+                    }
+                    _ => {
+                        panic!("Unexpected Poll Type {}", voteCount.poll_type_and_tz & 0b00000011)
                     }
                 }
 
