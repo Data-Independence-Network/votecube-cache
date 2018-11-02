@@ -7,6 +7,7 @@ pub mod locations_poll_rankings;
 pub mod manager;
 pub mod model;
 pub mod poll_id_byte_counts;
+pub mod polls;
 pub mod polls_by_category;
 pub mod polls_by_location;
 pub mod time_period_ids;

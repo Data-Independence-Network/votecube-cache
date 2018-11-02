@@ -8,7 +8,7 @@ use common::model::types::DayId;
 use common::model::types::MonthId;
 use common::model::types::WeekId;
 
-use super::super::super::super::cache::cache;
+use super::super::super::super::cache::cache::Cache;
 use super::super::super::super::cache::model::VoteCount;
 use super::super::super::super::cache::model::CategoryPeriodPollRankings;
 use super::super::super::super::data::byte_counts::ByteCounts;
@@ -110,15 +110,16 @@ pub fn get_todays_category_rankings_by_global_id(
     vc_day_id: DayId,
     block_index: u32,
     global_category_id: CategoryId,
+    &cache: Cache,
 ) -> Vec<u8> {
     return get_category_rankings_by_global_id(
-        cache::CATEGORY_CACHE_PERIOD_IDS.todays_vc_day_id,
+        cache.category_cache_period_ids.todays_vc_day_id,
         vc_day_id,
-        cache::CATEGORY_TODAYS_INDEX_MAP,
-        cache::TODAYS_CATEGORY_POLL_RANKINGS,
+        cache.category_index_map.TODAY,
+        cache.category_poll_rankings.TODAY,
         global_category_id,
         block_index,
-        cache::TODAYS_POLL_ID_BYTE_COUNTS[38],
+        cache.poll_id_byte_counts.TODAY[38],
     );
 }
 
@@ -126,14 +127,15 @@ pub fn get_todays_category_rankings_by_cache_index(
     vc_day_id: DayId,
     block_index: u32,
     category_cache_index: CategoryCacheIndex,
+    &cache: Cache,
 ) -> Vec<u8> {
     return get_category_rankings_by_cache_index(
-        cache::CATEGORY_CACHE_PERIOD_IDS.todays_vc_day_id,
+        cache.category_cache_period_ids.todays_vc_day_id,
         vc_day_id,
-        cache::TODAYS_CATEGORY_POLL_RANKINGS,
+        cache.category_poll_rankings.TODAY,
         category_cache_index,
         block_index,
-        cache::TODAYS_POLL_ID_BYTE_COUNTS[38],
+        cache.poll_id_byte_counts.TODAY[38],
     );
 }
 
@@ -141,15 +143,16 @@ pub fn get_yesterdays_category_rankings_by_global_id(
     vc_day_id: DayId,
     block_index: u32,
     global_category_id: CategoryId,
+    &cache: Cache,
 ) -> Vec<u8> {
     return get_category_rankings_by_global_id(
-        cache::CATEGORY_CACHE_PERIOD_IDS.yesterdays_vc_day_id,
+        cache.category_cache_period_ids.yesterdays_vc_day_id,
         vc_day_id,
-        cache::CATEGORY_YESTERDAYS_INDEX_MAP,
-        cache::YESTERDAYS_CATEGORY_POLL_RANKINGS,
+        cache.category_index_map.YESTERDAY,
+        cache.category_poll_rankings.YESTERDAY,
         global_category_id,
         block_index,
-        cache::YESTERDAYS_POLL_ID_BYTE_COUNTS[38],
+        cache.poll_id_byte_counts.YESTERDAY[38],
     );
 }
 
@@ -157,14 +160,15 @@ pub fn get_yesterdays_category_rankings_by_cache_index(
     vc_day_id: DayId,
     block_index: u32,
     category_cache_index: CategoryCacheIndex,
+    &cache: Cache,
 ) -> Vec<u8> {
     return get_category_rankings_by_cache_index(
-        cache::CATEGORY_CACHE_PERIOD_IDS.yesterdays_vc_day_id,
+        cache.category_cache_period_ids.yesterdays_vc_day_id,
         vc_day_id,
-        cache::YESTERDAYS_CATEGORY_POLL_RANKINGS,
+        cache.category_poll_rankings.YESTERDAY,
         category_cache_index,
         block_index,
-        cache::YESTERDAYS_POLL_ID_BYTE_COUNTS[38],
+        cache.poll_id_byte_counts.YESTERDAY[38],
     );
 }
 
@@ -172,15 +176,16 @@ pub fn get_day_b4_yesterdays_category_rankings_by_global_id(
     vc_day_id: DayId,
     block_index: u32,
     global_category_id: CategoryId,
+    &cache: Cache,
 ) -> Vec<u8> {
     return get_category_rankings_by_global_id(
-        cache::CATEGORY_CACHE_PERIOD_IDS.day_b4_yesterdays_vc_day_id,
+        cache.category_cache_period_ids.day_b4_yesterdays_vc_day_id,
         vc_day_id,
-        cache::CATEGORY_DAY_B4_YESTERDAYS_INDEX_MAP,
-        cache::DAY_B4_YESTERDAYS_CATEGORY_POLL_RANKINGS,
+        cache.category_index_map.DAY_B4_YESTERDAYS,
+        cache.category_poll_rankings.DAY_B4_YESTERDAY,
         global_category_id,
         block_index,
-        cache::DAY_B4_YESTERDAYS_POLL_ID_BYTE_COUNTS[38],
+        cache.poll_id_byte_counts.DAY_B4_YESTERDAY[38],
     );
 }
 
@@ -188,14 +193,15 @@ pub fn get_day_b4_yesterdays_category_rankings_by_cache_index(
     vc_day_id: DayId,
     block_index: u32,
     category_cache_index: CategoryCacheIndex,
+    &cache: Cache,
 ) -> Vec<u8> {
     return get_category_rankings_by_cache_index(
-        cache::CATEGORY_CACHE_PERIOD_IDS.day_b4_yesterdays_vc_day_id,
+        cache.category_cache_period_ids.day_b4_yesterdays_vc_day_id,
         vc_day_id,
-        cache::DAY_B4_YESTERDAYS_CATEGORY_POLL_RANKINGS,
+        cache.category_poll_rankings.DAY_B4_YESTERDAY,
         category_cache_index,
         block_index,
-        cache::DAY_B4_YESTERDAYS_POLL_ID_BYTE_COUNTS[38],
+        cache.poll_id_byte_counts.DAY_B4_YESTERDAY[38],
     );
 }
 
@@ -203,15 +209,16 @@ pub fn get_this_weeks_category_rankings_by_global_id(
     vc_week_id: WeekId,
     block_index: u32,
     global_category_id: CategoryId,
+    &cache: Cache,
 ) -> Vec<u8> {
     return get_category_rankings_by_global_id(
-        cache::CATEGORY_CACHE_PERIOD_IDS.this_weeks_vc_week_id,
+        cache.category_cache_period_ids.this_weeks_vc_week_id,
         vc_week_id,
-        cache::CATEGORY_THIS_WEEKS_INDEX_MAP,
-        cache::THIS_WEEKS_CATEGORY_POLL_RANKINGS,
+        cache.category_index_map.THIS_WEEK,
+        cache.category_poll_rankings.THIS_WEEK,
         global_category_id,
         block_index,
-        cache::THIS_WEEKS_POLL_ID_BYTE_COUNTS[38],
+        cache.poll_id_byte_counts.THIS_WEEK[38],
     );
 }
 
@@ -219,14 +226,15 @@ pub fn get_this_weeks_category_rankings_by_cache_index(
     vc_week_id: WeekId,
     block_index: u32,
     category_cache_index: CategoryCacheIndex,
+    &cache: Cache,
 ) -> Vec<u8> {
     return get_category_rankings_by_cache_index(
-        cache::CATEGORY_CACHE_PERIOD_IDS.this_weeks_vc_week_id,
+        cache.category_cache_period_ids.this_weeks_vc_week_id,
         vc_week_id,
-        cache::THIS_WEEKS_CATEGORY_POLL_RANKINGS,
+        cache.category_poll_rankings.THIS_WEEK,
         category_cache_index,
         block_index,
-        cache::THIS_WEEKS_POLL_ID_BYTE_COUNTS[38],
+        cache.poll_id_byte_counts.THIS_WEEK[38],
     );
 }
 
@@ -234,15 +242,16 @@ pub fn get_last_weeks_category_rankings_by_global_id(
     vc_week_id: WeekId,
     block_index: u32,
     global_category_id: CategoryId,
+    &cache: Cache,
 ) -> Vec<u8> {
     return get_category_rankings_by_global_id(
-        cache::CATEGORY_CACHE_PERIOD_IDS.last_weeks_vc_week_id,
+        cache.category_cache_period_ids.last_weeks_vc_week_id,
         vc_week_id,
-        cache::CATEGORY_LAST_WEEKS_INDEX_MAP,
-        cache::LAST_WEEKS_CATEGORY_POLL_RANKINGS,
+        cache.category_index_map.LAST_WEEK,
+        cache.category_poll_rankings.LAST_WEEK,
         global_category_id,
         block_index,
-        cache::LAST_WEEKS_POLL_ID_BYTE_COUNTS[38],
+        cache.poll_id_byte_counts.LAST_WEEK[38],
     );
 }
 
@@ -250,14 +259,15 @@ pub fn get_last_weeks_category_rankings_by_cache_index(
     vc_week_id: WeekId,
     block_index: u32,
     category_cache_index: CategoryCacheIndex,
+    &cache: Cache,
 ) -> Vec<u8> {
     return get_category_rankings_by_cache_index(
-        cache::CATEGORY_CACHE_PERIOD_IDS.last_weeks_vc_week_id,
+        cache.category_cache_period_ids.last_weeks_vc_week_id,
         vc_week_id,
-        cache::LAST_WEEKS_CATEGORY_POLL_RANKINGS,
+        cache.category_poll_rankings.LAST_WEEK,
         category_cache_index,
         block_index,
-        cache::LAST_WEEKS_POLL_ID_BYTE_COUNTS[38],
+        cache.poll_id_byte_counts.LAST_WEEK[38],
     );
 }
 
@@ -265,15 +275,16 @@ pub fn get_this_months_category_rankings_by_global_id(
     vc_month_id: MonthId,
     block_index: u32,
     global_category_id: CategoryId,
+    &cache: Cache,
 ) -> Vec<u8> {
     return get_category_rankings_by_global_id(
-        cache::CATEGORY_CACHE_PERIOD_IDS.this_months_vc_month_id,
+        cache.category_cache_period_ids.this_months_vc_month_id,
         vc_month_id,
-        cache::CATEGORY_THIS_MONTHS_INDEX_MAP,
-        cache::THIS_MONTHS_CATEGORY_POLL_RANKINGS,
+        cache.category_index_map.THIS_MONTH,
+        cache.category_poll_rankings.THIS_MONTH,
         global_category_id,
         block_index,
-        cache::THIS_MONTHS_POLL_ID_BYTE_COUNTS[38],
+        cache.poll_id_byte_counts.THIS_MONTH[38],
     );
 }
 
@@ -281,14 +292,15 @@ pub fn get_this_months_category_rankings_by_cache_index(
     vc_month_id: MonthId,
     block_index: u32,
     category_cache_index: CategoryCacheIndex,
+    &cache: Cache,
 ) -> Vec<u8> {
     return get_category_rankings_by_cache_index(
-        cache::CATEGORY_CACHE_PERIOD_IDS.this_months_vc_month_id,
+        cache.category_cache_period_ids.this_months_vc_month_id,
         vc_month_id,
-        cache::THIS_MONTHS_CATEGORY_POLL_RANKINGS,
+        cache.category_poll_rankings.THIS_MONTH,
         category_cache_index,
         block_index,
-        cache::THIS_MONTHS_POLL_ID_BYTE_COUNTS[38],
+        cache.poll_id_byte_counts.THIS_MONTH[38],
     );
 }
 
@@ -296,15 +308,16 @@ pub fn get_last_months_category_rankings_by_global_id(
     vc_month_id: MonthId,
     block_index: u32,
     global_category_id: CategoryId,
+    &cache: Cache,
 ) -> Vec<u8> {
     return get_category_rankings_by_global_id(
-        cache::CATEGORY_CACHE_PERIOD_IDS.last_months_vc_month_id,
+        cache.category_cache_period_ids.last_months_vc_month_id,
         vc_month_id,
-        cache::CATEGORY_LAST_MONTHS_INDEX_MAP,
-        cache::LAST_MONTHS_CATEGORY_POLL_RANKINGS,
+        cache.category_index_map.LAST_MONTH,
+        cache.category_poll_rankings.LAST_MONTH,
         global_category_id,
         block_index,
-        cache::LAST_MONTHS_POLL_ID_BYTE_COUNTS[38],
+        cache.poll_id_byte_counts.LAST_MONTH[38],
     );
 }
 
@@ -312,14 +325,15 @@ pub fn get_last_months_category_rankings_by_cache_index(
     vc_month_id: MonthId,
     block_index: u32,
     category_cache_index: CategoryCacheIndex,
+    &cache: Cache,
 ) -> Vec<u8> {
     return get_category_rankings_by_cache_index(
-        cache::CATEGORY_CACHE_PERIOD_IDS.last_months_vc_month_id,
+        cache.category_cache_period_ids.last_months_vc_month_id,
         vc_month_id,
-        cache::LAST_MONTHS_CATEGORY_POLL_RANKINGS,
+        cache.category_poll_rankings.LAST_MONTH,
         category_cache_index,
         block_index,
-        cache::LAST_MONTHS_POLL_ID_BYTE_COUNTS[38],
+        cache.poll_id_byte_counts.LAST_MONTH[38],
     );
 }
 

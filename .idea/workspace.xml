@@ -2,21 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ba46f974-e910-4014-8134-ee347c6561cb" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cache/src/cache/category_index_map.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cache/src/cache/category_poll_rankings.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cache/src/cache/location_category_index_map.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cache/src/cache/location_index_map.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cache/src/cache/locations_poll_rankings.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cache/src/cache/poll_id_byte_counts.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cache/src/cache/polls.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cache/src/cache/polls_by_category.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cache/src/cache/polls_by_location.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cache/src/cache/time_period_ids.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/votecube.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/votecube.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cache/src/cache/cache.rs" beforeDir="false" afterPath="$PROJECT_DIR$/cache/src/cache/cache.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cache/src/cache/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/cache/src/cache/mod.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cache/src/logic/serve/rankings/category.rs" beforeDir="false" afterPath="$PROJECT_DIR$/cache/src/logic/serve/rankings/category.rs" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -44,74 +33,75 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="rs" value="38" />
+          <entry key="rs" value="44" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="Rust" value="38" />
+          <entry key="Rust" value="44" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="rs" value="1788" />
+          <entry key="rs" value="1946" />
+          <entry key="txt" value="19" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="Rust" value="1788" />
+          <entry key="PLAIN_TEXT" value="19" />
+          <entry key="Rust" value="1946" />
         </counts>
       </usages-collector>
     </session>
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/cache/src/cache/cache.rs">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="563">
-              <caret line="181" selection-start-line="181" selection-end-line="181" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/cache/src/cache/polls.rs">
-          <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret lean-forward="true" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/cache/src/cache/polls_by_category.rs">
-          <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret selection-end-line="8" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/cache/src/cache/poll_id_byte_counts.rs">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="462">
-              <caret line="21" column="8" selection-start-line="21" selection-start-column="8" selection-end-line="21" selection-end-column="8" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/cache/src/main.rs">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="572">
-              <caret line="26" column="48" lean-forward="true" selection-start-line="26" selection-start-column="48" selection-end-line="26" selection-end-column="48" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <splitter split-orientation="horizontal" split-proportion="0.5">
+      <split-first>
+        <leaf>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/cache/src/cache/cache.rs">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="73">
+                  <caret line="29" column="11" selection-start-line="29" selection-start-column="11" selection-end-line="29" selection-end-column="11" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/cache/src/cache/model.rs">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="231">
+                  <caret line="14" column="11" selection-start-line="14" selection-start-column="11" selection-end-line="14" selection-end-column="11" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/cache/src/logic/serve/rankings/category.rs">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="603">
+                  <caret line="269" column="8" lean-forward="true" selection-start-line="269" selection-start-column="8" selection-end-line="269" selection-end-column="34" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+        </leaf>
+      </split-first>
+      <split-second>
+        <leaf>
+          <file pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/cache/src/logic/serve/rankings/category.rs">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="367">
+                  <caret line="335" column="34" selection-start-line="335" selection-start-column="34" selection-end-line="335" selection-end-column="34" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+        </leaf>
+      </split-second>
+    </splitter>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -178,15 +168,17 @@
         <option value="$PROJECT_DIR$/cache/src/cache/location_index_map.rs" />
         <option value="$PROJECT_DIR$/cache/src/cache/location_category_index_map.rs" />
         <option value="$PROJECT_DIR$/cache/src/cache/location_poll_rankings.rs" />
-        <option value="$PROJECT_DIR$/cache/src/cache/mod.rs" />
         <option value="$PROJECT_DIR$/cache/src/cache/categories_poll_rankings.rs" />
         <option value="$PROJECT_DIR$/cache/src/cache/category_poll_rankings.rs" />
         <option value="$PROJECT_DIR$/cache/src/cache/locations_poll_rankings.rs" />
         <option value="$PROJECT_DIR$/cache/src/cache/polls_1_d.rs" />
         <option value="$PROJECT_DIR$/cache/src/cache/polls_2_d.rs" />
         <option value="$PROJECT_DIR$/cache/src/cache/polls_3_d.rs" />
-        <option value="$PROJECT_DIR$/cache/src/cache/cache.rs" />
         <option value="$PROJECT_DIR$/cache/src/cache/polls.rs" />
+        <option value="$PROJECT_DIR$/cache/src/cache/mod.rs" />
+        <option value="$PROJECT_DIR$/cache/src/cache/cache.rs" />
+        <option value="$PROJECT_DIR$/cache/src/app/app.rs" />
+        <option value="$PROJECT_DIR$/cache/src/logic/serve/rankings/category.rs" />
       </list>
     </option>
   </component>
@@ -229,7 +221,38 @@
               <item name="votecube" type="462c0819:PsiDirectoryNode" />
               <item name="cache" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="votecube" type="b2602c69:ProjectViewProjectNode" />
+              <item name="votecube" type="462c0819:PsiDirectoryNode" />
               <item name="cache" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="cache" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="votecube" type="b2602c69:ProjectViewProjectNode" />
+              <item name="votecube" type="462c0819:PsiDirectoryNode" />
+              <item name="cache" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="logic" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="votecube" type="b2602c69:ProjectViewProjectNode" />
+              <item name="votecube" type="462c0819:PsiDirectoryNode" />
+              <item name="cache" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="logic" type="462c0819:PsiDirectoryNode" />
+              <item name="serve" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="votecube" type="b2602c69:ProjectViewProjectNode" />
+              <item name="votecube" type="462c0819:PsiDirectoryNode" />
+              <item name="cache" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="logic" type="462c0819:PsiDirectoryNode" />
+              <item name="serve" type="462c0819:PsiDirectoryNode" />
+              <item name="rankings" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -242,7 +265,7 @@
   <component name="PropertiesComponent">
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="org.rust.cargo.project.model.PROJECT_DISCOVERY" value="true" />
-    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="settings.editor.selected.configurable" value="editor.preferences.appearance" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -264,17 +287,26 @@
       <option name="presentableId" value="Default" />
       <updated>1539455846085</updated>
     </task>
+    <task id="LOCAL-00001" summary="moving from statics">
+      <created>1541120239890</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1541120239890</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="878" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.14966443" />
+      <window_info content_ui="combo" id="Project" order="0" weight="0.21208054" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Learn" order="3" />
       <window_info id="Favorites" order="4" side_tool="true" />
+      <window_info id="Cargo" order="5" weight="0.32980832" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="bottom" id="Run" order="2" />
@@ -283,18 +315,21 @@
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Version Control" order="7" />
-      <window_info anchor="bottom" id="Terminal" order="8" />
+      <window_info anchor="bottom" id="Terminal" order="8" weight="0.3297587" />
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="right" id="Cargo" order="3" />
-      <window_info anchor="right" id="Palette&#9;" order="4" />
-      <window_info anchor="right" id="Maven Projects" order="5" />
+      <window_info anchor="right" id="Palette&#9;" order="3" />
+      <window_info anchor="right" id="Maven Projects" order="4" />
     </layout>
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="moving from statics" />
+    <option name="LAST_COMMIT_MESSAGE" value="moving from statics" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$USER_HOME$/.rustup/toolchains/stable-x86_64-pc-windows-msvc/lib/rustlib/src/rust/src/libcore/ptr.rs">
@@ -360,13 +395,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cache/src/cache/mod.rs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="44">
-          <caret line="2" column="30" selection-start-line="2" selection-start-column="30" selection-end-line="2" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/cache/src/cache/category_poll_rankings.rs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="968">
@@ -381,13 +409,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cache/src/cache/model.rs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="231">
-          <caret line="178" column="11" selection-start-line="178" selection-start-column="11" selection-end-line="178" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/cache/src/cache/polls_3_d.rs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="88">
@@ -398,35 +419,61 @@
     <entry file="file://$PROJECT_DIR$/cache/src/main.rs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="572">
-          <caret line="26" column="48" lean-forward="true" selection-start-line="26" selection-start-column="48" selection-end-line="26" selection-end-column="48" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cache/src/cache/poll_id_byte_counts.rs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="462">
-          <caret line="21" column="8" selection-start-line="21" selection-start-column="8" selection-end-line="21" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cache/src/cache/cache.rs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="563">
-          <caret line="181" selection-start-line="181" selection-end-line="181" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cache/src/cache/polls.rs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret lean-forward="true" />
+          <caret line="26" column="48" selection-start-line="26" selection-start-column="48" selection-end-line="26" selection-end-column="48" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/cache/src/cache/polls_by_category.rs">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret selection-end-line="8" />
+        <state relative-caret-position="80">
+          <caret line="14" column="30" lean-forward="true" selection-start-line="14" selection-start-column="30" selection-end-line="14" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cache/src/cache/poll_id_byte_counts.rs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="365">
+          <caret line="21" column="8" selection-start-line="21" selection-start-column="8" selection-end-line="21" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cache/src/cache/mod.rs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="9" column="14" selection-start-line="9" selection-start-column="14" selection-end-line="9" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cache/src/app/app.rs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2">
+          <caret line="72" column="14" selection-start-line="72" selection-start-column="14" selection-end-line="72" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cache/src/cache/model.rs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="231">
+          <caret line="14" column="11" selection-start-line="14" selection-start-column="11" selection-end-line="14" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cache/src/cache/polls.rs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-210" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cache/src/cache/cache.rs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="73">
+          <caret line="29" column="11" selection-start-line="29" selection-start-column="11" selection-end-line="29" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cache/src/logic/serve/rankings/category.rs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="367">
+          <caret line="335" column="34" selection-start-line="335" selection-start-column="34" selection-end-line="335" selection-end-column="34" />
         </state>
       </provider>
     </entry>

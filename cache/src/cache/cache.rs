@@ -24,6 +24,7 @@ use super::model::ThreeDPoll;
 use super::model::TwoDPoll;
 use super::model::VoteCount;
 use super::poll_id_byte_counts::PollIdByteCounts;
+use super::polls::Polls;
 use super::time_period_ids::TimePeriodIds;
 
 pub struct Cache {
@@ -156,13 +157,7 @@ impl Cache {
 //pub static mut LOCATION_TIMEZONE_MAP: LsbShiftTree<usize> = LsbShiftTree::new();
 //pub static mut LOCATIONS_BY_TIMEZONE: Vec<u32> = Vec::new();
 
-pub static b: IntBuildHasher = IntBuildHasher::default();
-
-
-
-
-
-/**
+/*
  * Random access current poll maps, needed for count and sum increments by the voting servers.
  *    Indexed by global PollIds
  *
@@ -178,4 +173,3 @@ pub static b: IntBuildHasher = IntBuildHasher::default();
 //pub static mut THIS_MONTH_1_D_POLL_MAP: IntHashMap<u64, OneDPoll> = HashMap::with_capacity_and_hasher(2000, b);
 //pub static mut THIS_MONTH_2_D_POLL_MAP: IntHashMap<u64, TwoDPoll> = HashMap::with_capacity_and_hasher(2000, b);
 //pub static mut THIS_MONTH_3_D_POLL_MAP: IntHashMap<u64, ThreeDPoll> = HashMap::with_capacity_and_hasher(2000, b);
-
