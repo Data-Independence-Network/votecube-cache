@@ -1,3 +1,5 @@
+use super::model::VoteCount;
+
 /**
  * Poll rankings by Category.
  * Q: Global category lookups are meant to cross timezone boundaries but how to maintain that?
@@ -13,30 +15,30 @@
  * its poll add deadline (10pm) for the next day.  At that point there are still 9-10 hours left
  * in the day in Japan (depending on daylight savings).
  */
-pub struct CategoriesPollRankings {
-    LAST_MONTHS_CATEGORY_POLL_RANKINGS: Vec<Vec<VoteCount>>,
-    THIS_MONTHS_CATEGORY_POLL_RANKINGS: Vec<Vec<VoteCount>>,
+pub struct CategoryPollRankings {
+    LAST_MONTH: Vec<Vec<VoteCount>>,
+    THIS_MONTH: Vec<Vec<VoteCount>>,
 
-    LAST_WEEKS_CATEGORY_POLL_RANKINGS: Vec<Vec<VoteCount>>,
-    THIS_WEEKS_CATEGORY_POLL_RANKINGS: Vec<Vec<VoteCount>>,
+    LAST_WEEK: Vec<Vec<VoteCount>>,
+    THIS_WEEK: Vec<Vec<VoteCount>>,
 
-    DAY_B4_YESTERDAYS_CATEGORY_POLL_RANKINGS: Vec<Vec<VoteCount>>,
-    YESTERDAYS_CATEGORY_POLL_RANKINGS: Vec<Vec<VoteCount>>,
-    TODAYS_CATEGORY_POLL_RANKINGS: Vec<Vec<VoteCount>>,
+    DAY_B4_YESTERDAY: Vec<Vec<VoteCount>>,
+    YESTERDAY: Vec<Vec<VoteCount>>,
+    TODAY: Vec<Vec<VoteCount>>,
 }
 
-impl CategoriesPollRankings {
+impl CategoryPollRankings {
     pub fn new() -> CategoryPollRankings {
         CategoryPollRankings {
-            LAST_MONTHS_CATEGORY_POLL_RANKINGS: Vec::new(),
-            THIS_MONTHS_CATEGORY_POLL_RANKINGS: Vec::new(),
+            LAST_MONTH: Vec::new(),
+            THIS_MONTH: Vec::new(),
 
-            LAST_WEEKS_CATEGORY_POLL_RANKINGS: Vec::new(),
-            THIS_WEEKS_CATEGORY_POLL_RANKINGS: Vec::new(),
+            LAST_WEEK: Vec::new(),
+            THIS_WEEK: Vec::new(),
 
-            DAY_B4_YESTERDAYS_CATEGORY_POLL_RANKINGS: Vec::new(),
-            YESTERDAYS_CATEGORY_POLL_RANKINGS: Vec::new(),
-            TODAYS_CATEGORY_POLL_RANKINGS: Vec::new(),
+            DAY_B4_YESTERDAY: Vec::new(),
+            YESTERDAY: Vec::new(),
+            TODAY: Vec::new(),
         }
     }
 }

@@ -1,24 +1,26 @@
-use std::collections::HashMap;
-
-use int_hash::IntBuildHasher;
 use int_hash::IntHashMap;
 
-use common::model::types::CategoryId;
+use common::model::timezone::NUM_TIMEZONES;
 use common::model::types::PollId;
 
-pub struct Polls1D {
-    TODAY: Vec<IntHashMap<PollId, OneDPoll>>,
-    YESTERDAY: Vec<IntHashMap<PollId, OneDPoll>>,
-    DAY_B4_YESTERDAY: Vec<IntHashMap<PollId, OneDPoll>>,
-    THIS_WEEK: Vec<IntHashMap<PollId, OneDPoll>>,
-    LAST_WEEK: Vec<IntHashMap<PollId, OneDPoll>>,
-    THIS_MONTH: Vec<IntHashMap<PollId, OneDPoll>>,
-    LAST_MONTH: Vec<IntHashMap<PollId, OneDPoll>>,
+/**
+* Polls HashMap by timezone and global id.
+*  The actual poll counts are stored here.  They are accessed by the clients when they need
+*  sums and counts for a particular poll.
+*/
+pub struct Polls<T> {
+    TODAY: Vec<IntHashMap<PollId, T>>,
+    YESTERDAY: Vec<IntHashMap<PollId, T>>,
+    DAY_B4_YESTERDAY: Vec<IntHashMap<PollId, T>>,
+    THIS_WEEK: Vec<IntHashMap<PollId, T>>,
+    LAST_WEEK: Vec<IntHashMap<PollId, T>>,
+    THIS_MONTH: Vec<IntHashMap<PollId, T>>,
+    LAST_MONTH: Vec<IntHashMap<PollId, T>>,
 }
 
-impl Polls1D {
-    pub fn new() -> Polls1D {
-        Polls1D {
+impl<T> Polls<T> {
+    pub fn new() -> Polls<T> {
+        Polls {
             TODAY: Vec::with_capacity(NUM_TIMEZONES),
             YESTERDAY: Vec::with_capacity(NUM_TIMEZONES),
             DAY_B4_YESTERDAY: Vec::with_capacity(NUM_TIMEZONES),

@@ -1,3 +1,12 @@
 pub mod cache;
+pub mod category_index_map;
+pub mod category_poll_rankings;
+pub mod location_category_index_map;
+pub mod location_index_map;
+pub mod locations_poll_rankings;
 pub mod manager;
 pub mod model;
+pub mod poll_id_byte_counts;
+pub mod polls_by_category;
+pub mod polls_by_location;
+pub mod time_period_ids;
