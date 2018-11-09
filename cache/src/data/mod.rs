@@ -1,7 +1,7 @@
 //use std::thread;
 //use std::time::Duration;
 //
-//pub mod byte_counts;
+pub mod byte_counts;
 //
 //
 //static CACHE_TICK: u64 = 1 * 60 * 1000;
