@@ -23,7 +23,7 @@ impl ByteCounts {
         }
     }
 
-    pub fn add4(mut self) {
+    pub fn add4(&mut self) {
         // don't add a value, to save on computation in highest data volume cases
         // also because value 4 is usually represented with a higher bit (which
         // is absent here)
@@ -48,7 +48,7 @@ impl ByteCounts {
         }
     }
 
-    pub fn add3(mut self) {
+    pub fn add3(&mut self) {
         match self.current_bits {
             0 => {
                 self.current_byte &= 0b11000000;
@@ -74,7 +74,7 @@ impl ByteCounts {
         }
     }
 
-    pub fn add2(mut self) {
+    pub fn add2(&mut self) {
         match self.current_bits {
             0 => {
                 self.current_byte &= 0b10000000;
@@ -100,7 +100,7 @@ impl ByteCounts {
         }
     }
 
-    pub fn add1(mut self) {
+    pub fn add1(&mut self) {
         match self.current_bits {
             0 => {
                 self.current_byte &= 0b01000000;
@@ -128,7 +128,7 @@ impl ByteCounts {
 
     pub fn append(
         self,
-        mut response: Vec<u8>
+        mut response: &mut Vec<u8>
     ) {
         let num_entries_in_list_bytes = self.append_data(response);
         // NOTE: max page size is assumed to fin into u16
@@ -142,7 +142,7 @@ impl ByteCounts {
     #[inline]
     pub fn append_data(
         self,
-        mut response: Vec<u8>
+        mut response: &mut Vec<u8>
     ) -> [u8; 8] {
         let mut num_byte_counts_bytes: u64 = self.data.len() as u64;
         

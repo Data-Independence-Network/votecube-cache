@@ -3,7 +3,7 @@ use common::model::types::PollId;
 
 #[inline]
 pub fn get_2_byte_recent_poll_ids(
-    poll_ids: Vec<PollId>,
+    poll_ids: &Vec<PollId>,
     mut response: Vec<u8>,
 ) -> Vec<u8> {
     for pollId in poll_ids {
@@ -20,7 +20,7 @@ pub fn get_2_byte_recent_poll_ids(
 
 #[inline]
 pub fn get_3_byte_recent_poll_ids(
-    poll_ids: Vec<PollId>,
+    poll_ids: &Vec<PollId>,
     mut response: Vec<u8>,
 ) -> Vec<u8> {
     for pollId in poll_ids {
@@ -37,7 +37,7 @@ pub fn get_3_byte_recent_poll_ids(
 
 #[inline]
 pub fn get_4_byte_recent_poll_ids(
-    poll_ids: Vec<PollId>,
+    poll_ids: &Vec<PollId>,
     mut response: Vec<u8>,
 ) -> Vec<u8> {
     for pollId in poll_ids {
@@ -54,7 +54,7 @@ pub fn get_4_byte_recent_poll_ids(
 
 #[inline]
 pub fn get_5_byte_recent_poll_ids(
-    poll_ids: Vec<PollId>,
+    poll_ids: &Vec<PollId>,
     mut response: Vec<u8>,
 ) -> Vec<u8> {
     for pollId in poll_ids {
@@ -71,7 +71,7 @@ pub fn get_5_byte_recent_poll_ids(
 
 #[inline]
 pub fn get_6_byte_recent_poll_ids(
-    poll_ids: Vec<PollId>,
+    poll_ids: &Vec<PollId>,
     mut response: Vec<u8>,
 ) -> Vec<u8> {
     for pollId in poll_ids {
@@ -88,7 +88,7 @@ pub fn get_6_byte_recent_poll_ids(
 
 #[inline]
 pub fn get_7_byte_recent_poll_ids(
-    poll_ids: Vec<PollId>,
+    poll_ids: &Vec<PollId>,
     mut response: Vec<u8>,
 ) -> Vec<u8> {
     for pollId in poll_ids {
@@ -105,7 +105,7 @@ pub fn get_7_byte_recent_poll_ids(
 
 #[inline]
 pub fn get_8_byte_recent_poll_ids(
-    poll_ids: Vec<PollId>,
+    poll_ids: &Vec<PollId>,
     mut response: Vec<u8>,
 ) -> Vec<u8> {
     for pollId in poll_ids {

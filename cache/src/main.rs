@@ -26,7 +26,7 @@ fn main() {
 
     let app = Box::new(CompleteCacheApp::new(Cache::new()));
 
-    let server: Server<Cache> = Server::new(app);
+    let server: Server = Server::new(app);
 
     Server::start_small_load_optimized(server, "0.0.0.0", 4321);
 }

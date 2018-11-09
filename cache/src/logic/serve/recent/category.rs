@@ -19,8 +19,6 @@ use super::utils::get_6_byte_recent_poll_ids;
 use super::utils::get_7_byte_recent_poll_ids;
 use super::utils::get_8_byte_recent_poll_ids;
 
-const NO_RESULTS: Vec<u8> = Vec::new();
-
 pub fn get_tomorrows_category_polls(
     vc_day_id: DayId,
     // 1 based index
@@ -31,7 +29,7 @@ pub fn get_tomorrows_category_polls(
     return get_global_category_polls(
         cache.category_cache_period_ids.tomorrows_vc_day_id,
         vc_day_id,
-        cache.polls_by_category.TOMORROW,
+        &cache.polls_by_category.TOMORROW,
         block_number, global_category_id,
         cache.poll_id_byte_counts.TOMORROW[GLOBAL_TZ_INDEX as usize]);
 }
@@ -46,7 +44,7 @@ pub fn get_day_after_tomorrows_category_polls(
     return get_global_category_polls(
         cache.category_cache_period_ids.day_after_tomorrows_vc_day_id,
         vc_day_id,
-        cache.polls_by_category.DAY_AFTER_TOMORROW,
+        &cache.polls_by_category.DAY_AFTER_TOMORROW,
         block_number, global_category_id,
         cache.poll_id_byte_counts.DAY_AFTER_TOMORROW[GLOBAL_TZ_INDEX as usize]);
 }
@@ -61,7 +59,7 @@ pub fn get_next_weeks_category_polls(
     return get_global_category_polls(
         cache.category_cache_period_ids.next_weeks_vc_week_id,
         vc_week_id,
-        cache.polls_by_category.NEXT_WEEK,
+        &cache.polls_by_category.NEXT_WEEK,
         block_number, global_category_id,
         cache.poll_id_byte_counts.NEXT_WEEK[GLOBAL_TZ_INDEX as usize]);
 }
@@ -76,7 +74,7 @@ pub fn get_next_months_category_polls(
     return get_global_category_polls(
         cache.category_cache_period_ids.next_months_vc_month_id,
         vc_month_id,
-        cache.polls_by_category.NEXT_MONTH,
+        &cache.polls_by_category.NEXT_MONTH,
         block_number, global_category_id,
         cache.poll_id_byte_counts.NEXT_MONTH[GLOBAL_TZ_INDEX as usize]);
 }
@@ -85,7 +83,7 @@ pub fn get_next_months_category_polls(
 fn get_global_category_polls(
     current_period_id: u32,
     expected_period_id: u32,
-    global_category_polls: IntHashMap<CategoryId, Vec<Vec<PollId>>>,
+    global_category_polls: &IntHashMap<CategoryId, Vec<Vec<PollId>>>,
     // 1 based index
     block_number: u32,
     global_category_id: CategoryId,
@@ -95,20 +93,20 @@ fn get_global_category_polls(
         return codes::INVALID_PERIOD_ID_RESPONSE.to_vec();
     }
 
-    let category_polls: Vec<Vec<PollId>> = match global_category_polls.get(&global_category_id) {
+    let category_polls: &Vec<Vec<PollId>> = match global_category_polls.get(&global_category_id) {
         None => {
-            return NO_RESULTS;
+            return Vec::new();
         }
         Some(polls) => {
-            *polls
+            polls
         }
     };
-    let polls_block: Vec<PollId> = match category_polls.get(category_polls.len() - (block_number as usize)) {
+    let polls_block: &Vec<PollId> = match category_polls.get(category_polls.len() - (block_number as usize)) {
         None => {
-            return NO_RESULTS;
+            return Vec::new();
         }
         Some(block) => {
-            *block
+            block
         }
     };
     let mut response: Vec<u8> = Vec::with_capacity(max_poll_number_bytes as usize * polls_block.len()  + 1);

@@ -9,6 +9,8 @@ static mut CHECK_CACHE_TICK: u32 = 0;
 fn cache_cicker() {
     loop {
         thread::sleep_ms(CACHE_TICK);
-        CHECK_CACHE_TICK += 1;
+        unsafe {
+            CHECK_CACHE_TICK += 1;
+        }
     }
 }

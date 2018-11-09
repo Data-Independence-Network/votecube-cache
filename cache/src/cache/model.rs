@@ -75,8 +75,6 @@ pub struct LocationPeriodIds {
     pub location_cache_index: CategoryCacheIndex,
 }
 
-pub static b: IntBuildHasher = IntBuildHasher::default();
-
 impl LocationPeriodIds {
     pub fn new(
         location_cache_index: LocationCacheIndex,
@@ -84,7 +82,8 @@ impl LocationPeriodIds {
     ) -> LocationPeriodIds {
         LocationPeriodIds {
             location_cache_index,
-            location_category_cache_index_map: HashMap::with_capacity_and_hasher(num_categories, b),
+            location_category_cache_index_map: HashMap::with_capacity_and_hasher(
+                num_categories, IntBuildHasher::default()),
         }
     }
 }

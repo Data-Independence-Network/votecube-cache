@@ -18,7 +18,7 @@ use super::super::request::Request;
 use super::super::codes;
 use super::super::response::Response;
 
-pub trait App<T: 'static + Send> {
+pub trait App {
 
     fn get_response(
         &self,
@@ -28,15 +28,15 @@ pub trait App<T: 'static + Send> {
 
 }
 
-pub struct Server<T: Send> {
-    app: Box<App<T> + Send + Sync>
+pub struct Server {
+    app: Box<App + Send + Sync>
 }
 
-impl<T: 'static + Send> Server<T> {
+impl Server {
 
     pub fn new (
-        app: Box<App<T> + Send + Sync>
-    ) -> Server<T> {
+        app: Box<App + Send + Sync>
+    ) -> Server {
         Server {
             app
         }
@@ -53,7 +53,7 @@ impl<T: 'static + Send> Server<T> {
     ///
     /// https://users.rust-lang.org/t/getting-tokio-to-match-actix-web-performance/18659/7
     ///
-  pub fn start_small_load_optimized(server: Server<T>, host: &str, port: u16) {
+  pub fn start_small_load_optimized(server: Server, host: &str, port: u16) {
     let addr = (host, port).to_socket_addrs().unwrap().next().unwrap();
     let mut threads = Vec::new();
     let arc_server = Arc::new(server);
@@ -93,7 +93,7 @@ impl<T: 'static + Send> Server<T> {
       thread.join().unwrap();
     }
 
-    fn process<T: 'static + Send>(server: Arc<Server<T>>, socket: TcpStream) {
+    fn process(server: Arc<Server>, socket: TcpStream) {
       let framed = Framed::new(socket, Http);
       let (tx, rx) = framed.split();
 

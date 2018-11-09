@@ -28,13 +28,13 @@ impl LocationIndexMap {
         let b: IntBuildHasher = IntBuildHasher::default();
 
         LocationIndexMap {
-            LAST_MONTH: HashMap::with_capacity_and_hasher(2000, b),
-            THIS_MONTH: HashMap::with_capacity_and_hasher(2000, b),
-            LAST_WEEK: HashMap::with_capacity_and_hasher(2000, b),
-            THIS_WEEK: HashMap::with_capacity_and_hasher(2000, b),
-            DAY_B4_YESTERDAY: HashMap::with_capacity_and_hasher(2000, b),
-            YESTERDAY: HashMap::with_capacity_and_hasher(2000, b),
-            TODAY: HashMap::with_capacity_and_hasher(2000, b),
+            LAST_MONTH: HashMap::with_capacity_and_hasher(2000, IntBuildHasher::default()),
+            THIS_MONTH: HashMap::with_capacity_and_hasher(2000, IntBuildHasher::default()),
+            LAST_WEEK: HashMap::with_capacity_and_hasher(2000, IntBuildHasher::default()),
+            THIS_WEEK: HashMap::with_capacity_and_hasher(2000, IntBuildHasher::default()),
+            DAY_B4_YESTERDAY: HashMap::with_capacity_and_hasher(2000, IntBuildHasher::default()),
+            YESTERDAY: HashMap::with_capacity_and_hasher(2000, IntBuildHasher::default()),
+            TODAY: HashMap::with_capacity_and_hasher(2000, IntBuildHasher::default()),
         }
     }
 }

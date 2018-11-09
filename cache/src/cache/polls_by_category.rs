@@ -23,10 +23,10 @@ impl PollsByCategory {
         let b: IntBuildHasher = IntBuildHasher::default();
 
         PollsByCategory {
-            NEXT_MONTH: HashMap::with_capacity_and_hasher(1000000, b),
-            NEXT_WEEK: HashMap::with_capacity_and_hasher(1000000, b),
-            TOMORROW: HashMap::with_capacity_and_hasher(1000000, b),
-            DAY_AFTER_TOMORROW: HashMap::with_capacity_and_hasher(1000000, b),
+            NEXT_MONTH: HashMap::with_capacity_and_hasher(1000000, IntBuildHasher::default()),
+            NEXT_WEEK: HashMap::with_capacity_and_hasher(1000000, IntBuildHasher::default()),
+            TOMORROW: HashMap::with_capacity_and_hasher(1000000, IntBuildHasher::default()),
+            DAY_AFTER_TOMORROW: HashMap::with_capacity_and_hasher(1000000, IntBuildHasher::default()),
         }
     }
 }

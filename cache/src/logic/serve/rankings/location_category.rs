@@ -50,15 +50,15 @@ pub fn get_todays_location_category_rankings_by_global_ids(
         return codes::INVALID_TIMEZONE_ID_RESPONSE.to_vec();
     }
 
-    let current_period_ids: CachePeriodIds
-    = cache.per_timezone_cache_period_ids[timezone_id as usize];
+    let current_period_ids: &CachePeriodIds
+    = cache.per_timezone_cache_period_ids.get(timezone_id as usize).unwrap();
 
     return get_location_category_rankings_by_global_ids(
         current_period_ids.todays_vc_day_id,
         vc_day_id,
         timezone_id,
-        cache.location_category_index_map.TODAY,
-        cache.location_poll_rankings.TODAY,
+        &cache.location_category_index_map.TODAY,
+        &cache.location_poll_rankings.TODAY,
         global_location_id,
         global_category_id,
         block_index,
@@ -78,15 +78,15 @@ pub fn get_todays_location_category_rankings_by_location_cache_index_and_global_
         return codes::INVALID_TIMEZONE_ID_RESPONSE.to_vec();
     }
 
-    let current_period_ids: CachePeriodIds
-    = cache.per_timezone_cache_period_ids[timezone_id as usize];
+    let current_period_ids: &CachePeriodIds
+    = cache.per_timezone_cache_period_ids.get(timezone_id as usize).unwrap();
 
     return get_location_category_rankings_by_location_cache_index_and_global_category_id(
         current_period_ids.todays_vc_day_id,
         vc_day_id,
         timezone_id,
-        cache.location_category_index_map.TODAY,
-        cache.location_poll_rankings.TODAY,
+        &cache.location_category_index_map.TODAY,
+        &cache.location_poll_rankings.TODAY,
         location_cache_index,
         global_category_id,
         block_index,
@@ -106,14 +106,14 @@ pub fn get_todays_location_category_rankings_by_cache_indexes(
         return codes::INVALID_TIMEZONE_ID_RESPONSE.to_vec();
     }
 
-    let current_period_ids: CachePeriodIds
-    = cache.per_timezone_cache_period_ids[timezone_id as usize];
+    let current_period_ids: &CachePeriodIds
+    = cache.per_timezone_cache_period_ids.get(timezone_id as usize).unwrap();
 
     return get_location_category_rankings_by_cache_indexes(
         current_period_ids.todays_vc_day_id,
         vc_day_id,
         timezone_id,
-        cache.location_poll_rankings.TODAY,
+        &cache.location_poll_rankings.TODAY,
         location_cache_index,
         location_category_cache_index,
         block_index,
@@ -133,15 +133,15 @@ pub fn get_yesterdays_location_category_rankings_by_global_ids(
         return codes::INVALID_TIMEZONE_ID_RESPONSE.to_vec();
     }
 
-    let current_period_ids: CachePeriodIds
-    = cache.per_timezone_cache_period_ids[timezone_id as usize];
+    let current_period_ids: &CachePeriodIds
+    = cache.per_timezone_cache_period_ids.get(timezone_id as usize).unwrap();
 
     return get_location_category_rankings_by_global_ids(
         current_period_ids.yesterdays_vc_day_id,
         vc_day_id,
         timezone_id,
-        cache.location_category_index_map.YESTERDAY,
-        cache.location_poll_rankings.YESTERDAY,
+        &cache.location_category_index_map.YESTERDAY,
+        &cache.location_poll_rankings.YESTERDAY,
         global_location_id,
         global_category_id,
         block_index,
@@ -161,15 +161,15 @@ pub fn get_yesterdays_location_category_rankings_by_location_cache_index_and_glo
         return codes::INVALID_TIMEZONE_ID_RESPONSE.to_vec();
     }
 
-    let current_period_ids: CachePeriodIds
-    = cache.per_timezone_cache_period_ids[timezone_id as usize];
+    let current_period_ids: &CachePeriodIds
+    = cache.per_timezone_cache_period_ids.get(timezone_id as usize).unwrap();
 
     return get_location_category_rankings_by_location_cache_index_and_global_category_id(
         current_period_ids.yesterdays_vc_day_id,
         vc_day_id,
         timezone_id,
-        cache.location_category_index_map.YESTERDAY,
-        cache.location_poll_rankings.YESTERDAY,
+        &cache.location_category_index_map.YESTERDAY,
+        &cache.location_poll_rankings.YESTERDAY,
         location_cache_index,
         global_category_id,
         block_index,
@@ -189,14 +189,14 @@ pub fn get_yesterdays_location_category_rankings_by_cache_indexes(
         return codes::INVALID_TIMEZONE_ID_RESPONSE.to_vec();
     }
 
-    let current_period_ids: CachePeriodIds
-    = cache.per_timezone_cache_period_ids[timezone_id as usize];
+    let current_period_ids: &CachePeriodIds
+    = cache.per_timezone_cache_period_ids.get(timezone_id as usize).unwrap();
 
     return get_location_category_rankings_by_cache_indexes(
         current_period_ids.yesterdays_vc_day_id,
         vc_day_id,
         timezone_id,
-        cache.location_poll_rankings.YESTERDAY,
+        &cache.location_poll_rankings.YESTERDAY,
         location_cache_index,
         location_category_cache_index,
         block_index,
@@ -216,21 +216,22 @@ pub fn get_day_b4_yesterdays_location_category_rankings_by_global_ids(
         return codes::INVALID_TIMEZONE_ID_RESPONSE.to_vec();
     }
 
-    let current_period_ids: CachePeriodIds
-    = cache.per_timezone_cache_period_ids[timezone_id as usize];
+    let current_period_ids: &CachePeriodIds
+    = cache.per_timezone_cache_period_ids.get(timezone_id as usize).unwrap();
 
     return get_location_category_rankings_by_global_ids(
         current_period_ids.day_b4_yesterdays_vc_day_id,
         vc_day_id,
         timezone_id,
-        cache.location_category_index_map.DAY_B4_YESTERDAY,
-        cache.location_poll_rankings.DAY_B4_YESTERDAY,
+        &cache.location_category_index_map.DAY_B4_YESTERDAY,
+        &cache.location_poll_rankings.DAY_B4_YESTERDAY,
         global_location_id,
         global_category_id,
         block_index,
         cache.poll_id_byte_counts.DAY_B4_YESTERDAY[timezone_id as usize],
     );
 }
+
 pub fn get_day_b4_yesterdays_location_category_rankings_by_location_cache_index_and_global_category_ids(
     vc_day_id: DayId,
     timezone_id: TimezoneId,
@@ -243,15 +244,15 @@ pub fn get_day_b4_yesterdays_location_category_rankings_by_location_cache_index_
         return codes::INVALID_TIMEZONE_ID_RESPONSE.to_vec();
     }
 
-    let current_period_ids: CachePeriodIds
-    = cache.per_timezone_cache_period_ids[timezone_id as usize];
+    let current_period_ids: &CachePeriodIds
+    = cache.per_timezone_cache_period_ids.get(timezone_id as usize).unwrap();
 
     return get_location_category_rankings_by_location_cache_index_and_global_category_id(
         current_period_ids.day_b4_yesterdays_vc_day_id,
         vc_day_id,
         timezone_id,
-        cache.location_category_index_map.DAY_B4_YESTERDAY,
-        cache.location_poll_rankings.DAY_B4_YESTERDAY,
+        &cache.location_category_index_map.DAY_B4_YESTERDAY,
+        &cache.location_poll_rankings.DAY_B4_YESTERDAY,
         location_cache_index,
         global_category_id,
         block_index,
@@ -271,14 +272,14 @@ pub fn get_day_b4_yesterdays_location_category_rankings_by_cache_indexes(
         return codes::INVALID_TIMEZONE_ID_RESPONSE.to_vec();
     }
 
-    let current_period_ids: CachePeriodIds
-    = cache.per_timezone_cache_period_ids[timezone_id as usize];
+    let current_period_ids: &CachePeriodIds
+    = cache.per_timezone_cache_period_ids.get(timezone_id as usize).unwrap();
 
     return get_location_category_rankings_by_cache_indexes(
         current_period_ids.day_b4_yesterdays_vc_day_id,
         vc_day_id,
         timezone_id,
-        cache.location_poll_rankings.DAY_B4_YESTERDAY,
+        &cache.location_poll_rankings.DAY_B4_YESTERDAY,
         location_cache_index,
         location_category_cache_index,
         block_index,
@@ -298,15 +299,15 @@ pub fn get_this_weeks_location_category_rankings_by_global_ids(
         return codes::INVALID_TIMEZONE_ID_RESPONSE.to_vec();
     }
 
-    let current_period_ids: CachePeriodIds
-    = cache.per_timezone_cache_period_ids[timezone_id as usize];
+    let current_period_ids: &CachePeriodIds
+    = cache.per_timezone_cache_period_ids.get(timezone_id as usize).unwrap();
 
     return get_location_category_rankings_by_global_ids(
         current_period_ids.this_weeks_vc_week_id,
         vc_week_id,
         timezone_id,
-        cache.location_category_index_map.THIS_WEEK,
-        cache.location_poll_rankings.THIS_WEEK,
+        &cache.location_category_index_map.THIS_WEEK,
+        &cache.location_poll_rankings.THIS_WEEK,
         global_location_id,
         global_category_id,
         block_index,
@@ -326,15 +327,15 @@ pub fn get_this_weeks_location_category_rankings_by_location_cache_index_and_glo
         return codes::INVALID_TIMEZONE_ID_RESPONSE.to_vec();
     }
 
-    let current_period_ids: CachePeriodIds
-    = cache.per_timezone_cache_period_ids[timezone_id as usize];
+    let current_period_ids: &CachePeriodIds
+    = cache.per_timezone_cache_period_ids.get(timezone_id as usize).unwrap();
 
     return get_location_category_rankings_by_location_cache_index_and_global_category_id(
         current_period_ids.this_weeks_vc_week_id,
         vc_week_id,
         timezone_id,
-        cache.location_category_index_map.THIS_WEEK,
-        cache.location_poll_rankings.THIS_WEEK,
+        &cache.location_category_index_map.THIS_WEEK,
+        &cache.location_poll_rankings.THIS_WEEK,
         location_cache_index,
         global_category_id,
         block_index,
@@ -354,14 +355,14 @@ pub fn get_this_weeks_location_category_rankings_by_cache_indexes(
         return codes::INVALID_TIMEZONE_ID_RESPONSE.to_vec();
     }
 
-    let current_period_ids: CachePeriodIds
-    = cache.per_timezone_cache_period_ids[timezone_id as usize];
+    let current_period_ids: &CachePeriodIds
+    = cache.per_timezone_cache_period_ids.get(timezone_id as usize).unwrap();
 
     return get_location_category_rankings_by_cache_indexes(
         current_period_ids.this_weeks_vc_week_id,
         vc_week_id,
         timezone_id,
-        cache.location_poll_rankings.THIS_WEEK,
+        &cache.location_poll_rankings.THIS_WEEK,
         location_cache_index,
         location_category_cache_index,
         block_index,
@@ -381,15 +382,15 @@ pub fn get_last_weeks_location_category_rankings_by_global_ids(
         return codes::INVALID_TIMEZONE_ID_RESPONSE.to_vec();
     }
 
-    let current_period_ids: CachePeriodIds
-    = cache.per_timezone_cache_period_ids[timezone_id as usize];
+    let current_period_ids: &CachePeriodIds
+    = cache.per_timezone_cache_period_ids.get(timezone_id as usize).unwrap();
 
     return get_location_category_rankings_by_global_ids(
         current_period_ids.last_weeks_vc_week_id,
         vc_week_id,
         timezone_id,
-        cache.location_category_index_map.LAST_WEEK,
-        cache.location_poll_rankings.LAST_WEEK,
+        &cache.location_category_index_map.LAST_WEEK,
+        &cache.location_poll_rankings.LAST_WEEK,
         global_location_id,
         global_category_id,
         block_index,
@@ -409,15 +410,15 @@ pub fn get_last_weeks_location_category_rankings_by_location_cache_index_and_glo
         return codes::INVALID_TIMEZONE_ID_RESPONSE.to_vec();
     }
 
-    let current_period_ids: CachePeriodIds
-    = cache.per_timezone_cache_period_ids[timezone_id as usize];
+    let current_period_ids: &CachePeriodIds
+    = cache.per_timezone_cache_period_ids.get(timezone_id as usize).unwrap();
 
     return get_location_category_rankings_by_location_cache_index_and_global_category_id(
         current_period_ids.last_weeks_vc_week_id,
         vc_week_id,
         timezone_id,
-        cache.location_category_index_map.LAST_WEEK,
-        cache.location_poll_rankings.LAST_WEEK,
+        &cache.location_category_index_map.LAST_WEEK,
+        &cache.location_poll_rankings.LAST_WEEK,
         location_cache_index,
         global_category_id,
         block_index,
@@ -437,14 +438,14 @@ pub fn get_last_weeks_location_category_rankings_by_cache_indexes(
         return codes::INVALID_TIMEZONE_ID_RESPONSE.to_vec();
     }
 
-    let current_period_ids: CachePeriodIds
-    = cache.per_timezone_cache_period_ids[timezone_id as usize];
+    let current_period_ids: &CachePeriodIds
+    = cache.per_timezone_cache_period_ids.get(timezone_id as usize).unwrap();
 
     return get_location_category_rankings_by_cache_indexes(
         current_period_ids.last_weeks_vc_week_id,
         vc_week_id,
         timezone_id,
-        cache.location_poll_rankings.LAST_WEEK,
+        &cache.location_poll_rankings.LAST_WEEK,
         location_cache_index,
         location_category_cache_index,
         block_index,
@@ -464,15 +465,15 @@ pub fn get_this_months_location_category_rankings_by_global_ids(
         return codes::INVALID_TIMEZONE_ID_RESPONSE.to_vec();
     }
 
-    let current_period_ids: CachePeriodIds
-    = cache.per_timezone_cache_period_ids[timezone_id as usize];
+    let current_period_ids: &CachePeriodIds
+    = cache.per_timezone_cache_period_ids.get(timezone_id as usize).unwrap();
 
     return get_location_category_rankings_by_global_ids(
         current_period_ids.this_months_vc_month_id,
         vc_month_id,
         timezone_id,
-        cache.location_category_index_map.THIS_MONTH,
-        cache.location_poll_rankings.THIS_MONTH,
+        &cache.location_category_index_map.THIS_MONTH,
+        &cache.location_poll_rankings.THIS_MONTH,
         global_location_id,
         global_category_id,
         block_index,
@@ -492,15 +493,15 @@ pub fn get_this_months_location_category_rankings_by_location_cache_index_and_gl
         return codes::INVALID_TIMEZONE_ID_RESPONSE.to_vec();
     }
 
-    let current_period_ids: CachePeriodIds
-    = cache.per_timezone_cache_period_ids[timezone_id as usize];
+    let current_period_ids: &CachePeriodIds
+    = cache.per_timezone_cache_period_ids.get(timezone_id as usize).unwrap();
 
     return get_location_category_rankings_by_location_cache_index_and_global_category_id(
         current_period_ids.this_months_vc_month_id,
         vc_month_id,
         timezone_id,
-        cache.location_category_index_map.THIS_MONTH,
-        cache.location_poll_rankings.THIS_MONTH,
+        &cache.location_category_index_map.THIS_MONTH,
+        &cache.location_poll_rankings.THIS_MONTH,
         location_cache_index,
         global_category_id,
         block_index,
@@ -520,14 +521,14 @@ pub fn get_this_months_location_category_rankings_by_cache_indexes(
         return codes::INVALID_TIMEZONE_ID_RESPONSE.to_vec();
     }
 
-    let current_period_ids: CachePeriodIds
-    = cache.per_timezone_cache_period_ids[timezone_id as usize];
+    let current_period_ids: &CachePeriodIds
+    = cache.per_timezone_cache_period_ids.get(timezone_id as usize).unwrap();
 
     return get_location_category_rankings_by_cache_indexes(
         current_period_ids.this_months_vc_month_id,
         vc_month_id,
         timezone_id,
-        cache.location_poll_rankings.THIS_MONTH,
+        &cache.location_poll_rankings.THIS_MONTH,
         location_cache_index,
         location_category_cache_index,
         block_index,
@@ -547,15 +548,15 @@ pub fn get_last_months_location_category_rankings_by_global_ids(
         return codes::INVALID_TIMEZONE_ID_RESPONSE.to_vec();
     }
 
-    let current_period_ids: CachePeriodIds
-    = cache.per_timezone_cache_period_ids[timezone_id as usize];
+    let current_period_ids: &CachePeriodIds
+    = cache.per_timezone_cache_period_ids.get(timezone_id as usize).unwrap();
 
     return get_location_category_rankings_by_global_ids(
         current_period_ids.last_months_vc_month_id,
         vc_month_id,
         timezone_id,
-        cache.location_category_index_map.LAST_MONTH,
-        cache.location_poll_rankings.LAST_MONTH,
+        &cache.location_category_index_map.LAST_MONTH,
+        &cache.location_poll_rankings.LAST_MONTH,
         global_location_id,
         global_category_id,
         block_index,
@@ -575,15 +576,15 @@ pub fn get_last_months_location_category_rankings_by_location_cache_index_and_gl
         return codes::INVALID_TIMEZONE_ID_RESPONSE.to_vec();
     }
 
-    let current_period_ids: CachePeriodIds
-    = cache.per_timezone_cache_period_ids[timezone_id as usize];
+    let current_period_ids: &CachePeriodIds
+    = cache.per_timezone_cache_period_ids.get(timezone_id as usize).unwrap();
 
     return get_location_category_rankings_by_location_cache_index_and_global_category_id(
         current_period_ids.last_months_vc_month_id,
         vc_month_id,
         timezone_id,
-        cache.location_category_index_map.LAST_MONTH,
-        cache.location_poll_rankings.LAST_MONTH,
+        &cache.location_category_index_map.LAST_MONTH,
+        &cache.location_poll_rankings.LAST_MONTH,
         location_cache_index,
         global_category_id,
         block_index,
@@ -603,14 +604,14 @@ pub fn get_last_months_location_category_rankings_by_cache_indexes(
         return codes::INVALID_TIMEZONE_ID_RESPONSE.to_vec();
     }
 
-    let current_period_ids: CachePeriodIds
-    = cache.per_timezone_cache_period_ids[timezone_id as usize];
+    let current_period_ids: &CachePeriodIds
+    = cache.per_timezone_cache_period_ids.get(timezone_id as usize).unwrap();
 
     return get_location_category_rankings_by_cache_indexes(
         current_period_ids.last_months_vc_month_id,
         vc_month_id,
         timezone_id,
-        cache.location_poll_rankings.LAST_MONTH,
+        &cache.location_poll_rankings.LAST_MONTH,
         location_cache_index,
         location_category_cache_index,
         block_index,
@@ -623,8 +624,8 @@ fn get_location_category_rankings_by_global_ids(
     current_period_id: u32,
     expected_period_id: u32,
     timezone_id: TimezoneId,
-    location_category_index_map: IntHashMap<LocationId, LocationPeriodIds>,
-    given_period_location_poll_rankings: Vec<Vec<LocationPollRankings>>,
+    location_category_index_map: &IntHashMap<LocationId, LocationPeriodIds>,
+    given_period_location_poll_rankings: &Vec<Vec<LocationPollRankings>>,
     global_location_id: LocationId,
     global_category_id: CategoryId,
     block_index: u32,
@@ -634,12 +635,12 @@ fn get_location_category_rankings_by_global_ids(
         return codes::INVALID_PERIOD_ID_RESPONSE.to_vec();
     }
 
-    let location_period_ids: LocationPeriodIds = match location_category_index_map.get(&global_location_id) {
+    let location_period_ids: &LocationPeriodIds = match location_category_index_map.get(&global_location_id) {
         None => {
             return codes::INVALID_GLOBAL_LOCATION_ID_RESPONSE.to_vec();
         }
         Some(location_period_ids) => {
-            *location_period_ids
+            location_period_ids
         }
     };
 
@@ -655,12 +656,13 @@ fn get_location_category_rankings_by_global_ids(
 
 
     let location_cache_index: LocationCacheIndex = location_period_ids.location_cache_index;
-    let location_poll_rankings = given_period_location_poll_rankings[timezone_id as usize][location_cache_index as usize];
+    let location_poll_rankings = given_period_location_poll_rankings
+        .get(timezone_id as usize).unwrap().get(location_cache_index as usize).unwrap();
     let first_record_index = PAGE_SIZE * block_index;
 
     return get_location_category_rankings_with_cache_indexes(
         timezone_id, first_record_index as usize, location_cache_index, location_category_cache_index,
-        location_poll_rankings, max_poll_number_bytes);
+        &location_poll_rankings, max_poll_number_bytes);
 }
 
 #[inline]
@@ -668,8 +670,8 @@ fn get_location_category_rankings_by_location_cache_index_and_global_category_id
     current_period_id: u32,
     expected_period_id: u32,
     timezone_id: TimezoneId,
-    location_category_index_map: IntHashMap<LocationId, LocationPeriodIds>,
-    given_period_location_poll_rankings: Vec<Vec<LocationPollRankings>>,
+    location_category_index_map: &IntHashMap<LocationId, LocationPeriodIds>,
+    given_period_location_poll_rankings: &Vec<Vec<LocationPollRankings>>,
     location_cache_index: LocationCacheIndex,
     global_category_id: CategoryId,
     block_index: u32,
@@ -679,19 +681,19 @@ fn get_location_category_rankings_by_location_cache_index_and_global_category_id
         return codes::INVALID_PERIOD_ID_RESPONSE.to_vec();
     }
 
-    let location_poll_rankings: LocationPollRankings
+    let location_poll_rankings: &LocationPollRankings
     = match given_period_location_poll_rankings.get(timezone_id as usize)
     .unwrap().get(location_cache_index as usize) {
         None => {
             return codes::INVALID_LOCATION_CACHE_INDEX_RESPONSE.to_vec();
         }
         Some(location_poll_rankings) => {
-            *location_poll_rankings
+            location_poll_rankings
         }
     };
 
-    let location_period_ids: LocationPeriodIds
-    = *location_category_index_map.get(&(location_cache_index as u64)).unwrap();
+    let location_period_ids: &LocationPeriodIds
+    = location_category_index_map.get(&(location_cache_index as u64)).unwrap();
 
     let location_category_cache_index: u32 = match location_period_ids
         .location_category_cache_index_map.get(&global_category_id) {
@@ -703,12 +705,13 @@ fn get_location_category_rankings_by_location_cache_index_and_global_category_id
         }
     };
 
-    let location_poll_rankings = given_period_location_poll_rankings[timezone_id as usize][location_cache_index as usize];
+//    let location_poll_rankings = given_period_location_poll_rankings
+// .get(timezone_id as usize).unwrap().get(location_cache_index as usize).unwrap();
     let first_record_index = PAGE_SIZE * block_index;
 
     return get_location_category_rankings_with_category_cache_index(
         timezone_id, first_record_index as usize, location_cache_index, location_category_cache_index,
-        location_poll_rankings, max_poll_number_bytes);
+        &location_poll_rankings, max_poll_number_bytes);
 }
 
 #[inline]
@@ -716,7 +719,7 @@ fn get_location_category_rankings_by_cache_indexes(
     current_period_id: u32,
     expected_period_id: u32,
     timezone_id: TimezoneId,
-    given_period_location_poll_rankings: Vec<Vec<LocationPollRankings>>,
+    given_period_location_poll_rankings: &Vec<Vec<LocationPollRankings>>,
     location_cache_index: LocationCacheIndex,
     location_category_cache_index: LocationCategoryCacheIndex,
     block_index: u32,
@@ -726,31 +729,32 @@ fn get_location_category_rankings_by_cache_indexes(
         return codes::INVALID_PERIOD_ID_RESPONSE.to_vec();
     }
 
-    let location_poll_rankings: LocationPollRankings
+    let location_poll_rankings: &LocationPollRankings
     = match given_period_location_poll_rankings.get(timezone_id as usize)
     .unwrap().get(location_cache_index as usize) {
         None => {
             return codes::INVALID_LOCATION_CACHE_INDEX_RESPONSE.to_vec();
         }
         Some(location_poll_rankings) => {
-            *location_poll_rankings
+            location_poll_rankings
         }
     };
 
-    let location_category_vote_counts: Vec<VoteCount>
+    let location_category_vote_counts: &Vec<VoteCount>
     = match location_poll_rankings.category_locations.get(location_category_cache_index as usize) {
         None => {
             return codes::INVALID_CATEGORY_CACHE_INDEX_RESPONSE.to_vec();
         }
         Some(location_category_vote_counts) => {
-            *location_category_vote_counts
+            location_category_vote_counts
         }
     };
 
     let first_record_index = PAGE_SIZE * block_index;
 
     return get_location_category_rankings(
-        first_record_index as usize, location_category_vote_counts,max_poll_number_bytes);
+        first_record_index as usize, location_category_vote_counts,
+        max_poll_number_bytes);
 }
 
 #[inline]
@@ -759,11 +763,11 @@ fn get_location_category_rankings_with_cache_indexes(
     first_record_index: usize,
     location_cache_index: LocationCacheIndex,
     category_cache_index: CategoryCacheIndex,
-    location_poll_rankings: LocationPollRankings,
+    location_poll_rankings: &LocationPollRankings,
     max_poll_number_bytes: u8,
 ) -> Vec<u8> {
     let vote_counts_for_location
-    = location_poll_rankings.category_locations[category_cache_index as usize];
+    = location_poll_rankings.category_locations.get(category_cache_index as usize).unwrap();
     let location_cache_index_bytes: [u8; 4] = unsafe {
         transmute(location_cache_index)
     };
@@ -841,11 +845,11 @@ fn get_location_category_rankings_with_category_cache_index(
     first_record_index: usize,
     location_cache_index: LocationCacheIndex,
     category_cache_index: CategoryCacheIndex,
-    location_poll_rankings: LocationPollRankings,
+    location_poll_rankings: &LocationPollRankings,
     max_poll_number_bytes: u8,
 ) -> Vec<u8> {
     let vote_counts_for_location
-    = location_poll_rankings.category_locations[category_cache_index as usize];
+    = location_poll_rankings.category_locations.get(category_cache_index as usize).unwrap();
     let category_cache_index_bytes: [u8; 4] = unsafe {
         transmute(category_cache_index)
     };
@@ -910,7 +914,7 @@ fn get_location_category_rankings_with_category_cache_index(
 #[inline]
 fn get_location_category_rankings(
     first_record_index: usize,
-    location_category_vote_counts: Vec<VoteCount>,
+    location_category_vote_counts: &Vec<VoteCount>,
     max_poll_number_bytes: u8,
 ) -> Vec<u8> {
     match max_poll_number_bytes {

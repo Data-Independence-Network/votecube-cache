@@ -123,7 +123,7 @@ pub const INITIAL_RESPONSE_VECTOR_SIZE_2_POLL_BYTES: u32 =
 
 #[inline]
 pub fn get_8_byte_recent_polls(
-    poll_rankings: Vec<VoteCount>,
+    poll_rankings: &Vec<VoteCount>,
     starting_index: usize,
     mut response: Vec<u8>,
 ) -> Vec<u8> {
@@ -177,15 +177,15 @@ pub fn get_8_byte_recent_polls(
             }
         }
     }
-    vote_counts_sizes.append_data(response);
-    poll_types.append(response);
+    vote_counts_sizes.append_data(&mut response);
+    poll_types.append(&mut response);
 
     return response;
 }
 
 #[inline]
 pub fn get_7_byte_recent_polls(
-    poll_rankings: Vec<VoteCount>,
+    poll_rankings: &Vec<VoteCount>,
     starting_index: usize,
     mut response: Vec<u8>,
 ) -> Vec<u8> {
@@ -239,15 +239,15 @@ pub fn get_7_byte_recent_polls(
             }
         }
     }
-    vote_counts_sizes.append_data(response);
-    poll_types.append(response);
+    vote_counts_sizes.append_data(&mut response);
+    poll_types.append(&mut response);
 
     return response;
 }
 
 #[inline]
 pub fn get_6_byte_recent_polls(
-    poll_rankings: Vec<VoteCount>,
+    poll_rankings: &Vec<VoteCount>,
     starting_index: usize,
     mut response: Vec<u8>,
 ) -> Vec<u8> {
@@ -301,15 +301,15 @@ pub fn get_6_byte_recent_polls(
             }
         }
     }
-    vote_counts_sizes.append_data(response);
-    poll_types.append(response);
+    vote_counts_sizes.append_data(&mut response);
+    poll_types.append(&mut response);
 
     return response;
 }
 
 #[inline]
 pub fn get_5_byte_recent_polls(
-    poll_rankings: Vec<VoteCount>,
+    poll_rankings: &Vec<VoteCount>,
     starting_index: usize,
     mut response: Vec<u8>,
 ) -> Vec<u8> {
@@ -363,15 +363,15 @@ pub fn get_5_byte_recent_polls(
             }
         }
     }
-    vote_counts_sizes.append_data(response);
-    poll_types.append(response);
+    vote_counts_sizes.append_data(&mut response);
+    poll_types.append(&mut response);
 
     return response;
 }
 
 #[inline]
 pub fn get_4_byte_recent_polls(
-    poll_rankings: Vec<VoteCount>,
+    poll_rankings: &Vec<VoteCount>,
     starting_index: usize,
     mut response: Vec<u8>,
 ) -> Vec<u8> {
@@ -425,15 +425,15 @@ pub fn get_4_byte_recent_polls(
             }
         }
     }
-    vote_counts_sizes.append_data(response);
-    poll_types.append(response);
+    vote_counts_sizes.append_data(&mut response);
+    poll_types.append(&mut response);
 
     return response;
 }
 
 #[inline]
 pub fn get_3_byte_recent_polls(
-    poll_rankings: Vec<VoteCount>,
+    poll_rankings: &Vec<VoteCount>,
     starting_index: usize,
     mut response: Vec<u8>,
 ) -> Vec<u8> {
@@ -487,15 +487,15 @@ pub fn get_3_byte_recent_polls(
             }
         }
     }
-    vote_counts_sizes.append_data(response);
-    poll_types.append(response);
+    vote_counts_sizes.append_data(&mut response);
+    poll_types.append(&mut response);
 
     return response;
 }
 
 #[inline]
 pub fn get_2_byte_recent_polls(
-    poll_rankings: Vec<VoteCount>,
+    poll_rankings: &Vec<VoteCount>,
     starting_index: usize,
     mut response: Vec<u8>,
 ) -> Vec<u8> {
@@ -549,8 +549,8 @@ pub fn get_2_byte_recent_polls(
             }
         }
     }
-    vote_counts_sizes.append_data(response);
-    poll_types.append(response);
+    vote_counts_sizes.append_data(&mut response);
+    poll_types.append(&mut response);
 
     return response;
 }

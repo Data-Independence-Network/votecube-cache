@@ -21,8 +21,6 @@ use super::utils::get_6_byte_recent_poll_ids;
 use super::utils::get_7_byte_recent_poll_ids;
 use super::utils::get_8_byte_recent_poll_ids;
 
-const NO_RESULTS: Vec<u8> = Vec::new();
-
 pub fn get_tomorrows_location_category_polls(
     vc_day_id: DayId,
     timezone_id: TimezoneId,
@@ -35,7 +33,7 @@ pub fn get_tomorrows_location_category_polls(
         cache.category_cache_period_ids.tomorrows_vc_day_id,
         vc_day_id,
         timezone_id,
-        cache.polls_by_location.TOMORROW,
+        &cache.polls_by_location.TOMORROW,
         block_index,
         global_location_id,
         global_category_id,
@@ -55,7 +53,7 @@ pub fn get_day_after_tomorrows_location_category_polls(
         cache.category_cache_period_ids.day_after_tomorrows_vc_day_id,
         vc_day_id,
         timezone_id,
-        cache.polls_by_location.DAY_AFTER_TOMORROW,
+        &cache.polls_by_location.DAY_AFTER_TOMORROW,
         block_index,
         global_location_id,
         global_category_id,
@@ -75,7 +73,7 @@ pub fn get_next_weeks_location_category_polls(
         cache.category_cache_period_ids.next_weeks_vc_week_id,
         vc_week_id,
         timezone_id,
-        cache.polls_by_location.NEXT_WEEK,
+        &cache.polls_by_location.NEXT_WEEK,
         block_index,
         global_location_id,
         global_category_id,
@@ -95,7 +93,7 @@ pub fn get_next_months_location_category_polls(
         cache.category_cache_period_ids.next_months_vc_month_id,
         vc_month_id,
         timezone_id,
-        cache.polls_by_location.NEXT_MONTH,
+        &cache.polls_by_location.NEXT_MONTH,
         block_index,
         global_location_id,
         global_category_id,
@@ -108,7 +106,7 @@ fn get_global_location_category_polls(
     current_period_id: u32,
     expected_period_id: u32,
     timezone_id: TimezoneId,
-    location_polls_by_timezone: Vec<IntHashMap<LocationId, LocationPollPrependLists>>,
+    location_polls_by_timezone: &Vec<IntHashMap<LocationId, LocationPollPrependLists>>,
     // 1 based index
     block_number: u32,
     global_location_id: LocationId,
@@ -119,40 +117,40 @@ fn get_global_location_category_polls(
         return codes::INVALID_PERIOD_ID_RESPONSE.to_vec();
     }
 
-    let location_polls_for_timezone: IntHashMap<LocationId, LocationPollPrependLists> =
+    let location_polls_for_timezone: &IntHashMap<LocationId, LocationPollPrependLists> =
         match location_polls_by_timezone.get(timezone_id as usize) {
             None => {
                 return codes::INVALID_TIMEZONE_ID_RESPONSE.to_vec();
             }
             Some(futurePolls) => {
-                *futurePolls
+                futurePolls
             }
         };
 
-    let location_polls: LocationPollPrependLists = match location_polls_for_timezone.get(&(timezone_id as u64)) {
+    let location_polls: &LocationPollPrependLists = match location_polls_for_timezone.get(&(timezone_id as u64)) {
         None => {
-            return NO_RESULTS;
+            return Vec::new();
         }
         Some(locationPolls) => {
-            *locationPolls
+            locationPolls
         }
     };
 
-    let location_category_polls: Vec<Vec<PollId>> = match location_polls.category_locations.get(&global_category_id) {
+    let location_category_polls: &Vec<Vec<PollId>> = match location_polls.category_locations.get(&global_category_id) {
         None => {
-            return NO_RESULTS;
+            return Vec::new();
         }
         Some(locationCategoryPolls) => {
-            *locationCategoryPolls
+            locationCategoryPolls
         }
     };
 
-    let polls_block: Vec<PollId> = match location_category_polls.get(location_category_polls.len() - block_number as usize) {
+    let polls_block: &Vec<PollId> = match location_category_polls.get(location_category_polls.len() - block_number as usize) {
         None => {
-            return NO_RESULTS;
+            return Vec::new();
         }
         Some(block) => {
-            *block
+            block
         }
     };
     let mut response: Vec<u8> = Vec::with_capacity(max_poll_number_bytes as usize * polls_block.len() + 1);

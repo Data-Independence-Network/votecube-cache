@@ -115,8 +115,8 @@ pub fn get_todays_category_rankings_by_global_id(
     return get_category_rankings_by_global_id(
         cache.category_cache_period_ids.todays_vc_day_id,
         vc_day_id,
-        cache.category_index_map.TODAY,
-        cache.category_poll_rankings.TODAY,
+        &cache.category_index_map.TODAY,
+        &cache.category_poll_rankings.TODAY,
         global_category_id,
         block_index,
         cache.poll_id_byte_counts.TODAY[38],
@@ -132,7 +132,7 @@ pub fn get_todays_category_rankings_by_cache_index(
     return get_category_rankings_by_cache_index(
         cache.category_cache_period_ids.todays_vc_day_id,
         vc_day_id,
-        cache.category_poll_rankings.TODAY,
+        &cache.category_poll_rankings.TODAY,
         category_cache_index,
         block_index,
         cache.poll_id_byte_counts.TODAY[38],
@@ -148,8 +148,8 @@ pub fn get_yesterdays_category_rankings_by_global_id(
     return get_category_rankings_by_global_id(
         cache.category_cache_period_ids.yesterdays_vc_day_id,
         vc_day_id,
-        cache.category_index_map.YESTERDAY,
-        cache.category_poll_rankings.YESTERDAY,
+        &cache.category_index_map.YESTERDAY,
+        &cache.category_poll_rankings.YESTERDAY,
         global_category_id,
         block_index,
         cache.poll_id_byte_counts.YESTERDAY[38],
@@ -165,7 +165,7 @@ pub fn get_yesterdays_category_rankings_by_cache_index(
     return get_category_rankings_by_cache_index(
         cache.category_cache_period_ids.yesterdays_vc_day_id,
         vc_day_id,
-        cache.category_poll_rankings.YESTERDAY,
+        &cache.category_poll_rankings.YESTERDAY,
         category_cache_index,
         block_index,
         cache.poll_id_byte_counts.YESTERDAY[38],
@@ -181,8 +181,8 @@ pub fn get_day_b4_yesterdays_category_rankings_by_global_id(
     return get_category_rankings_by_global_id(
         cache.category_cache_period_ids.day_b4_yesterdays_vc_day_id,
         vc_day_id,
-        cache.category_index_map.DAY_B4_YESTERDAY,
-        cache.category_poll_rankings.DAY_B4_YESTERDAY,
+        &cache.category_index_map.DAY_B4_YESTERDAY,
+        &cache.category_poll_rankings.DAY_B4_YESTERDAY,
         global_category_id,
         block_index,
         cache.poll_id_byte_counts.DAY_B4_YESTERDAY[38],
@@ -198,7 +198,7 @@ pub fn get_day_b4_yesterdays_category_rankings_by_cache_index(
     return get_category_rankings_by_cache_index(
         cache.category_cache_period_ids.day_b4_yesterdays_vc_day_id,
         vc_day_id,
-        cache.category_poll_rankings.DAY_B4_YESTERDAY,
+        &cache.category_poll_rankings.DAY_B4_YESTERDAY,
         category_cache_index,
         block_index,
         cache.poll_id_byte_counts.DAY_B4_YESTERDAY[38],
@@ -214,8 +214,8 @@ pub fn get_this_weeks_category_rankings_by_global_id(
     return get_category_rankings_by_global_id(
         cache.category_cache_period_ids.this_weeks_vc_week_id,
         vc_week_id,
-        cache.category_index_map.THIS_WEEK,
-        cache.category_poll_rankings.THIS_WEEK,
+        &cache.category_index_map.THIS_WEEK,
+        &cache.category_poll_rankings.THIS_WEEK,
         global_category_id,
         block_index,
         cache.poll_id_byte_counts.THIS_WEEK[38],
@@ -231,7 +231,7 @@ pub fn get_this_weeks_category_rankings_by_cache_index(
     return get_category_rankings_by_cache_index(
         cache.category_cache_period_ids.this_weeks_vc_week_id,
         vc_week_id,
-        cache.category_poll_rankings.THIS_WEEK,
+        &cache.category_poll_rankings.THIS_WEEK,
         category_cache_index,
         block_index,
         cache.poll_id_byte_counts.THIS_WEEK[38],
@@ -247,8 +247,8 @@ pub fn get_last_weeks_category_rankings_by_global_id(
     return get_category_rankings_by_global_id(
         cache.category_cache_period_ids.last_weeks_vc_week_id,
         vc_week_id,
-        cache.category_index_map.LAST_WEEK,
-        cache.category_poll_rankings.LAST_WEEK,
+        &cache.category_index_map.LAST_WEEK,
+        &cache.category_poll_rankings.LAST_WEEK,
         global_category_id,
         block_index,
         cache.poll_id_byte_counts.LAST_WEEK[38],
@@ -264,7 +264,7 @@ pub fn get_last_weeks_category_rankings_by_cache_index(
     return get_category_rankings_by_cache_index(
         cache.category_cache_period_ids.last_weeks_vc_week_id,
         vc_week_id,
-        cache.category_poll_rankings.LAST_WEEK,
+        &cache.category_poll_rankings.LAST_WEEK,
         category_cache_index,
         block_index,
         cache.poll_id_byte_counts.LAST_WEEK[38],
@@ -280,8 +280,8 @@ pub fn get_this_months_category_rankings_by_global_id(
     return get_category_rankings_by_global_id(
         cache.category_cache_period_ids.this_months_vc_month_id,
         vc_month_id,
-        cache.category_index_map.THIS_MONTH,
-        cache.category_poll_rankings.THIS_MONTH,
+        &cache.category_index_map.THIS_MONTH,
+        &cache.category_poll_rankings.THIS_MONTH,
         global_category_id,
         block_index,
         cache.poll_id_byte_counts.THIS_MONTH[38],
@@ -297,7 +297,7 @@ pub fn get_this_months_category_rankings_by_cache_index(
     return get_category_rankings_by_cache_index(
         cache.category_cache_period_ids.this_months_vc_month_id,
         vc_month_id,
-        cache.category_poll_rankings.THIS_MONTH,
+        &cache.category_poll_rankings.THIS_MONTH,
         category_cache_index,
         block_index,
         cache.poll_id_byte_counts.THIS_MONTH[38],
@@ -313,8 +313,8 @@ pub fn get_last_months_category_rankings_by_global_id(
     return get_category_rankings_by_global_id(
         cache.category_cache_period_ids.last_months_vc_month_id,
         vc_month_id,
-        cache.category_index_map.LAST_MONTH,
-        cache.category_poll_rankings.LAST_MONTH,
+        &cache.category_index_map.LAST_MONTH,
+        &cache.category_poll_rankings.LAST_MONTH,
         global_category_id,
         block_index,
         cache.poll_id_byte_counts.LAST_MONTH[38],
@@ -330,7 +330,7 @@ pub fn get_last_months_category_rankings_by_cache_index(
     return get_category_rankings_by_cache_index(
         cache.category_cache_period_ids.last_months_vc_month_id,
         vc_month_id,
-        cache.category_poll_rankings.LAST_MONTH,
+        &cache.category_poll_rankings.LAST_MONTH,
         category_cache_index,
         block_index,
         cache.poll_id_byte_counts.LAST_MONTH[38],
@@ -340,8 +340,8 @@ pub fn get_last_months_category_rankings_by_cache_index(
 fn get_category_rankings_by_global_id(
     current_period_id: u32,
     expected_period_id: u32,
-    category_index_map: IntHashMap<CategoryId, CategoryCacheIndex>,
-    given_period_category_poll_rankings: Vec<Vec<VoteCount>>,
+    category_index_map: &IntHashMap<CategoryId, CategoryCacheIndex>,
+    given_period_category_poll_rankings: &Vec<Vec<VoteCount>>,
     global_category_id: CategoryId,
     block_index: u32,
     max_poll_number_bytes: u8,
@@ -367,7 +367,7 @@ fn get_category_rankings_by_global_id(
 fn get_category_rankings_by_cache_index(
     current_period_id: u32,
     expected_period_id: u32,
-    vote_counts_by_category_index: Vec<Vec<VoteCount>>,
+    vote_counts_by_category_index: &Vec<Vec<VoteCount>>,
     category_cache_index: CategoryCacheIndex,
     block_index: u32,
     max_poll_number_bytes: u8,
@@ -394,10 +394,10 @@ fn get_category_rankings_by_cache_index(
 fn get_category_rankings_with_category_cache_index(
     first_record_index: u32,
     category_cache_index: CategoryCacheIndex,
-    vote_counts_by_category_index: Vec<Vec<VoteCount>>,
+    vote_counts_by_category_index: &Vec<Vec<VoteCount>>,
     max_poll_number_bytes: u8,
 ) -> Vec<u8> {
-    let vote_counts_for_category = vote_counts_by_category_index[category_cache_index as usize];
+    let vote_counts_for_category: &Vec<VoteCount> = vote_counts_by_category_index.get(category_cache_index as usize).unwrap();
     let category_cache_index_bytes: [u8; 4] = unsafe {
         transmute(category_cache_index)
     };
@@ -464,10 +464,10 @@ fn get_category_rankings_with_category_cache_index(
 fn get_category_rankings(
     first_record_index: u32,
     category_cache_index: CategoryCacheIndex,
-    given_period_category_poll_rankings: Vec<Vec<VoteCount>>,
+    given_period_category_poll_rankings: &Vec<Vec<VoteCount>>,
     max_poll_number_bytes: u8,
 ) -> Vec<u8> {
-    let vote_counts_for_category = given_period_category_poll_rankings[category_cache_index as usize];
+    let vote_counts_for_category: &Vec<VoteCount> = given_period_category_poll_rankings.get(category_cache_index as usize).unwrap();
 
     match max_poll_number_bytes {
         3 => {
@@ -514,7 +514,7 @@ fn get_category_rankings(
 
 #[inline]
 fn get_8_byte_recent_polls(
-    poll_rankings: Vec<VoteCount>,
+    poll_rankings: &Vec<VoteCount>,
     starting_index: usize,
     mut response: Vec<u8>,
 ) -> Vec<u8> {
@@ -553,14 +553,14 @@ fn get_8_byte_recent_polls(
             }
         }
     }
-    vote_counts_sizes.append(response);
+    vote_counts_sizes.append(&mut response);
 
     return response;
 }
 
 #[inline]
 fn get_7_byte_recent_polls(
-    poll_rankings: Vec<VoteCount>,
+    poll_rankings: &Vec<VoteCount>,
     starting_index: usize,
     mut response: Vec<u8>,
 ) -> Vec<u8> {
@@ -599,14 +599,14 @@ fn get_7_byte_recent_polls(
             }
         }
     }
-    vote_counts_sizes.append(response);
+    vote_counts_sizes.append(&mut response);
 
     return response;
 }
 
 #[inline]
 fn get_6_byte_recent_polls(
-    poll_rankings: Vec<VoteCount>,
+    poll_rankings: &Vec<VoteCount>,
     starting_index: usize,
     mut response: Vec<u8>,
 ) -> Vec<u8> {
@@ -645,14 +645,14 @@ fn get_6_byte_recent_polls(
             }
         }
     }
-    vote_counts_sizes.append(response);
+    vote_counts_sizes.append(&mut response);
 
     return response;
 }
 
 #[inline]
 fn get_5_byte_recent_polls(
-    poll_rankings: Vec<VoteCount>,
+    poll_rankings: &Vec<VoteCount>,
     starting_index: usize,
     mut response: Vec<u8>,
 ) -> Vec<u8> {
@@ -691,14 +691,14 @@ fn get_5_byte_recent_polls(
             }
         }
     }
-    vote_counts_sizes.append(response);
+    vote_counts_sizes.append(&mut response);
 
     return response;
 }
 
 #[inline]
 fn get_4_byte_recent_polls(
-    poll_rankings: Vec<VoteCount>,
+    poll_rankings: &Vec<VoteCount>,
     starting_index: usize,
     mut response: Vec<u8>,
 ) -> Vec<u8> {
@@ -737,14 +737,14 @@ fn get_4_byte_recent_polls(
             }
         }
     }
-    vote_counts_sizes.append(response);
+    vote_counts_sizes.append(&mut response);
 
     return response;
 }
 
 #[inline]
 fn get_3_byte_recent_polls(
-    poll_rankings: Vec<VoteCount>,
+    poll_rankings: &Vec<VoteCount>,
     starting_index: usize,
     mut response: Vec<u8>,
 ) -> Vec<u8> {
@@ -783,14 +783,14 @@ fn get_3_byte_recent_polls(
             }
         }
     }
-    vote_counts_sizes.append(response);
+    vote_counts_sizes.append(&mut response);
 
     return response;
 }
 
 #[inline]
 fn get_2_byte_recent_polls(
-    poll_rankings: Vec<VoteCount>,
+    poll_rankings: &Vec<VoteCount>,
     starting_index: usize,
     mut response: Vec<u8>,
 ) -> Vec<u8> {
@@ -829,7 +829,7 @@ fn get_2_byte_recent_polls(
             }
         }
     }
-    vote_counts_sizes.append(response);
+    vote_counts_sizes.append(&mut response);
 
     return response;
 }
