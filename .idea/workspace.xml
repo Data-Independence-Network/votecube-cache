@@ -2,25 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ba46f974-e910-4014-8134-ee347c6561cb" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cache/src/cache/category_index_map.rs" beforeDir="false" afterPath="$PROJECT_DIR$/cache/src/cache/category_index_map.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cache/src/cache/category_poll_rankings.rs" beforeDir="false" afterPath="$PROJECT_DIR$/cache/src/cache/category_poll_rankings.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cache/src/cache/location_category_index_map.rs" beforeDir="false" afterPath="$PROJECT_DIR$/cache/src/cache/location_category_index_map.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cache/src/cache/location_index_map.rs" beforeDir="false" afterPath="$PROJECT_DIR$/cache/src/cache/location_index_map.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cache/src/cache/locations_poll_rankings.rs" beforeDir="false" afterPath="$PROJECT_DIR$/cache/src/cache/locations_poll_rankings.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cache/src/cache/poll_id_byte_counts.rs" beforeDir="false" afterPath="$PROJECT_DIR$/cache/src/cache/poll_id_byte_counts.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cache/src/cache/polls.rs" beforeDir="false" afterPath="$PROJECT_DIR$/cache/src/cache/polls.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cache/src/cache/polls_by_category.rs" beforeDir="false" afterPath="$PROJECT_DIR$/cache/src/cache/polls_by_category.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cache/src/cache/polls_by_location.rs" beforeDir="false" afterPath="$PROJECT_DIR$/cache/src/cache/polls_by_location.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cache/src/cache/time_period_ids.rs" beforeDir="false" afterPath="$PROJECT_DIR$/cache/src/cache/time_period_ids.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cache/src/logic/serve/rankings/category.rs" beforeDir="false" afterPath="$PROJECT_DIR$/cache/src/logic/serve/rankings/category.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cache/src/logic/serve/rankings/location.rs" beforeDir="false" afterPath="$PROJECT_DIR$/cache/src/logic/serve/rankings/location.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cache/src/logic/serve/rankings/location_and_loc_category.rs" beforeDir="false" afterPath="$PROJECT_DIR$/cache/src/logic/serve/rankings/location_and_loc_category.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cache/src/logic/serve/rankings/location_category.rs" beforeDir="false" afterPath="$PROJECT_DIR$/cache/src/logic/serve/rankings/location_category.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cache/src/logic/serve/recent/category.rs" beforeDir="false" afterPath="$PROJECT_DIR$/cache/src/logic/serve/recent/category.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cache/src/logic/serve/recent/location.rs" beforeDir="false" afterPath="$PROJECT_DIR$/cache/src/logic/serve/recent/location.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cache/src/logic/serve/recent/location_category.rs" beforeDir="false" afterPath="$PROJECT_DIR$/cache/src/logic/serve/recent/location_category.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cache/src/logic/serve/recent/utils.rs" beforeDir="false" afterPath="$PROJECT_DIR$/cache/src/logic/serve/recent/utils.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cache/src/logic/add/polls.rs" beforeDir="false" afterPath="$PROJECT_DIR$/cache/src/logic/add/polls.rs" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -73,12 +55,12 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="rs" value="122" />
+          <entry key="rs" value="123" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="Rust" value="122" />
+          <entry key="Rust" value="123" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
@@ -106,11 +88,20 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/cache/src/logic/serve/recent/location_category.rs">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="215">
               <caret line="142" column="36" selection-start-line="142" selection-start-column="36" selection-end-line="142" selection-end-column="36" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/cache/src/logic/add/polls.rs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="88">
+              <caret line="4" selection-start-line="4" selection-end-line="4" />
             </state>
           </provider>
         </entry>
@@ -163,8 +154,8 @@
       <find>str = *</find>
       <find>voteCount</find>
       <find>timezone_id &lt; 0 ||</find>
-      <find>locationPolls</find>
       <find>pollId</find>
+      <find>locationPolls</find>
     </findStrings>
     <replaceStrings>
       <replace>],</replace>
@@ -185,8 +176,8 @@
       <replace>&amp;mut response</replace>
       <replace>Vec::new()</replace>
       <replace>vote_count</replace>
-      <replace>location_polls</replace>
       <replace>poll_id</replace>
+      <replace>location_polls</replace>
     </replaceStrings>
     <dirStrings>
       <dir>C:\Users\Papa\dac\votecube\cache</dir>
@@ -220,7 +211,6 @@
         <option value="$PROJECT_DIR$/cache/src/logic/serve/recent/category.rs" />
         <option value="$PROJECT_DIR$/cache/src/cache/cache.rs" />
         <option value="$PROJECT_DIR$/cache/src/app/app.rs" />
-        <option value="$PROJECT_DIR$/cache/src/logic/add/polls.rs" />
         <option value="$PROJECT_DIR$/cache/src/logic/add/votes.rs" />
         <option value="$PROJECT_DIR$/cache/src/main.rs" />
         <option value="$PROJECT_DIR$/cache/src/data/byte_counts.rs" />
@@ -243,6 +233,7 @@
         <option value="$PROJECT_DIR$/cache/src/logic/serve/recent/location.rs" />
         <option value="$PROJECT_DIR$/cache/src/logic/serve/recent/utils.rs" />
         <option value="$PROJECT_DIR$/cache/src/logic/serve/recent/location_category.rs" />
+        <option value="$PROJECT_DIR$/cache/src/logic/add/polls.rs" />
       </list>
     </option>
   </component>
@@ -291,6 +282,14 @@
               <item name="cache" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="logic" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="votecube" type="b2602c69:ProjectViewProjectNode" />
+              <item name="votecube" type="462c0819:PsiDirectoryNode" />
+              <item name="cache" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="logic" type="462c0819:PsiDirectoryNode" />
+              <item name="add" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="votecube" type="b2602c69:ProjectViewProjectNode" />
@@ -402,7 +401,14 @@
       <option name="project" value="LOCAL" />
       <updated>1541771084012</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="moving from statics">
+      <created>1541773312479</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1541773312479</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -467,13 +473,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="281">
           <caret line="96" column="10" selection-start-line="96" selection-start-column="8" selection-end-line="96" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cache/src/logic/add/polls.rs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="12" selection-start-column="12" selection-end-line="5" selection-end-column="15" />
         </state>
       </provider>
     </entry>
@@ -670,6 +669,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="215">
           <caret line="142" column="36" selection-start-line="142" selection-start-column="36" selection-end-line="142" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cache/src/logic/add/polls.rs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="88">
+          <caret line="4" selection-start-line="4" selection-end-line="4" />
         </state>
       </provider>
     </entry>
