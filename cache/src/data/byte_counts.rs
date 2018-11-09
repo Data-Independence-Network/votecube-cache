@@ -128,7 +128,7 @@ impl ByteCounts {
 
     pub fn append(
         self,
-        mut response: &mut Vec<u8>
+        response: &mut Vec<u8>
     ) {
         let num_entries_in_list_bytes = self.append_data(response);
         // NOTE: max page size is assumed to fin into u16
@@ -142,7 +142,7 @@ impl ByteCounts {
     #[inline]
     pub fn append_data(
         self,
-        mut response: &mut Vec<u8>
+        response: &mut Vec<u8>
     ) -> [u8; 8] {
         let mut num_byte_counts_bytes: u64 = self.data.len() as u64;
         

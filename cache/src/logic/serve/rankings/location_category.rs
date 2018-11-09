@@ -18,7 +18,6 @@ use super::super::super::super::cache::model::CachePeriodIds;
 use super::super::super::super::cache::model::LocationPeriodIds;
 use super::super::super::super::cache::model::LocationPollRankings;
 use super::super::super::super::cache::model::VoteCount;
-use super::super::super::super::data::byte_counts::ByteCounts;
 
 use super::location_and_loc_category::INITIAL_RESPONSE_VECTOR_SIZE_2_POLL_BYTES;
 use super::location_and_loc_category::INITIAL_RESPONSE_VECTOR_SIZE_3_POLL_BYTES;
@@ -661,7 +660,8 @@ fn get_location_category_rankings_by_global_ids(
     let first_record_index = PAGE_SIZE * block_index;
 
     return get_location_category_rankings_with_cache_indexes(
-        timezone_id, first_record_index as usize, location_cache_index, location_category_cache_index,
+         first_record_index as usize, location_cache_index,
+         location_category_cache_index,
         &location_poll_rankings, max_poll_number_bytes);
 }
 
@@ -710,7 +710,7 @@ fn get_location_category_rankings_by_location_cache_index_and_global_category_id
     let first_record_index = PAGE_SIZE * block_index;
 
     return get_location_category_rankings_with_category_cache_index(
-        timezone_id, first_record_index as usize, location_cache_index, location_category_cache_index,
+        first_record_index as usize, location_category_cache_index,
         &location_poll_rankings, max_poll_number_bytes);
 }
 
@@ -759,7 +759,6 @@ fn get_location_category_rankings_by_cache_indexes(
 
 #[inline]
 fn get_location_category_rankings_with_cache_indexes(
-    timezone_id: TimezoneId,
     first_record_index: usize,
     location_cache_index: LocationCacheIndex,
     category_cache_index: CategoryCacheIndex,
@@ -841,9 +840,7 @@ fn get_location_category_rankings_with_cache_indexes(
 
 #[inline]
 fn get_location_category_rankings_with_category_cache_index(
-    timezone_id: TimezoneId,
     first_record_index: usize,
-    location_cache_index: LocationCacheIndex,
     category_cache_index: CategoryCacheIndex,
     location_poll_rankings: &LocationPollRankings,
     max_poll_number_bytes: u8,

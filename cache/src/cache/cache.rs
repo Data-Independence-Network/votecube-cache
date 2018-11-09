@@ -1,14 +1,9 @@
-use std::collections::HashMap;
+//use std::collections::HashMap;
 
-use int_hash::IntBuildHasher;
-use int_hash::IntHashMap;
+//use int_hash::IntBuildHasher;
+//use int_hash::IntHashMap;
 
 use common::model::timezone::NUM_TIMEZONES;
-use common::model::timezone::NUM_TIMEZONES_WITH_GLOBAL_CATEGORY;
-use common::model::types::CategoryCacheIndex;
-use common::model::types::CategoryId;
-use common::model::types::LocationId;
-use common::model::types::PollId;
 
 use super::category_index_map::CategoryIndexMap;
 use super::category_poll_rankings::CategoryPollRankings;
@@ -16,13 +11,9 @@ use super::location_category_index_map::LocationCategoryIndexMap;
 use super::locations_poll_rankings::LocationsPollRankings;
 use super::location_index_map::LocationIndexMap;
 use super::model::CachePeriodIds;
-use super::model::LocationPeriodIds;
-use super::model::LocationPollPrependLists;
-use super::model::LocationPollRankings;
 use super::model::OneDPoll;
 use super::model::ThreeDPoll;
 use super::model::TwoDPoll;
-use super::model::VoteCount;
 use super::poll_id_byte_counts::PollIdByteCounts;
 use super::polls::Polls;
 use super::polls_by_category::PollsByCategory;

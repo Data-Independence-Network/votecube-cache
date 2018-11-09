@@ -176,43 +176,43 @@ pub struct VoteCount {
  * Poll sums and counts for a 3 dimensional poll.
  */
 pub struct ThreeDPoll {
-    dim_1_dir_1_over: u8,
-    dim_1_dir_2_over: u8,
-    dim_2_dir_1_over: u8,
-    dim_2_dir_2_over: u8,
-    dim_3_dir_1_over: u8,
-    dim_3_dir_2_over: u8,
-    dim_1_dir_1_sum: u32,
-    dim_1_dir_2_sum: u32,
-    dim_2_dir_1_sum: u32,
-    dim_2_dir_2_sum: u32,
-    dim_3_dir_1_sum: u32,
-    dim_3_dir_2_sum: u32,
-    vote_count: VoteCount,
+    pub dim_1_dir_1_over: u8,
+    pub dim_1_dir_2_over: u8,
+    pub dim_2_dir_1_over: u8,
+    pub dim_2_dir_2_over: u8,
+    pub dim_3_dir_1_over: u8,
+    pub dim_3_dir_2_over: u8,
+    pub dim_1_dir_1_sum: u32,
+    pub dim_1_dir_2_sum: u32,
+    pub dim_2_dir_1_sum: u32,
+    pub dim_2_dir_2_sum: u32,
+    pub dim_3_dir_1_sum: u32,
+    pub dim_3_dir_2_sum: u32,
+    pub vote_count: VoteCount,
 }
 
 /*
  * Poll sums and counts for a 2 dimensional poll.
  */
 pub struct TwoDPoll {
-    dim_1_dir_1_over: u8,
-    dim_1_dir_2_over: u8,
-    dim_2_dir_1_over: u8,
-    dim_2_dir_2_over: u8,
-    dim_1_dir_1_sum: u32,
-    dim_1_dir_2_sum: u32,
-    dim_2_dir_1_sum: u32,
-    dim_2_dir_2_sum: u32,
-    vote_count: VoteCount,
+    pub dim_1_dir_1_over: u8,
+    pub dim_1_dir_2_over: u8,
+    pub dim_2_dir_1_over: u8,
+    pub dim_2_dir_2_over: u8,
+    pub dim_1_dir_1_sum: u32,
+    pub dim_1_dir_2_sum: u32,
+    pub dim_2_dir_1_sum: u32,
+    pub dim_2_dir_2_sum: u32,
+    pub vote_count: VoteCount,
 }
 
 /*
  * Poll sums and counts for a 1 dimensional poll.
  */
 pub struct OneDPoll {
-    dim_1_dir_1_over: u8,
-    dim_1_dir_2_over: u8,
-    dim_1_dir_1_sum: u32,
-    dim_1_dir_2_sum: u32,
-    vote_count: VoteCount,
+    pub dim_1_dir_1_over: u8,
+    pub dim_1_dir_2_over: u8,
+    pub dim_1_dir_1_sum: u32,
+    pub dim_1_dir_2_sum: u32,
+    pub vote_count: VoteCount,
 }

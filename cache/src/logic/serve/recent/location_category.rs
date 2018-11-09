@@ -127,7 +127,7 @@ fn get_global_location_category_polls(
             }
         };
 
-    let location_polls: &LocationPollPrependLists = match location_polls_for_timezone.get(&(timezone_id as u64)) {
+    let location_polls: &LocationPollPrependLists = match location_polls_for_timezone.get(&global_location_id) {
         None => {
             return Vec::new();
         }

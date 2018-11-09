@@ -3,9 +3,7 @@ use std::collections::HashMap;
 use int_hash::IntBuildHasher;
 use int_hash::IntHashMap;
 
-use common::model::types::CategoryId;
 use common::model::types::LocationId;
-use common::model::types::PollId;
 
 use super::model::LocationPeriodIds;
 

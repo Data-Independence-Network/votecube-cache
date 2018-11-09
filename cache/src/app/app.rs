@@ -73,7 +73,7 @@ impl App for CompleteCacheApp {
         request_body: &[u8],
     ) -> Vec<u8> {
         match path {
-            /**
+            /*
              *
              *  POLL RANKINGS
              *
@@ -599,7 +599,7 @@ impl App for CompleteCacheApp {
                 }
             }
 
-            /**
+            /*
              *
              *  RECENT POLLS
              *

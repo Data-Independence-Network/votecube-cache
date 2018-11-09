@@ -20,8 +20,6 @@ pub struct PollsByCategory {
 
 impl PollsByCategory {
     pub fn new() -> PollsByCategory {
-        let b: IntBuildHasher = IntBuildHasher::default();
-
         PollsByCategory {
             NEXT_MONTH: HashMap::with_capacity_and_hasher(1000000, IntBuildHasher::default()),
             NEXT_WEEK: HashMap::with_capacity_and_hasher(1000000, IntBuildHasher::default()),

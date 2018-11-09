@@ -1,7 +1,6 @@
 use std::mem::transmute;
 use int_hash::IntHashMap;
 
-use common::model::consts;
 use common::model::types::CategoryId;
 use common::model::types::CategoryCacheIndex;
 use common::model::types::DayId;
@@ -10,7 +9,6 @@ use common::model::types::WeekId;
 
 use super::super::super::super::cache::cache::Cache;
 use super::super::super::super::cache::model::VoteCount;
-use super::super::super::super::cache::model::CategoryPeriodPollRankings;
 use super::super::super::super::data::byte_counts::ByteCounts;
 use super::super::super::super::server::codes;
 
@@ -521,7 +519,7 @@ fn get_8_byte_recent_polls(
     let mut iterator = poll_rankings.iter().skip(starting_index);
     let mut vote_counts_sizes = ByteCounts::new(PAGE_SIZE as usize);
 
-    for x in 0..PAGE_SIZE {
+    for _ in 0..PAGE_SIZE {
         match iterator.next() {
             None => break,
             Some(voteCount) => {
@@ -567,7 +565,7 @@ fn get_7_byte_recent_polls(
     let mut iterator = poll_rankings.iter().skip(starting_index);
     let mut vote_counts_sizes = ByteCounts::new(PAGE_SIZE as usize);
 
-    for x in 0..PAGE_SIZE {
+    for _ in 0..PAGE_SIZE {
         match iterator.next() {
             None => break,
             Some(voteCount) => {
@@ -613,7 +611,7 @@ fn get_6_byte_recent_polls(
     let mut iterator = poll_rankings.iter().skip(starting_index);
     let mut vote_counts_sizes = ByteCounts::new(PAGE_SIZE as usize);
 
-    for x in 0..PAGE_SIZE {
+    for _ in 0..PAGE_SIZE {
         match iterator.next() {
             None => break,
             Some(voteCount) => {
@@ -659,7 +657,7 @@ fn get_5_byte_recent_polls(
     let mut iterator = poll_rankings.iter().skip(starting_index);
     let mut vote_counts_sizes = ByteCounts::new(PAGE_SIZE as usize);
 
-    for x in 0..PAGE_SIZE {
+    for _ in 0..PAGE_SIZE {
         match iterator.next() {
             None => break,
             Some(voteCount) => {
@@ -705,7 +703,7 @@ fn get_4_byte_recent_polls(
     let mut iterator = poll_rankings.iter().skip(starting_index);
     let mut vote_counts_sizes = ByteCounts::new(PAGE_SIZE as usize);
 
-    for x in 0..PAGE_SIZE {
+    for _ in 0..PAGE_SIZE {
         match iterator.next() {
             None => break,
             Some(voteCount) => {
@@ -751,7 +749,7 @@ fn get_3_byte_recent_polls(
     let mut iterator = poll_rankings.iter().skip(starting_index);
     let mut vote_counts_sizes = ByteCounts::new(PAGE_SIZE as usize);
 
-    for x in 0..PAGE_SIZE {
+    for _ in 0..PAGE_SIZE {
         match iterator.next() {
             None => break,
             Some(voteCount) => {
@@ -797,7 +795,7 @@ fn get_2_byte_recent_polls(
     let mut iterator = poll_rankings.iter().skip(starting_index);
     let mut vote_counts_sizes = ByteCounts::new(PAGE_SIZE as usize);
 
-    for x in 0..PAGE_SIZE {
+    for _ in 0..PAGE_SIZE {
         match iterator.next() {
             None => break,
             Some(voteCount) => {

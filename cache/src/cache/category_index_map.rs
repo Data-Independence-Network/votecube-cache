@@ -5,8 +5,6 @@ use int_hash::IntHashMap;
 
 use common::model::types::CategoryCacheIndex;
 use common::model::types::CategoryId;
-use common::model::types::LocationId;
-use common::model::types::PollId;
 
 /**
  *  Random access Category Id map, needed by initial lookup from clients.  The

@@ -13,8 +13,6 @@ use super::super::super::super::cache::cache::Cache;
 use super::super::super::super::cache::model::CachePeriodIds;
 use super::super::super::super::cache::model::LocationPeriodIds;
 use super::super::super::super::cache::model::LocationPollRankings;
-use super::super::super::super::cache::model::VoteCount;
-use super::super::super::super::data::byte_counts::ByteCounts;
 use super::super::super::super::server::codes;
 
 use super::location_and_loc_category::INITIAL_RESPONSE_VECTOR_SIZE_2_POLL_BYTES;
@@ -421,7 +419,7 @@ fn get_location_rankings_by_global_id(
     let first_record_index = PAGE_SIZE * block_index;
 
     return get_location_rankings_with_location_cache_index(
-        timezone_id, first_record_index as usize, location_cache_index,
+        first_record_index as usize, location_cache_index,
         &location_poll_rankings, max_poll_number_bytes);
 }
 
@@ -451,13 +449,11 @@ fn get_location_rankings_by_cache_index(
     let first_record_index = PAGE_SIZE * block_index;
 
     return get_location_rankings(
-        timezone_id, first_record_index as usize, location_cache_index,
-        &location_poll_rankings, max_poll_number_bytes);
+        first_record_index as usize, &location_poll_rankings, max_poll_number_bytes);
 }
 
 #[inline]
 fn get_location_rankings_with_location_cache_index(
-    timezone_id: TimezoneId,
     first_record_index: usize,
     location_cache_index: LocationCacheIndex,
     location_poll_rankings: &LocationPollRankings,
@@ -527,9 +523,7 @@ fn get_location_rankings_with_location_cache_index(
 
 #[inline]
 fn get_location_rankings(
-    timezone_id: TimezoneId,
     first_record_index: usize,
-    location_cache_index: LocationCacheIndex,
     location_poll_rankings: &LocationPollRankings,
     max_poll_number_bytes: u8,
 ) -> Vec<u8> {
