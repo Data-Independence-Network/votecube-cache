@@ -113,11 +113,11 @@ pub fn get_todays_category_rankings_by_global_id(
     return get_category_rankings_by_global_id(
         cache.category_cache_period_ids.todays_vc_day_id,
         vc_day_id,
-        &cache.category_index_map.TODAY,
-        &cache.category_poll_rankings.TODAY,
+        &cache.category_index_map.today,
+        &cache.category_poll_rankings.today,
         global_category_id,
         block_index,
-        cache.poll_id_byte_counts.TODAY[38],
+        cache.poll_id_byte_counts.today[38],
     );
 }
 
@@ -130,10 +130,10 @@ pub fn get_todays_category_rankings_by_cache_index(
     return get_category_rankings_by_cache_index(
         cache.category_cache_period_ids.todays_vc_day_id,
         vc_day_id,
-        &cache.category_poll_rankings.TODAY,
+        &cache.category_poll_rankings.today,
         category_cache_index,
         block_index,
-        cache.poll_id_byte_counts.TODAY[38],
+        cache.poll_id_byte_counts.today[38],
     );
 }
 
@@ -146,11 +146,11 @@ pub fn get_yesterdays_category_rankings_by_global_id(
     return get_category_rankings_by_global_id(
         cache.category_cache_period_ids.yesterdays_vc_day_id,
         vc_day_id,
-        &cache.category_index_map.YESTERDAY,
-        &cache.category_poll_rankings.YESTERDAY,
+        &cache.category_index_map.yesterday,
+        &cache.category_poll_rankings.yesterday,
         global_category_id,
         block_index,
-        cache.poll_id_byte_counts.YESTERDAY[38],
+        cache.poll_id_byte_counts.yesterday[38],
     );
 }
 
@@ -163,10 +163,10 @@ pub fn get_yesterdays_category_rankings_by_cache_index(
     return get_category_rankings_by_cache_index(
         cache.category_cache_period_ids.yesterdays_vc_day_id,
         vc_day_id,
-        &cache.category_poll_rankings.YESTERDAY,
+        &cache.category_poll_rankings.yesterday,
         category_cache_index,
         block_index,
-        cache.poll_id_byte_counts.YESTERDAY[38],
+        cache.poll_id_byte_counts.yesterday[38],
     );
 }
 
@@ -179,11 +179,11 @@ pub fn get_day_b4_yesterdays_category_rankings_by_global_id(
     return get_category_rankings_by_global_id(
         cache.category_cache_period_ids.day_b4_yesterdays_vc_day_id,
         vc_day_id,
-        &cache.category_index_map.DAY_B4_YESTERDAY,
-        &cache.category_poll_rankings.DAY_B4_YESTERDAY,
+        &cache.category_index_map.day_b4_yesterday,
+        &cache.category_poll_rankings.day_b4_yesterday,
         global_category_id,
         block_index,
-        cache.poll_id_byte_counts.DAY_B4_YESTERDAY[38],
+        cache.poll_id_byte_counts.day_b4_yesterday[38],
     );
 }
 
@@ -196,10 +196,10 @@ pub fn get_day_b4_yesterdays_category_rankings_by_cache_index(
     return get_category_rankings_by_cache_index(
         cache.category_cache_period_ids.day_b4_yesterdays_vc_day_id,
         vc_day_id,
-        &cache.category_poll_rankings.DAY_B4_YESTERDAY,
+        &cache.category_poll_rankings.day_b4_yesterday,
         category_cache_index,
         block_index,
-        cache.poll_id_byte_counts.DAY_B4_YESTERDAY[38],
+        cache.poll_id_byte_counts.day_b4_yesterday[38],
     );
 }
 
@@ -212,11 +212,11 @@ pub fn get_this_weeks_category_rankings_by_global_id(
     return get_category_rankings_by_global_id(
         cache.category_cache_period_ids.this_weeks_vc_week_id,
         vc_week_id,
-        &cache.category_index_map.THIS_WEEK,
-        &cache.category_poll_rankings.THIS_WEEK,
+        &cache.category_index_map.this_week,
+        &cache.category_poll_rankings.this_week,
         global_category_id,
         block_index,
-        cache.poll_id_byte_counts.THIS_WEEK[38],
+        cache.poll_id_byte_counts.this_week[38],
     );
 }
 
@@ -229,10 +229,10 @@ pub fn get_this_weeks_category_rankings_by_cache_index(
     return get_category_rankings_by_cache_index(
         cache.category_cache_period_ids.this_weeks_vc_week_id,
         vc_week_id,
-        &cache.category_poll_rankings.THIS_WEEK,
+        &cache.category_poll_rankings.this_week,
         category_cache_index,
         block_index,
-        cache.poll_id_byte_counts.THIS_WEEK[38],
+        cache.poll_id_byte_counts.this_week[38],
     );
 }
 
@@ -245,11 +245,11 @@ pub fn get_last_weeks_category_rankings_by_global_id(
     return get_category_rankings_by_global_id(
         cache.category_cache_period_ids.last_weeks_vc_week_id,
         vc_week_id,
-        &cache.category_index_map.LAST_WEEK,
-        &cache.category_poll_rankings.LAST_WEEK,
+        &cache.category_index_map.last_week,
+        &cache.category_poll_rankings.last_week,
         global_category_id,
         block_index,
-        cache.poll_id_byte_counts.LAST_WEEK[38],
+        cache.poll_id_byte_counts.last_week[38],
     );
 }
 
@@ -262,10 +262,10 @@ pub fn get_last_weeks_category_rankings_by_cache_index(
     return get_category_rankings_by_cache_index(
         cache.category_cache_period_ids.last_weeks_vc_week_id,
         vc_week_id,
-        &cache.category_poll_rankings.LAST_WEEK,
+        &cache.category_poll_rankings.last_week,
         category_cache_index,
         block_index,
-        cache.poll_id_byte_counts.LAST_WEEK[38],
+        cache.poll_id_byte_counts.last_week[38],
     );
 }
 
@@ -278,11 +278,11 @@ pub fn get_this_months_category_rankings_by_global_id(
     return get_category_rankings_by_global_id(
         cache.category_cache_period_ids.this_months_vc_month_id,
         vc_month_id,
-        &cache.category_index_map.THIS_MONTH,
-        &cache.category_poll_rankings.THIS_MONTH,
+        &cache.category_index_map.this_month,
+        &cache.category_poll_rankings.this_month,
         global_category_id,
         block_index,
-        cache.poll_id_byte_counts.THIS_MONTH[38],
+        cache.poll_id_byte_counts.this_month[38],
     );
 }
 
@@ -295,10 +295,10 @@ pub fn get_this_months_category_rankings_by_cache_index(
     return get_category_rankings_by_cache_index(
         cache.category_cache_period_ids.this_months_vc_month_id,
         vc_month_id,
-        &cache.category_poll_rankings.THIS_MONTH,
+        &cache.category_poll_rankings.this_month,
         category_cache_index,
         block_index,
-        cache.poll_id_byte_counts.THIS_MONTH[38],
+        cache.poll_id_byte_counts.this_month[38],
     );
 }
 
@@ -311,11 +311,11 @@ pub fn get_last_months_category_rankings_by_global_id(
     return get_category_rankings_by_global_id(
         cache.category_cache_period_ids.last_months_vc_month_id,
         vc_month_id,
-        &cache.category_index_map.LAST_MONTH,
-        &cache.category_poll_rankings.LAST_MONTH,
+        &cache.category_index_map.last_month,
+        &cache.category_poll_rankings.last_month,
         global_category_id,
         block_index,
-        cache.poll_id_byte_counts.LAST_MONTH[38],
+        cache.poll_id_byte_counts.last_month[38],
     );
 }
 
@@ -328,10 +328,10 @@ pub fn get_last_months_category_rankings_by_cache_index(
     return get_category_rankings_by_cache_index(
         cache.category_cache_period_ids.last_months_vc_month_id,
         vc_month_id,
-        &cache.category_poll_rankings.LAST_MONTH,
+        &cache.category_poll_rankings.last_month,
         category_cache_index,
         block_index,
-        cache.poll_id_byte_counts.LAST_MONTH[38],
+        cache.poll_id_byte_counts.last_month[38],
     );
 }
 
@@ -354,9 +354,9 @@ fn get_category_rankings_by_global_id(
         None => {
             return codes::INVALID_GLOBAL_CATEGORY_ID_RESPONSE.to_vec();
         }
-        Some(categoryCacheIndex) => {
+        Some(category_cache_index) => {
             return get_category_rankings_with_category_cache_index(
-                first_record_index, *categoryCacheIndex,
+                first_record_index, *category_cache_index,
                 given_period_category_poll_rankings, max_poll_number_bytes);
         }
     }
@@ -522,18 +522,18 @@ fn get_8_byte_recent_polls(
     for _ in 0..PAGE_SIZE {
         match iterator.next() {
             None => break,
-            Some(voteCount) => {
-                response.push(voteCount.poll_type_and_tz);
+            Some(vote_count) => {
+                response.push(vote_count.poll_type_and_tz);
 
                 let poll_id_bytes: [u8; 8] = unsafe {
                     // Poll Id in the period of a given time zone
-                    transmute(voteCount.poll_id)
+                    transmute(vote_count.poll_id)
                 };
                 // TODO: ALWAYS verify Big fs Little Endianness
                 response.extend_from_slice(&poll_id_bytes);
 
                 let count_bytes: [u8; 4] = unsafe {
-                    transmute(voteCount.count)
+                    transmute(vote_count.count)
                 };
                 if count_bytes[0] != 0 {
                     response.extend_from_slice(&count_bytes);
@@ -568,18 +568,18 @@ fn get_7_byte_recent_polls(
     for _ in 0..PAGE_SIZE {
         match iterator.next() {
             None => break,
-            Some(voteCount) => {
-                response.push(voteCount.poll_type_and_tz);
+            Some(vote_count) => {
+                response.push(vote_count.poll_type_and_tz);
 
                 let poll_id_bytes: [u8; 8] = unsafe {
                     // Poll Id in the period of a given time zone
-                    transmute(voteCount.poll_id)
+                    transmute(vote_count.poll_id)
                 };
                 // TODO: ALWAYS verify Big fs Little Endianness
                 response.extend_from_slice(&poll_id_bytes[1..7]);
 
                 let count_bytes: [u8; 4] = unsafe {
-                    transmute(voteCount.count)
+                    transmute(vote_count.count)
                 };
                 if count_bytes[0] != 0 {
                     response.extend_from_slice(&count_bytes);
@@ -614,18 +614,18 @@ fn get_6_byte_recent_polls(
     for _ in 0..PAGE_SIZE {
         match iterator.next() {
             None => break,
-            Some(voteCount) => {
-                response.push(voteCount.poll_type_and_tz);
+            Some(vote_count) => {
+                response.push(vote_count.poll_type_and_tz);
 
                 let poll_id_bytes: [u8; 8] = unsafe {
                     // Poll Id in the period of a given time zone
-                    transmute(voteCount.poll_id)
+                    transmute(vote_count.poll_id)
                 };
                 // TODO: ALWAYS verify Big fs Little Endianness
                 response.extend_from_slice(&poll_id_bytes[2..7]);
 
                 let count_bytes: [u8; 4] = unsafe {
-                    transmute(voteCount.count)
+                    transmute(vote_count.count)
                 };
                 if count_bytes[0] != 0 {
                     response.extend_from_slice(&count_bytes);
@@ -660,18 +660,18 @@ fn get_5_byte_recent_polls(
     for _ in 0..PAGE_SIZE {
         match iterator.next() {
             None => break,
-            Some(voteCount) => {
-                response.push(voteCount.poll_type_and_tz);
+            Some(vote_count) => {
+                response.push(vote_count.poll_type_and_tz);
 
                 let poll_id_bytes: [u8; 8] = unsafe {
                     // Poll Id in the period of a given time zone
-                    transmute(voteCount.poll_id)
+                    transmute(vote_count.poll_id)
                 };
                 // TODO: ALWAYS verify Big fs Little Endianness
                 response.extend_from_slice(&poll_id_bytes[3..7]);
 
                 let count_bytes: [u8; 4] = unsafe {
-                    transmute(voteCount.count)
+                    transmute(vote_count.count)
                 };
                 if count_bytes[0] != 0 {
                     response.extend_from_slice(&count_bytes);
@@ -706,18 +706,18 @@ fn get_4_byte_recent_polls(
     for _ in 0..PAGE_SIZE {
         match iterator.next() {
             None => break,
-            Some(voteCount) => {
-                response.push(voteCount.poll_type_and_tz);
+            Some(vote_count) => {
+                response.push(vote_count.poll_type_and_tz);
 
                 let poll_id_bytes: [u8; 8] = unsafe {
                     // Poll Id in the period of a given time zone
-                    transmute(voteCount.poll_id)
+                    transmute(vote_count.poll_id)
                 };
                 // TODO: ALWAYS verify Big fs Little Endianness
                 response.extend_from_slice(&poll_id_bytes[4..7]);
 
                 let count_bytes: [u8; 4] = unsafe {
-                    transmute(voteCount.count)
+                    transmute(vote_count.count)
                 };
                 if count_bytes[0] != 0 {
                     response.extend_from_slice(&count_bytes);
@@ -752,18 +752,18 @@ fn get_3_byte_recent_polls(
     for _ in 0..PAGE_SIZE {
         match iterator.next() {
             None => break,
-            Some(voteCount) => {
-                response.push(voteCount.poll_type_and_tz);
+            Some(vote_count) => {
+                response.push(vote_count.poll_type_and_tz);
 
                 let poll_id_bytes: [u8; 8] = unsafe {
                     // Poll Id in the period of a given time zone
-                    transmute(voteCount.poll_id)
+                    transmute(vote_count.poll_id)
                 };
                 // TODO: ALWAYS verify Big fs Little Endianness
                 response.extend_from_slice(&poll_id_bytes[5..7]);
 
                 let count_bytes: [u8; 4] = unsafe {
-                    transmute(voteCount.count)
+                    transmute(vote_count.count)
                 };
                 if count_bytes[0] != 0 {
                     response.extend_from_slice(&count_bytes);
@@ -798,18 +798,18 @@ fn get_2_byte_recent_polls(
     for _ in 0..PAGE_SIZE {
         match iterator.next() {
             None => break,
-            Some(voteCount) => {
-                response.push(voteCount.poll_type_and_tz);
+            Some(vote_count) => {
+                response.push(vote_count.poll_type_and_tz);
 
                 let poll_id_bytes: [u8; 8] = unsafe {
                     // Poll Id in the period of a given time zone
-                    transmute(voteCount.poll_id)
+                    transmute(vote_count.poll_id)
                 };
                 // TODO: ALWAYS verify Big fs Little Endianness
                 response.extend_from_slice(&poll_id_bytes[6..7]);
 
                 let count_bytes: [u8; 4] = unsafe {
-                    transmute(voteCount.count)
+                    transmute(vote_count.count)
                 };
                 if count_bytes[0] != 0 {
                     response.extend_from_slice(&count_bytes);

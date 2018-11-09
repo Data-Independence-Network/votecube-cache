@@ -45,7 +45,7 @@ pub fn get_todays_location_category_rankings_by_global_ids(
     global_category_id: CategoryId,
     cache: &Cache,
 ) -> Vec<u8> {
-    if timezone_id < 0 || timezone_id >= NUM_TIMEZONES {
+    if timezone_id >= NUM_TIMEZONES {
         return codes::INVALID_TIMEZONE_ID_RESPONSE.to_vec();
     }
 
@@ -56,12 +56,12 @@ pub fn get_todays_location_category_rankings_by_global_ids(
         current_period_ids.todays_vc_day_id,
         vc_day_id,
         timezone_id,
-        &cache.location_category_index_map.TODAY,
-        &cache.location_poll_rankings.TODAY,
+        &cache.location_category_index_map.today,
+        &cache.location_poll_rankings.today,
         global_location_id,
         global_category_id,
         block_index,
-        cache.poll_id_byte_counts.TODAY[timezone_id as usize],
+        cache.poll_id_byte_counts.today[timezone_id as usize],
     );
 }
 
@@ -73,7 +73,7 @@ pub fn get_todays_location_category_rankings_by_location_cache_index_and_global_
     global_category_id: CategoryId,
     cache: &Cache,
 ) -> Vec<u8> {
-    if timezone_id < 0 || timezone_id >= NUM_TIMEZONES {
+    if timezone_id >= NUM_TIMEZONES {
         return codes::INVALID_TIMEZONE_ID_RESPONSE.to_vec();
     }
 
@@ -84,12 +84,12 @@ pub fn get_todays_location_category_rankings_by_location_cache_index_and_global_
         current_period_ids.todays_vc_day_id,
         vc_day_id,
         timezone_id,
-        &cache.location_category_index_map.TODAY,
-        &cache.location_poll_rankings.TODAY,
+        &cache.location_category_index_map.today,
+        &cache.location_poll_rankings.today,
         location_cache_index,
         global_category_id,
         block_index,
-        cache.poll_id_byte_counts.TODAY[timezone_id as usize],
+        cache.poll_id_byte_counts.today[timezone_id as usize],
     );
 }
 
@@ -101,7 +101,7 @@ pub fn get_todays_location_category_rankings_by_cache_indexes(
     location_category_cache_index: LocationCategoryCacheIndex,
     cache: &Cache,
 ) -> Vec<u8> {
-    if timezone_id < 0 || timezone_id >= NUM_TIMEZONES {
+    if timezone_id >= NUM_TIMEZONES {
         return codes::INVALID_TIMEZONE_ID_RESPONSE.to_vec();
     }
 
@@ -112,11 +112,11 @@ pub fn get_todays_location_category_rankings_by_cache_indexes(
         current_period_ids.todays_vc_day_id,
         vc_day_id,
         timezone_id,
-        &cache.location_poll_rankings.TODAY,
+        &cache.location_poll_rankings.today,
         location_cache_index,
         location_category_cache_index,
         block_index,
-        cache.poll_id_byte_counts.TODAY[timezone_id as usize],
+        cache.poll_id_byte_counts.today[timezone_id as usize],
     );
 }
 
@@ -128,7 +128,7 @@ pub fn get_yesterdays_location_category_rankings_by_global_ids(
     global_category_id: CategoryId,
     cache: &Cache,
 ) -> Vec<u8> {
-    if timezone_id < 0 || timezone_id >= NUM_TIMEZONES {
+    if timezone_id >= NUM_TIMEZONES {
         return codes::INVALID_TIMEZONE_ID_RESPONSE.to_vec();
     }
 
@@ -139,12 +139,12 @@ pub fn get_yesterdays_location_category_rankings_by_global_ids(
         current_period_ids.yesterdays_vc_day_id,
         vc_day_id,
         timezone_id,
-        &cache.location_category_index_map.YESTERDAY,
-        &cache.location_poll_rankings.YESTERDAY,
+        &cache.location_category_index_map.yesterday,
+        &cache.location_poll_rankings.yesterday,
         global_location_id,
         global_category_id,
         block_index,
-        cache.poll_id_byte_counts.YESTERDAY[timezone_id as usize],
+        cache.poll_id_byte_counts.yesterday[timezone_id as usize],
     );
 }
 
@@ -156,7 +156,7 @@ pub fn get_yesterdays_location_category_rankings_by_location_cache_index_and_glo
     global_category_id: CategoryId,
     cache: &Cache,
 ) -> Vec<u8> {
-    if timezone_id < 0 || timezone_id >= NUM_TIMEZONES {
+    if timezone_id >= NUM_TIMEZONES {
         return codes::INVALID_TIMEZONE_ID_RESPONSE.to_vec();
     }
 
@@ -167,12 +167,12 @@ pub fn get_yesterdays_location_category_rankings_by_location_cache_index_and_glo
         current_period_ids.yesterdays_vc_day_id,
         vc_day_id,
         timezone_id,
-        &cache.location_category_index_map.YESTERDAY,
-        &cache.location_poll_rankings.YESTERDAY,
+        &cache.location_category_index_map.yesterday,
+        &cache.location_poll_rankings.yesterday,
         location_cache_index,
         global_category_id,
         block_index,
-        cache.poll_id_byte_counts.YESTERDAY[timezone_id as usize],
+        cache.poll_id_byte_counts.yesterday[timezone_id as usize],
     );
 }
 
@@ -184,7 +184,7 @@ pub fn get_yesterdays_location_category_rankings_by_cache_indexes(
     location_category_cache_index: LocationCategoryCacheIndex,
     cache: &Cache,
 ) -> Vec<u8> {
-    if timezone_id < 0 || timezone_id >= NUM_TIMEZONES {
+    if timezone_id >= NUM_TIMEZONES {
         return codes::INVALID_TIMEZONE_ID_RESPONSE.to_vec();
     }
 
@@ -195,11 +195,11 @@ pub fn get_yesterdays_location_category_rankings_by_cache_indexes(
         current_period_ids.yesterdays_vc_day_id,
         vc_day_id,
         timezone_id,
-        &cache.location_poll_rankings.YESTERDAY,
+        &cache.location_poll_rankings.yesterday,
         location_cache_index,
         location_category_cache_index,
         block_index,
-        cache.poll_id_byte_counts.YESTERDAY[timezone_id as usize],
+        cache.poll_id_byte_counts.yesterday[timezone_id as usize],
     );
 }
 
@@ -211,7 +211,7 @@ pub fn get_day_b4_yesterdays_location_category_rankings_by_global_ids(
     global_category_id: CategoryId,
     cache: &Cache,
 ) -> Vec<u8> {
-    if timezone_id < 0 || timezone_id >= NUM_TIMEZONES {
+    if timezone_id >= NUM_TIMEZONES {
         return codes::INVALID_TIMEZONE_ID_RESPONSE.to_vec();
     }
 
@@ -222,12 +222,12 @@ pub fn get_day_b4_yesterdays_location_category_rankings_by_global_ids(
         current_period_ids.day_b4_yesterdays_vc_day_id,
         vc_day_id,
         timezone_id,
-        &cache.location_category_index_map.DAY_B4_YESTERDAY,
-        &cache.location_poll_rankings.DAY_B4_YESTERDAY,
+        &cache.location_category_index_map.day_b4_yesterday,
+        &cache.location_poll_rankings.day_b4_yesterday,
         global_location_id,
         global_category_id,
         block_index,
-        cache.poll_id_byte_counts.DAY_B4_YESTERDAY[timezone_id as usize],
+        cache.poll_id_byte_counts.day_b4_yesterday[timezone_id as usize],
     );
 }
 
@@ -239,7 +239,7 @@ pub fn get_day_b4_yesterdays_location_category_rankings_by_location_cache_index_
     global_category_id: CategoryId,
     cache: &Cache,
 ) -> Vec<u8> {
-    if timezone_id < 0 || timezone_id >= NUM_TIMEZONES {
+    if timezone_id >= NUM_TIMEZONES {
         return codes::INVALID_TIMEZONE_ID_RESPONSE.to_vec();
     }
 
@@ -250,12 +250,12 @@ pub fn get_day_b4_yesterdays_location_category_rankings_by_location_cache_index_
         current_period_ids.day_b4_yesterdays_vc_day_id,
         vc_day_id,
         timezone_id,
-        &cache.location_category_index_map.DAY_B4_YESTERDAY,
-        &cache.location_poll_rankings.DAY_B4_YESTERDAY,
+        &cache.location_category_index_map.day_b4_yesterday,
+        &cache.location_poll_rankings.day_b4_yesterday,
         location_cache_index,
         global_category_id,
         block_index,
-        cache.poll_id_byte_counts.DAY_B4_YESTERDAY[timezone_id as usize],
+        cache.poll_id_byte_counts.day_b4_yesterday[timezone_id as usize],
     );
 }
 
@@ -267,7 +267,7 @@ pub fn get_day_b4_yesterdays_location_category_rankings_by_cache_indexes(
     location_category_cache_index: LocationCategoryCacheIndex,
     cache: &Cache,
 ) -> Vec<u8> {
-    if timezone_id < 0 || timezone_id >= NUM_TIMEZONES {
+    if timezone_id >= NUM_TIMEZONES {
         return codes::INVALID_TIMEZONE_ID_RESPONSE.to_vec();
     }
 
@@ -278,11 +278,11 @@ pub fn get_day_b4_yesterdays_location_category_rankings_by_cache_indexes(
         current_period_ids.day_b4_yesterdays_vc_day_id,
         vc_day_id,
         timezone_id,
-        &cache.location_poll_rankings.DAY_B4_YESTERDAY,
+        &cache.location_poll_rankings.day_b4_yesterday,
         location_cache_index,
         location_category_cache_index,
         block_index,
-        cache.poll_id_byte_counts.DAY_B4_YESTERDAY[timezone_id as usize],
+        cache.poll_id_byte_counts.day_b4_yesterday[timezone_id as usize],
     );
 }
 
@@ -294,7 +294,7 @@ pub fn get_this_weeks_location_category_rankings_by_global_ids(
     global_category_id: CategoryId,
     cache: &Cache,
 ) -> Vec<u8> {
-    if timezone_id < 0 || timezone_id >= NUM_TIMEZONES {
+    if timezone_id >= NUM_TIMEZONES {
         return codes::INVALID_TIMEZONE_ID_RESPONSE.to_vec();
     }
 
@@ -305,12 +305,12 @@ pub fn get_this_weeks_location_category_rankings_by_global_ids(
         current_period_ids.this_weeks_vc_week_id,
         vc_week_id,
         timezone_id,
-        &cache.location_category_index_map.THIS_WEEK,
-        &cache.location_poll_rankings.THIS_WEEK,
+        &cache.location_category_index_map.this_week,
+        &cache.location_poll_rankings.this_week,
         global_location_id,
         global_category_id,
         block_index,
-        cache.poll_id_byte_counts.THIS_WEEK[timezone_id as usize],
+        cache.poll_id_byte_counts.this_week[timezone_id as usize],
     );
 }
 
@@ -322,7 +322,7 @@ pub fn get_this_weeks_location_category_rankings_by_location_cache_index_and_glo
     global_category_id: CategoryId,
     cache: &Cache,
 ) -> Vec<u8> {
-    if timezone_id < 0 || timezone_id >= NUM_TIMEZONES {
+    if timezone_id >= NUM_TIMEZONES {
         return codes::INVALID_TIMEZONE_ID_RESPONSE.to_vec();
     }
 
@@ -333,12 +333,12 @@ pub fn get_this_weeks_location_category_rankings_by_location_cache_index_and_glo
         current_period_ids.this_weeks_vc_week_id,
         vc_week_id,
         timezone_id,
-        &cache.location_category_index_map.THIS_WEEK,
-        &cache.location_poll_rankings.THIS_WEEK,
+        &cache.location_category_index_map.this_week,
+        &cache.location_poll_rankings.this_week,
         location_cache_index,
         global_category_id,
         block_index,
-        cache.poll_id_byte_counts.THIS_WEEK[timezone_id as usize],
+        cache.poll_id_byte_counts.this_week[timezone_id as usize],
     );
 }
 
@@ -350,7 +350,7 @@ pub fn get_this_weeks_location_category_rankings_by_cache_indexes(
     location_category_cache_index: LocationCategoryCacheIndex,
     cache: &Cache,
 ) -> Vec<u8> {
-    if timezone_id < 0 || timezone_id >= NUM_TIMEZONES {
+    if timezone_id >= NUM_TIMEZONES {
         return codes::INVALID_TIMEZONE_ID_RESPONSE.to_vec();
     }
 
@@ -361,11 +361,11 @@ pub fn get_this_weeks_location_category_rankings_by_cache_indexes(
         current_period_ids.this_weeks_vc_week_id,
         vc_week_id,
         timezone_id,
-        &cache.location_poll_rankings.THIS_WEEK,
+        &cache.location_poll_rankings.this_week,
         location_cache_index,
         location_category_cache_index,
         block_index,
-        cache.poll_id_byte_counts.THIS_WEEK[timezone_id as usize],
+        cache.poll_id_byte_counts.this_week[timezone_id as usize],
     );
 }
 
@@ -377,7 +377,7 @@ pub fn get_last_weeks_location_category_rankings_by_global_ids(
     global_category_id: CategoryId,
     cache: &Cache,
 ) -> Vec<u8> {
-    if timezone_id < 0 || timezone_id >= NUM_TIMEZONES {
+    if timezone_id >= NUM_TIMEZONES {
         return codes::INVALID_TIMEZONE_ID_RESPONSE.to_vec();
     }
 
@@ -388,12 +388,12 @@ pub fn get_last_weeks_location_category_rankings_by_global_ids(
         current_period_ids.last_weeks_vc_week_id,
         vc_week_id,
         timezone_id,
-        &cache.location_category_index_map.LAST_WEEK,
-        &cache.location_poll_rankings.LAST_WEEK,
+        &cache.location_category_index_map.last_week,
+        &cache.location_poll_rankings.last_week,
         global_location_id,
         global_category_id,
         block_index,
-        cache.poll_id_byte_counts.LAST_WEEK[timezone_id as usize],
+        cache.poll_id_byte_counts.last_week[timezone_id as usize],
     );
 }
 
@@ -405,7 +405,7 @@ pub fn get_last_weeks_location_category_rankings_by_location_cache_index_and_glo
     global_category_id: CategoryId,
     cache: &Cache,
 ) -> Vec<u8> {
-    if timezone_id < 0 || timezone_id >= NUM_TIMEZONES {
+    if timezone_id >= NUM_TIMEZONES {
         return codes::INVALID_TIMEZONE_ID_RESPONSE.to_vec();
     }
 
@@ -416,12 +416,12 @@ pub fn get_last_weeks_location_category_rankings_by_location_cache_index_and_glo
         current_period_ids.last_weeks_vc_week_id,
         vc_week_id,
         timezone_id,
-        &cache.location_category_index_map.LAST_WEEK,
-        &cache.location_poll_rankings.LAST_WEEK,
+        &cache.location_category_index_map.last_week,
+        &cache.location_poll_rankings.last_week,
         location_cache_index,
         global_category_id,
         block_index,
-        cache.poll_id_byte_counts.LAST_WEEK[timezone_id as usize],
+        cache.poll_id_byte_counts.last_week[timezone_id as usize],
     );
 }
 
@@ -433,7 +433,7 @@ pub fn get_last_weeks_location_category_rankings_by_cache_indexes(
     location_category_cache_index: LocationCategoryCacheIndex,
     cache: &Cache,
 ) -> Vec<u8> {
-    if timezone_id < 0 || timezone_id >= NUM_TIMEZONES {
+    if timezone_id >= NUM_TIMEZONES {
         return codes::INVALID_TIMEZONE_ID_RESPONSE.to_vec();
     }
 
@@ -444,11 +444,11 @@ pub fn get_last_weeks_location_category_rankings_by_cache_indexes(
         current_period_ids.last_weeks_vc_week_id,
         vc_week_id,
         timezone_id,
-        &cache.location_poll_rankings.LAST_WEEK,
+        &cache.location_poll_rankings.last_week,
         location_cache_index,
         location_category_cache_index,
         block_index,
-        cache.poll_id_byte_counts.LAST_WEEK[timezone_id as usize],
+        cache.poll_id_byte_counts.last_week[timezone_id as usize],
     );
 }
 
@@ -460,7 +460,7 @@ pub fn get_this_months_location_category_rankings_by_global_ids(
     global_category_id: CategoryId,
     cache: &Cache,
 ) -> Vec<u8> {
-    if timezone_id < 0 || timezone_id >= NUM_TIMEZONES {
+    if timezone_id >= NUM_TIMEZONES {
         return codes::INVALID_TIMEZONE_ID_RESPONSE.to_vec();
     }
 
@@ -471,12 +471,12 @@ pub fn get_this_months_location_category_rankings_by_global_ids(
         current_period_ids.this_months_vc_month_id,
         vc_month_id,
         timezone_id,
-        &cache.location_category_index_map.THIS_MONTH,
-        &cache.location_poll_rankings.THIS_MONTH,
+        &cache.location_category_index_map.this_month,
+        &cache.location_poll_rankings.this_month,
         global_location_id,
         global_category_id,
         block_index,
-        cache.poll_id_byte_counts.THIS_MONTH[timezone_id as usize],
+        cache.poll_id_byte_counts.this_month[timezone_id as usize],
     );
 }
 
@@ -488,7 +488,7 @@ pub fn get_this_months_location_category_rankings_by_location_cache_index_and_gl
     global_category_id: CategoryId,
     cache: &Cache,
 ) -> Vec<u8> {
-    if timezone_id < 0 || timezone_id >= NUM_TIMEZONES {
+    if timezone_id >= NUM_TIMEZONES {
         return codes::INVALID_TIMEZONE_ID_RESPONSE.to_vec();
     }
 
@@ -499,12 +499,12 @@ pub fn get_this_months_location_category_rankings_by_location_cache_index_and_gl
         current_period_ids.this_months_vc_month_id,
         vc_month_id,
         timezone_id,
-        &cache.location_category_index_map.THIS_MONTH,
-        &cache.location_poll_rankings.THIS_MONTH,
+        &cache.location_category_index_map.this_month,
+        &cache.location_poll_rankings.this_month,
         location_cache_index,
         global_category_id,
         block_index,
-        cache.poll_id_byte_counts.THIS_MONTH[timezone_id as usize],
+        cache.poll_id_byte_counts.this_month[timezone_id as usize],
     );
 }
 
@@ -516,7 +516,7 @@ pub fn get_this_months_location_category_rankings_by_cache_indexes(
     location_category_cache_index: u32,
     cache: &Cache,
 ) -> Vec<u8> {
-    if timezone_id < 0 || timezone_id >= NUM_TIMEZONES {
+    if timezone_id >= NUM_TIMEZONES {
         return codes::INVALID_TIMEZONE_ID_RESPONSE.to_vec();
     }
 
@@ -527,11 +527,11 @@ pub fn get_this_months_location_category_rankings_by_cache_indexes(
         current_period_ids.this_months_vc_month_id,
         vc_month_id,
         timezone_id,
-        &cache.location_poll_rankings.THIS_MONTH,
+        &cache.location_poll_rankings.this_month,
         location_cache_index,
         location_category_cache_index,
         block_index,
-        cache.poll_id_byte_counts.THIS_MONTH[timezone_id as usize],
+        cache.poll_id_byte_counts.this_month[timezone_id as usize],
     );
 }
 
@@ -543,7 +543,7 @@ pub fn get_last_months_location_category_rankings_by_global_ids(
     global_category_id: CategoryId,
     cache: &Cache,
 ) -> Vec<u8> {
-    if timezone_id < 0 || timezone_id >= NUM_TIMEZONES {
+    if timezone_id >= NUM_TIMEZONES {
         return codes::INVALID_TIMEZONE_ID_RESPONSE.to_vec();
     }
 
@@ -554,12 +554,12 @@ pub fn get_last_months_location_category_rankings_by_global_ids(
         current_period_ids.last_months_vc_month_id,
         vc_month_id,
         timezone_id,
-        &cache.location_category_index_map.LAST_MONTH,
-        &cache.location_poll_rankings.LAST_MONTH,
+        &cache.location_category_index_map.last_month,
+        &cache.location_poll_rankings.last_month,
         global_location_id,
         global_category_id,
         block_index,
-        cache.poll_id_byte_counts.LAST_MONTH[timezone_id as usize],
+        cache.poll_id_byte_counts.last_month[timezone_id as usize],
     );
 }
 
@@ -571,7 +571,7 @@ pub fn get_last_months_location_category_rankings_by_location_cache_index_and_gl
     global_category_id: CategoryId,
     cache: &Cache,
 ) -> Vec<u8> {
-    if timezone_id < 0 || timezone_id >= NUM_TIMEZONES {
+    if timezone_id >= NUM_TIMEZONES {
         return codes::INVALID_TIMEZONE_ID_RESPONSE.to_vec();
     }
 
@@ -582,12 +582,12 @@ pub fn get_last_months_location_category_rankings_by_location_cache_index_and_gl
         current_period_ids.last_months_vc_month_id,
         vc_month_id,
         timezone_id,
-        &cache.location_category_index_map.LAST_MONTH,
-        &cache.location_poll_rankings.LAST_MONTH,
+        &cache.location_category_index_map.last_month,
+        &cache.location_poll_rankings.last_month,
         location_cache_index,
         global_category_id,
         block_index,
-        cache.poll_id_byte_counts.LAST_MONTH[timezone_id as usize],
+        cache.poll_id_byte_counts.last_month[timezone_id as usize],
     );
 }
 
@@ -599,7 +599,7 @@ pub fn get_last_months_location_category_rankings_by_cache_indexes(
     location_category_cache_index: LocationCategoryCacheIndex,
     cache: &Cache,
 ) -> Vec<u8> {
-    if timezone_id < 0 || timezone_id >= NUM_TIMEZONES {
+    if timezone_id >= NUM_TIMEZONES {
         return codes::INVALID_TIMEZONE_ID_RESPONSE.to_vec();
     }
 
@@ -610,11 +610,11 @@ pub fn get_last_months_location_category_rankings_by_cache_indexes(
         current_period_ids.last_months_vc_month_id,
         vc_month_id,
         timezone_id,
-        &cache.location_poll_rankings.LAST_MONTH,
+        &cache.location_poll_rankings.last_month,
         location_cache_index,
         location_category_cache_index,
         block_index,
-        cache.poll_id_byte_counts.LAST_MONTH[timezone_id as usize],
+        cache.poll_id_byte_counts.last_month[timezone_id as usize],
     );
 }
 

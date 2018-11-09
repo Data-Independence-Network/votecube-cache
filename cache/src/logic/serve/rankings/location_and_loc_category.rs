@@ -133,9 +133,9 @@ pub fn get_8_byte_recent_polls(
     for _ in 0..PAGE_SIZE {
         match iterator.next() {
             None => break,
-            Some(voteCount) => {
+            Some(vote_count) => {
                 // Get the poll type
-                match voteCount.poll_type_and_tz & 0b00000011 {
+                match vote_count.poll_type_and_tz & 0b00000011 {
                     consts::POLL_TYPE_1D => {
                         poll_types.add1();
                     }
@@ -146,19 +146,19 @@ pub fn get_8_byte_recent_polls(
                         poll_types.add3();
                     }
                     _ => {
-                        panic!("Unexpected Poll Type {}", voteCount.poll_type_and_tz & 0b00000011)
+                        panic!("Unexpected Poll Type {}", vote_count.poll_type_and_tz & 0b00000011)
                     }
                 }
 
                 let poll_id_bytes: [u8; 8] = unsafe {
                     // Poll Id in the period of a given time zone
-                    transmute(voteCount.poll_id)
+                    transmute(vote_count.poll_id)
                 };
                 // TODO: ALWAYS verify Big fs Little Endianness
                 response.extend_from_slice(&poll_id_bytes);
 
                 let count_bytes: [u8; 4] = unsafe {
-                    transmute(voteCount.count)
+                    transmute(vote_count.count)
                 };
                 if count_bytes[0] != 0 {
                     response.extend_from_slice(&count_bytes);
@@ -195,9 +195,9 @@ pub fn get_7_byte_recent_polls(
     for _ in 0..PAGE_SIZE {
         match iterator.next() {
             None => break,
-            Some(voteCount) => {
+            Some(vote_count) => {
                 // Get the poll type
-                match voteCount.poll_type_and_tz & 0b00000011 {
+                match vote_count.poll_type_and_tz & 0b00000011 {
                     consts::POLL_TYPE_1D => {
                         poll_types.add1();
                     }
@@ -208,19 +208,19 @@ pub fn get_7_byte_recent_polls(
                         poll_types.add3();
                     }
                     _ => {
-                        panic!("Unexpected Poll Type {}", voteCount.poll_type_and_tz & 0b00000011)
+                        panic!("Unexpected Poll Type {}", vote_count.poll_type_and_tz & 0b00000011)
                     }
                 }
 
                 let poll_id_bytes: [u8; 8] = unsafe {
                     // Poll Id in the period of a given time zone
-                    transmute(voteCount.poll_id)
+                    transmute(vote_count.poll_id)
                 };
                 // TODO: ALWAYS verify Big fs Little Endianness
                 response.extend_from_slice(&poll_id_bytes[1..7]);
 
                 let count_bytes: [u8; 4] = unsafe {
-                    transmute(voteCount.count)
+                    transmute(vote_count.count)
                 };
                 if count_bytes[0] != 0 {
                     response.extend_from_slice(&count_bytes);
@@ -257,9 +257,9 @@ pub fn get_6_byte_recent_polls(
     for _ in 0..PAGE_SIZE {
         match iterator.next() {
             None => break,
-            Some(voteCount) => {
+            Some(vote_count) => {
                 // Get the poll type
-                match voteCount.poll_type_and_tz & 0b00000011 {
+                match vote_count.poll_type_and_tz & 0b00000011 {
                     consts::POLL_TYPE_1D => {
                         poll_types.add1();
                     }
@@ -270,19 +270,19 @@ pub fn get_6_byte_recent_polls(
                         poll_types.add3();
                     }
                     _ => {
-                        panic!("Unexpected Poll Type {}", voteCount.poll_type_and_tz & 0b00000011)
+                        panic!("Unexpected Poll Type {}", vote_count.poll_type_and_tz & 0b00000011)
                     }
                 }
 
                 let poll_id_bytes: [u8; 8] = unsafe {
                     // Poll Id in the period of a given time zone
-                    transmute(voteCount.poll_id)
+                    transmute(vote_count.poll_id)
                 };
                 // TODO: ALWAYS verify Big fs Little Endianness
                 response.extend_from_slice(&poll_id_bytes[2..7]);
 
                 let count_bytes: [u8; 4] = unsafe {
-                    transmute(voteCount.count)
+                    transmute(vote_count.count)
                 };
                 if count_bytes[0] != 0 {
                     response.extend_from_slice(&count_bytes);
@@ -319,9 +319,9 @@ pub fn get_5_byte_recent_polls(
     for _ in 0..PAGE_SIZE {
         match iterator.next() {
             None => break,
-            Some(voteCount) => {
+            Some(vote_count) => {
                 // Get the poll type
-                match voteCount.poll_type_and_tz & 0b00000011 {
+                match vote_count.poll_type_and_tz & 0b00000011 {
                     consts::POLL_TYPE_1D => {
                         poll_types.add1();
                     }
@@ -332,19 +332,19 @@ pub fn get_5_byte_recent_polls(
                         poll_types.add3();
                     }
                     _ => {
-                        panic!("Unexpected Poll Type {}", voteCount.poll_type_and_tz & 0b00000011)
+                        panic!("Unexpected Poll Type {}", vote_count.poll_type_and_tz & 0b00000011)
                     }
                 }
 
                 let poll_id_bytes: [u8; 8] = unsafe {
                     // Poll Id in the period of a given time zone
-                    transmute(voteCount.poll_id)
+                    transmute(vote_count.poll_id)
                 };
                 // TODO: ALWAYS verify Big fs Little Endianness
                 response.extend_from_slice(&poll_id_bytes[3..7]);
 
                 let count_bytes: [u8; 4] = unsafe {
-                    transmute(voteCount.count)
+                    transmute(vote_count.count)
                 };
                 if count_bytes[0] != 0 {
                     response.extend_from_slice(&count_bytes);
@@ -381,9 +381,9 @@ pub fn get_4_byte_recent_polls(
     for _ in 0..PAGE_SIZE {
         match iterator.next() {
             None => break,
-            Some(voteCount) => {
+            Some(vote_count) => {
                 // Get the poll type
-                match voteCount.poll_type_and_tz & 0b00000011 {
+                match vote_count.poll_type_and_tz & 0b00000011 {
                     consts::POLL_TYPE_1D => {
                         poll_types.add1();
                     }
@@ -394,19 +394,19 @@ pub fn get_4_byte_recent_polls(
                         poll_types.add3();
                     }
                     _ => {
-                        panic!("Unexpected Poll Type {}", voteCount.poll_type_and_tz & 0b00000011)
+                        panic!("Unexpected Poll Type {}", vote_count.poll_type_and_tz & 0b00000011)
                     }
                 }
 
                 let poll_id_bytes: [u8; 8] = unsafe {
                     // Poll Id in the period of a given time zone
-                    transmute(voteCount.poll_id)
+                    transmute(vote_count.poll_id)
                 };
                 // TODO: ALWAYS verify Big fs Little Endianness
                 response.extend_from_slice(&poll_id_bytes[4..7]);
 
                 let count_bytes: [u8; 4] = unsafe {
-                    transmute(voteCount.count)
+                    transmute(vote_count.count)
                 };
                 if count_bytes[0] != 0 {
                     response.extend_from_slice(&count_bytes);
@@ -443,9 +443,9 @@ pub fn get_3_byte_recent_polls(
     for _ in 0..PAGE_SIZE {
         match iterator.next() {
             None => break,
-            Some(voteCount) => {
+            Some(vote_count) => {
                 // Get the poll type
-                match voteCount.poll_type_and_tz & 0b00000011 {
+                match vote_count.poll_type_and_tz & 0b00000011 {
                     consts::POLL_TYPE_1D => {
                         poll_types.add1();
                     }
@@ -456,19 +456,19 @@ pub fn get_3_byte_recent_polls(
                         poll_types.add3();
                     }
                     _ => {
-                        panic!("Unexpected Poll Type {}", voteCount.poll_type_and_tz & 0b00000011)
+                        panic!("Unexpected Poll Type {}", vote_count.poll_type_and_tz & 0b00000011)
                     }
                 }
 
                 let poll_id_bytes: [u8; 8] = unsafe {
                     // Poll Id in the period of a given time zone
-                    transmute(voteCount.poll_id)
+                    transmute(vote_count.poll_id)
                 };
                 // TODO: ALWAYS verify Big fs Little Endianness
                 response.extend_from_slice(&poll_id_bytes[5..7]);
 
                 let count_bytes: [u8; 4] = unsafe {
-                    transmute(voteCount.count)
+                    transmute(vote_count.count)
                 };
                 if count_bytes[0] != 0 {
                     response.extend_from_slice(&count_bytes);
@@ -505,9 +505,9 @@ pub fn get_2_byte_recent_polls(
     for _ in 0..PAGE_SIZE {
         match iterator.next() {
             None => break,
-            Some(voteCount) => {
+            Some(vote_count) => {
                 // Get the poll type
-                match voteCount.poll_type_and_tz & 0b00000011 {
+                match vote_count.poll_type_and_tz & 0b00000011 {
                     consts::POLL_TYPE_1D => {
                         poll_types.add1();
                     }
@@ -518,19 +518,19 @@ pub fn get_2_byte_recent_polls(
                         poll_types.add3();
                     }
                     _ => {
-                        panic!("Unexpected Poll Type {}", voteCount.poll_type_and_tz & 0b00000011)
+                        panic!("Unexpected Poll Type {}", vote_count.poll_type_and_tz & 0b00000011)
                     }
                 }
 
                 let poll_id_bytes: [u8; 8] = unsafe {
                     // Poll Id in the period of a given time zone
-                    transmute(voteCount.poll_id)
+                    transmute(vote_count.poll_id)
                 };
                 // TODO: ALWAYS verify Big fs Little Endianness
                 response.extend_from_slice(&poll_id_bytes[6..7]);
 
                 let count_bytes: [u8; 4] = unsafe {
-                    transmute(voteCount.count)
+                    transmute(vote_count.count)
                 };
                 if count_bytes[0] != 0 {
                     response.extend_from_slice(&count_bytes);

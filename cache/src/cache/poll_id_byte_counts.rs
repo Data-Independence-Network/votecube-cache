@@ -4,34 +4,34 @@ use common::model::timezone::NUM_TIMEZONES_WITH_GLOBAL_CATEGORY;
  *  Maximum number of bytes taken by poll ids of a given current of future cache period.
  */
 pub struct PollIdByteCounts {
-    pub LAST_MONTH: [u8; NUM_TIMEZONES_WITH_GLOBAL_CATEGORY as usize],
-    pub THIS_MONTH: [u8; NUM_TIMEZONES_WITH_GLOBAL_CATEGORY as usize],
-    pub NEXT_MONTH: [u8; NUM_TIMEZONES_WITH_GLOBAL_CATEGORY as usize],
-    pub LAST_WEEK: [u8; NUM_TIMEZONES_WITH_GLOBAL_CATEGORY as usize],
-    pub THIS_WEEK: [u8; NUM_TIMEZONES_WITH_GLOBAL_CATEGORY as usize],
-    pub NEXT_WEEK: [u8; NUM_TIMEZONES_WITH_GLOBAL_CATEGORY as usize],
-    pub DAY_B4_YESTERDAY: [u8; NUM_TIMEZONES_WITH_GLOBAL_CATEGORY as usize],
-    pub YESTERDAY: [u8; NUM_TIMEZONES_WITH_GLOBAL_CATEGORY as usize],
-    pub TODAY: [u8; NUM_TIMEZONES_WITH_GLOBAL_CATEGORY as usize],
-    pub TOMORROW: [u8; NUM_TIMEZONES_WITH_GLOBAL_CATEGORY as usize],
-    pub DAY_AFTER_TOMORROW: [u8; NUM_TIMEZONES_WITH_GLOBAL_CATEGORY as usize],
+    pub last_month: [u8; NUM_TIMEZONES_WITH_GLOBAL_CATEGORY as usize],
+    pub this_month: [u8; NUM_TIMEZONES_WITH_GLOBAL_CATEGORY as usize],
+    pub next_month: [u8; NUM_TIMEZONES_WITH_GLOBAL_CATEGORY as usize],
+    pub last_week: [u8; NUM_TIMEZONES_WITH_GLOBAL_CATEGORY as usize],
+    pub this_week: [u8; NUM_TIMEZONES_WITH_GLOBAL_CATEGORY as usize],
+    pub next_week: [u8; NUM_TIMEZONES_WITH_GLOBAL_CATEGORY as usize],
+    pub day_b4_yesterday: [u8; NUM_TIMEZONES_WITH_GLOBAL_CATEGORY as usize],
+    pub yesterday: [u8; NUM_TIMEZONES_WITH_GLOBAL_CATEGORY as usize],
+    pub today: [u8; NUM_TIMEZONES_WITH_GLOBAL_CATEGORY as usize],
+    pub tomorrow: [u8; NUM_TIMEZONES_WITH_GLOBAL_CATEGORY as usize],
+    pub day_after_tomorrow: [u8; NUM_TIMEZONES_WITH_GLOBAL_CATEGORY as usize],
 }
 
 impl PollIdByteCounts {
 
     pub fn new() -> PollIdByteCounts {
         PollIdByteCounts {
-            LAST_MONTH: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            THIS_MONTH: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            NEXT_MONTH: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            LAST_WEEK: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            THIS_WEEK: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            NEXT_WEEK: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            DAY_B4_YESTERDAY: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            YESTERDAY: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            TODAY: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            TOMORROW: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            DAY_AFTER_TOMORROW: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            last_month: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            this_month: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            next_month: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            last_week: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            this_week: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            next_week: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            day_b4_yesterday: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            yesterday: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            today: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            tomorrow: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            day_after_tomorrow: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         }
     }
 

@@ -11,19 +11,19 @@ use super::model::LocationPollPrependLists;
  *  Contain only the prepended Poll Ids
  */
 pub struct PollsByLocation {
-    pub NEXT_MONTH: Vec<IntHashMap<LocationId, LocationPollPrependLists>>,
-    pub NEXT_WEEK: Vec<IntHashMap<LocationId, LocationPollPrependLists>>,
-    pub TOMORROW: Vec<IntHashMap<LocationId, LocationPollPrependLists>>,
-    pub DAY_AFTER_TOMORROW: Vec<IntHashMap<LocationId, LocationPollPrependLists>>,
+    pub next_month: Vec<IntHashMap<LocationId, LocationPollPrependLists>>,
+    pub next_week: Vec<IntHashMap<LocationId, LocationPollPrependLists>>,
+    pub tomorrow: Vec<IntHashMap<LocationId, LocationPollPrependLists>>,
+    pub day_after_tomorrow: Vec<IntHashMap<LocationId, LocationPollPrependLists>>,
 }
 
 impl PollsByLocation {
     pub fn new() -> PollsByLocation {
         PollsByLocation {
-            NEXT_MONTH: Vec::with_capacity(NUM_TIMEZONES as usize),
-            NEXT_WEEK: Vec::with_capacity(NUM_TIMEZONES as usize),
-            TOMORROW: Vec::with_capacity(NUM_TIMEZONES as usize),
-            DAY_AFTER_TOMORROW: Vec::with_capacity(NUM_TIMEZONES as usize),
+            next_month: Vec::with_capacity(NUM_TIMEZONES as usize),
+            next_week: Vec::with_capacity(NUM_TIMEZONES as usize),
+            tomorrow: Vec::with_capacity(NUM_TIMEZONES as usize),
+            day_after_tomorrow: Vec::with_capacity(NUM_TIMEZONES as usize),
         }
     }
 }

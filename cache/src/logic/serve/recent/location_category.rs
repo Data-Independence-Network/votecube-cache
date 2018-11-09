@@ -33,11 +33,11 @@ pub fn get_tomorrows_location_category_polls(
         cache.category_cache_period_ids.tomorrows_vc_day_id,
         vc_day_id,
         timezone_id,
-        &cache.polls_by_location.TOMORROW,
+        &cache.polls_by_location.tomorrow,
         block_index,
         global_location_id,
         global_category_id,
-        cache.poll_id_byte_counts.TOMORROW[timezone_id as usize],
+        cache.poll_id_byte_counts.tomorrow[timezone_id as usize],
     );
 }
 
@@ -53,11 +53,11 @@ pub fn get_day_after_tomorrows_location_category_polls(
         cache.category_cache_period_ids.day_after_tomorrows_vc_day_id,
         vc_day_id,
         timezone_id,
-        &cache.polls_by_location.DAY_AFTER_TOMORROW,
+        &cache.polls_by_location.day_after_tomorrow,
         block_index,
         global_location_id,
         global_category_id,
-        cache.poll_id_byte_counts.DAY_AFTER_TOMORROW[timezone_id as usize],
+        cache.poll_id_byte_counts.day_after_tomorrow[timezone_id as usize],
     );
 }
 
@@ -73,11 +73,11 @@ pub fn get_next_weeks_location_category_polls(
         cache.category_cache_period_ids.next_weeks_vc_week_id,
         vc_week_id,
         timezone_id,
-        &cache.polls_by_location.NEXT_WEEK,
+        &cache.polls_by_location.next_week,
         block_index,
         global_location_id,
         global_category_id,
-        cache.poll_id_byte_counts.NEXT_WEEK[timezone_id as usize],
+        cache.poll_id_byte_counts.next_week[timezone_id as usize],
     );
 }
 
@@ -93,11 +93,11 @@ pub fn get_next_months_location_category_polls(
         cache.category_cache_period_ids.next_months_vc_month_id,
         vc_month_id,
         timezone_id,
-        &cache.polls_by_location.NEXT_MONTH,
+        &cache.polls_by_location.next_month,
         block_index,
         global_location_id,
         global_category_id,
-        cache.poll_id_byte_counts.NEXT_MONTH[timezone_id as usize],
+        cache.poll_id_byte_counts.next_month[timezone_id as usize],
     );
 }
 
@@ -122,8 +122,8 @@ fn get_global_location_category_polls(
             None => {
                 return codes::INVALID_TIMEZONE_ID_RESPONSE.to_vec();
             }
-            Some(futurePolls) => {
-                futurePolls
+            Some(future_polls) => {
+                future_polls
             }
         };
 
@@ -131,8 +131,8 @@ fn get_global_location_category_polls(
         None => {
             return Vec::new();
         }
-        Some(locationPolls) => {
-            locationPolls
+        Some(location_polls) => {
+            location_polls
         }
     };
 
@@ -140,8 +140,8 @@ fn get_global_location_category_polls(
         None => {
             return Vec::new();
         }
-        Some(locationCategoryPolls) => {
-            locationCategoryPolls
+        Some(location_category_polls) => {
+            location_category_polls
         }
     };
 

@@ -12,19 +12,19 @@ use common::model::types::PollId;
  *  Contain only the prepended Poll Ids
  */
 pub struct PollsByCategory {
-    pub NEXT_MONTH: IntHashMap<CategoryId, Vec<Vec<PollId>>>,
-    pub NEXT_WEEK: IntHashMap<CategoryId, Vec<Vec<PollId>>>,
-    pub TOMORROW: IntHashMap<CategoryId, Vec<Vec<PollId>>>,
-    pub DAY_AFTER_TOMORROW: IntHashMap<CategoryId, Vec<Vec<PollId>>>,
+    pub next_month: IntHashMap<CategoryId, Vec<Vec<PollId>>>,
+    pub next_week: IntHashMap<CategoryId, Vec<Vec<PollId>>>,
+    pub tomorrow: IntHashMap<CategoryId, Vec<Vec<PollId>>>,
+    pub day_after_tomorrow: IntHashMap<CategoryId, Vec<Vec<PollId>>>,
 }
 
 impl PollsByCategory {
     pub fn new() -> PollsByCategory {
         PollsByCategory {
-            NEXT_MONTH: HashMap::with_capacity_and_hasher(1000000, IntBuildHasher::default()),
-            NEXT_WEEK: HashMap::with_capacity_and_hasher(1000000, IntBuildHasher::default()),
-            TOMORROW: HashMap::with_capacity_and_hasher(1000000, IntBuildHasher::default()),
-            DAY_AFTER_TOMORROW: HashMap::with_capacity_and_hasher(1000000, IntBuildHasher::default()),
+            next_month: HashMap::with_capacity_and_hasher(1000000, IntBuildHasher::default()),
+            next_week: HashMap::with_capacity_and_hasher(1000000, IntBuildHasher::default()),
+            tomorrow: HashMap::with_capacity_and_hasher(1000000, IntBuildHasher::default()),
+            day_after_tomorrow: HashMap::with_capacity_and_hasher(1000000, IntBuildHasher::default()),
         }
     }
 }

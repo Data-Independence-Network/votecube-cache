@@ -13,29 +13,29 @@ use super::model::LocationPollRankings;
  *  Subsequently, the client knows the time period specific ids and uses them for direct access.
  */
 pub struct LocationsPollRankings {
-    pub LAST_MONTH: Vec<Vec<LocationPollRankings>>,
-    pub THIS_MONTH: Vec<Vec<LocationPollRankings>>,
+    pub last_month: Vec<Vec<LocationPollRankings>>,
+    pub this_month: Vec<Vec<LocationPollRankings>>,
 
-    pub LAST_WEEK: Vec<Vec<LocationPollRankings>>,
-    pub THIS_WEEK: Vec<Vec<LocationPollRankings>>,
+    pub last_week: Vec<Vec<LocationPollRankings>>,
+    pub this_week: Vec<Vec<LocationPollRankings>>,
 
-    pub DAY_B4_YESTERDAY: Vec<Vec<LocationPollRankings>>,
-    pub YESTERDAY: Vec<Vec<LocationPollRankings>>,
-    pub TODAY: Vec<Vec<LocationPollRankings>>,
+    pub day_b4_yesterday: Vec<Vec<LocationPollRankings>>,
+    pub yesterday: Vec<Vec<LocationPollRankings>>,
+    pub today: Vec<Vec<LocationPollRankings>>,
 }
 
 impl LocationsPollRankings {
     pub fn new() -> LocationsPollRankings {
         LocationsPollRankings {
-            LAST_MONTH: Vec::with_capacity(NUM_TIMEZONES as usize),
-            THIS_MONTH: Vec::with_capacity(NUM_TIMEZONES as usize),
+            last_month: Vec::with_capacity(NUM_TIMEZONES as usize),
+            this_month: Vec::with_capacity(NUM_TIMEZONES as usize),
 
-            LAST_WEEK: Vec::with_capacity(NUM_TIMEZONES as usize),
-            THIS_WEEK: Vec::with_capacity(NUM_TIMEZONES as usize),
+            last_week: Vec::with_capacity(NUM_TIMEZONES as usize),
+            this_week: Vec::with_capacity(NUM_TIMEZONES as usize),
 
-            DAY_B4_YESTERDAY: Vec::with_capacity(NUM_TIMEZONES as usize),
-            YESTERDAY: Vec::with_capacity(NUM_TIMEZONES as usize),
-            TODAY: Vec::with_capacity(NUM_TIMEZONES as usize),
+            day_b4_yesterday: Vec::with_capacity(NUM_TIMEZONES as usize),
+            yesterday: Vec::with_capacity(NUM_TIMEZONES as usize),
+            today: Vec::with_capacity(NUM_TIMEZONES as usize),
         }
     }
 }
