@@ -1,7 +1,7 @@
 use common::model::timezone::NUM_TIMEZONES_WITH_GLOBAL_CATEGORY;
 
 /**
- *  Maximum number of bytes taken by poll ids of a given current of future cache period.
+ *  Maximum number of bytes taken by poll ids of a given current/future cache period.
  */
 pub struct PollIdByteCounts {
     pub last_month: [u8; NUM_TIMEZONES_WITH_GLOBAL_CATEGORY as usize],
