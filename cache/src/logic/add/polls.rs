@@ -5,6 +5,8 @@ use common::model::types::MonthId;
 use common::model::types::PollId;
 use common::model::types::WeekId;
 
+use super::super::super::cache::cache::Cache;
+
 /*
  *
  *  Entering polls early - not needed for Minimum Viable Product.
@@ -19,7 +21,8 @@ use common::model::types::WeekId;
  *          - not as high
  */
 pub fn add_polls(
-    raw_data: &[u8]
+    raw_data: &[u8],
+    cache: &mut Cache,
 ) {
 
 }
@@ -29,7 +32,33 @@ fn add_day_poll(
     global_poll_id: PollId,
     global_location_id: LocationId,
     global_category_ids: Vec<CategoryId>,
+    cache: &mut Cache,
 ) {
+    // TODO: Figure out if the poll is for tomorrow or day after tomorrow
+
+//    let for_tomorrow = false;
+//
+//    let poll_map = if for_tomorrow {
+//        &mut cache.polls_by_category.tomorrow
+//    } else {
+//        &mut cache.polls_by_category.day_after_tomorrow
+//    };
+//
+//    for category_id in &global_category_ids {
+//        let category_poll_ids = match poll_map.get(category_id) {
+//            Some(poll_ids) => {
+//                poll_ids
+//            },
+//            None => {
+//                let mut poll_ids = Vec::new();
+//                let first_polls_block = Vec::new();
+//                poll_ids.push(first_polls_block);
+//                poll_map.insert(*category_id, poll_ids);
+//
+//                &poll_ids
+//            }
+//        };
+//    }
 
 }
 
@@ -38,6 +67,7 @@ fn add_week_poll(
     global_poll_id: PollId,
     global_location_id: LocationId,
     global_category_ids: Vec<CategoryId>,
+    cache: &mut Cache,
 ) {
 
 }
@@ -47,6 +77,7 @@ fn add_month_poll(
     global_poll_id: PollId,
     global_location_id: LocationId,
     global_category_ids: Vec<CategoryId>,
+    cache: &mut Cache,
 ) {
 
 }

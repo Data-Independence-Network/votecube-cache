@@ -3,6 +3,8 @@
 //use int_hash::IntBuildHasher;
 //use int_hash::IntHashMap;
 
+
+
 use common::model::timezone::NUM_TIMEZONES;
 
 use super::category_index_map::CategoryIndexMap;
@@ -19,6 +21,7 @@ use super::polls::Polls;
 use super::polls_by_category::PollsByCategory;
 use super::polls_by_location::PollsByLocation;
 use super::time_period_ids::TimePeriodIds;
+
 
 pub struct Cache {
     /**
@@ -55,12 +58,11 @@ pub struct Cache {
     pub location_index_map: LocationIndexMap,
 
     /**
-     * Poll rankings by Category.
+     * Poll rankings by Category (past & present).
      */
     pub category_poll_rankings: CategoryPollRankings,
-
     /**
-     * Poll rankings by Location.
+     * Poll rankings by Location (past & present).
      */
     pub location_poll_rankings: LocationsPollRankings,
 
@@ -68,14 +70,13 @@ pub struct Cache {
      *  Future PollIds by Category.
      */
     pub polls_by_category: PollsByCategory,
-
     /**
      *  Future PollIds by Location.
      */
     pub polls_by_location: PollsByLocation,
 
     /**
-     *  Past and present Polls for future and current time periods.
+     *  Polls (with counts) for past & present time periods.
      */
     pub polls_1_d: Polls<OneDPoll>,
     pub polls_2_d: Polls<TwoDPoll>,
