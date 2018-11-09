@@ -14,13 +14,13 @@ use super::model::LocationPeriodIds;
  *  stored index is then used to access the VoteCount nested arrays.
  */
 pub struct LocationIndexMap {
-    LOCATION_LAST_MONTHS_INDEX_MAP: IntHashMap<LocationId, LocationPeriodIds>,
-    LOCATION_THIS_MONTHS_INDEX_MAP: IntHashMap<LocationId, LocationPeriodIds>,
-    LOCATION_LAST_WEEKS_INDEX_MAP: IntHashMap<LocationId, LocationPeriodIds>,
-    LOCATION_THIS_WEEKS_INDEX_MAP: IntHashMap<LocationId, LocationPeriodIds>,
-    LOCATION_DAY_B4_YESTERDAYS_INDEX_MAP: IntHashMap<LocationId, LocationPeriodIds>,
-    LOCATION_YESTERDAYS_INDEX_MAP: IntHashMap<LocationId, LocationPeriodIds>,
-    LOCATION_TODAYS_INDEX_MAP: IntHashMap<LocationId, LocationPeriodIds>,
+    pub LAST_MONTH: IntHashMap<LocationId, LocationPeriodIds>,
+    pub THIS_MONTH: IntHashMap<LocationId, LocationPeriodIds>,
+    pub LAST_WEEK: IntHashMap<LocationId, LocationPeriodIds>,
+    pub THIS_WEEK: IntHashMap<LocationId, LocationPeriodIds>,
+    pub DAY_B4_YESTERDAY: IntHashMap<LocationId, LocationPeriodIds>,
+    pub YESTERDAY: IntHashMap<LocationId, LocationPeriodIds>,
+    pub TODAY: IntHashMap<LocationId, LocationPeriodIds>,
 }
 
 impl LocationIndexMap {
@@ -28,13 +28,13 @@ impl LocationIndexMap {
         let b: IntBuildHasher = IntBuildHasher::default();
 
         LocationIndexMap {
-            LOCATION_LAST_MONTHS_INDEX_MAP: HashMap::with_capacity_and_hasher(2000, b),
-            LOCATION_THIS_MONTHS_INDEX_MAP: HashMap::with_capacity_and_hasher(2000, b),
-            LOCATION_LAST_WEEKS_INDEX_MAP: HashMap::with_capacity_and_hasher(2000, b),
-            LOCATION_THIS_WEEKS_INDEX_MAP: HashMap::with_capacity_and_hasher(2000, b),
-            LOCATION_DAY_B4_YESTERDAYS_INDEX_MAP: HashMap::with_capacity_and_hasher(2000, b),
-            LOCATION_YESTERDAYS_INDEX_MAP: HashMap::with_capacity_and_hasher(2000, b),
-            LOCATION_TODAYS_INDEX_MAP: HashMap::with_capacity_and_hasher(2000, b),
+            LAST_MONTH: HashMap::with_capacity_and_hasher(2000, b),
+            THIS_MONTH: HashMap::with_capacity_and_hasher(2000, b),
+            LAST_WEEK: HashMap::with_capacity_and_hasher(2000, b),
+            THIS_WEEK: HashMap::with_capacity_and_hasher(2000, b),
+            DAY_B4_YESTERDAY: HashMap::with_capacity_and_hasher(2000, b),
+            YESTERDAY: HashMap::with_capacity_and_hasher(2000, b),
+            TODAY: HashMap::with_capacity_and_hasher(2000, b),
         }
     }
 }

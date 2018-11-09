@@ -12,10 +12,10 @@ use common::model::types::PollId;
  *  Contain only the prepended Poll Ids
  */
 pub struct PollsByCategory {
-    NEXT_MONTH: IntHashMap<CategoryId, Vec<Vec<PollId>>>,
-    NEXT_WEEK: IntHashMap<CategoryId, Vec<Vec<PollId>>>,
-    TOMORROW: IntHashMap<CategoryId, Vec<Vec<PollId>>>,
-    DAY_AFTER_TOMORROW: IntHashMap<CategoryId, Vec<Vec<PollId>>>,
+    pub NEXT_MONTH: IntHashMap<CategoryId, Vec<Vec<PollId>>>,
+    pub NEXT_WEEK: IntHashMap<CategoryId, Vec<Vec<PollId>>>,
+    pub TOMORROW: IntHashMap<CategoryId, Vec<Vec<PollId>>>,
+    pub DAY_AFTER_TOMORROW: IntHashMap<CategoryId, Vec<Vec<PollId>>>,
 }
 
 impl PollsByCategory {

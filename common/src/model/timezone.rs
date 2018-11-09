@@ -1,5 +1,5 @@
-pub const NUM_TIMEZONES: usize = 38;
-pub const NUM_TIMEZONES_WITH_GLOBAL_CATEGORY: usize = NUM_TIMEZONES + 1;
+pub const NUM_TIMEZONES: u32 = 38;
+pub const NUM_TIMEZONES_WITH_GLOBAL_CATEGORY: u32 = NUM_TIMEZONES + 1;
 
 /**  Time zones **/
 //UTC Offset	Locations	Example Name	Example Location

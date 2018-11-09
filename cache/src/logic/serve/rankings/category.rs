@@ -110,7 +110,7 @@ pub fn get_todays_category_rankings_by_global_id(
     vc_day_id: DayId,
     block_index: u32,
     global_category_id: CategoryId,
-    &cache: Cache,
+    cache: &Cache,
 ) -> Vec<u8> {
     return get_category_rankings_by_global_id(
         cache.category_cache_period_ids.todays_vc_day_id,
@@ -127,7 +127,7 @@ pub fn get_todays_category_rankings_by_cache_index(
     vc_day_id: DayId,
     block_index: u32,
     category_cache_index: CategoryCacheIndex,
-    &cache: Cache,
+    cache: &Cache,
 ) -> Vec<u8> {
     return get_category_rankings_by_cache_index(
         cache.category_cache_period_ids.todays_vc_day_id,
@@ -143,7 +143,7 @@ pub fn get_yesterdays_category_rankings_by_global_id(
     vc_day_id: DayId,
     block_index: u32,
     global_category_id: CategoryId,
-    &cache: Cache,
+    cache: &Cache,
 ) -> Vec<u8> {
     return get_category_rankings_by_global_id(
         cache.category_cache_period_ids.yesterdays_vc_day_id,
@@ -160,7 +160,7 @@ pub fn get_yesterdays_category_rankings_by_cache_index(
     vc_day_id: DayId,
     block_index: u32,
     category_cache_index: CategoryCacheIndex,
-    &cache: Cache,
+    cache: &Cache,
 ) -> Vec<u8> {
     return get_category_rankings_by_cache_index(
         cache.category_cache_period_ids.yesterdays_vc_day_id,
@@ -176,12 +176,12 @@ pub fn get_day_b4_yesterdays_category_rankings_by_global_id(
     vc_day_id: DayId,
     block_index: u32,
     global_category_id: CategoryId,
-    &cache: Cache,
+    cache: &Cache,
 ) -> Vec<u8> {
     return get_category_rankings_by_global_id(
         cache.category_cache_period_ids.day_b4_yesterdays_vc_day_id,
         vc_day_id,
-        cache.category_index_map.DAY_B4_YESTERDAYS,
+        cache.category_index_map.DAY_B4_YESTERDAY,
         cache.category_poll_rankings.DAY_B4_YESTERDAY,
         global_category_id,
         block_index,
@@ -193,7 +193,7 @@ pub fn get_day_b4_yesterdays_category_rankings_by_cache_index(
     vc_day_id: DayId,
     block_index: u32,
     category_cache_index: CategoryCacheIndex,
-    &cache: Cache,
+    cache: &Cache,
 ) -> Vec<u8> {
     return get_category_rankings_by_cache_index(
         cache.category_cache_period_ids.day_b4_yesterdays_vc_day_id,
@@ -209,7 +209,7 @@ pub fn get_this_weeks_category_rankings_by_global_id(
     vc_week_id: WeekId,
     block_index: u32,
     global_category_id: CategoryId,
-    &cache: Cache,
+    cache: &Cache,
 ) -> Vec<u8> {
     return get_category_rankings_by_global_id(
         cache.category_cache_period_ids.this_weeks_vc_week_id,
@@ -226,7 +226,7 @@ pub fn get_this_weeks_category_rankings_by_cache_index(
     vc_week_id: WeekId,
     block_index: u32,
     category_cache_index: CategoryCacheIndex,
-    &cache: Cache,
+    cache: &Cache,
 ) -> Vec<u8> {
     return get_category_rankings_by_cache_index(
         cache.category_cache_period_ids.this_weeks_vc_week_id,
@@ -242,7 +242,7 @@ pub fn get_last_weeks_category_rankings_by_global_id(
     vc_week_id: WeekId,
     block_index: u32,
     global_category_id: CategoryId,
-    &cache: Cache,
+    cache: &Cache,
 ) -> Vec<u8> {
     return get_category_rankings_by_global_id(
         cache.category_cache_period_ids.last_weeks_vc_week_id,
@@ -259,7 +259,7 @@ pub fn get_last_weeks_category_rankings_by_cache_index(
     vc_week_id: WeekId,
     block_index: u32,
     category_cache_index: CategoryCacheIndex,
-    &cache: Cache,
+    cache: &Cache,
 ) -> Vec<u8> {
     return get_category_rankings_by_cache_index(
         cache.category_cache_period_ids.last_weeks_vc_week_id,
@@ -275,7 +275,7 @@ pub fn get_this_months_category_rankings_by_global_id(
     vc_month_id: MonthId,
     block_index: u32,
     global_category_id: CategoryId,
-    &cache: Cache,
+    cache: &Cache,
 ) -> Vec<u8> {
     return get_category_rankings_by_global_id(
         cache.category_cache_period_ids.this_months_vc_month_id,
@@ -292,7 +292,7 @@ pub fn get_this_months_category_rankings_by_cache_index(
     vc_month_id: MonthId,
     block_index: u32,
     category_cache_index: CategoryCacheIndex,
-    &cache: Cache,
+    cache: &Cache,
 ) -> Vec<u8> {
     return get_category_rankings_by_cache_index(
         cache.category_cache_period_ids.this_months_vc_month_id,
@@ -308,7 +308,7 @@ pub fn get_last_months_category_rankings_by_global_id(
     vc_month_id: MonthId,
     block_index: u32,
     global_category_id: CategoryId,
-    &cache: Cache,
+    cache: &Cache,
 ) -> Vec<u8> {
     return get_category_rankings_by_global_id(
         cache.category_cache_period_ids.last_months_vc_month_id,
@@ -325,7 +325,7 @@ pub fn get_last_months_category_rankings_by_cache_index(
     vc_month_id: MonthId,
     block_index: u32,
     category_cache_index: CategoryCacheIndex,
-    &cache: Cache,
+    cache: &Cache,
 ) -> Vec<u8> {
     return get_category_rankings_by_cache_index(
         cache.category_cache_period_ids.last_months_vc_month_id,

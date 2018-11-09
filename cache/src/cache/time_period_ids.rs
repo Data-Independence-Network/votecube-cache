@@ -7,17 +7,17 @@ use common::model::timezone::NUM_TIMEZONES;
  * Used to verify client requests, to make sure that their requests are still valid.
  */
 pub struct TimePeriodIds {
-    LAST_MONTH: [u32; NUM_TIMEZONES],
-    THIS_MONTH: [u32; NUM_TIMEZONES],
-    NEXT_MONTH: [u32; NUM_TIMEZONES],
-    LAST_WEEK: [u32; NUM_TIMEZONES],
-    THIS_WEEK: [u32; NUM_TIMEZONES],
-    NEXT_WEEK: [u32; NUM_TIMEZONES],
-    DAY_B4_YESTERDAY: [u32; NUM_TIMEZONES],
-    YESTERDAY: [u32; NUM_TIMEZONES],
-    TODAY: [u32; NUM_TIMEZONES],
-    TOMORROW: [u32; NUM_TIMEZONES],
-    DAY_AFTER_TOMORROW: [u32; NUM_TIMEZONES],
+    pub LAST_MONTH: [u32; NUM_TIMEZONES as usize],
+    pub THIS_MONTH: [u32; NUM_TIMEZONES as usize],
+    pub NEXT_MONTH: [u32; NUM_TIMEZONES as usize],
+    pub LAST_WEEK: [u32; NUM_TIMEZONES as usize],
+    pub THIS_WEEK: [u32; NUM_TIMEZONES as usize],
+    pub NEXT_WEEK: [u32; NUM_TIMEZONES as usize],
+    pub DAY_B4_YESTERDAY: [u32; NUM_TIMEZONES as usize],
+    pub YESTERDAY: [u32; NUM_TIMEZONES as usize],
+    pub TODAY: [u32; NUM_TIMEZONES as usize],
+    pub TOMORROW: [u32; NUM_TIMEZONES as usize],
+    pub DAY_AFTER_TOMORROW: [u32; NUM_TIMEZONES as usize],
 }
 
 impl TimePeriodIds {

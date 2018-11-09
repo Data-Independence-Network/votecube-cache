@@ -25,36 +25,41 @@ use super::model::TwoDPoll;
 use super::model::VoteCount;
 use super::poll_id_byte_counts::PollIdByteCounts;
 use super::polls::Polls;
+use super::polls_by_category::PollsByCategory;
+use super::polls_by_location::PollsByLocation;
 use super::time_period_ids::TimePeriodIds;
 
 pub struct Cache {
     /**
      * Ids of currently cached time periods, across all timezones
      */
-    category_cache_period_ids: CachePeriodIds,
+    pub category_cache_period_ids: CachePeriodIds,
     /**
      * Ids of currently cached time periods, per timezone
      */
-    per_timezone_cache_period_ids: [CachePeriodIds; NUM_TIMEZONES],
-    poll_id_byte_counts: PollIdByteCounts,
-    time_period_ids: TimePeriodIds,
+    pub per_timezone_cache_period_ids: [CachePeriodIds; NUM_TIMEZONES as usize],
+    pub poll_id_byte_counts: PollIdByteCounts,
+    pub time_period_ids: TimePeriodIds,
     // Keeps track of when a timezone is being modified
-    time_zone_modification_flags: [bool; 38],
+    pub time_zone_modification_flags: [bool; 38],
 
-    category_index_map: CategoryIndexMap,
-    location_category_index_map: LocationCategoryIndexMap,
-    location_index_map: LocationIndexMap,
+    pub category_index_map: CategoryIndexMap,
+    pub location_category_index_map: LocationCategoryIndexMap,
+    pub location_index_map: LocationIndexMap,
 
-    category_poll_rankings: CategoryPollRankings,
-    location_poll_rankings: LocationsPollRankings,
+    pub category_poll_rankings: CategoryPollRankings,
+    pub location_poll_rankings: LocationsPollRankings,
 
-    polls_1_d: Polls<OneDPoll>,
-    polls_2_d: Polls<TwoDPoll>,
-    polls_3_d: Polls<ThreeDPoll>,
+    pub polls_by_category: PollsByCategory,
+    pub polls_by_location: PollsByLocation,
+
+    pub polls_1_d: Polls<OneDPoll>,
+    pub polls_2_d: Polls<TwoDPoll>,
+    pub polls_3_d: Polls<ThreeDPoll>,
 }
 
 impl Cache {
-    fn new() -> Cache {
+    pub fn new() -> Cache {
         Cache {
             category_cache_period_ids: CachePeriodIds::new(),
             per_timezone_cache_period_ids: [
@@ -146,6 +151,9 @@ impl Cache {
 
             category_poll_rankings: CategoryPollRankings::new(),
             location_poll_rankings: LocationsPollRankings::new(),
+
+            polls_by_category: PollsByCategory::new(),
+            polls_by_location: PollsByLocation::new(),
 
             polls_1_d: Polls::new(),
             polls_2_d: Polls::new(),

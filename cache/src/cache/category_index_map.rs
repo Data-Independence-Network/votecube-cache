@@ -13,13 +13,13 @@ use common::model::types::PollId;
  *  stored index is then used to access the VoteCount nested arrays.
  */
 pub struct CategoryIndexMap {
-    CATEGORY_LAST_MONTHS_INDEX_MAP: IntHashMap<CategoryId, CategoryCacheIndex>,
-    CATEGORY_THIS_MONTHS_INDEX_MAP: IntHashMap<CategoryId, CategoryCacheIndex>,
-    CATEGORY_LAST_WEEKS_INDEX_MAP: IntHashMap<CategoryId, CategoryCacheIndex>,
-    CATEGORY_THIS_WEEKS_INDEX_MAP: IntHashMap<CategoryId, CategoryCacheIndex>,
-    CATEGORY_DAY_B4_YESTERDAYS_INDEX_MAP: IntHashMap<CategoryId, CategoryCacheIndex>,
-    CATEGORY_YESTERDAYS_INDEX_MAP: IntHashMap<CategoryId, CategoryCacheIndex>,
-    CATEGORY_TODAYS_INDEX_MAP: IntHashMap<CategoryId, CategoryCacheIndex>,
+    pub LAST_MONTH: IntHashMap<CategoryId, CategoryCacheIndex>,
+    pub THIS_MONTH: IntHashMap<CategoryId, CategoryCacheIndex>,
+    pub LAST_WEEK: IntHashMap<CategoryId, CategoryCacheIndex>,
+    pub THIS_WEEK: IntHashMap<CategoryId, CategoryCacheIndex>,
+    pub DAY_B4_YESTERDAY: IntHashMap<CategoryId, CategoryCacheIndex>,
+    pub YESTERDAY: IntHashMap<CategoryId, CategoryCacheIndex>,
+    pub TODAY: IntHashMap<CategoryId, CategoryCacheIndex>,
 }
 
 impl CategoryIndexMap {
@@ -27,13 +27,13 @@ impl CategoryIndexMap {
         let b: IntBuildHasher = IntBuildHasher::default();
 
         CategoryIndexMap {
-            CATEGORY_LAST_MONTHS_INDEX_MAP: HashMap::with_capacity_and_hasher(2000, b),
-            CATEGORY_THIS_MONTHS_INDEX_MAP: HashMap::with_capacity_and_hasher(2000, b),
-            CATEGORY_LAST_WEEKS_INDEX_MAP: HashMap::with_capacity_and_hasher(2000, b),
-            CATEGORY_THIS_WEEKS_INDEX_MAP: HashMap::with_capacity_and_hasher(2000, b),
-            CATEGORY_DAY_B4_YESTERDAYS_INDEX_MAP: HashMap::with_capacity_and_hasher(2000, b),
-            CATEGORY_YESTERDAYS_INDEX_MAP: HashMap::with_capacity_and_hasher(2000, b),
-            CATEGORY_TODAYS_INDEX_MAP: HashMap::with_capacity_and_hasher(2000, b),
+            LAST_MONTH: HashMap::with_capacity_and_hasher(2000, b),
+            THIS_MONTH: HashMap::with_capacity_and_hasher(2000, b),
+            LAST_WEEK: HashMap::with_capacity_and_hasher(2000, b),
+            THIS_WEEK: HashMap::with_capacity_and_hasher(2000, b),
+            DAY_B4_YESTERDAY: HashMap::with_capacity_and_hasher(2000, b),
+            YESTERDAY: HashMap::with_capacity_and_hasher(2000, b),
+            TODAY: HashMap::with_capacity_and_hasher(2000, b),
         }
     }
 }

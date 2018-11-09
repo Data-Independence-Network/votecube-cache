@@ -8,7 +8,7 @@ use common::model::types::MonthId;
 use common::model::types::PollId;
 use common::model::types::WeekId;
 
-use super::super::super::super::cache::cache;
+use super::super::super::super::cache::cache::Cache;
 use super::super::super::super::server::codes;
 
 use super::utils::get_2_byte_recent_poll_ids;
@@ -26,13 +26,14 @@ pub fn get_tomorrows_category_polls(
     // 1 based index
     block_number: u32,
     global_category_id: CategoryId,
+    cache: &Cache,
 ) -> Vec<u8> {
     return get_global_category_polls(
-        cache::CATEGORY_CACHE_PERIOD_IDS.tomorrows_vc_day_id,
+        cache.category_cache_period_ids.tomorrows_vc_day_id,
         vc_day_id,
-        cache::TOMORROWS_POLLS_BY_CATEGORY,
+        cache.polls_by_category.TOMORROW,
         block_number, global_category_id,
-        cache::TOMORROWS_POLL_ID_BYTE_COUNTS[GLOBAL_TZ_INDEX as usize]);
+        cache.poll_id_byte_counts.TOMORROW[GLOBAL_TZ_INDEX as usize]);
 }
 
 pub fn get_day_after_tomorrows_category_polls(
@@ -40,13 +41,14 @@ pub fn get_day_after_tomorrows_category_polls(
     // 1 based index
     block_number: u32,
     global_category_id: CategoryId,
+    cache: &Cache,
 ) -> Vec<u8> {
     return get_global_category_polls(
-        cache::CATEGORY_CACHE_PERIOD_IDS.day_after_tomorrows_vc_day_id,
+        cache.category_cache_period_ids.day_after_tomorrows_vc_day_id,
         vc_day_id,
-        cache::DAY_AFTER_TOMORROWS_POLLS_BY_CATEGORY,
+        cache.polls_by_category.DAY_AFTER_TOMORROW,
         block_number, global_category_id,
-        cache::DAY_AFTER_TOMORROWS_POLL_ID_BYTE_COUNTS[GLOBAL_TZ_INDEX as usize]);
+        cache.poll_id_byte_counts.DAY_AFTER_TOMORROW[GLOBAL_TZ_INDEX as usize]);
 }
 
 pub fn get_next_weeks_category_polls(
@@ -54,13 +56,14 @@ pub fn get_next_weeks_category_polls(
     // 1 based index
     block_number: u32,
     global_category_id: CategoryId,
+    cache: &Cache,
 ) -> Vec<u8> {
     return get_global_category_polls(
-        cache::CATEGORY_CACHE_PERIOD_IDS.next_weeks_vc_week_id,
+        cache.category_cache_period_ids.next_weeks_vc_week_id,
         vc_week_id,
-        cache::NEXT_WEEKS_POLLS_BY_CATEGORY,
+        cache.polls_by_category.NEXT_WEEK,
         block_number, global_category_id,
-        cache::NEXT_WEEKS_POLL_ID_BYTE_COUNTS[GLOBAL_TZ_INDEX as usize]);
+        cache.poll_id_byte_counts.NEXT_WEEK[GLOBAL_TZ_INDEX as usize]);
 }
 
 pub fn get_next_months_category_polls(
@@ -68,13 +71,14 @@ pub fn get_next_months_category_polls(
     // 1 based index
     block_number: u32,
     global_category_id: CategoryId,
+    cache: &Cache,
 ) -> Vec<u8> {
     return get_global_category_polls(
-        cache::CATEGORY_CACHE_PERIOD_IDS.next_months_vc_month_id,
+        cache.category_cache_period_ids.next_months_vc_month_id,
         vc_month_id,
-        cache::NEXT_MONTHS_POLLS_BY_CATEGORY,
+        cache.polls_by_category.NEXT_MONTH,
         block_number, global_category_id,
-        cache::NEXT_MONTHS_POLL_ID_BYTE_COUNTS[GLOBAL_TZ_INDEX as usize]);
+        cache.poll_id_byte_counts.NEXT_MONTH[GLOBAL_TZ_INDEX as usize]);
 }
 
 

@@ -11,19 +11,19 @@ use super::model::LocationPollPrependLists;
  *  Contain only the prepended Poll Ids
  */
 pub struct PollsByLocation {
-    NEXT_MONTHS_POLLS_BY_LOCATION: Vec<IntHashMap<LocationId, LocationPollPrependLists>>,
-    NEXT_WEEKS_POLLS_BY_LOCATION: Vec<IntHashMap<LocationId, LocationPollPrependLists>>,
-    TOMORROWS_POLLS_BY_LOCATION: Vec<IntHashMap<LocationId, LocationPollPrependLists>>,
-    DAY_AFTER_TOMORROWS_POLLS_BY_LOCATION: Vec<IntHashMap<LocationId, LocationPollPrependLists>>,
+    pub NEXT_MONTH: Vec<IntHashMap<LocationId, LocationPollPrependLists>>,
+    pub NEXT_WEEK: Vec<IntHashMap<LocationId, LocationPollPrependLists>>,
+    pub TOMORROW: Vec<IntHashMap<LocationId, LocationPollPrependLists>>,
+    pub DAY_AFTER_TOMORROW: Vec<IntHashMap<LocationId, LocationPollPrependLists>>,
 }
 
 impl PollsByLocation {
     pub fn new() -> PollsByLocation {
         PollsByLocation {
-            NEXT_MONTHS_POLLS_BY_LOCATION: Vec::with_capacity(NUM_TIMEZONES),
-            NEXT_WEEKS_POLLS_BY_LOCATION: Vec::with_capacity(NUM_TIMEZONES),
-            TOMORROWS_POLLS_BY_LOCATION: Vec::with_capacity(NUM_TIMEZONES),
-            DAY_AFTER_TOMORROWS_POLLS_BY_LOCATION: Vec::with_capacity(NUM_TIMEZONES),
+            NEXT_MONTH: Vec::with_capacity(NUM_TIMEZONES as usize),
+            NEXT_WEEK: Vec::with_capacity(NUM_TIMEZONES as usize),
+            TOMORROW: Vec::with_capacity(NUM_TIMEZONES as usize),
+            DAY_AFTER_TOMORROW: Vec::with_capacity(NUM_TIMEZONES as usize),
         }
     }
 }

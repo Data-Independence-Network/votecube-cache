@@ -16,15 +16,15 @@ use super::model::VoteCount;
  * in the day in Japan (depending on daylight savings).
  */
 pub struct CategoryPollRankings {
-    LAST_MONTH: Vec<Vec<VoteCount>>,
-    THIS_MONTH: Vec<Vec<VoteCount>>,
+    pub LAST_MONTH: Vec<Vec<VoteCount>>,
+    pub THIS_MONTH: Vec<Vec<VoteCount>>,
 
-    LAST_WEEK: Vec<Vec<VoteCount>>,
-    THIS_WEEK: Vec<Vec<VoteCount>>,
+    pub LAST_WEEK: Vec<Vec<VoteCount>>,
+    pub THIS_WEEK: Vec<Vec<VoteCount>>,
 
-    DAY_B4_YESTERDAY: Vec<Vec<VoteCount>>,
-    YESTERDAY: Vec<Vec<VoteCount>>,
-    TODAY: Vec<Vec<VoteCount>>,
+    pub DAY_B4_YESTERDAY: Vec<Vec<VoteCount>>,
+    pub YESTERDAY: Vec<Vec<VoteCount>>,
+    pub TODAY: Vec<Vec<VoteCount>>,
 }
 
 impl CategoryPollRankings {

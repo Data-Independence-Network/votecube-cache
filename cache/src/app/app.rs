@@ -86,7 +86,7 @@ impl<T: Send> App<T> for CompleteCacheApp<T> {
                     let (vc_month_id, block_index, global_category_id)
                     = read_two_ints_and_long(request_body);
                     category::get_this_months_category_rankings_by_global_id(
-                        vc_month_id, block_index, global_category_id)
+                        vc_month_id, block_index, global_category_id, &self.cache)
                 }
             }
             serve::URL_THIS_MONTHS_CATEGORY_POLL_RANKINGS_BY_CACHE_INDEX => {

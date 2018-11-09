@@ -24,7 +24,7 @@ fn main() {
 
     let test: Vec<u32> = Vec::with_capacity(4);
 
-    let app = Box::new(CompleteCacheApp::new(Cache{}));
+    let app = Box::new(CompleteCacheApp::new(Cache::new()));
 
     let server: Server<Cache> = Server::new(app);
 

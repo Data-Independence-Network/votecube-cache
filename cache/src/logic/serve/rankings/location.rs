@@ -1,6 +1,7 @@
 use std::mem::transmute;
 use int_hash::IntHashMap;
 
+use common::model::timezone::NUM_TIMEZONES;
 use common::model::types::DayId;
 use common::model::types::LocationId;
 use common::model::types::LocationCacheIndex;
@@ -8,7 +9,7 @@ use common::model::types::MonthId;
 use common::model::types::TimezoneId;
 use common::model::types::WeekId;
 
-use super::super::super::super::cache::cache;
+use super::super::super::super::cache::cache::Cache;
 use super::super::super::super::cache::model::CachePeriodIds;
 use super::super::super::super::cache::model::LocationPeriodIds;
 use super::super::super::super::cache::model::LocationPollRankings;
@@ -39,26 +40,24 @@ pub fn get_todays_location_rankings_by_global_id(
     timezone_id: TimezoneId,
     block_index: u32,
     global_location_id: LocationId,
+    cache: &Cache,
 ) -> Vec<u8> {
-    let current_period_ids: CachePeriodIds =
-        match cache::PER_TIMEZONE__CACHE_PERIOD_IDS.get(timezone_id as usize) {
-        None => {
-            return codes::INVALID_TIMEZONE_ID_RESPONSE.to_vec();
-        }
-        Some(cachePeriodIds) => {
-            *cachePeriodIds
-        }
-    };
+    if timezone_id < 0 || timezone_id >= NUM_TIMEZONES {
+        return codes::INVALID_TIMEZONE_ID_RESPONSE.to_vec();
+    }
+
+    let current_period_ids: CachePeriodIds
+        = cache.per_timezone_cache_period_ids[timezone_id as usize];
 
     return get_location_rankings_by_global_id(
         current_period_ids.todays_vc_day_id,
         vc_day_id,
         timezone_id,
-        cache::LOCATION_TODAYS_INDEX_MAP,
-        cache::TODAYS_LOCATION_POLL_RANKINGS,
+        cache.location_index_map.TODAY,
+        cache.location_poll_rankings.TODAY,
         global_location_id,
         block_index,
-        cache::TODAYS_POLL_ID_BYTE_COUNTS[timezone_id as usize],
+        cache.poll_id_byte_counts.TODAY[timezone_id as usize],
     );
 }
 
@@ -67,25 +66,23 @@ pub fn get_todays_location_rankings_by_cache_index(
     timezone_id: TimezoneId,
     block_index: u32,
     location_cache_index: LocationCacheIndex,
+    cache: &Cache,
 ) -> Vec<u8> {
-    let current_period_ids: CachePeriodIds =
-        match cache::PER_TIMEZONE__CACHE_PERIOD_IDS.get(timezone_id as usize) {
-            None => {
-                return codes::INVALID_TIMEZONE_ID_RESPONSE.to_vec();
-            }
-            Some(cachePeriodIds) => {
-                *cachePeriodIds
-            }
-        };
+    if timezone_id < 0 || timezone_id >= NUM_TIMEZONES {
+        return codes::INVALID_TIMEZONE_ID_RESPONSE.to_vec();
+    }
+
+    let current_period_ids: CachePeriodIds
+    = cache.per_timezone_cache_period_ids[timezone_id as usize];
 
     return get_location_rankings_by_cache_index(
         current_period_ids.todays_vc_day_id,
         vc_day_id,
         timezone_id,
-        cache::TODAYS_LOCATION_POLL_RANKINGS,
+        cache.location_poll_rankings.TODAY,
         location_cache_index,
         block_index,
-        cache::TODAYS_POLL_ID_BYTE_COUNTS[timezone_id as usize],
+        cache.poll_id_byte_counts.TODAY[timezone_id as usize],
     );
 }
 
@@ -94,26 +91,24 @@ pub fn get_yesterdays_location_rankings_by_global_id(
     timezone_id: TimezoneId,
     block_index: u32,
     global_location_id: LocationId,
+    cache: &Cache,
 ) -> Vec<u8> {
-    let current_period_ids: CachePeriodIds =
-        match cache::PER_TIMEZONE__CACHE_PERIOD_IDS.get(timezone_id as usize) {
-            None => {
-                return codes::INVALID_TIMEZONE_ID_RESPONSE.to_vec();
-            }
-            Some(cachePeriodIds) => {
-                *cachePeriodIds
-            }
-        };
+    if timezone_id < 0 || timezone_id >= NUM_TIMEZONES {
+        return codes::INVALID_TIMEZONE_ID_RESPONSE.to_vec();
+    }
+
+    let current_period_ids: CachePeriodIds
+    = cache.per_timezone_cache_period_ids[timezone_id as usize];
 
     return get_location_rankings_by_global_id(
         current_period_ids.yesterdays_vc_day_id,
         vc_day_id,
         timezone_id,
-        cache::LOCATION_YESTERDAYS_INDEX_MAP,
-        cache::YESTERDAYS_LOCATION_POLL_RANKINGS,
+        cache.location_index_map.YESTERDAY,
+        cache.location_poll_rankings.YESTERDAY,
         global_location_id,
         block_index,
-        cache::YESTERDAYS_POLL_ID_BYTE_COUNTS[timezone_id as usize],
+        cache.poll_id_byte_counts.YESTERDAY[timezone_id as usize],
     );
 }
 
@@ -122,25 +117,23 @@ pub fn get_yesterdays_location_rankings_by_cache_index(
     timezone_id: TimezoneId,
     block_index: u32,
     location_cache_index: LocationCacheIndex,
+    cache: &Cache,
 ) -> Vec<u8> {
-    let current_period_ids: CachePeriodIds =
-        match cache::PER_TIMEZONE__CACHE_PERIOD_IDS.get(timezone_id as usize) {
-            None => {
-                return codes::INVALID_TIMEZONE_ID_RESPONSE.to_vec();
-            }
-            Some(cachePeriodIds) => {
-                *cachePeriodIds
-            }
-        };
+    if timezone_id < 0 || timezone_id >= NUM_TIMEZONES {
+        return codes::INVALID_TIMEZONE_ID_RESPONSE.to_vec();
+    }
+
+    let current_period_ids: CachePeriodIds
+    = cache.per_timezone_cache_period_ids[timezone_id as usize];
 
     return get_location_rankings_by_cache_index(
         current_period_ids.yesterdays_vc_day_id,
         vc_day_id,
         timezone_id,
-        cache::YESTERDAYS_LOCATION_POLL_RANKINGS,
+        cache.location_poll_rankings.YESTERDAY,
         location_cache_index,
         block_index,
-        cache::YESTERDAYS_POLL_ID_BYTE_COUNTS[timezone_id as usize],
+        cache.poll_id_byte_counts.YESTERDAY[timezone_id as usize],
     );
 }
 
@@ -149,26 +142,24 @@ pub fn get_day_b4_yesterdays_location_rankings_by_global_id(
     timezone_id: TimezoneId,
     block_index: u32,
     global_location_id: LocationId,
+    cache: &Cache,
 ) -> Vec<u8> {
-    let current_period_ids: CachePeriodIds =
-        match cache::PER_TIMEZONE__CACHE_PERIOD_IDS.get(timezone_id as usize) {
-            None => {
-                return codes::INVALID_TIMEZONE_ID_RESPONSE.to_vec();
-            }
-            Some(cachePeriodIds) => {
-                *cachePeriodIds
-            }
-        };
+    if timezone_id < 0 || timezone_id >= NUM_TIMEZONES {
+        return codes::INVALID_TIMEZONE_ID_RESPONSE.to_vec();
+    }
+
+    let current_period_ids: CachePeriodIds
+    = cache.per_timezone_cache_period_ids[timezone_id as usize];
 
     return get_location_rankings_by_global_id(
         current_period_ids.day_b4_yesterdays_vc_day_id,
         vc_day_id,
         timezone_id,
-        cache::LOCATION_DAY_B4_YESTERDAYS_INDEX_MAP,
-        cache::DAY_B4_YESTERDAYS_LOCATION_POLL_RANKINGS,
+        cache.location_index_map.DAY_B4_YESTERDAY,
+        cache.location_poll_rankings.DAY_B4_YESTERDAY,
         global_location_id,
         block_index,
-        cache::DAY_B4_YESTERDAYS_POLL_ID_BYTE_COUNTS[timezone_id as usize],
+        cache.poll_id_byte_counts.DAY_B4_YESTERDAY[timezone_id as usize],
     );
 }
 
@@ -177,25 +168,23 @@ pub fn get_day_b4_yesterdays_location_rankings_by_cache_index(
     timezone_id: TimezoneId,
     block_index: u32,
     location_cache_index: LocationCacheIndex,
+    cache: &Cache,
 ) -> Vec<u8> {
-    let current_period_ids: CachePeriodIds =
-        match cache::PER_TIMEZONE__CACHE_PERIOD_IDS.get(timezone_id as usize) {
-            None => {
-                return codes::INVALID_TIMEZONE_ID_RESPONSE.to_vec();
-            }
-            Some(cachePeriodIds) => {
-                *cachePeriodIds
-            }
-        };
+    if timezone_id < 0 || timezone_id >= NUM_TIMEZONES {
+        return codes::INVALID_TIMEZONE_ID_RESPONSE.to_vec();
+    }
+
+    let current_period_ids: CachePeriodIds
+    = cache.per_timezone_cache_period_ids[timezone_id as usize];
 
     return get_location_rankings_by_cache_index(
         current_period_ids.day_b4_yesterdays_vc_day_id,
         vc_day_id,
         timezone_id,
-        cache::DAY_B4_YESTERDAYS_LOCATION_POLL_RANKINGS,
+        cache.location_poll_rankings.DAY_B4_YESTERDAY,
         location_cache_index,
         block_index,
-        cache::DAY_B4_YESTERDAYS_POLL_ID_BYTE_COUNTS[timezone_id as usize],
+        cache.poll_id_byte_counts.DAY_B4_YESTERDAY[timezone_id as usize],
     );
 }
 
@@ -204,26 +193,24 @@ pub fn get_this_weeks_location_rankings_by_global_id(
     timezone_id: TimezoneId,
     block_index: u32,
     global_location_id: LocationId,
+    cache: &Cache,
 ) -> Vec<u8> {
-    let current_period_ids: CachePeriodIds =
-        match cache::PER_TIMEZONE__CACHE_PERIOD_IDS.get(timezone_id as usize) {
-            None => {
-                return codes::INVALID_TIMEZONE_ID_RESPONSE.to_vec();
-            }
-            Some(cachePeriodIds) => {
-                *cachePeriodIds
-            }
-        };
+    if timezone_id < 0 || timezone_id >= NUM_TIMEZONES {
+        return codes::INVALID_TIMEZONE_ID_RESPONSE.to_vec();
+    }
+
+    let current_period_ids: CachePeriodIds
+    = cache.per_timezone_cache_period_ids[timezone_id as usize];
 
     return get_location_rankings_by_global_id(
         current_period_ids.this_weeks_vc_week_id,
         vc_week_id,
         timezone_id,
-        cache::LOCATION_THIS_WEEKS_INDEX_MAP,
-        cache::THIS_WEEKS_LOCATION_POLL_RANKINGS,
+        cache.location_index_map.THIS_WEEK,
+        cache.location_poll_rankings.THIS_WEEK,
         global_location_id,
         block_index,
-        cache::THIS_WEEKS_POLL_ID_BYTE_COUNTS[timezone_id as usize],
+        cache.poll_id_byte_counts.THIS_WEEK[timezone_id as usize],
     );
 }
 
@@ -232,25 +219,23 @@ pub fn get_this_weeks_location_rankings_by_cache_index(
     timezone_id: TimezoneId,
     block_index: u32,
     location_cache_index: LocationCacheIndex,
+    cache: &Cache,
 ) -> Vec<u8> {
-    let current_period_ids: CachePeriodIds =
-        match cache::PER_TIMEZONE__CACHE_PERIOD_IDS.get(timezone_id as usize) {
-            None => {
-                return codes::INVALID_TIMEZONE_ID_RESPONSE.to_vec();
-            }
-            Some(cachePeriodIds) => {
-                *cachePeriodIds
-            }
-        };
+    if timezone_id < 0 || timezone_id >= NUM_TIMEZONES {
+        return codes::INVALID_TIMEZONE_ID_RESPONSE.to_vec();
+    }
+
+    let current_period_ids: CachePeriodIds
+    = cache.per_timezone_cache_period_ids[timezone_id as usize];
 
     return get_location_rankings_by_cache_index(
         current_period_ids.this_weeks_vc_week_id,
         vc_week_id,
         timezone_id,
-        cache::THIS_WEEKS_LOCATION_POLL_RANKINGS,
+        cache.location_poll_rankings.THIS_WEEK,
         location_cache_index,
         block_index,
-        cache::THIS_WEEKS_POLL_ID_BYTE_COUNTS[timezone_id as usize],
+        cache.poll_id_byte_counts.THIS_WEEK[timezone_id as usize],
     );
 }
 
@@ -259,26 +244,24 @@ pub fn get_last_weeks_location_rankings_by_global_id(
     timezone_id: TimezoneId,
     block_index: u32,
     global_location_id: LocationId,
+    cache: &Cache,
 ) -> Vec<u8> {
-    let current_period_ids: CachePeriodIds =
-        match cache::PER_TIMEZONE__CACHE_PERIOD_IDS.get(timezone_id as usize) {
-            None => {
-                return codes::INVALID_TIMEZONE_ID_RESPONSE.to_vec();
-            }
-            Some(cachePeriodIds) => {
-                *cachePeriodIds
-            }
-        };
+    if timezone_id < 0 || timezone_id >= NUM_TIMEZONES {
+        return codes::INVALID_TIMEZONE_ID_RESPONSE.to_vec();
+    }
+
+    let current_period_ids: CachePeriodIds
+    = cache.per_timezone_cache_period_ids[timezone_id as usize];
 
     return get_location_rankings_by_global_id(
         current_period_ids.last_weeks_vc_week_id,
         vc_week_id,
         timezone_id,
-        cache::LOCATION_LAST_WEEKS_INDEX_MAP,
-        cache::LAST_WEEKS_LOCATION_POLL_RANKINGS,
+        cache.location_index_map.LAST_WEEK,
+        cache.location_poll_rankings.LAST_WEEK,
         global_location_id,
         block_index,
-        cache::LAST_WEEKS_POLL_ID_BYTE_COUNTS[timezone_id as usize],
+        cache.poll_id_byte_counts.LAST_WEEK[timezone_id as usize],
     );
 }
 
@@ -287,25 +270,23 @@ pub fn get_last_weeks_location_rankings_by_cache_index(
     timezone_id: TimezoneId,
     block_index: u32,
     location_cache_index: LocationCacheIndex,
+    cache: &Cache,
 ) -> Vec<u8> {
-    let current_period_ids: CachePeriodIds =
-        match cache::PER_TIMEZONE__CACHE_PERIOD_IDS.get(timezone_id as usize) {
-            None => {
-                return codes::INVALID_TIMEZONE_ID_RESPONSE.to_vec();
-            }
-            Some(cachePeriodIds) => {
-                *cachePeriodIds
-            }
-        };
+    if timezone_id < 0 || timezone_id >= NUM_TIMEZONES {
+        return codes::INVALID_TIMEZONE_ID_RESPONSE.to_vec();
+    }
+
+    let current_period_ids: CachePeriodIds
+    = cache.per_timezone_cache_period_ids[timezone_id as usize];
 
     return get_location_rankings_by_cache_index(
         current_period_ids.last_weeks_vc_week_id,
         vc_week_id,
         timezone_id,
-        cache::LAST_WEEKS_LOCATION_POLL_RANKINGS,
+        cache.location_poll_rankings.LAST_WEEK,
         location_cache_index,
         block_index,
-        cache::LAST_WEEKS_LOCATION_POLL_RANKINGS[timezone_id as usize][location_cache_index as usize].max_poll_number_bytes,
+        cache.poll_id_byte_counts.LAST_WEEK[timezone_id as usize],
     );
 }
 
@@ -314,26 +295,24 @@ pub fn get_this_months_location_rankings_by_global_id(
     timezone_id: TimezoneId,
     block_index: u32,
     global_location_id: LocationId,
+    cache: &Cache,
 ) -> Vec<u8> {
-    let current_period_ids: CachePeriodIds =
-        match cache::PER_TIMEZONE__CACHE_PERIOD_IDS.get(timezone_id as usize) {
-            None => {
-                return codes::INVALID_TIMEZONE_ID_RESPONSE.to_vec();
-            }
-            Some(cachePeriodIds) => {
-                *cachePeriodIds
-            }
-        };
+    if timezone_id < 0 || timezone_id >= NUM_TIMEZONES {
+        return codes::INVALID_TIMEZONE_ID_RESPONSE.to_vec();
+    }
+
+    let current_period_ids: CachePeriodIds
+    = cache.per_timezone_cache_period_ids[timezone_id as usize];
 
     return get_location_rankings_by_global_id(
         current_period_ids.this_months_vc_month_id,
         vc_month_id,
         timezone_id,
-        cache::LOCATION_THIS_MONTHS_INDEX_MAP,
-        cache::THIS_MONTHS_LOCATION_POLL_RANKINGS,
+        cache.location_index_map.THIS_MONTH,
+        cache.location_poll_rankings.THIS_MONTH,
         global_location_id,
         block_index,
-        cache::THIS_MONTHS_POLL_ID_BYTE_COUNTS[timezone_id as usize],
+        cache.poll_id_byte_counts.THIS_MONTH[timezone_id as usize],
     );
 }
 
@@ -342,25 +321,23 @@ pub fn get_this_months_location_rankings_by_cache_index(
     timezone_id: TimezoneId,
     block_index: u32,
     location_cache_index: LocationCacheIndex,
+    cache: &Cache,
 ) -> Vec<u8> {
-    let current_period_ids: CachePeriodIds =
-        match cache::PER_TIMEZONE__CACHE_PERIOD_IDS.get(timezone_id as usize) {
-            None => {
-                return codes::INVALID_TIMEZONE_ID_RESPONSE.to_vec();
-            }
-            Some(cachePeriodIds) => {
-                *cachePeriodIds
-            }
-        };
+    if timezone_id < 0 || timezone_id >= NUM_TIMEZONES {
+        return codes::INVALID_TIMEZONE_ID_RESPONSE.to_vec();
+    }
+
+    let current_period_ids: CachePeriodIds
+    = cache.per_timezone_cache_period_ids[timezone_id as usize];
 
     return get_location_rankings_by_cache_index(
         current_period_ids.this_months_vc_month_id,
         vc_month_id,
         timezone_id,
-        cache::THIS_MONTHS_LOCATION_POLL_RANKINGS,
+        cache.location_poll_rankings.THIS_MONTH,
         location_cache_index,
         block_index,
-        cache::THIS_MONTHS_POLL_ID_BYTE_COUNTS[timezone_id as usize],
+        cache.poll_id_byte_counts.THIS_MONTH[timezone_id as usize],
     );
 }
 
@@ -369,26 +346,24 @@ pub fn get_last_months_location_rankings_by_global_id(
     timezone_id: TimezoneId,
     block_index: u32,
     global_location_id: LocationId,
+    cache: &Cache,
 ) -> Vec<u8> {
-    let current_period_ids: CachePeriodIds =
-        match cache::PER_TIMEZONE__CACHE_PERIOD_IDS.get(timezone_id as usize) {
-            None => {
-                return codes::INVALID_TIMEZONE_ID_RESPONSE.to_vec();
-            }
-            Some(cachePeriodIds) => {
-                *cachePeriodIds
-            }
-        };
+    if timezone_id < 0 || timezone_id >= NUM_TIMEZONES {
+        return codes::INVALID_TIMEZONE_ID_RESPONSE.to_vec();
+    }
+
+    let current_period_ids: CachePeriodIds
+    = cache.per_timezone_cache_period_ids[timezone_id as usize];
 
     return get_location_rankings_by_global_id(
         current_period_ids.last_months_vc_month_id,
         vc_month_id,
         timezone_id,
-        cache::LOCATION_LAST_MONTHS_INDEX_MAP,
-        cache::LAST_MONTHS_LOCATION_POLL_RANKINGS,
+        cache.location_index_map.LAST_MONTH,
+        cache.location_poll_rankings.LAST_MONTH,
         global_location_id,
         block_index,
-        cache::LAST_MONTHS_POLL_ID_BYTE_COUNTS[timezone_id as usize],
+        cache.poll_id_byte_counts.LAST_MONTH[timezone_id as usize],
     );
 }
 
@@ -397,25 +372,23 @@ pub fn get_last_months_location_rankings_by_cache_index(
     timezone_id: TimezoneId,
     block_index: u32,
     location_cache_index: LocationCacheIndex,
+    cache: &Cache,
 ) -> Vec<u8> {
-    let current_period_ids: CachePeriodIds =
-        match cache::PER_TIMEZONE__CACHE_PERIOD_IDS.get(timezone_id as usize) {
-            None => {
-                return codes::INVALID_TIMEZONE_ID_RESPONSE.to_vec();
-            }
-            Some(cachePeriodIds) => {
-                *cachePeriodIds
-            }
-        };
+    if timezone_id < 0 || timezone_id >= NUM_TIMEZONES {
+        return codes::INVALID_TIMEZONE_ID_RESPONSE.to_vec();
+    }
+
+    let current_period_ids: CachePeriodIds
+    = cache.per_timezone_cache_period_ids[timezone_id as usize];
 
     return get_location_rankings_by_cache_index(
         current_period_ids.last_months_vc_month_id,
         vc_month_id,
         timezone_id,
-        cache::LAST_MONTHS_LOCATION_POLL_RANKINGS,
+        cache.location_poll_rankings.LAST_MONTH,
         location_cache_index,
         block_index,
-        cache::LAST_MONTHS_POLL_ID_BYTE_COUNTS[timezone_id as usize],
+        cache.poll_id_byte_counts.LAST_MONTH[timezone_id as usize],
     );
 }
 
