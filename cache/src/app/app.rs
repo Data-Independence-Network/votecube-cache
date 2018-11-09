@@ -42,19 +42,21 @@ use super::super::logic::serve::recent::location_category::get_next_months_locat
 use super::super::logic::serve::recent::location_category::get_next_weeks_location_category_polls;
 use super::super::logic::serve::recent::location_category::get_tomorrows_location_category_polls;
 
+use super::super::cache::cache::Cache;
 
-pub struct CompleteCacheApp<T: 'static + Send> {
 
-    cache: T,
+pub struct CompleteCacheApp {
+
+    cache: Cache,
 
 }
 
 
-impl<T: Send> CompleteCacheApp<T> {
+impl CompleteCacheApp {
 
     pub fn new(
-        cache: T
-    ) -> CompleteCacheApp<T> {
+        cache: Cache
+    ) -> CompleteCacheApp {
         CompleteCacheApp {
             cache
         }
@@ -63,7 +65,7 @@ impl<T: Send> CompleteCacheApp<T> {
 }
 
 
-impl<T: Send> App<T> for CompleteCacheApp<T> {
+impl App for CompleteCacheApp {
 
     fn get_response(
         &self,
@@ -96,7 +98,7 @@ impl<T: Send> App<T> for CompleteCacheApp<T> {
                     let (vc_month_id, block_index, category_cache_index)
                     = read_three_ints(request_body);
                     category::get_this_months_category_rankings_by_cache_index(
-                        vc_month_id, block_index, category_cache_index)
+                        vc_month_id, block_index, category_cache_index, &self.cache)
                 }
             }
             serve::URL_THIS_WEEKS_CATEGORY_POLL_RANKINGS_BY_GLOBAL_ID => {
@@ -106,7 +108,7 @@ impl<T: Send> App<T> for CompleteCacheApp<T> {
                     let (vc_week_id, block_index, global_category_id)
                     = read_two_ints_and_long(request_body);
                     category::get_this_weeks_category_rankings_by_global_id(
-                        vc_week_id, block_index, global_category_id)
+                        vc_week_id, block_index, global_category_id, &self.cache)
                 }
             }
             serve::URL_THIS_WEEKS_CATEGORY_POLL_RANKINGS_BY_CACHE_INDEX => {
@@ -116,7 +118,7 @@ impl<T: Send> App<T> for CompleteCacheApp<T> {
                     let (vc_week_id, block_index, category_cache_index)
                     = read_three_ints(request_body);
                     category::get_this_weeks_category_rankings_by_cache_index(
-                        vc_week_id, block_index, category_cache_index)
+                        vc_week_id, block_index, category_cache_index, &self.cache)
                 }
             }
             serve::URL_TODAYS_CATEGORY_POLL_RANKINGS_BY_GLOBAL_ID => {
@@ -126,7 +128,7 @@ impl<T: Send> App<T> for CompleteCacheApp<T> {
                     let (vc_day_id, block_index, global_category_id)
                     = read_two_ints_and_long(request_body);
                     category::get_todays_category_rankings_by_global_id(
-                        vc_day_id, block_index, global_category_id)
+                        vc_day_id, block_index, global_category_id, &self.cache)
                 }
             }
             serve::URL_TODAYS_CATEGORY_POLL_RANKINGS_BY_CACHE_INDEX => {
@@ -136,7 +138,7 @@ impl<T: Send> App<T> for CompleteCacheApp<T> {
                     let (vc_day_id, block_index, category_cache_index)
                     = read_three_ints(request_body);
                     category::get_todays_category_rankings_by_cache_index(
-                        vc_day_id, block_index, category_cache_index)
+                        vc_day_id, block_index, category_cache_index, &self.cache)
                 }
             }
             serve::URL_LAST_MONTHS_CATEGORY_POLL_RANKINGS_BY_GLOBAL_ID => {
@@ -146,7 +148,7 @@ impl<T: Send> App<T> for CompleteCacheApp<T> {
                     let (vc_month_id, block_index, global_category_id)
                     = read_two_ints_and_long(request_body);
                     category::get_last_months_category_rankings_by_global_id(
-                        vc_month_id, block_index, global_category_id)
+                        vc_month_id, block_index, global_category_id, &self.cache)
                 }
             }
             serve::URL_LAST_MONTHS_CATEGORY_POLL_RANKINGS_BY_CACHE_INDEX => {
@@ -156,7 +158,7 @@ impl<T: Send> App<T> for CompleteCacheApp<T> {
                     let (vc_month_id, block_index, category_cache_index)
                     = read_three_ints(request_body);
                     category::get_last_months_category_rankings_by_cache_index(
-                        vc_month_id, block_index, category_cache_index)
+                        vc_month_id, block_index, category_cache_index, &self.cache)
                 }
             }
             serve::URL_LAST_WEEKS_CATEGORY_POLL_RANKINGS_BY_GLOBAL_ID => {
@@ -166,7 +168,7 @@ impl<T: Send> App<T> for CompleteCacheApp<T> {
                     let (vc_week_id, block_index, global_category_id)
                     = read_two_ints_and_long(request_body);
                     category::get_last_weeks_category_rankings_by_global_id(
-                        vc_week_id, block_index, global_category_id)
+                        vc_week_id, block_index, global_category_id, &self.cache)
                 }
             }
             serve::URL_LAST_WEEKS_CATEGORY_POLL_RANKINGS_BY_CACHE_INDEX => {
@@ -176,7 +178,7 @@ impl<T: Send> App<T> for CompleteCacheApp<T> {
                     let (vc_week_id, block_index, category_cache_index)
                     = read_three_ints(request_body);
                     category::get_last_weeks_category_rankings_by_cache_index(
-                        vc_week_id, block_index, category_cache_index)
+                        vc_week_id, block_index, category_cache_index, &self.cache)
                 }
             }
             serve::URL_YESTERDAYS_CATEGORY_POLL_RANKINGS_BY_GLOBAL_ID => {
@@ -186,7 +188,7 @@ impl<T: Send> App<T> for CompleteCacheApp<T> {
                     let (vc_day_id, block_index, global_category_id)
                     = read_two_ints_and_long(request_body);
                     category::get_yesterdays_category_rankings_by_global_id(
-                        vc_day_id, block_index, global_category_id)
+                        vc_day_id, block_index, global_category_id, &self.cache)
                 }
             }
             serve::URL_YESTERDAYS_CATEGORY_POLL_RANKINGS_BY_CACHE_INDEX => {
@@ -196,7 +198,7 @@ impl<T: Send> App<T> for CompleteCacheApp<T> {
                     let (vc_day_id, block_index, category_cache_index)
                     = read_three_ints(request_body);
                     category::get_yesterdays_category_rankings_by_cache_index(
-                        vc_day_id, block_index, category_cache_index)
+                        vc_day_id, block_index, category_cache_index, &self.cache)
                 }
             }
             serve::URL_DAY_B4_YESTERDAY_CATEGORY_POLL_RANKINGS_BY_GLOBAL_ID => {
@@ -206,7 +208,7 @@ impl<T: Send> App<T> for CompleteCacheApp<T> {
                     let (vc_day_id, block_index, global_category_id)
                     = read_two_ints_and_long(request_body);
                     category::get_day_b4_yesterdays_category_rankings_by_global_id(
-                        vc_day_id, block_index, global_category_id)
+                        vc_day_id, block_index, global_category_id, &self.cache)
                 }
             }
             serve::URL_DAY_B4_YESTERDAY_CATEGORY_POLL_RANKINGS_BY_CACHE_INDEX => {
@@ -216,7 +218,7 @@ impl<T: Send> App<T> for CompleteCacheApp<T> {
                     let (vc_day_id, block_index, category_cache_index)
                     = read_three_ints(request_body);
                     category::get_day_b4_yesterdays_category_rankings_by_cache_index(
-                        vc_day_id, block_index, category_cache_index)
+                        vc_day_id, block_index, category_cache_index, &self.cache)
                 }
             }
 
@@ -229,7 +231,7 @@ impl<T: Send> App<T> for CompleteCacheApp<T> {
                     let (vc_month_id, timezone_id, block_index, global_location_id)
                     = read_three_ints_and_long(request_body);
                     location::get_this_months_location_rankings_by_global_id(
-                        vc_month_id, timezone_id, block_index, global_location_id)
+                        vc_month_id, timezone_id, block_index, global_location_id, &self.cache)
                 }
             }
             serve::URL_THIS_MONTHS_LOCATION_POLL_RANKINGS_BY_CACHE_INDEX => {
@@ -239,7 +241,7 @@ impl<T: Send> App<T> for CompleteCacheApp<T> {
                     let (vc_month_id, timezone_id, block_index, location_cache_index)
                     = read_four_ints(request_body);
                     location::get_this_months_location_rankings_by_cache_index(
-                        vc_month_id, timezone_id, block_index, location_cache_index)
+                        vc_month_id, timezone_id, block_index, location_cache_index, &self.cache)
                 }
             }
             serve::URL_THIS_WEEKS_LOCATION_POLL_RANKINGS_BY_GLOBAL_ID => {
@@ -249,7 +251,7 @@ impl<T: Send> App<T> for CompleteCacheApp<T> {
                     let (vc_week_id, timezone_id, block_index, global_location_id)
                     = read_three_ints_and_long(request_body);
                     location::get_this_weeks_location_rankings_by_global_id(
-                        vc_week_id, timezone_id, block_index, global_location_id)
+                        vc_week_id, timezone_id, block_index, global_location_id, &self.cache)
                 }
             }
             serve::URL_THIS_WEEKS_LOCATION_POLL_RANKINGS_BY_CACHE_INDEX => {
@@ -259,7 +261,7 @@ impl<T: Send> App<T> for CompleteCacheApp<T> {
                     let (vc_week_id, timezone_id, block_index, location_cache_index)
                     = read_four_ints(request_body);
                     location::get_this_weeks_location_rankings_by_cache_index(
-                        vc_week_id, timezone_id, block_index, location_cache_index)
+                        vc_week_id, timezone_id, block_index, location_cache_index, &self.cache)
                 }
             }
             serve::URL_TODAYS_LOCATION_POLL_RANKINGS_BY_GLOBAL_ID => {
@@ -269,7 +271,7 @@ impl<T: Send> App<T> for CompleteCacheApp<T> {
                     let (vc_day_id, timezone_id, block_index, global_location_id)
                     = read_three_ints_and_long(request_body);
                     location::get_todays_location_rankings_by_global_id(
-                        vc_day_id, timezone_id, block_index, global_location_id)
+                        vc_day_id, timezone_id, block_index, global_location_id, &self.cache)
                 }
             }
             serve::URL_TODAYS_LOCATION_POLL_RANKINGS_BY_CACHE_INDEX => {
@@ -279,7 +281,7 @@ impl<T: Send> App<T> for CompleteCacheApp<T> {
                     let (vc_day_id, timezone_id, block_index, location_cache_index)
                     = read_four_ints(request_body);
                     location::get_todays_location_rankings_by_cache_index(
-                        vc_day_id, timezone_id, block_index, location_cache_index)
+                        vc_day_id, timezone_id, block_index, location_cache_index, &self.cache)
                 }
             }
             serve::URL_LAST_MONTHS_LOCATION_POLL_RANKINGS_BY_GLOBAL_ID => {
@@ -289,7 +291,7 @@ impl<T: Send> App<T> for CompleteCacheApp<T> {
                     let (vc_month_id, timezone_id, block_index, global_location_id)
                     = read_three_ints_and_long(request_body);
                     location::get_last_months_location_rankings_by_global_id(
-                        vc_month_id, timezone_id, block_index, global_location_id)
+                        vc_month_id, timezone_id, block_index, global_location_id, &self.cache)
                 }
             }
             serve::URL_LAST_MONTHS_LOCATION_POLL_RANKINGS_BY_CACHE_INDEX => {
@@ -299,7 +301,7 @@ impl<T: Send> App<T> for CompleteCacheApp<T> {
                     let (vc_month_id, timezone_id, block_index, location_cache_index)
                     = read_four_ints(request_body);
                     location::get_last_months_location_rankings_by_cache_index(
-                        vc_month_id, timezone_id, block_index, location_cache_index)
+                        vc_month_id, timezone_id, block_index, location_cache_index, &self.cache)
                 }
             }
             serve::URL_LAST_WEEKS_LOCATION_POLL_RANKINGS_BY_GLOBAL_ID => {
@@ -309,7 +311,7 @@ impl<T: Send> App<T> for CompleteCacheApp<T> {
                     let (vc_week_id, timezone_id, block_index, global_location_id)
                     = read_three_ints_and_long(request_body);
                     location::get_last_weeks_location_rankings_by_global_id(
-                        vc_week_id, timezone_id, block_index, global_location_id)
+                        vc_week_id, timezone_id, block_index, global_location_id, &self.cache)
                 }
             }
             serve::URL_LAST_WEEKS_LOCATION_POLL_RANKINGS_BY_CACHE_INDEX => {
@@ -319,7 +321,7 @@ impl<T: Send> App<T> for CompleteCacheApp<T> {
                     let (vc_week_id, timezone_id, block_index, location_cache_index)
                     = read_four_ints(request_body);
                     location::get_last_weeks_location_rankings_by_cache_index(
-                        vc_week_id, timezone_id, block_index, location_cache_index)
+                        vc_week_id, timezone_id, block_index, location_cache_index, &self.cache)
                 }
             }
             serve::URL_YESTERDAYS_LOCATION_POLL_RANKINGS_BY_GLOBAL_ID => {
@@ -329,7 +331,7 @@ impl<T: Send> App<T> for CompleteCacheApp<T> {
                     let (vc_day_id, timezone_id, block_index, global_location_id)
                     = read_three_ints_and_long(request_body);
                     location::get_yesterdays_location_rankings_by_global_id(
-                        vc_day_id, timezone_id, block_index, global_location_id)
+                        vc_day_id, timezone_id, block_index, global_location_id, &self.cache)
                 }
             }
             serve::URL_YESTERDAYS_LOCATION_POLL_RANKINGS_BY_CACHE_INDEX => {
@@ -339,7 +341,7 @@ impl<T: Send> App<T> for CompleteCacheApp<T> {
                     let (vc_day_id, timezone_id, block_index, location_cache_index)
                     = read_four_ints(request_body);
                     location::get_yesterdays_location_rankings_by_cache_index(
-                        vc_day_id, timezone_id, block_index, location_cache_index)
+                        vc_day_id, timezone_id, block_index, location_cache_index, &self.cache)
                 }
             }
             serve::URL_DAY_B4_YESTERDAY_LOCATION_POLL_RANKINGS_BY_GLOBAL_ID => {
@@ -349,7 +351,7 @@ impl<T: Send> App<T> for CompleteCacheApp<T> {
                     let (vc_day_id, timezone_id, block_index, global_location_id)
                     = read_three_ints_and_long(request_body);
                     location::get_day_b4_yesterdays_location_rankings_by_global_id(
-                        vc_day_id, timezone_id, block_index, global_location_id)
+                        vc_day_id, timezone_id, block_index, global_location_id, &self.cache)
                 }
             }
             serve::URL_DAY_B4_YESTERDAY_LOCATION_POLL_RANKINGS_BY_CACHE_INDEX => {
@@ -359,7 +361,7 @@ impl<T: Send> App<T> for CompleteCacheApp<T> {
                     let (vc_day_id, timezone_id, block_index, location_cache_index)
                     = read_four_ints(request_body);
                     location::get_day_b4_yesterdays_location_rankings_by_cache_index(
-                        vc_day_id, timezone_id, block_index, location_cache_index)
+                        vc_day_id, timezone_id, block_index, location_cache_index, &self.cache)
                 }
             }
 
@@ -372,7 +374,8 @@ impl<T: Send> App<T> for CompleteCacheApp<T> {
                     let (vc_day_id, timezone_id, block_index, global_location_id, global_category_id)
                     = read_three_ints_and_two_longs(request_body);
                     location_category::get_this_months_location_category_rankings_by_global_ids(
-                        vc_day_id, timezone_id, block_index, global_location_id, global_category_id)
+                        vc_day_id, timezone_id, block_index,
+                        global_location_id, global_category_id, &self.cache)
                 }
             }
             serve::URL_THIS_MONTHS_LOCATION_CATEGORY_POLL_RANKINGS_BY_LOCATION_CACHE_INDEX_AND_GLOBAL_CATEGORY_ID => {
@@ -382,7 +385,8 @@ impl<T: Send> App<T> for CompleteCacheApp<T> {
                     let (vc_day_id, timezone_id, block_index, location_cache_index, global_category_id)
                     = read_four_ints_and_long(request_body);
                     location_category::get_this_months_location_category_rankings_by_location_cache_index_and_global_category_ids(
-                        vc_day_id, timezone_id, block_index, location_cache_index, global_category_id)
+                        vc_day_id, timezone_id, block_index,
+                        location_cache_index, global_category_id, &self.cache)
                 }
             }
             serve::URL_THIS_MONTHS_LOCATION_CATEGORY_POLL_RANKINGS_BY_CACHE_INDEXES => {
@@ -392,7 +396,8 @@ impl<T: Send> App<T> for CompleteCacheApp<T> {
                     let (vc_day_id, timezone_id, block_index, location_cache_index, location_category_cache_index)
                     = read_five_ints(request_body);
                     location_category::get_this_months_location_category_rankings_by_cache_indexes(
-                        vc_day_id, timezone_id, block_index, location_cache_index, location_category_cache_index)
+                        vc_day_id, timezone_id, block_index, location_cache_index,
+                        location_category_cache_index, &self.cache)
                 }
             }
             serve::URL_THIS_WEEKS_LOCATION_CATEGORY_POLL_RANKINGS_BY_GLOBAL_IDS => {
@@ -402,7 +407,8 @@ impl<T: Send> App<T> for CompleteCacheApp<T> {
                     let (vc_day_id, timezone_id, block_index, global_location_id, global_category_id)
                     = read_three_ints_and_two_longs(request_body);
                     location_category::get_this_weeks_location_category_rankings_by_global_ids(
-                        vc_day_id, timezone_id, block_index, global_location_id, global_category_id)
+                        vc_day_id, timezone_id, block_index, global_location_id,
+                        global_category_id, &self.cache)
                 }
             }
             serve::URL_THIS_WEEKS_LOCATION_CATEGORY_POLL_RANKINGS_BY_LOCATION_CACHE_INDEX_AND_GLOBAL_CATEGORY_ID => {
@@ -412,7 +418,8 @@ impl<T: Send> App<T> for CompleteCacheApp<T> {
                     let (vc_day_id, timezone_id, block_index, location_cache_index, global_category_id)
                     = read_four_ints_and_long(request_body);
                     location_category::get_this_weeks_location_category_rankings_by_location_cache_index_and_global_category_ids(
-                        vc_day_id, timezone_id, block_index, location_cache_index, global_category_id)
+                        vc_day_id, timezone_id, block_index, location_cache_index,
+                        global_category_id, &self.cache)
                 }
             }
             serve::URL_THIS_WEEKS_LOCATION_CATEGORY_POLL_RANKINGS_BY_CACHE_INDEXES => {
@@ -422,7 +429,8 @@ impl<T: Send> App<T> for CompleteCacheApp<T> {
                     let (vc_day_id, timezone_id, block_index, location_cache_index, location_category_cache_index)
                     = read_five_ints(request_body);
                     location_category::get_this_weeks_location_category_rankings_by_cache_indexes(
-                        vc_day_id, timezone_id, block_index, location_cache_index, location_category_cache_index)
+                        vc_day_id, timezone_id, block_index, location_cache_index,
+                        location_category_cache_index, &self.cache)
                 }
             }
             serve::URL_TODAYS_LOCATION_CATEGORY_POLL_RANKINGS_BY_GLOBAL_IDS => {
@@ -432,7 +440,8 @@ impl<T: Send> App<T> for CompleteCacheApp<T> {
                     let (vc_day_id, timezone_id, block_index, global_location_id, global_category_id)
                     = read_three_ints_and_two_longs(request_body);
                     location_category::get_todays_location_category_rankings_by_global_ids(
-                        vc_day_id, timezone_id, block_index, global_location_id, global_category_id)
+                        vc_day_id, timezone_id, block_index, global_location_id, global_category_id,
+                        &self.cache)
                 }
             }
             serve::URL_TODAYS_LOCATION_CATEGORY_POLL_RANKINGS_BY_LOCATION_CACHE_INDEX_AND_GLOBAL_CATEGORY_ID => {
@@ -442,7 +451,8 @@ impl<T: Send> App<T> for CompleteCacheApp<T> {
                     let (vc_day_id, timezone_id, block_index, location_cache_index, global_category_id)
                     = read_four_ints_and_long(request_body);
                     location_category::get_todays_location_category_rankings_by_location_cache_index_and_global_category_ids(
-                        vc_day_id, timezone_id, block_index, location_cache_index, global_category_id)
+                        vc_day_id, timezone_id, block_index, location_cache_index,
+                        global_category_id, &self.cache)
                 }
             }
             serve::URL_TODAYS_LOCATION_CATEGORY_POLL_RANKINGS_BY_CACHE_INDEXES => {
@@ -452,7 +462,8 @@ impl<T: Send> App<T> for CompleteCacheApp<T> {
                     let (vc_day_id, timezone_id, block_index, location_cache_index, location_category_cache_index)
                     = read_five_ints(request_body);
                     location_category::get_todays_location_category_rankings_by_cache_indexes(
-                        vc_day_id, timezone_id, block_index, location_cache_index, location_category_cache_index)
+                        vc_day_id, timezone_id, block_index, location_cache_index,
+                        location_category_cache_index, &self.cache)
                 }
             }
             serve::URL_LAST_MONTHS_LOCATION_CATEGORY_POLL_RANKINGS_BY_GLOBAL_IDS => {
@@ -462,7 +473,8 @@ impl<T: Send> App<T> for CompleteCacheApp<T> {
                     let (vc_day_id, timezone_id, block_index, global_location_id, global_category_id)
                     = read_three_ints_and_two_longs(request_body);
                     location_category::get_last_months_location_category_rankings_by_global_ids(
-                        vc_day_id, timezone_id, block_index, global_location_id, global_category_id)
+                        vc_day_id, timezone_id, block_index, global_location_id,
+                        global_category_id, &self.cache)
                 }
             }
             serve::URL_LAST_MONTHS_LOCATION_CATEGORY_POLL_RANKINGS_BY_LOCATION_CACHE_INDEX_AND_GLOBAL_CATEGORY_ID => {
@@ -472,7 +484,8 @@ impl<T: Send> App<T> for CompleteCacheApp<T> {
                     let (vc_day_id, timezone_id, block_index, location_cache_index, global_category_id)
                     = read_four_ints_and_long(request_body);
                     location_category::get_last_months_location_category_rankings_by_location_cache_index_and_global_category_ids(
-                        vc_day_id, timezone_id, block_index, location_cache_index, global_category_id)
+                        vc_day_id, timezone_id, block_index, location_cache_index,
+                        global_category_id, &self.cache)
                 }
             }
             serve::URL_LAST_MONTHS_LOCATION_CATEGORY_POLL_RANKINGS_BY_CACHE_INDEXES => {
@@ -482,7 +495,8 @@ impl<T: Send> App<T> for CompleteCacheApp<T> {
                     let (vc_day_id, timezone_id, block_index, location_cache_index, location_category_cache_index)
                     = read_five_ints(request_body);
                     location_category::get_last_months_location_category_rankings_by_cache_indexes(
-                        vc_day_id, timezone_id, block_index, location_cache_index, location_category_cache_index)
+                        vc_day_id, timezone_id, block_index, location_cache_index,
+                        location_category_cache_index, &self.cache)
                 }
             }
             serve::URL_LAST_WEEKS_LOCATION_CATEGORY_POLL_RANKINGS_BY_GLOBAL_IDS => {
@@ -492,7 +506,8 @@ impl<T: Send> App<T> for CompleteCacheApp<T> {
                     let (vc_day_id, timezone_id, block_index, global_location_id, global_category_id)
                     = read_three_ints_and_two_longs(request_body);
                     location_category::get_last_weeks_location_category_rankings_by_global_ids(
-                        vc_day_id, timezone_id, block_index, global_location_id, global_category_id)
+                        vc_day_id, timezone_id, block_index, global_location_id,
+                        global_category_id, &self.cache)
                 }
             }
             serve::URL_LAST_WEEKS_LOCATION_CATEGORY_POLL_RANKINGS_BY_LOCATION_CACHE_INDEX_AND_GLOBAL_CATEGORY_ID => {
@@ -502,7 +517,8 @@ impl<T: Send> App<T> for CompleteCacheApp<T> {
                     let (vc_day_id, timezone_id, block_index, location_cache_index, global_category_id)
                     = read_four_ints_and_long(request_body);
                     location_category::get_last_weeks_location_category_rankings_by_location_cache_index_and_global_category_ids(
-                        vc_day_id, timezone_id, block_index, location_cache_index, global_category_id)
+                        vc_day_id, timezone_id, block_index, location_cache_index,
+                        global_category_id, &self.cache)
                 }
             }
             serve::URL_LAST_WEEKS_LOCATION_CATEGORY_POLL_RANKINGS_BY_CACHE_INDEXES => {
@@ -512,7 +528,8 @@ impl<T: Send> App<T> for CompleteCacheApp<T> {
                     let (vc_day_id, timezone_id, block_index, location_cache_index, location_category_cache_index)
                     = read_five_ints(request_body);
                     location_category::get_last_weeks_location_category_rankings_by_cache_indexes(
-                        vc_day_id, timezone_id, block_index, location_cache_index, location_category_cache_index)
+                        vc_day_id, timezone_id, block_index, location_cache_index,
+                        location_category_cache_index, &self.cache)
                 }
             }
             serve::URL_YESTERDAYS_LOCATION_CATEGORY_POLL_RANKINGS_BY_GLOBAL_IDS => {
@@ -522,7 +539,8 @@ impl<T: Send> App<T> for CompleteCacheApp<T> {
                     let (vc_day_id, timezone_id, block_index, global_location_id, global_category_id)
                     = read_three_ints_and_two_longs(request_body);
                     location_category::get_yesterdays_location_category_rankings_by_global_ids(
-                        vc_day_id, timezone_id, block_index, global_location_id, global_category_id)
+                        vc_day_id, timezone_id, block_index, global_location_id, global_category_id,
+                        &self.cache)
                 }
             }
             serve::URL_YESTERDAYS_LOCATION_CATEGORY_POLL_RANKINGS_BY_LOCATION_CACHE_INDEX_AND_GLOBAL_CATEGORY_ID => {
@@ -532,7 +550,8 @@ impl<T: Send> App<T> for CompleteCacheApp<T> {
                     let (vc_day_id, timezone_id, block_index, location_cache_index, global_category_id)
                     = read_four_ints_and_long(request_body);
                     location_category::get_yesterdays_location_category_rankings_by_location_cache_index_and_global_category_ids(
-                        vc_day_id, timezone_id, block_index, location_cache_index, global_category_id)
+                        vc_day_id, timezone_id, block_index, location_cache_index,
+                        global_category_id, &self.cache)
                 }
             }
             serve::URL_YESTERDAYS_LOCATION_CATEGORY_POLL_RANKINGS_BY_CACHE_INDEXES => {
@@ -542,7 +561,8 @@ impl<T: Send> App<T> for CompleteCacheApp<T> {
                     let (vc_day_id, timezone_id, block_index, location_cache_index, location_category_cache_index)
                     = read_five_ints(request_body);
                     location_category::get_yesterdays_location_category_rankings_by_cache_indexes(
-                        vc_day_id, timezone_id, block_index, location_cache_index, location_category_cache_index)
+                        vc_day_id, timezone_id, block_index, location_cache_index,
+                        location_category_cache_index, &self.cache)
                 }
             }
             serve::URL_DAY_B4_YESTERDAY_LOCATION_YESTERDAY_CATEGORY_POLL_RANKINGS_BY_GLOBAL_IDS => {
@@ -552,7 +572,8 @@ impl<T: Send> App<T> for CompleteCacheApp<T> {
                     let (vc_day_id, timezone_id, block_index, global_location_id, global_category_id)
                     = read_three_ints_and_two_longs(request_body);
                     location_category::get_day_b4_yesterdays_location_category_rankings_by_global_ids(
-                        vc_day_id, timezone_id, block_index, global_location_id, global_category_id)
+                        vc_day_id, timezone_id, block_index, global_location_id, global_category_id,
+                        &self.cache)
                 }
             }
             serve::URL_DAY_B4_YESTERDAY_LOCATION_YESTERDAY_CATEGORY_POLL_RANKINGS_BY_LOCATION_CACHE_INDEX_AND_GLOBAL_CATEGORY_ID => {
@@ -562,7 +583,8 @@ impl<T: Send> App<T> for CompleteCacheApp<T> {
                     let (vc_day_id, timezone_id, block_index, location_cache_index, global_category_id)
                     = read_four_ints_and_long(request_body);
                     location_category::get_day_b4_yesterdays_location_category_rankings_by_location_cache_index_and_global_category_ids(
-                        vc_day_id, timezone_id, block_index, location_cache_index, global_category_id)
+                        vc_day_id, timezone_id, block_index, location_cache_index,
+                        global_category_id, &self.cache)
                 }
             }
             serve::URL_DAY_B4_YESTERDAY_LOCATION_YESTERDAY_CATEGORY_POLL_RANKINGS_BY_CACHE_INDEXES => {
@@ -572,7 +594,8 @@ impl<T: Send> App<T> for CompleteCacheApp<T> {
                     let (vc_day_id, timezone_id, block_index, location_cache_index, location_category_cache_index)
                     = read_five_ints(request_body);
                     location_category::get_day_b4_yesterdays_location_category_rankings_by_cache_indexes(
-                        vc_day_id, timezone_id, block_index, location_cache_index, location_category_cache_index)
+                        vc_day_id, timezone_id, block_index, location_cache_index,
+                        location_category_cache_index, &self.cache)
                 }
             }
 
@@ -589,7 +612,9 @@ impl<T: Send> App<T> for CompleteCacheApp<T> {
                     codes::INVALID_DATA_FORMAT_RESPONSE.to_vec()
                 } else {
                     let (month_id, timezone_id, block_number, global_location_id) = read_three_ints_and_long(request_body);
-                    get_next_months_location_polls(month_id, timezone_id, block_number, global_location_id)
+                    get_next_months_location_polls(
+                        month_id, timezone_id, block_number, global_location_id,
+                        &self.cache)
                 }
             }
             serve::URL_NEXT_WEEKS_LOCATION_POLLS => {
@@ -597,7 +622,9 @@ impl<T: Send> App<T> for CompleteCacheApp<T> {
                     codes::INVALID_DATA_FORMAT_RESPONSE.to_vec()
                 } else {
                     let (week_id, timezone_id, block_number, global_location_id) = read_three_ints_and_long(request_body);
-                    get_next_weeks_location_polls(week_id, timezone_id, block_number, global_location_id)
+                    get_next_weeks_location_polls(
+                        week_id, timezone_id, block_number, global_location_id,
+                        &self.cache)
                 }
             }
             serve::URL_TOMORROWS_LOCATION_POLLS => {
@@ -605,7 +632,9 @@ impl<T: Send> App<T> for CompleteCacheApp<T> {
                     codes::INVALID_DATA_FORMAT_RESPONSE.to_vec()
                 } else {
                     let (day_id, timezone_id, block_number, global_location_id) = read_three_ints_and_long(request_body);
-                    get_tomorrows_location_polls(day_id, timezone_id, block_number, global_location_id)
+                    get_tomorrows_location_polls(
+                        day_id, timezone_id, block_number, global_location_id,
+                        &self.cache)
                 }
             }
             serve::URL_DAY_AFTER_TOMORROWS_LOCATION_POLLS => {
@@ -613,7 +642,9 @@ impl<T: Send> App<T> for CompleteCacheApp<T> {
                     codes::INVALID_DATA_FORMAT_RESPONSE.to_vec()
                 } else {
                     let (day_id, timezone_id, block_number, global_location_id) = read_three_ints_and_long(request_body);
-                    get_day_after_tomorrows_location_polls(day_id, timezone_id, block_number, global_location_id)
+                    get_day_after_tomorrows_location_polls(
+                        day_id, timezone_id, block_number, global_location_id,
+                        &self.cache)
                 }
             }
 
@@ -624,7 +655,8 @@ impl<T: Send> App<T> for CompleteCacheApp<T> {
                     codes::INVALID_DATA_FORMAT_RESPONSE.to_vec()
                 } else {
                     let (month_id,block_number, global_category_id) = read_two_ints_and_long(request_body);
-                    get_next_months_category_polls(month_id, block_number, global_category_id)
+                    get_next_months_category_polls(
+                        month_id, block_number, global_category_id, &self.cache)
                 }
             }
             serve::URL_NEXT_WEEKS_CATEGORY_POLLS => {
@@ -632,7 +664,8 @@ impl<T: Send> App<T> for CompleteCacheApp<T> {
                     codes::INVALID_DATA_FORMAT_RESPONSE.to_vec()
                 } else {
                     let (week_id,block_number, global_category_id) = read_two_ints_and_long(request_body);
-                    get_next_weeks_category_polls(week_id, block_number, global_category_id)
+                    get_next_weeks_category_polls(
+                        week_id, block_number, global_category_id, &self.cache)
                 }
             }
             serve::URL_TOMORROWS_CATEGORY_POLLS => {
@@ -640,7 +673,8 @@ impl<T: Send> App<T> for CompleteCacheApp<T> {
                     codes::INVALID_DATA_FORMAT_RESPONSE.to_vec()
                 } else {
                     let (day_id,block_number, global_category_id) = read_two_ints_and_long(request_body);
-                    get_tomorrows_category_polls(day_id, block_number, global_category_id)
+                    get_tomorrows_category_polls(
+                        day_id, block_number, global_category_id, &self.cache)
                 }
             }
             serve::URL_DAY_AFTER_TOMORROWS_CATEGORY_POLLS => {
@@ -648,7 +682,8 @@ impl<T: Send> App<T> for CompleteCacheApp<T> {
                     codes::INVALID_DATA_FORMAT_RESPONSE.to_vec()
                 } else {
                     let (day_id,block_number, global_category_id) = read_two_ints_and_long(request_body);
-                    get_day_after_tomorrows_category_polls(day_id, block_number, global_category_id)
+                    get_day_after_tomorrows_category_polls(
+                        day_id, block_number, global_category_id, &self.cache)
                 }
             }
 
@@ -659,7 +694,9 @@ impl<T: Send> App<T> for CompleteCacheApp<T> {
                     codes::INVALID_DATA_FORMAT_RESPONSE.to_vec()
                 } else {
                     let (month_id, timezone_id, block_number, global_location_id, global_category_id) = read_three_ints_and_two_longs(request_body);
-                    get_next_months_location_category_polls(month_id, timezone_id, block_number, global_location_id, global_category_id)
+                    get_next_months_location_category_polls(
+                        month_id, timezone_id, block_number, global_location_id,
+                        global_category_id, &self.cache)
                 }
             }
             serve::URL_NEXT_WEEKS_LOCATION_CATEGORY_POLLS => {
@@ -667,7 +704,9 @@ impl<T: Send> App<T> for CompleteCacheApp<T> {
                     codes::INVALID_DATA_FORMAT_RESPONSE.to_vec()
                 } else {
                     let (week_id, timezone_id, block_number, global_location_id, global_category_id) = read_three_ints_and_two_longs(request_body);
-                    get_next_weeks_location_category_polls(week_id, timezone_id, block_number, global_location_id, global_category_id)
+                    get_next_weeks_location_category_polls(
+                        week_id, timezone_id, block_number, global_location_id,
+                        global_category_id, &self.cache)
                 }
             }
             serve::URL_TOMORROWS_LOCATION_CATEGORY_POLLS => {
@@ -675,7 +714,9 @@ impl<T: Send> App<T> for CompleteCacheApp<T> {
                     codes::INVALID_DATA_FORMAT_RESPONSE.to_vec()
                 } else {
                     let (day_id, timezone_id, block_number, global_location_id, global_category_id) = read_three_ints_and_two_longs(request_body);
-                    get_tomorrows_location_category_polls(day_id, timezone_id, block_number, global_location_id, global_category_id)
+                    get_tomorrows_location_category_polls(
+                        day_id, timezone_id, block_number, global_location_id,
+                        global_category_id, &self.cache)
                 }
             }
             serve::URL_DAY_AFTER_TOMORROWS_LOCATION_CATEGORY_POLLS => {
@@ -683,7 +724,9 @@ impl<T: Send> App<T> for CompleteCacheApp<T> {
                     codes::INVALID_DATA_FORMAT_RESPONSE.to_vec()
                 } else {
                     let (day_id, timezone_id, block_number, global_location_id, global_category_id) = read_three_ints_and_two_longs(request_body);
-                    get_day_after_tomorrows_location_category_polls(day_id, timezone_id, block_number, global_location_id, global_category_id)
+                    get_day_after_tomorrows_location_category_polls(
+                        day_id, timezone_id, block_number, global_location_id,
+                        global_category_id, &self.cache)
                 }
             }
 
