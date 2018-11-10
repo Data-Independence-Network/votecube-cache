@@ -1,4 +1,5 @@
 use std::collections::HashMap;
+use std::collections::hash_map::Entry;
 
 use int_hash::IntBuildHasher;
 use int_hash::IntHashMap;
@@ -39,12 +40,9 @@ impl PollsByCategory {
         global_category_ids: Vec<CategoryId>,
     ) {
         // TODO: Figure out if the poll is for tomorrow or day after tomorrow
-
         let for_tomorrow = false;
 
-
-
-        let mut poll_map: &mut HashMap<CategoryId, Vec<Vec<PollId>>> = if for_tomorrow {
+        let mut poll_map: &mut IntHashMap<CategoryId, Vec<Vec<PollId>>> = if for_tomorrow {
             &mut self.tomorrow
         } else {
             &mut self.day_after_tomorrow
@@ -52,27 +50,26 @@ impl PollsByCategory {
 
         for category_id in &global_category_ids {
 
-            if !poll_map.contains_key(category_id) {
-                let mut poll_ids = Vec::new();
-                let first_polls_block = Vec::new();
+            let poll_ids = match poll_map.entry(*category_id) {
+                Entry::Occupied(o) => o.into_mut(),
+                Entry::Vacant(v) => v.insert(Vec::new())
+            };
+
+            let num_frames = poll_ids.len();
+
+            if num_frames == 0 {
+                let mut first_polls_block = Vec::new();
+                first_polls_block.push(global_poll_id);
                 poll_ids.push(first_polls_block);
-                poll_map.insert(*category_id, poll_ids);
+            } else {
+                let last_polls_block: &mut Vec<PollId> = poll_ids.get_mut(num_frames - 1).unwrap();
+
+                if last_polls_block.len() == 1024 {
+
+                }
+
+                last_polls_block.push(global_poll_id);
             }
-
-//            let category_poll_ids = match poll_map.get(category_id) {
-//                Some(poll_ids) => {
-//                    poll_ids
-//                },
-//                None => {
-//                    let mut poll_ids = Vec::new();
-//                    let first_polls_block = Vec::new();
-//                    poll_ids.push(first_polls_block);
-//                    poll_map.insert(*category_id, poll_ids);
-//
-//                    &poll_ids
-//                }
-//            };
         }
-
     }
 }
