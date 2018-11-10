@@ -10,6 +10,17 @@ use common::model::types::PollId;
 use common::model::types::MonthId;
 use common::model::types::WeekId;
 
+pub struct DayPollAddition {
+    pub vc_day_id: DayId,
+    pub global_poll_id: PollId,
+    pub global_category_ids: Vec<CategoryId>,
+}
+
+pub struct CategoryPollAddition {
+    pub category_id: CategoryId,
+    pub poll_ids: Vec<PollId>,
+}
+
 /**
  *  Future period prepend data structures for per category access.
  *      By:     categoryId
@@ -24,6 +35,7 @@ pub struct PollsByCategory {
 }
 
 impl PollsByCategory {
+
     pub fn new() -> PollsByCategory {
         PollsByCategory {
             next_month: HashMap::with_capacity_and_hasher(1000000, IntBuildHasher::default()),
@@ -33,11 +45,56 @@ impl PollsByCategory {
         }
     }
 
+    fn add_tomorrow_poll(
+        &mut self,
+        category_poll_additions: Vec<CategoryPollAddition>
+    ) {
+        let mut poll_map: &mut IntHashMap<CategoryId, Vec<Vec<PollId>>> = &mut sef.tomorrow;
+
+        let mut missing_category_additions: Vec<CategoryPollAddition> = Vec::new();
+
+        for category_poll_addition in &category_poll_additions {
+            if poll_map.contains_key(&category_poll_addition.category_id) {
+
+            } else {
+                missing_category_additions.push(*category_poll_addition);
+            }
+        }
+
+        let num_missing_categories = missing_category_additions.len();
+        if num_missing_categories == 0 {
+            return;
+        }
+
+        let mut map_grew = false;
+
+        let spare_poll_map_capacity = poll_map.capacity() - poll_map.len();
+        if spare_poll_map_capacity < num_missing_categories {
+            let mut new_poll_map_capacity = poll_map.capacity() + num_missing_categories;
+            new_poll_map_capacity += new_poll_map_capacity / 2;
+
+            let mut new_poll_map: IntHashMap<CategoryId, Vec<Vec<PollId>>>
+                = HashMap::with_capacity_and_hasher(new_poll_map_capacity, IntBuildHasher::default());
+
+            for (category_id, poll_ids) in poll_map.iter() {
+                new_poll_map.insert(*category_id, *poll_ids);
+            }
+
+            poll_map = &mut new_poll_map;
+            map_grew = true;
+        }
+
+        for category_poll_addition in &missing_category_additions {
+            // TODO: work here next
+            let mut first_polls_block = Vec::new();
+            first_polls_block.push(global_poll_id);
+        }
+
+    }
+
     fn add_day_poll(
         &mut self,
-        vc_day_id: DayId,
-        global_poll_id: PollId,
-        global_category_ids: Vec<CategoryId>,
+        day_poll_additions: Vec<DayPollAddition>,
     ) {
         // TODO: Figure out if the poll is for tomorrow or day after tomorrow
         let for_tomorrow = false;
@@ -49,6 +106,7 @@ impl PollsByCategory {
         };
 
         for category_id in &global_category_ids {
+
 
             let poll_ids = match poll_map.entry(*category_id) {
                 Entry::Occupied(o) => o.into_mut(),
