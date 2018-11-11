@@ -29,7 +29,7 @@ pub fn get_tomorrows_category_polls(
     return get_global_category_polls(
         cache.category_cache_period_ids.tomorrows_vc_day_id,
         vc_day_id,
-        &cache.polls_by_category.tomorrow,
+        &cache.future_polls_by_category.tomorrow,
         block_number, global_category_id,
         cache.poll_id_byte_counts.tomorrow[GLOBAL_TZ_INDEX as usize]);
 }
@@ -44,7 +44,7 @@ pub fn get_day_after_tomorrows_category_polls(
     return get_global_category_polls(
         cache.category_cache_period_ids.day_after_tomorrows_vc_day_id,
         vc_day_id,
-        &cache.polls_by_category.day_after_tomorrow,
+        &cache.future_polls_by_category.day_after_tomorrow,
         block_number, global_category_id,
         cache.poll_id_byte_counts.day_after_tomorrow[GLOBAL_TZ_INDEX as usize]);
 }
@@ -59,7 +59,7 @@ pub fn get_next_weeks_category_polls(
     return get_global_category_polls(
         cache.category_cache_period_ids.next_weeks_vc_week_id,
         vc_week_id,
-        &cache.polls_by_category.next_week,
+        &cache.future_polls_by_category.next_week,
         block_number, global_category_id,
         cache.poll_id_byte_counts.next_week[GLOBAL_TZ_INDEX as usize]);
 }
@@ -74,7 +74,7 @@ pub fn get_next_months_category_polls(
     return get_global_category_polls(
         cache.category_cache_period_ids.next_months_vc_month_id,
         vc_month_id,
-        &cache.polls_by_category.next_month,
+        &cache.future_polls_by_category.next_month,
         block_number, global_category_id,
         cache.poll_id_byte_counts.next_month[GLOBAL_TZ_INDEX as usize]);
 }

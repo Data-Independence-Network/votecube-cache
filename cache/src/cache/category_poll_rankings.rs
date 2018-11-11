@@ -1,7 +1,9 @@
 use super::model::VoteCount;
 
 /**
- * Poll rankings by Category.
+ * Poll rankings by:
+ *      Category Cache Id
+ *
  * Q: Global category lookups are meant to cross timezone boundaries but how to maintain that?
  *
  * 1)  Maintain only per-location/per-category rankings
@@ -12,8 +14,8 @@ use super::model::VoteCount;
  * 3)  Maintain only previous period rankings (doable now) - Implementing
  *
  * 3a)  Actually, today's category rankings can be made available after UTC-8 (West Coast) passes
- * its poll add deadline (10pm) for the next day.  At that point there are still 9-10 hours left
- * in the day in Japan (depending on daylight savings).
+ * its poll add deadline (9pm) for the next day.  At that point there are still 10-11 hours left
+ * in the next day in Japan (depending on daylight savings).
  */
 pub struct CategoryPollRankings {
     pub last_month: Vec<Vec<VoteCount>>,

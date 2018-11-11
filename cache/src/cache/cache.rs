@@ -6,6 +6,12 @@
 
 
 use common::model::timezone::NUM_TIMEZONES;
+use common::model::timezone::ALL_TIME_ZONES;
+use common::model::types::CategoryId;
+use common::model::types::DayId;
+use common::model::types::MonthId;
+use common::model::types::PollId;
+use common::model::types::WeekId;
 
 use super::category_index_map::CategoryIndexMap;
 use super::category_poll_rankings::CategoryPollRankings;
@@ -69,11 +75,11 @@ pub struct Cache {
     /**
      *  Future PollIds by Category.
      */
-    pub polls_by_category: PollsByCategory,
+    pub future_polls_by_category: PollsByCategory,
     /**
      *  Future PollIds by Location.
      */
-    pub polls_by_location: PollsByLocation,
+    pub future_polls_by_location: PollsByLocation,
 
     /**
      *  Polls (with counts) for past & present time periods.
@@ -178,14 +184,68 @@ impl Cache {
             category_poll_rankings: CategoryPollRankings::new(),
             location_poll_rankings: LocationsPollRankings::new(),
 
-            polls_by_category: PollsByCategory::new(),
-            polls_by_location: PollsByLocation::new(),
+            future_polls_by_category: PollsByCategory::new(),
+            future_polls_by_location: PollsByLocation::new(),
 
             polls_1_d: Polls::new(),
             polls_2_d: Polls::new(),
             polls_3_d: Polls::new(),
         }
     }
+
+    pub fn add_future_day_polls(
+        &mut self,
+        day_id: DayId,
+        category_ids: Vec<CategoryId>,
+        poll_ids: Vec<Vec<PollId>>,
+    ) {
+        let tomorrows_day_id = self.time_period_ids.tomorrow[ALL_TIME_ZONES];
+        if day_id == tomorrows_day_id {
+            &self.future_polls_by_category.add_tomorrows_polls(category_ids, poll_ids);
+        } else if day_id == tomorrows_day_id + 1 {
+            &self.future_polls_by_category.add_day_after_tomorrows_polls(category_ids, poll_ids);
+        } else if day_id < tomorrows_day_id {
+            // TOO LATE TO ADD
+            return;
+        } else {
+            // TOO EARLY TO ADD
+        }
+    }
+
+    pub fn add_future_week_polls(
+        &mut self,
+        week_id: WeekId,
+        category_ids: Vec<CategoryId>,
+        poll_ids: Vec<Vec<PollId>>,
+    ) {
+        let next_week_id = self.time_period_ids.next_week[ALL_TIME_ZONES];
+        if week_id == next_week_id {
+            &self.future_polls_by_category.add_next_weeks_polls(category_ids, poll_ids);
+        } else if week_id < next_week_id {
+            // TOO LATE TO ADD
+            return;
+        } else {
+            // TOO EARLY TO ADD
+        }
+    }
+
+    pub fn add_future_month_polls(
+        &mut self,
+        month_id: MonthId,
+        category_ids: Vec<CategoryId>,
+        poll_ids: Vec<Vec<PollId>>,
+    ) {
+        let next_month_id = self.time_period_ids.next_month[ALL_TIME_ZONES];
+        if month_id == next_month_id {
+            &self.future_polls_by_category.add_next_months_polls(category_ids, poll_ids);
+        } else if month_id < next_month_id {
+            // TOO LATE TO ADD
+            return;
+        } else {
+            // TOO EARLY TO ADD
+        }
+    }
+
 }
 
 //pub static mut LOCATION_TIMEZONE_MAP: LsbShiftTree<usize> = LsbShiftTree::new();

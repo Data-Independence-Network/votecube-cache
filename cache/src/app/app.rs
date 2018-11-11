@@ -1,7 +1,7 @@
 use common::url::cache::serve;
 
 use server::codes;
-use server::cache::server::App;
+use server::cache::app::App;
 
 
 use server::read::read_five_ints;
@@ -61,6 +61,14 @@ impl CompleteCacheApp {
             cache
         }
     }
+
+}
+
+unsafe impl Send for CompleteCacheApp {
+
+}
+
+unsafe impl Sync for CompleteCacheApp {
 
 }
 

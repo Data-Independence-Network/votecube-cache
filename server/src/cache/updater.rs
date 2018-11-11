@@ -3,7 +3,6 @@ use futures::Future;
 use net2::TcpBuilder;
 #[cfg(not(windows))]
 use net2::unix::UnixTcpBuilderExt;
-use num_cpus;
 use std::io;
 use std::net::ToSocketAddrs;
 use std::sync::Arc;
@@ -20,15 +19,15 @@ use super::super::response::Response;
 
 use super::app::App;
 
-pub struct Server {
-    app: &'static mut Box<App + Send + Sync>
+pub struct Updater {
+    app: Box<App + Send + Sync>
 }
 
-impl Server {
+impl Updater {
     pub fn new(
-        app: &'static mut Box<App + Send + Sync>
-    ) -> Server {
-        Server {
+        app: Box<App + Send + Sync>
+    ) -> Updater {
+        Updater {
             app
         }
     }
@@ -44,47 +43,42 @@ impl Server {
     ///
     /// https://users.rust-lang.org/t/getting-tokio-to-match-actix-web-performance/18659/7
     ///
-    pub fn start_small_load_optimized(server: Server, host: &str, port: u16) {
+    pub fn start_small_load_optimized(server: Updater, host: &str, port: u16) {
         let addr = (host, port).to_socket_addrs().unwrap().next().unwrap();
-        let mut threads = Vec::new();
+
         let arc_server = Arc::new(server);
 
-        for _ in 0..num_cpus::get() {
-            let arc_server = arc_server.clone();
-            threads.push(thread::spawn(move || {
-                let mut runtime = tokio::runtime::current_thread::Runtime::new().unwrap();
+        thread::spawn(move || {
+            let mut runtime = tokio::runtime::current_thread::Runtime::new().unwrap();
 
-                let server = future::lazy(move || {
-                    let listener = {
-                        let builder = TcpBuilder::new_v4().unwrap();
-                        #[cfg(not(windows))]
-                            builder.reuse_address(true).unwrap();
-                        #[cfg(not(windows))]
-                            builder.reuse_port(true).unwrap();
-                        builder.bind(addr).unwrap();
-                        builder.listen(10240).unwrap()
-                    };
-                    let listener = TcpListener::from_std(listener, &tokio::reactor::Handle::current()).unwrap();
+            let server = future::lazy(move || {
+                let listener = {
+                    let builder = TcpBuilder::new_v4().unwrap();
+                    #[cfg(not(windows))]
+                        builder.reuse_address(true).unwrap();
+                    #[cfg(not(windows))]
+                        builder.reuse_port(true).unwrap();
+                    builder.bind(addr).unwrap();
+                    builder.listen(10240).unwrap()
+                };
+                let listener = TcpListener::from_std(listener, &tokio::reactor::Handle::current()).unwrap();
 
-                    listener.incoming().for_each(move |socket| {
-                        process(Arc::clone(&arc_server), socket);
-                        Ok(())
-                    })
-                        .map_err(|err| eprintln!("accept error = {:?}", err))
-                });
+                listener.incoming().for_each(move |socket| {
+                    process(Arc::clone(&arc_server), socket);
+                    Ok(())
+                })
+                    .map_err(|err| eprintln!("accept error = {:?}", err))
+            });
 
-                runtime.spawn(server);
-                runtime.run().unwrap();
-            }));
-        }
+            runtime.spawn(server);
+            runtime.run().unwrap();
+        });
 
-        println!("Server running on {}", addr);
+        println!("Updater running on {}", addr);
 
-        for thread in threads {
-            thread.join().unwrap();
-        }
 
-        fn process(server: Arc<Server>, socket: TcpStream) {
+
+        fn process(server: Arc<Updater>, socket: TcpStream) {
             let framed = Framed::new(socket, Http);
             let (tx, rx) = framed.split();
 
