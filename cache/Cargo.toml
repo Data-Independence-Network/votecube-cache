@@ -8,5 +8,6 @@ common = { path = "../common" }
 server = { path = "../server" }
 byteorder = "1"
 bytes = "^0"
+evmap="^4.0.0"
 int_hash="^0"
 lazy_static = "1.1.0"

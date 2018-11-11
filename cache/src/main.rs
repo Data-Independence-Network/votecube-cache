@@ -1,6 +1,7 @@
 extern crate byteorder;
 extern crate bytes;
 extern crate core;
+extern crate evmap;
 extern crate int_hash;
 extern crate lazy_static;
 
