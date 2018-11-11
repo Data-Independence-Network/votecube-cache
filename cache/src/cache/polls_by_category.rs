@@ -21,6 +21,11 @@ pub struct CategoryPollAddition {
     pub poll_ids: Vec<PollId>,
 }
 
+pub enum PollIdAdditionResult {
+    NewMap(IntHashMap<CategoryId, Vec<Vec<PollId>>>),
+    ExistingMap
+}
+
 /**
  *  Future period prepend data structures for per category access.
  *      By:     categoryId
@@ -35,7 +40,6 @@ pub struct PollsByCategory {
 }
 
 impl PollsByCategory {
-
     pub fn new() -> PollsByCategory {
         PollsByCategory {
             next_month: HashMap::with_capacity_and_hasher(1000000, IntBuildHasher::default()),
@@ -47,23 +51,22 @@ impl PollsByCategory {
 
     fn add_tomorrow_poll(
         &mut self,
-        category_poll_additions: Vec<CategoryPollAddition>
-    ) {
-        let mut poll_map: &mut IntHashMap<CategoryId, Vec<Vec<PollId>>> = &mut sef.tomorrow;
+        mut poll_map: IntHashMap<CategoryId, Vec<Vec<PollId>>>,
+        mut category_poll_additions: Vec<CategoryPollAddition>,
+    ) -> PollIdAdditionResult {
+        let mut result = PollIdAdditionResult::ExistingMap;
 
-        let mut missing_category_additions: Vec<CategoryPollAddition> = Vec::new();
+        let mut missing_category_additions: Vec<&CategoryPollAddition> = Vec::new();
 
         for category_poll_addition in &category_poll_additions {
-            if poll_map.contains_key(&category_poll_addition.category_id) {
-
-            } else {
-                missing_category_additions.push(*category_poll_addition);
+            if poll_map.contains_key(&category_poll_addition.category_id) {} else {
+                missing_category_additions.push(category_poll_addition);
             }
         }
 
         let num_missing_categories = missing_category_additions.len();
         if num_missing_categories == 0 {
-            return;
+            return result;
         }
 
         let mut map_grew = false;
@@ -74,60 +77,46 @@ impl PollsByCategory {
             new_poll_map_capacity += new_poll_map_capacity / 2;
 
             let mut new_poll_map: IntHashMap<CategoryId, Vec<Vec<PollId>>>
-                = HashMap::with_capacity_and_hasher(new_poll_map_capacity, IntBuildHasher::default());
+            = HashMap::with_capacity_and_hasher(new_poll_map_capacity, IntBuildHasher::default());
 
             for (category_id, poll_ids) in poll_map.iter() {
                 new_poll_map.insert(*category_id, *poll_ids);
             }
 
-            poll_map = &mut new_poll_map;
+            poll_map = new_poll_map;
             map_grew = true;
         }
 
         for category_poll_addition in &missing_category_additions {
-            // TODO: work here next
-            let mut first_polls_block = Vec::new();
-            first_polls_block.push(global_poll_id);
-        }
+            let mut poll_ids = Vec::new();
 
-    }
-
-    fn add_day_poll(
-        &mut self,
-        day_poll_additions: Vec<DayPollAddition>,
-    ) {
-        // TODO: Figure out if the poll is for tomorrow or day after tomorrow
-        let for_tomorrow = false;
-
-        let mut poll_map: &mut IntHashMap<CategoryId, Vec<Vec<PollId>>> = if for_tomorrow {
-            &mut self.tomorrow
-        } else {
-            &mut self.day_after_tomorrow
-        };
-
-        for category_id in &global_category_ids {
-
-
-            let poll_ids = match poll_map.entry(*category_id) {
-                Entry::Occupied(o) => o.into_mut(),
-                Entry::Vacant(v) => v.insert(Vec::new())
-            };
-
-            let num_frames = poll_ids.len();
-
-            if num_frames == 0 {
-                let mut first_polls_block = Vec::new();
-                first_polls_block.push(global_poll_id);
-                poll_ids.push(first_polls_block);
+            let poll_ids_to_add = category_poll_addition.poll_ids;
+            let num_polls = poll_ids_to_add.len();
+            if num_polls <= 1024 {
+                poll_ids.push(poll_ids_to_add );
             } else {
-                let last_polls_block: &mut Vec<PollId> = poll_ids.get_mut(num_frames - 1).unwrap();
-
-                if last_polls_block.len() == 1024 {
-
+                let mut num_frames = num_polls / 1024;
+                if num_polls % 1024 != 0 {
+                    num_frames += 1;
                 }
-
-                last_polls_block.push(global_poll_id);
+                let last_frame_index = num_frames - 1;
+                for frame_index in 0..last_frame_index {
+                    let frame = poll_ids_to_add [frame_index * 1024..frame_index + 1 * 1024]
+                        .iter().cloned().collect();
+                    poll_ids.push(frame);
+                }
+                let last_frame = poll_ids_to_add [last_frame_index * 1024..poll_ids_to_add.len()]
+                    .iter().cloned().collect();
+                poll_ids.push(last_frame);
             }
+            poll_map.insert(category_poll_addition.category_id, poll_ids);
         }
+
+        if map_grew {
+            return PollIdAdditionResult::NewMap(poll_map);
+        }
+
+        return result;
     }
+
 }
