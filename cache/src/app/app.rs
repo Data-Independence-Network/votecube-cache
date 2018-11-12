@@ -47,7 +47,7 @@ use super::super::cache::cache::Cache;
 
 pub struct CompleteCacheApp {
 
-    cache: Cache,
+    pub cache: &'static Box<Cache>,
 
 }
 
@@ -55,20 +55,12 @@ pub struct CompleteCacheApp {
 impl CompleteCacheApp {
 
     pub fn new(
-        cache: Cache
+        cache: &'static Box<Cache>
     ) -> CompleteCacheApp {
         CompleteCacheApp {
             cache
         }
     }
-
-}
-
-unsafe impl Send for CompleteCacheApp {
-
-}
-
-unsafe impl Sync for CompleteCacheApp {
 
 }
 

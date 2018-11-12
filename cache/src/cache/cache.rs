@@ -248,6 +248,14 @@ impl Cache {
 
 }
 
+unsafe impl Send for Cache {
+
+}
+
+unsafe impl Sync for Cache {
+
+}
+
 //pub static mut LOCATION_TIMEZONE_MAP: LsbShiftTree<usize> = LsbShiftTree::new();
 //pub static mut LOCATIONS_BY_TIMEZONE: Vec<u32> = Vec::new();
 

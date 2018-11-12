@@ -14,22 +14,40 @@ pub mod data;
 pub mod logic;
 pub mod app;
 
-use server::cache::app::App;
+//use std::sync::Arc;
+
+//use server::cache::app::App;
 use server::cache::server::Server;
 use server::cache::updater::Updater;
 
 use app::app::CompleteCacheApp;
+use app::updater::CompleteCacheUpdater;
 use cache::cache::Cache;
 
+
 fn main() {
-    println!("Hello, world!");
+    println!("VC Complete (not-split up) Cache v0.1.0");
 
-    let app: &mut Box<App + Sync + Send + 'static> = &mut Box::new(CompleteCacheApp::new(Cache::new()));
-
-    let server: Server = Server::new(app);
-    let updater: Updater = Updater::new(app);
-
-    Server::start_small_load_optimized(server, "0.0.0.0", 4321);
-    Updater::start_small_load_optimized(updater, "0.0.0.0", 5321);
-
+    let cache = Box::new(Cache::new());
+    let cache_ref: &'static Box<Cache> = &cache;
+//    {
+//        let (cache_server, cache_updater) = {
+//            (
+//                Box::new(CompleteCacheApp::new(cache_ref)),
+//                Box::new(CompleteCacheUpdater::new(cache))
+//            )
+////        (
+////            cache_updater,
+////        )
+//        };
+//
+////    let cache_updater = Box::new(CompleteCacheUpdater::new(cache));
+////    let cache_server = Box::new(CompleteCacheApp::new(&*cache_updater.cache));
+//
+//        let updater: Updater = Updater::new(cache_updater);
+//        Updater::start_small_load_optimized(updater, "0.0.0.0", 5321);
+//
+//        let server: Server = Server::new(cache_server);
+//        Server::start_small_load_optimized(server, "0.0.0.0", 4321);
+//    }
 }

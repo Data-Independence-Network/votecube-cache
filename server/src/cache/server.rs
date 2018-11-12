@@ -21,12 +21,12 @@ use super::super::response::Response;
 use super::app::App;
 
 pub struct Server {
-    app: &'static mut Box<App + Send + Sync>
+    app: Box<App + Send + Sync>
 }
 
 impl Server {
     pub fn new(
-        app: &'static mut Box<App + Send + Sync>
+        app: Box<App + Send + Sync>
     ) -> Server {
         Server {
             app
@@ -44,7 +44,11 @@ impl Server {
     ///
     /// https://users.rust-lang.org/t/getting-tokio-to-match-actix-web-performance/18659/7
     ///
-    pub fn start_small_load_optimized(server: Server, host: &str, port: u16) {
+    pub fn start_small_load_optimized(
+        server: Server,
+        host: &str,
+        port: u16
+    ) {
         let addr = (host, port).to_socket_addrs().unwrap().next().unwrap();
         let mut threads = Vec::new();
         let arc_server = Arc::new(server);
