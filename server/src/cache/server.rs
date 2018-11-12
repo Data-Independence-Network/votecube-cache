@@ -25,6 +25,7 @@ pub struct Server {
 }
 
 impl Server {
+
     pub fn new(
         app: Box<App + Send + Sync>
     ) -> Server {
@@ -47,11 +48,43 @@ impl Server {
     pub fn start_small_load_optimized(
         server: Server,
         host: &str,
-        port: u16
+        server_port: u16,
+        updater_port: u16
     ) {
-        let addr = (host, port).to_socket_addrs().unwrap().next().unwrap();
-        let mut threads = Vec::new();
+        let updater_addr = (host, updater_port).to_socket_addrs().unwrap().next().unwrap();
         let arc_server = Arc::new(server);
+
+        let update_server = arc_server.clone();
+        thread::spawn(move || {
+            let mut runtime = tokio::runtime::current_thread::Runtime::new().unwrap();
+
+            let server = future::lazy(move || {
+                let listener = {
+                    let builder = TcpBuilder::new_v4().unwrap();
+                    #[cfg(not(windows))]
+                        builder.reuse_address(true).unwrap();
+                    #[cfg(not(windows))]
+                        builder.reuse_port(true).unwrap();
+                    builder.bind(updater_addr).unwrap();
+                    builder.listen(10240).unwrap()
+                };
+                let listener = TcpListener::from_std(listener, &tokio::reactor::Handle::current()).unwrap();
+
+                listener.incoming().for_each(move |socket| {
+                    process(Arc::clone(&update_server), socket);
+                    Ok(())
+                })
+                    .map_err(|err| eprintln!("accept error = {:?}", err))
+            });
+
+            runtime.spawn(server);
+            runtime.run().unwrap();
+        });
+
+        println!("Update thread running on {}", updater_addr);
+
+        let server_addr = (host, server_port).to_socket_addrs().unwrap().next().unwrap();
+        let mut threads = Vec::new();
 
         for _ in 0..num_cpus::get() {
             let arc_server = arc_server.clone();
@@ -65,7 +98,7 @@ impl Server {
                             builder.reuse_address(true).unwrap();
                         #[cfg(not(windows))]
                             builder.reuse_port(true).unwrap();
-                        builder.bind(addr).unwrap();
+                        builder.bind(server_addr).unwrap();
                         builder.listen(10240).unwrap()
                     };
                     let listener = TcpListener::from_std(listener, &tokio::reactor::Handle::current()).unwrap();
@@ -82,7 +115,7 @@ impl Server {
             }));
         }
 
-        println!("Server running on {}", addr);
+        println!("Server threads running on {}", server_addr);
 
         for thread in threads {
             thread.join().unwrap();
@@ -94,6 +127,19 @@ impl Server {
 
             let task = tx.send_all(rx.and_then(move |request: Request| {
                 server.resolve(&request)
+            }))
+                .then(|_| future::ok(()));
+
+            // Spawn the task that handles the connection.
+            tokio::spawn(task);
+        }
+
+        fn process_update(server: Arc<Server>, socket: TcpStream) {
+            let framed = Framed::new(socket, Http);
+            let (tx, rx) = framed.split();
+
+            let task = tx.send_all(rx.and_then(move |request: Request| {
+                server.resolve_update(&request)
             }))
                 .then(|_| future::ok(()));
 
@@ -121,6 +167,25 @@ impl Server {
         response
     }
 
+    #[inline]
+    fn get_update_response(&self, request: &Request) -> Response {
+        let mut response = Response::new();
+
+        if request.method() != "PUT" {
+            response.body_vec(codes::INVALID_DATA_FORMAT_RESPONSE.to_vec());
+            return response;
+        }
+
+        let path = request.path();
+        let request_body = request.raw_body();
+
+        let data = self.app.get_update_response(path, request_body);
+
+        response.body_vec(data);
+
+        response
+    }
+
     /// Resolves a request, returning a future that is processable into a Response
 
     fn resolve(&self, request: &Request) -> impl Future<Item=Response, Error=io::Error> + Send {
@@ -135,5 +200,10 @@ impl Server {
 //
         future::ok(response)
 //            })
+    }
+
+    fn resolve_update(&self, request: &Request) -> impl Future<Item=Response, Error=io::Error> + Send {
+        let response = self.get_update_response(&request);
+        future::ok(response)
     }
 }

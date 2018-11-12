@@ -42,12 +42,12 @@ use super::super::logic::serve::recent::location_category::get_next_months_locat
 use super::super::logic::serve::recent::location_category::get_next_weeks_location_category_polls;
 use super::super::logic::serve::recent::location_category::get_tomorrows_location_category_polls;
 
-use super::super::cache::cache::Cache;
+use super::super::cache::cache_reader::CacheReader;
 
 
 pub struct CompleteCacheApp {
 
-    pub cache: &'static Box<Cache>,
+    pub cache: Box<CacheReader + Send + Sync>,
 
 }
 
@@ -55,7 +55,7 @@ pub struct CompleteCacheApp {
 impl CompleteCacheApp {
 
     pub fn new(
-        cache: &'static Box<Cache>
+        cache: Box<CacheReader + Send + Sync>
     ) -> CompleteCacheApp {
         CompleteCacheApp {
             cache
@@ -735,4 +735,13 @@ impl App for CompleteCacheApp {
             }
         }
     }
+
+    fn get_update_response(
+        &self,
+        _path: &str,
+        _request_body: &[u8],
+    ) -> Vec<u8> {
+        codes::INVALID_DATA_FORMAT_RESPONSE.to_vec()
+    }
+
 }

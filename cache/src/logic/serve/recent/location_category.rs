@@ -8,7 +8,7 @@ use common::model::types::PollId;
 use common::model::types::TimezoneId;
 use common::model::types::WeekId;
 
-use super::super::super::super::cache::cache::Cache;
+use super::super::super::super::cache::cache_reader::CacheReader;
 use super::super::super::super::cache::model::LocationPollPrependLists;
 
 use super::super::super::super::server::codes;
@@ -27,17 +27,17 @@ pub fn get_tomorrows_location_category_polls(
     block_index: u32,
     global_location_id: LocationId,
     global_category_id: CategoryId,
-    cache: &Cache,
+    cache: &Box<CacheReader + Send + Sync>,
 ) -> Vec<u8> {
     return get_global_location_category_polls(
-        cache.category_cache_period_ids.tomorrows_vc_day_id,
+        cache.get_category_cache_period_ids().tomorrows_vc_day_id,
         vc_day_id,
         timezone_id,
-        &cache.future_polls_by_location.tomorrow,
+        &cache.get_future_polls_by_location().tomorrow,
         block_index,
         global_location_id,
         global_category_id,
-        cache.poll_id_byte_counts.tomorrow[timezone_id as usize],
+        cache.get_poll_id_byte_counts().tomorrow[timezone_id as usize],
     );
 }
 
@@ -47,17 +47,17 @@ pub fn get_day_after_tomorrows_location_category_polls(
     block_index: u32,
     global_location_id: LocationId,
     global_category_id: CategoryId,
-    cache: &Cache,
+    cache: &Box<CacheReader + Send + Sync>,
 ) -> Vec<u8> {
     return get_global_location_category_polls(
-        cache.category_cache_period_ids.day_after_tomorrows_vc_day_id,
+        cache.get_category_cache_period_ids().day_after_tomorrows_vc_day_id,
         vc_day_id,
         timezone_id,
-        &cache.future_polls_by_location.day_after_tomorrow,
+        &cache.get_future_polls_by_location().day_after_tomorrow,
         block_index,
         global_location_id,
         global_category_id,
-        cache.poll_id_byte_counts.day_after_tomorrow[timezone_id as usize],
+        cache.get_poll_id_byte_counts().day_after_tomorrow[timezone_id as usize],
     );
 }
 
@@ -67,17 +67,17 @@ pub fn get_next_weeks_location_category_polls(
     block_index: u32,
     global_location_id: LocationId,
     global_category_id: CategoryId,
-    cache: &Cache,
+    cache: &Box<CacheReader + Send + Sync>,
 ) -> Vec<u8> {
     return get_global_location_category_polls(
-        cache.category_cache_period_ids.next_weeks_vc_week_id,
+        cache.get_category_cache_period_ids().next_weeks_vc_week_id,
         vc_week_id,
         timezone_id,
-        &cache.future_polls_by_location.next_week,
+        &cache.get_future_polls_by_location().next_week,
         block_index,
         global_location_id,
         global_category_id,
-        cache.poll_id_byte_counts.next_week[timezone_id as usize],
+        cache.get_poll_id_byte_counts().next_week[timezone_id as usize],
     );
 }
 
@@ -87,17 +87,17 @@ pub fn get_next_months_location_category_polls(
     block_index: u32,
     global_location_id: LocationId,
     global_category_id: CategoryId,
-    cache: &Cache,
+    cache: &Box<CacheReader + Send + Sync>,
 ) -> Vec<u8> {
     return get_global_location_category_polls(
-        cache.category_cache_period_ids.next_months_vc_month_id,
+        cache.get_category_cache_period_ids().next_months_vc_month_id,
         vc_month_id,
         timezone_id,
-        &cache.future_polls_by_location.next_month,
+        &cache.get_future_polls_by_location().next_month,
         block_index,
         global_location_id,
         global_category_id,
-        cache.poll_id_byte_counts.next_month[timezone_id as usize],
+        cache.get_poll_id_byte_counts().next_month[timezone_id as usize],
     );
 }
 

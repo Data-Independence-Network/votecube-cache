@@ -13,6 +13,7 @@ use common::model::types::MonthId;
 use common::model::types::PollId;
 use common::model::types::WeekId;
 
+use super::cache_reader::CacheReader;
 use super::category_index_map::CategoryIndexMap;
 use super::category_poll_rankings::CategoryPollRankings;
 use super::location_category_index_map::LocationCategoryIndexMap;
@@ -87,6 +88,120 @@ pub struct Cache {
     pub polls_1_d: Polls<OneDPoll>,
     pub polls_2_d: Polls<TwoDPoll>,
     pub polls_3_d: Polls<ThreeDPoll>,
+
+}
+
+impl CacheReader for Cache {
+    /**
+     * Ids of currently cached time periods, across all timezones
+     */
+    #[inline]
+    fn get_category_cache_period_ids(&self) -> &CachePeriodIds {
+        &self.category_cache_period_ids
+    }
+
+    /**
+     * Ids of currently cached time periods, per timezone
+     */
+    #[inline]
+    fn get_per_timezone_cache_period_ids(&self) -> &[CachePeriodIds; NUM_TIMEZONES as usize] {
+        &self.per_timezone_cache_period_ids
+    }
+    /**
+     *  Maximum number of bytes taken by poll ids of a given current/future cache period.
+     */
+    #[inline]
+    fn get_poll_id_byte_counts(&self) -> &PollIdByteCounts {
+        &self.poll_id_byte_counts
+    }
+
+    /**
+     * Global time period ids across timezones
+     */
+    #[inline]
+    fn get_time_period_ids(&self) -> &TimePeriodIds {
+        &self.time_period_ids
+    }
+
+    // Keeps track of when a timezone is being modified
+    #[inline]
+    fn get_time_zone_modification_flags(&self) -> &[bool; NUM_TIMEZONES as usize] {
+        &self.time_zone_modification_flags
+    }
+
+    /**
+     *  Random access Category Id map, needed by initial lookup from clients.
+     */
+    #[inline]
+    fn get_category_index_map(&self) -> &CategoryIndexMap {
+        &self.category_index_map
+    }
+
+    /**
+     *  Random access Location + Category Id map, needed by initial lookup from clients.
+     */
+    #[inline]
+    fn get_location_category_index_map(&self) -> &LocationCategoryIndexMap {
+        &self.location_category_index_map
+    }
+
+    /**
+     *  Random access Location Id map, needed by initial lookup from clients.
+     */
+    #[inline]
+    fn get_location_index_map(&self) -> &LocationIndexMap {
+        &self.location_index_map
+    }
+
+    /**
+     * Poll rankings by Category (past & present).
+     */
+    #[inline]
+    fn get_category_poll_rankings(&self) -> &CategoryPollRankings {
+        &self.category_poll_rankings
+    }
+
+    /**
+     * Poll rankings by Location (past & present).
+     */
+    #[inline]
+    fn get_location_poll_rankings(&self) -> &LocationsPollRankings {
+        &self.location_poll_rankings
+    }
+
+    /**
+     *  Future PollIds by Category.
+     */
+    #[inline]
+    fn get_future_polls_by_category(&self) -> &PollsByCategory {
+        &self.future_polls_by_category
+    }
+
+    /**
+     *  Future PollIds by Location.
+     */
+    #[inline]
+    fn get_future_polls_by_location(&self) -> &PollsByLocation {
+        &self.future_polls_by_location
+    }
+
+    /**
+     *  Polls (with counts) for past & present time periods.
+     */
+    #[inline]
+    fn get_polls_1_d(&self) -> &Polls<OneDPoll> {
+        &self.polls_1_d
+    }
+
+    #[inline]
+    fn get_polls_2_d(&self) -> &Polls<TwoDPoll> {
+        &self.polls_2_d
+    }
+
+    #[inline]
+    fn get_polls_3_d(&self) -> &Polls<ThreeDPoll> {
+        &self.polls_3_d
+    }
 
 }
 
@@ -245,16 +360,11 @@ impl Cache {
             // TOO EARLY TO ADD
         }
     }
-
 }
 
-unsafe impl Send for Cache {
+unsafe impl Send for Cache {}
 
-}
-
-unsafe impl Sync for Cache {
-
-}
+unsafe impl Sync for Cache {}
 
 //pub static mut LOCATION_TIMEZONE_MAP: LsbShiftTree<usize> = LsbShiftTree::new();
 //pub static mut LOCATIONS_BY_TIMEZONE: Vec<u32> = Vec::new();

@@ -1,4 +1,5 @@
 pub mod cache;
+pub mod cache_reader;
 pub mod category_index_map;
 pub mod category_poll_rankings;
 pub mod location_category_index_map;

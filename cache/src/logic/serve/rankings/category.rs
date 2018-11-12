@@ -7,7 +7,7 @@ use common::model::types::DayId;
 use common::model::types::MonthId;
 use common::model::types::WeekId;
 
-use super::super::super::super::cache::cache::Cache;
+use super::super::super::super::cache::cache_reader::CacheReader;
 use super::super::super::super::cache::model::VoteCount;
 use super::super::super::super::data::byte_counts::ByteCounts;
 use super::super::super::super::server::codes;
@@ -108,16 +108,16 @@ pub fn get_todays_category_rankings_by_global_id(
     vc_day_id: DayId,
     block_index: u32,
     global_category_id: CategoryId,
-    cache: &Cache,
+    cache: &Box<CacheReader + Send + Sync>,
 ) -> Vec<u8> {
     return get_category_rankings_by_global_id(
-        cache.category_cache_period_ids.todays_vc_day_id,
+        cache.get_category_cache_period_ids().todays_vc_day_id,
         vc_day_id,
-        &cache.category_index_map.today,
-        &cache.category_poll_rankings.today,
+        &cache.get_category_index_map().today,
+        &cache.get_category_poll_rankings().today,
         global_category_id,
         block_index,
-        cache.poll_id_byte_counts.today[38],
+        cache.get_poll_id_byte_counts().today[38],
     );
 }
 
@@ -125,15 +125,15 @@ pub fn get_todays_category_rankings_by_cache_index(
     vc_day_id: DayId,
     block_index: u32,
     category_cache_index: CategoryCacheIndex,
-    cache: &Cache,
+    cache: &Box<CacheReader + Send + Sync>,
 ) -> Vec<u8> {
     return get_category_rankings_by_cache_index(
-        cache.category_cache_period_ids.todays_vc_day_id,
+        cache.get_category_cache_period_ids().todays_vc_day_id,
         vc_day_id,
-        &cache.category_poll_rankings.today,
+        &cache.get_category_poll_rankings().today,
         category_cache_index,
         block_index,
-        cache.poll_id_byte_counts.today[38],
+        cache.get_poll_id_byte_counts().today[38],
     );
 }
 
@@ -141,16 +141,16 @@ pub fn get_yesterdays_category_rankings_by_global_id(
     vc_day_id: DayId,
     block_index: u32,
     global_category_id: CategoryId,
-    cache: &Cache,
+    cache: &Box<CacheReader + Send + Sync>,
 ) -> Vec<u8> {
     return get_category_rankings_by_global_id(
-        cache.category_cache_period_ids.yesterdays_vc_day_id,
+        cache.get_category_cache_period_ids().yesterdays_vc_day_id,
         vc_day_id,
-        &cache.category_index_map.yesterday,
-        &cache.category_poll_rankings.yesterday,
+        &cache.get_category_index_map().yesterday,
+        &cache.get_category_poll_rankings().yesterday,
         global_category_id,
         block_index,
-        cache.poll_id_byte_counts.yesterday[38],
+        cache.get_poll_id_byte_counts().yesterday[38],
     );
 }
 
@@ -158,15 +158,15 @@ pub fn get_yesterdays_category_rankings_by_cache_index(
     vc_day_id: DayId,
     block_index: u32,
     category_cache_index: CategoryCacheIndex,
-    cache: &Cache,
+    cache: &Box<CacheReader + Send + Sync>,
 ) -> Vec<u8> {
     return get_category_rankings_by_cache_index(
-        cache.category_cache_period_ids.yesterdays_vc_day_id,
+        cache.get_category_cache_period_ids().yesterdays_vc_day_id,
         vc_day_id,
-        &cache.category_poll_rankings.yesterday,
+        &cache.get_category_poll_rankings().yesterday,
         category_cache_index,
         block_index,
-        cache.poll_id_byte_counts.yesterday[38],
+        cache.get_poll_id_byte_counts().yesterday[38],
     );
 }
 
@@ -174,16 +174,16 @@ pub fn get_day_b4_yesterdays_category_rankings_by_global_id(
     vc_day_id: DayId,
     block_index: u32,
     global_category_id: CategoryId,
-    cache: &Cache,
+    cache: &Box<CacheReader + Send + Sync>,
 ) -> Vec<u8> {
     return get_category_rankings_by_global_id(
-        cache.category_cache_period_ids.day_b4_yesterdays_vc_day_id,
+        cache.get_category_cache_period_ids().day_b4_yesterdays_vc_day_id,
         vc_day_id,
-        &cache.category_index_map.day_b4_yesterday,
-        &cache.category_poll_rankings.day_b4_yesterday,
+        &cache.get_category_index_map().day_b4_yesterday,
+        &cache.get_category_poll_rankings().day_b4_yesterday,
         global_category_id,
         block_index,
-        cache.poll_id_byte_counts.day_b4_yesterday[38],
+        cache.get_poll_id_byte_counts().day_b4_yesterday[38],
     );
 }
 
@@ -191,15 +191,15 @@ pub fn get_day_b4_yesterdays_category_rankings_by_cache_index(
     vc_day_id: DayId,
     block_index: u32,
     category_cache_index: CategoryCacheIndex,
-    cache: &Cache,
+    cache: &Box<CacheReader + Send + Sync>,
 ) -> Vec<u8> {
     return get_category_rankings_by_cache_index(
-        cache.category_cache_period_ids.day_b4_yesterdays_vc_day_id,
+        cache.get_category_cache_period_ids().day_b4_yesterdays_vc_day_id,
         vc_day_id,
-        &cache.category_poll_rankings.day_b4_yesterday,
+        &cache.get_category_poll_rankings().day_b4_yesterday,
         category_cache_index,
         block_index,
-        cache.poll_id_byte_counts.day_b4_yesterday[38],
+        cache.get_poll_id_byte_counts().day_b4_yesterday[38],
     );
 }
 
@@ -207,16 +207,16 @@ pub fn get_this_weeks_category_rankings_by_global_id(
     vc_week_id: WeekId,
     block_index: u32,
     global_category_id: CategoryId,
-    cache: &Cache,
+    cache: &Box<CacheReader + Send + Sync>,
 ) -> Vec<u8> {
     return get_category_rankings_by_global_id(
-        cache.category_cache_period_ids.this_weeks_vc_week_id,
+        cache.get_category_cache_period_ids().this_weeks_vc_week_id,
         vc_week_id,
-        &cache.category_index_map.this_week,
-        &cache.category_poll_rankings.this_week,
+        &cache.get_category_index_map().this_week,
+        &cache.get_category_poll_rankings().this_week,
         global_category_id,
         block_index,
-        cache.poll_id_byte_counts.this_week[38],
+        cache.get_poll_id_byte_counts().this_week[38],
     );
 }
 
@@ -224,15 +224,15 @@ pub fn get_this_weeks_category_rankings_by_cache_index(
     vc_week_id: WeekId,
     block_index: u32,
     category_cache_index: CategoryCacheIndex,
-    cache: &Cache,
+    cache: &Box<CacheReader + Send + Sync>,
 ) -> Vec<u8> {
     return get_category_rankings_by_cache_index(
-        cache.category_cache_period_ids.this_weeks_vc_week_id,
+        cache.get_category_cache_period_ids().this_weeks_vc_week_id,
         vc_week_id,
-        &cache.category_poll_rankings.this_week,
+        &cache.get_category_poll_rankings().this_week,
         category_cache_index,
         block_index,
-        cache.poll_id_byte_counts.this_week[38],
+        cache.get_poll_id_byte_counts().this_week[38],
     );
 }
 
@@ -240,16 +240,16 @@ pub fn get_last_weeks_category_rankings_by_global_id(
     vc_week_id: WeekId,
     block_index: u32,
     global_category_id: CategoryId,
-    cache: &Cache,
+    cache: &Box<CacheReader + Send + Sync>,
 ) -> Vec<u8> {
     return get_category_rankings_by_global_id(
-        cache.category_cache_period_ids.last_weeks_vc_week_id,
+        cache.get_category_cache_period_ids().last_weeks_vc_week_id,
         vc_week_id,
-        &cache.category_index_map.last_week,
-        &cache.category_poll_rankings.last_week,
+        &cache.get_category_index_map().last_week,
+        &cache.get_category_poll_rankings().last_week,
         global_category_id,
         block_index,
-        cache.poll_id_byte_counts.last_week[38],
+        cache.get_poll_id_byte_counts().last_week[38],
     );
 }
 
@@ -257,15 +257,15 @@ pub fn get_last_weeks_category_rankings_by_cache_index(
     vc_week_id: WeekId,
     block_index: u32,
     category_cache_index: CategoryCacheIndex,
-    cache: &Cache,
+    cache: &Box<CacheReader + Send + Sync>,
 ) -> Vec<u8> {
     return get_category_rankings_by_cache_index(
-        cache.category_cache_period_ids.last_weeks_vc_week_id,
+        cache.get_category_cache_period_ids().last_weeks_vc_week_id,
         vc_week_id,
-        &cache.category_poll_rankings.last_week,
+        &cache.get_category_poll_rankings().last_week,
         category_cache_index,
         block_index,
-        cache.poll_id_byte_counts.last_week[38],
+        cache.get_poll_id_byte_counts().last_week[38],
     );
 }
 
@@ -273,16 +273,16 @@ pub fn get_this_months_category_rankings_by_global_id(
     vc_month_id: MonthId,
     block_index: u32,
     global_category_id: CategoryId,
-    cache: &Cache,
+    cache: &Box<CacheReader + Send + Sync>,
 ) -> Vec<u8> {
     return get_category_rankings_by_global_id(
-        cache.category_cache_period_ids.this_months_vc_month_id,
+        cache.get_category_cache_period_ids().this_months_vc_month_id,
         vc_month_id,
-        &cache.category_index_map.this_month,
-        &cache.category_poll_rankings.this_month,
+        &cache.get_category_index_map().this_month,
+        &cache.get_category_poll_rankings().this_month,
         global_category_id,
         block_index,
-        cache.poll_id_byte_counts.this_month[38],
+        cache.get_poll_id_byte_counts().this_month[38],
     );
 }
 
@@ -290,15 +290,15 @@ pub fn get_this_months_category_rankings_by_cache_index(
     vc_month_id: MonthId,
     block_index: u32,
     category_cache_index: CategoryCacheIndex,
-    cache: &Cache,
+    cache: &Box<CacheReader + Send + Sync>,
 ) -> Vec<u8> {
     return get_category_rankings_by_cache_index(
-        cache.category_cache_period_ids.this_months_vc_month_id,
+        cache.get_category_cache_period_ids().this_months_vc_month_id,
         vc_month_id,
-        &cache.category_poll_rankings.this_month,
+        &cache.get_category_poll_rankings().this_month,
         category_cache_index,
         block_index,
-        cache.poll_id_byte_counts.this_month[38],
+        cache.get_poll_id_byte_counts().this_month[38],
     );
 }
 
@@ -306,16 +306,16 @@ pub fn get_last_months_category_rankings_by_global_id(
     vc_month_id: MonthId,
     block_index: u32,
     global_category_id: CategoryId,
-    cache: &Cache,
+    cache: &Box<CacheReader + Send + Sync>,
 ) -> Vec<u8> {
     return get_category_rankings_by_global_id(
-        cache.category_cache_period_ids.last_months_vc_month_id,
+        cache.get_category_cache_period_ids().last_months_vc_month_id,
         vc_month_id,
-        &cache.category_index_map.last_month,
-        &cache.category_poll_rankings.last_month,
+        &cache.get_category_index_map().last_month,
+        &cache.get_category_poll_rankings().last_month,
         global_category_id,
         block_index,
-        cache.poll_id_byte_counts.last_month[38],
+        cache.get_poll_id_byte_counts().last_month[38],
     );
 }
 
@@ -323,15 +323,15 @@ pub fn get_last_months_category_rankings_by_cache_index(
     vc_month_id: MonthId,
     block_index: u32,
     category_cache_index: CategoryCacheIndex,
-    cache: &Cache,
+    cache: &Box<CacheReader + Send + Sync>,
 ) -> Vec<u8> {
     return get_category_rankings_by_cache_index(
-        cache.category_cache_period_ids.last_months_vc_month_id,
+        cache.get_category_cache_period_ids().last_months_vc_month_id,
         vc_month_id,
-        &cache.category_poll_rankings.last_month,
+        &cache.get_category_poll_rankings().last_month,
         category_cache_index,
         block_index,
-        cache.poll_id_byte_counts.last_month[38],
+        cache.get_poll_id_byte_counts().last_month[38],
     );
 }
 
