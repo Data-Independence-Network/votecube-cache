@@ -3,26 +3,27 @@ use std::collections::HashMap;
 use int_hash::IntBuildHasher;
 use int_hash::IntHashMap;
 
-use common::model::types::CategoryCacheIndex;
-use common::model::types::CategoryId;
+use common::model::types::LocationId;
+
+use super::model::LocationPeriodIds;
 
 /**
- *  Random access Category Id map, needed by initial lookup from clients.  The
+ *  Random access Location + Label Id map, needed by initial lookup from clients.  The
  *  stored index is then used to access the VoteCount nested arrays.
  */
-pub struct CategoryIndexMap {
-    pub last_month: IntHashMap<CategoryId, CategoryCacheIndex>,
-    pub this_month: IntHashMap<CategoryId, CategoryCacheIndex>,
-    pub last_week: IntHashMap<CategoryId, CategoryCacheIndex>,
-    pub this_week: IntHashMap<CategoryId, CategoryCacheIndex>,
-    pub day_b4_yesterday: IntHashMap<CategoryId, CategoryCacheIndex>,
-    pub yesterday: IntHashMap<CategoryId, CategoryCacheIndex>,
-    pub today: IntHashMap<CategoryId, CategoryCacheIndex>,
+pub struct LocationLabelIndexMap {
+    pub last_month: IntHashMap<LocationId, LocationPeriodIds>,
+    pub this_month: IntHashMap<LocationId, LocationPeriodIds>,
+    pub last_week: IntHashMap<LocationId, LocationPeriodIds>,
+    pub this_week: IntHashMap<LocationId, LocationPeriodIds>,
+    pub day_b4_yesterday: IntHashMap<LocationId, LocationPeriodIds>,
+    pub yesterday: IntHashMap<LocationId, LocationPeriodIds>,
+    pub today: IntHashMap<LocationId, LocationPeriodIds>,
 }
 
-impl CategoryIndexMap {
-    pub fn new() -> CategoryIndexMap {
-        CategoryIndexMap {
+impl LocationLabelIndexMap {
+    pub fn new() -> LocationLabelIndexMap {
+        LocationLabelIndexMap {
             last_month: HashMap::with_capacity_and_hasher(2000, IntBuildHasher::default()),
             this_month: HashMap::with_capacity_and_hasher(2000, IntBuildHasher::default()),
             last_week: HashMap::with_capacity_and_hasher(2000, IntBuildHasher::default()),

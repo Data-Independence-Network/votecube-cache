@@ -3,11 +3,11 @@ use std::collections::HashMap;
 use int_hash::IntBuildHasher;
 use int_hash::IntHashMap;
 
-use common::model::types::CategoryCacheIndex;
-use common::model::types::CategoryId;
+use common::model::types::LabelCacheIndex;
+use common::model::types::LabelId;
 use common::model::types::DayId;
 use common::model::types::LocationCacheIndex;
-use common::model::types::LocationCategoryCacheIndex;
+use common::model::types::LocationLabelCacheIndex;
 use common::model::types::MonthId;
 use common::model::types::PollId;
 use common::model::types::WeekId;
@@ -45,34 +45,34 @@ impl CachePeriodIds {
     }
 }
 
-pub struct CategoryPeriodPollRankings {
+pub struct LabelPeriodPollRankings {
     pub max_poll_number_bytes: u8,
     pub num_polls_in_period: u32,
-    pub vote_counts_by_category_index: Vec<Vec<VoteCount>>,
+    pub vote_counts_by_label_index: Vec<Vec<VoteCount>>,
 }
 
-impl CategoryPeriodPollRankings {
+impl LabelPeriodPollRankings {
     pub fn new(
         max_poll_number_bytes: u8,
         num_polls_in_period: u32,
         num_categories_in_period: usize,
-    ) -> CategoryPeriodPollRankings {
-        CategoryPeriodPollRankings {
+    ) -> LabelPeriodPollRankings {
+        LabelPeriodPollRankings {
             max_poll_number_bytes,
             num_polls_in_period,
-            vote_counts_by_category_index: Vec::with_capacity(num_categories_in_period),
+            vote_counts_by_label_index: Vec::with_capacity(num_categories_in_period),
         }
     }
 }
 
 /**
- * Random access data structure needed for initial lookup of a Location+Category poll rankings.
+ * Random access data structure needed for initial lookup of a Location+Label poll rankings.
  * Contains time period specific array index of the Location
- *      and a map (by Global Id) of the category indexes for same time period
+ *      and a map (by Global Id) of the label indexes for same time period
  */
 pub struct LocationPeriodIds {
-    pub location_category_cache_index_map: IntHashMap<CategoryId, LocationCategoryCacheIndex>,
-    pub location_cache_index: CategoryCacheIndex,
+    pub location_label_cache_index_map: IntHashMap<LabelId, LocationLabelCacheIndex>,
+    pub location_cache_index: LabelCacheIndex,
 }
 
 impl LocationPeriodIds {
@@ -82,7 +82,7 @@ impl LocationPeriodIds {
     ) -> LocationPeriodIds {
         LocationPeriodIds {
             location_cache_index,
-            location_category_cache_index_map: HashMap::with_capacity_and_hasher(
+            location_label_cache_index_map: HashMap::with_capacity_and_hasher(
                 num_categories, IntBuildHasher::default()),
         }
     }
@@ -96,26 +96,26 @@ Split by timezone:
 /**
  *  Vote count data structure needed for looking up Poll Rankings by Vote Count
  *  Contains ranked vote counts for a particular location
- *      and an array (by time period+location specific category index) of location+category
+ *      and an array (by time period+location specific label index) of location+label
  *          ranked vote counts
  */
 pub struct LocationPollRankings {
     pub max_poll_number_bytes: u8,
     pub location: Vec<VoteCount>,
-    pub category_locations: Vec<Vec<VoteCount>>,
+    pub label_locations: Vec<Vec<VoteCount>>,
 }
 
 /**
  *  Ordered list of latest added polls (in a future time period).
  *     Contains time ordered polls (in order of creation) for a particular location
- *         and a map/tree (by Global Category Id) of time ordered polls for location+category
+ *         and a map/tree (by Global Label Id) of time ordered polls for location+label
  */
 pub struct LocationPollPrependLists {
     // Inner vector is a page/frame (Ex: capped @ 1024) and outer vector grows
     pub location: Vec<Vec<PollId>>,
     // Custom fast no rehashing, fast insert datastructure
     // for managing an unknown number of categories in a given location
-    pub category_locations: IntHashMap<CategoryId, Vec<Vec<PollId>>>,
+    pub label_locations: IntHashMap<LabelId, Vec<Vec<PollId>>>,
 }
 
 

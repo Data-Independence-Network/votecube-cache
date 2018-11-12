@@ -15,20 +15,20 @@ use super::super::super::super::cache::model::LocationPeriodIds;
 use super::super::super::super::cache::model::LocationPollRankings;
 use super::super::super::super::server::codes;
 
-use super::location_and_loc_category::INITIAL_RESPONSE_VECTOR_SIZE_2_POLL_BYTES;
-use super::location_and_loc_category::INITIAL_RESPONSE_VECTOR_SIZE_3_POLL_BYTES;
-use super::location_and_loc_category::INITIAL_RESPONSE_VECTOR_SIZE_4_POLL_BYTES;
-use super::location_and_loc_category::INITIAL_RESPONSE_VECTOR_SIZE_5_POLL_BYTES;
-use super::location_and_loc_category::INITIAL_RESPONSE_VECTOR_SIZE_6_POLL_BYTES;
-use super::location_and_loc_category::INITIAL_RESPONSE_VECTOR_SIZE_7_POLL_BYTES;
-use super::location_and_loc_category::INITIAL_RESPONSE_VECTOR_SIZE_8_POLL_BYTES;
-use super::location_and_loc_category::get_2_byte_recent_polls;
-use super::location_and_loc_category::get_3_byte_recent_polls;
-use super::location_and_loc_category::get_4_byte_recent_polls;
-use super::location_and_loc_category::get_5_byte_recent_polls;
-use super::location_and_loc_category::get_6_byte_recent_polls;
-use super::location_and_loc_category::get_7_byte_recent_polls;
-use super::location_and_loc_category::get_8_byte_recent_polls;
+use super::location_and_loc_label::INITIAL_RESPONSE_VECTOR_SIZE_2_POLL_BYTES;
+use super::location_and_loc_label::INITIAL_RESPONSE_VECTOR_SIZE_3_POLL_BYTES;
+use super::location_and_loc_label::INITIAL_RESPONSE_VECTOR_SIZE_4_POLL_BYTES;
+use super::location_and_loc_label::INITIAL_RESPONSE_VECTOR_SIZE_5_POLL_BYTES;
+use super::location_and_loc_label::INITIAL_RESPONSE_VECTOR_SIZE_6_POLL_BYTES;
+use super::location_and_loc_label::INITIAL_RESPONSE_VECTOR_SIZE_7_POLL_BYTES;
+use super::location_and_loc_label::INITIAL_RESPONSE_VECTOR_SIZE_8_POLL_BYTES;
+use super::location_and_loc_label::get_2_byte_recent_polls;
+use super::location_and_loc_label::get_3_byte_recent_polls;
+use super::location_and_loc_label::get_4_byte_recent_polls;
+use super::location_and_loc_label::get_5_byte_recent_polls;
+use super::location_and_loc_label::get_6_byte_recent_polls;
+use super::location_and_loc_label::get_7_byte_recent_polls;
+use super::location_and_loc_label::get_8_byte_recent_polls;
 
 // NOTE: max page size must fin into u16
 const PAGE_SIZE: u32 = 1024;

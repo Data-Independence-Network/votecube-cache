@@ -7,7 +7,7 @@ use super::model::LocationPollPrependLists;
  *  Future period prepend data structures for adding recent polls.
  *    By:   timezoneId
  *              locationId
- *                  categoryId
+ *                  labelId
  *  Contain only the prepended Poll Ids
  */
 pub struct PollsByLocation {

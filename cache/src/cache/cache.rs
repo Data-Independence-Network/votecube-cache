@@ -7,16 +7,16 @@
 
 use common::model::timezone::NUM_TIMEZONES;
 use common::model::timezone::ALL_TIME_ZONES;
-use common::model::types::CategoryId;
+use common::model::types::LabelId;
 use common::model::types::DayId;
 use common::model::types::MonthId;
 use common::model::types::PollId;
 use common::model::types::WeekId;
 
 use super::cache_reader::CacheReader;
-use super::category_index_map::CategoryIndexMap;
-use super::category_poll_rankings::CategoryPollRankings;
-use super::location_category_index_map::LocationCategoryIndexMap;
+use super::label_index_map::LabelIndexMap;
+use super::label_poll_rankings::LabelPollRankings;
+use super::location_label_index_map::LocationLabelIndexMap;
 use super::locations_poll_rankings::LocationsPollRankings;
 use super::location_index_map::LocationIndexMap;
 use super::model::CachePeriodIds;
@@ -25,7 +25,7 @@ use super::model::ThreeDPoll;
 use super::model::TwoDPoll;
 use super::poll_id_byte_counts::PollIdByteCounts;
 use super::polls::Polls;
-use super::polls_by_category::PollsByCategory;
+use super::polls_by_label::PollsByLabel;
 use super::polls_by_location::PollsByLocation;
 use super::time_period_ids::TimePeriodIds;
 
@@ -34,7 +34,7 @@ pub struct Cache {
     /**
      * Ids of currently cached time periods, across all timezones
      */
-    pub category_cache_period_ids: CachePeriodIds,
+    pub label_cache_period_ids: CachePeriodIds,
     /**
      * Ids of currently cached time periods, per timezone
      */
@@ -52,31 +52,31 @@ pub struct Cache {
     pub time_zone_modification_flags: [bool; NUM_TIMEZONES as usize],
 
     /**
-     *  Random access Category Id map, needed by initial lookup from clients.
+     *  Random access Label Id map, needed by initial lookup from clients.
      */
-    pub category_index_map: CategoryIndexMap,
+    pub label_index_map: LabelIndexMap,
     /**
-     *  Random access Location + Category Id map, needed by initial lookup from clients.
+     *  Random access Location + Label Id map, needed by initial lookup from clients.
      */
-    pub location_category_index_map: LocationCategoryIndexMap,
+    pub location_label_index_map: LocationLabelIndexMap,
     /**
      *  Random access Location Id map, needed by initial lookup from clients.
      */
     pub location_index_map: LocationIndexMap,
 
     /**
-     * Poll rankings by Category (past & present).
+     * Poll rankings by Label (past & present).
      */
-    pub category_poll_rankings: CategoryPollRankings,
+    pub label_poll_rankings: LabelPollRankings,
     /**
      * Poll rankings by Location (past & present).
      */
     pub location_poll_rankings: LocationsPollRankings,
 
     /**
-     *  Future PollIds by Category.
+     *  Future PollIds by Label.
      */
-    pub future_polls_by_category: PollsByCategory,
+    pub future_polls_by_label: PollsByLabel,
     /**
      *  Future PollIds by Location.
      */
@@ -96,8 +96,8 @@ impl CacheReader for Cache {
      * Ids of currently cached time periods, across all timezones
      */
     #[inline]
-    fn get_category_cache_period_ids(&self) -> &CachePeriodIds {
-        &self.category_cache_period_ids
+    fn get_label_cache_period_ids(&self) -> &CachePeriodIds {
+        &self.label_cache_period_ids
     }
 
     /**
@@ -130,19 +130,19 @@ impl CacheReader for Cache {
     }
 
     /**
-     *  Random access Category Id map, needed by initial lookup from clients.
+     *  Random access Label Id map, needed by initial lookup from clients.
      */
     #[inline]
-    fn get_category_index_map(&self) -> &CategoryIndexMap {
-        &self.category_index_map
+    fn get_label_index_map(&self) -> &LabelIndexMap {
+        &self.label_index_map
     }
 
     /**
-     *  Random access Location + Category Id map, needed by initial lookup from clients.
+     *  Random access Location + Label Id map, needed by initial lookup from clients.
      */
     #[inline]
-    fn get_location_category_index_map(&self) -> &LocationCategoryIndexMap {
-        &self.location_category_index_map
+    fn get_location_label_index_map(&self) -> &LocationLabelIndexMap {
+        &self.location_label_index_map
     }
 
     /**
@@ -154,11 +154,11 @@ impl CacheReader for Cache {
     }
 
     /**
-     * Poll rankings by Category (past & present).
+     * Poll rankings by Label (past & present).
      */
     #[inline]
-    fn get_category_poll_rankings(&self) -> &CategoryPollRankings {
-        &self.category_poll_rankings
+    fn get_label_poll_rankings(&self) -> &LabelPollRankings {
+        &self.label_poll_rankings
     }
 
     /**
@@ -170,11 +170,11 @@ impl CacheReader for Cache {
     }
 
     /**
-     *  Future PollIds by Category.
+     *  Future PollIds by Label.
      */
     #[inline]
-    fn get_future_polls_by_category(&self) -> &PollsByCategory {
-        &self.future_polls_by_category
+    fn get_future_polls_by_label(&self) -> &PollsByLabel {
+        &self.future_polls_by_label
     }
 
     /**
@@ -208,7 +208,7 @@ impl CacheReader for Cache {
 impl Cache {
     pub fn new() -> Cache {
         Cache {
-            category_cache_period_ids: CachePeriodIds::new(),
+            label_cache_period_ids: CachePeriodIds::new(),
             per_timezone_cache_period_ids: [
                 CachePeriodIds::new(),
                 CachePeriodIds::new(),
@@ -292,14 +292,14 @@ impl Cache {
                 false
             ],
 
-            category_index_map: CategoryIndexMap::new(),
-            location_category_index_map: LocationCategoryIndexMap::new(),
+            label_index_map: LabelIndexMap::new(),
+            location_label_index_map: LocationLabelIndexMap::new(),
             location_index_map: LocationIndexMap::new(),
 
-            category_poll_rankings: CategoryPollRankings::new(),
+            label_poll_rankings: LabelPollRankings::new(),
             location_poll_rankings: LocationsPollRankings::new(),
 
-            future_polls_by_category: PollsByCategory::new(),
+            future_polls_by_label: PollsByLabel::new(),
             future_polls_by_location: PollsByLocation::new(),
 
             polls_1_d: Polls::new(),
@@ -311,14 +311,14 @@ impl Cache {
     pub fn add_future_day_polls(
         &mut self,
         day_id: DayId,
-        category_ids: Vec<CategoryId>,
+        label_ids: Vec<LabelId>,
         poll_ids: Vec<Vec<PollId>>,
     ) {
         let tomorrows_day_id = self.time_period_ids.tomorrow[ALL_TIME_ZONES];
         if day_id == tomorrows_day_id {
-            &self.future_polls_by_category.add_tomorrows_polls(category_ids, poll_ids);
+            &self.future_polls_by_label.add_tomorrows_polls(label_ids, poll_ids);
         } else if day_id == tomorrows_day_id + 1 {
-            &self.future_polls_by_category.add_day_after_tomorrows_polls(category_ids, poll_ids);
+            &self.future_polls_by_label.add_day_after_tomorrows_polls(label_ids, poll_ids);
         } else if day_id < tomorrows_day_id {
             // TOO LATE TO ADD
             return;
@@ -330,12 +330,12 @@ impl Cache {
     pub fn add_future_week_polls(
         &mut self,
         week_id: WeekId,
-        category_ids: Vec<CategoryId>,
+        label_ids: Vec<LabelId>,
         poll_ids: Vec<Vec<PollId>>,
     ) {
         let next_week_id = self.time_period_ids.next_week[ALL_TIME_ZONES];
         if week_id == next_week_id {
-            &self.future_polls_by_category.add_next_weeks_polls(category_ids, poll_ids);
+            &self.future_polls_by_label.add_next_weeks_polls(label_ids, poll_ids);
         } else if week_id < next_week_id {
             // TOO LATE TO ADD
             return;
@@ -347,12 +347,12 @@ impl Cache {
     pub fn add_future_month_polls(
         &mut self,
         month_id: MonthId,
-        category_ids: Vec<CategoryId>,
+        label_ids: Vec<LabelId>,
         poll_ids: Vec<Vec<PollId>>,
     ) {
         let next_month_id = self.time_period_ids.next_month[ALL_TIME_ZONES];
         if month_id == next_month_id {
-            &self.future_polls_by_category.add_next_months_polls(category_ids, poll_ids);
+            &self.future_polls_by_label.add_next_months_polls(label_ids, poll_ids);
         } else if month_id < next_month_id {
             // TOO LATE TO ADD
             return;

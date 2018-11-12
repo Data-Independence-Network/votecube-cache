@@ -1,7 +1,7 @@
-pub type CategoryCacheIndex = u32;
-pub type CategoryId = u64;
+pub type LabelCacheIndex = u32;
+pub type LabelId = u64;
 pub type LocationCacheIndex = u32;
-pub type LocationCategoryCacheIndex = u32;
+pub type LocationLabelCacheIndex = u32;
 pub type LocationId = u64;
 pub type PollId = u64;
 pub type TimezoneId = u32;

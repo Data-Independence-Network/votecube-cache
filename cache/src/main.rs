@@ -28,5 +28,19 @@ fn main() {
     let cache_server: Box<App + Sync + Send> = Box::new(CompleteCacheApp::new(cache));
     let server: Server = Server::new(cache_server);
 
+    /**
+    Cache moving logic
+
+    In MVP version, cache does not do any database lookups.  Whatever poll ids have been accumulated
+    during a particular time period are then used to initialize vote count caches for current & past
+    time periods.
+
+    The logic to initialize vote counts needs to run:
+        After the addition of poll ids for future periods have finished
+        Probably periodically throughout the 24 hour period, as the counts are locked down for
+            each timezone.
+
+    */
+
     Server::start_small_load_optimized(server, "0.0.0.0", 4321, 5432);
 }

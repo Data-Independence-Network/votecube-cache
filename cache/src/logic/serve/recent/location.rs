@@ -28,7 +28,7 @@ pub fn get_tomorrows_location_polls(
     cache: &Box<CacheReader + Send + Sync>,
 ) -> Vec<u8> {
     return get_global_location_polls(
-        cache.get_category_cache_period_ids().tomorrows_vc_day_id,
+        cache.get_label_cache_period_ids().tomorrows_vc_day_id,
         vc_day_id,
         timezone_id,
         &cache.get_future_polls_by_location().tomorrow,
@@ -46,7 +46,7 @@ pub fn get_day_after_tomorrows_location_polls(
     cache: &Box<CacheReader + Send + Sync>,
 ) -> Vec<u8> {
     return get_global_location_polls(
-        cache.get_category_cache_period_ids().day_after_tomorrows_vc_day_id,
+        cache.get_label_cache_period_ids().day_after_tomorrows_vc_day_id,
         vc_day_id,
         timezone_id,
         &cache.get_future_polls_by_location().day_after_tomorrow,
@@ -64,7 +64,7 @@ pub fn get_next_weeks_location_polls(
     cache: &Box<CacheReader + Send + Sync>,
 ) -> Vec<u8> {
     return get_global_location_polls(
-        cache.get_category_cache_period_ids().next_weeks_vc_week_id,
+        cache.get_label_cache_period_ids().next_weeks_vc_week_id,
         vc_week_id,
         timezone_id,
         &cache.get_future_polls_by_location().next_week,
@@ -82,7 +82,7 @@ pub fn get_next_months_location_polls(
     cache: &Box<CacheReader + Send + Sync>,
 ) -> Vec<u8> {
     return get_global_location_polls(
-        cache.get_category_cache_period_ids().next_months_vc_month_id,
+        cache.get_label_cache_period_ids().next_months_vc_month_id,
         vc_month_id,
         timezone_id,
         &cache.get_future_polls_by_location().next_month,

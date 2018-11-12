@@ -13,7 +13,7 @@ pub const INITIAL_RESPONSE_VECTOR_SIZE_8_POLL_BYTES: u32 =
     1 +
         // space for location cache index (if any
         4 +
-        // space for category cache index (if any
+        // space for label cache index (if any
         4 +
         // space for location ids & vote counts
         PAGE_SIZE * (8 + 3) +
@@ -29,7 +29,7 @@ pub const INITIAL_RESPONSE_VECTOR_SIZE_7_POLL_BYTES: u32 =
     1 +
         // space for location cache index (if any
         4 +
-        // space for category cache index (if any
+        // space for label cache index (if any
         4 +
         // space for location ids & vote counts
         PAGE_SIZE * (7 + 3) +
@@ -45,7 +45,7 @@ pub const INITIAL_RESPONSE_VECTOR_SIZE_6_POLL_BYTES: u32 =
     1 +
         // space for location cache index (if any
         4 +
-        // space for category cache index (if any
+        // space for label cache index (if any
         4 +
         // space for location ids & vote counts
         PAGE_SIZE * (6 + 3) +
@@ -61,7 +61,7 @@ pub const INITIAL_RESPONSE_VECTOR_SIZE_5_POLL_BYTES: u32 =
     1 +
         // space for location cache index (if any
         4 +
-        // space for category cache index (if any
+        // space for label cache index (if any
         4 +
         // space for location ids & vote counts
         PAGE_SIZE * (5 + 3) +
@@ -77,7 +77,7 @@ pub const INITIAL_RESPONSE_VECTOR_SIZE_4_POLL_BYTES: u32 =
     1 +
         // space for location cache index (if any
         4 +
-        // space for category cache index (if any
+        // space for label cache index (if any
         4 +
         // space for location ids & vote counts
         PAGE_SIZE * (4 + 3) +
@@ -93,7 +93,7 @@ pub const INITIAL_RESPONSE_VECTOR_SIZE_3_POLL_BYTES: u32 =
     1 +
         // space for location cache index (if any
         4 +
-        // space for category cache index (if any
+        // space for label cache index (if any
         4 +
         // space for location ids & vote counts
         PAGE_SIZE * (3 + 3) +
@@ -109,7 +109,7 @@ pub const INITIAL_RESPONSE_VECTOR_SIZE_2_POLL_BYTES: u32 =
     1 +
         // space for location cache index (if any
         4 +
-        // space for category cache index (if any
+        // space for label cache index (if any
         4 +
         // space for location ids & vote counts
         PAGE_SIZE * (2 + 3) +

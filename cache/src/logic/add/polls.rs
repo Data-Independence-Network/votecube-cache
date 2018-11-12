@@ -1,6 +1,6 @@
 use int_hash::IntHashMap;
 
-use common::model::types::CategoryId;
+use common::model::types::LabelId;
 //use common::model::types::DayId;
 //use common::model::types::LocationId;
 //use common::model::types::MonthId;
@@ -20,7 +20,7 @@ use common::model::types::PollId;
  *    categories at the same time - very high
  *
  *    what are the chances of polls coming in for the same
- *    category in the same location at the same time
+ *    label in the same location at the same time
  *          - not as high
  */
 //pub fn add_polls(
@@ -34,7 +34,7 @@ use common::model::types::PollId;
 //    vc_day_id: DayId,
 //    global_poll_id: PollId,
 //    global_location_id: LocationId,
-//    global_category_ids: Vec<CategoryId>,
+//    global_label_ids: Vec<LabelId>,
 //    cache: &mut Cache,
 //) {
     // TODO: Figure out if the poll is for tomorrow or day after tomorrow
@@ -42,13 +42,13 @@ use common::model::types::PollId;
 //    let for_tomorrow = false;
 //
 //    let poll_map = if for_tomorrow {
-//        &mut cache.polls_by_category.tomorrow
+//        &mut cache.polls_by_label.tomorrow
 //    } else {
-//        &mut cache.polls_by_category.day_after_tomorrow
+//        &mut cache.polls_by_label.day_after_tomorrow
 //    };
 //
-//    for category_id in &global_category_ids {
-//        let category_poll_ids = match poll_map.get(category_id) {
+//    for label_id in &global_label_ids {
+//        let label_poll_ids = match poll_map.get(label_id) {
 //            Some(poll_ids) => {
 //                poll_ids
 //            },
@@ -56,7 +56,7 @@ use common::model::types::PollId;
 //                let mut poll_ids = Vec::new();
 //                let first_polls_block = Vec::new();
 //                poll_ids.push(first_polls_block);
-//                poll_map.insert(*category_id, poll_ids);
+//                poll_map.insert(*label_id, poll_ids);
 //
 //                &poll_ids
 //            }
@@ -72,7 +72,7 @@ use common::model::types::PollId;
 //    vc_day_id: DayId,
 //    global_poll_id: PollId,
 //    global_location_id: LocationId,
-//    global_category_ids: Vec<CategoryId>,
+//    global_label_ids: Vec<LabelId>,
 //    cache: &mut Cache,
 //) {
 //
@@ -82,7 +82,7 @@ use common::model::types::PollId;
 //    vc_day_id: DayId,
 //    global_poll_id: PollId,
 //    global_location_id: LocationId,
-//    global_category_ids: Vec<CategoryId>,
+//    global_label_ids: Vec<LabelId>,
 //    cache: &mut Cache,
 //) {
 //
@@ -92,7 +92,7 @@ use common::model::types::PollId;
 //    vc_week_id: WeekId,
 //    global_poll_id: PollId,
 //    global_location_id: LocationId,
-//    global_category_ids: Vec<CategoryId>,
+//    global_label_ids: Vec<LabelId>,
 //    cache: &mut Cache,
 //) {
 //
@@ -102,7 +102,7 @@ use common::model::types::PollId;
 //    vc_month_id: MonthId,
 //    global_poll_id: PollId,
 //    global_location_id: LocationId,
-//    global_category_ids: Vec<CategoryId>,
+//    global_label_ids: Vec<LabelId>,
 //    cache: &mut Cache,
 //) {
 //
@@ -110,29 +110,32 @@ use common::model::types::PollId;
 
 
 
-pub fn add_polls_to_per_category_map(
-    poll_map: &mut IntHashMap<CategoryId, Vec<Vec<PollId>>>,
+pub fn add_polls_to_per_label_map(
+    poll_map: &mut IntHashMap<LabelId, Vec<Vec<PollId>>>,
     rehash: &mut bool,
-    category_ids: Vec<CategoryId>,
+    // Vec of label ids with PollIds to be added
+    label_ids: Vec<LabelId>,
+    // Vec of Vec<PollId>s, in the same order as the Vec<LabelId> above.  Each nested Vec
+    // contains the PollIds for that given LabelId
     poll_ids: Vec<Vec<PollId>>,
 ) {
-    let mut missing_category_ids: Vec<CategoryId> = Vec::new();
+    let mut missing_label_ids: Vec<LabelId> = Vec::new();
     let mut missing_poll_ids: Vec<Vec<PollId>> = Vec::new();
 
     let mut i = 0;
     for poll_ids_to_add in poll_ids {
-        let category_id = category_ids[i];
-        if poll_map.contains_key(&category_id) {
-            insert_polls_ids_to_per_category_map(poll_map, poll_ids_to_add, category_id, false);
+        let label_id = label_ids[i];
+        if poll_map.contains_key(&label_id) {
+            insert_polls_ids_to_per_label_map(poll_map, poll_ids_to_add, label_id, false);
         } else {
-            missing_category_ids.push(category_id);
+            missing_label_ids.push(label_id);
             missing_poll_ids.push(poll_ids_to_add);
         }
 
         i += 1;
     }
 
-    let num_missing_categories = missing_category_ids.len();
+    let num_missing_categories = missing_label_ids.len();
     if num_missing_categories == 0 {
         return;
     }
@@ -145,26 +148,26 @@ pub fn add_polls_to_per_category_map(
     let mut i = 0;
 
     for poll_ids_to_add in missing_poll_ids {
-        let category_id = missing_category_ids[i];
+        let label_id = missing_label_ids[i];
 
-        insert_polls_ids_to_per_category_map(poll_map, poll_ids_to_add, category_id, true);
+        insert_polls_ids_to_per_label_map(poll_map, poll_ids_to_add, label_id, true);
 
         i += 1;
     }
     *rehash = false;
 }
 
-fn insert_polls_ids_to_per_category_map(
-    poll_map: &mut IntHashMap<CategoryId, Vec<Vec<PollId>>>,
+fn insert_polls_ids_to_per_label_map(
+    poll_map: &mut IntHashMap<LabelId, Vec<Vec<PollId>>>,
     poll_ids_to_add: Vec<PollId>,
-    category_id: CategoryId,
+    label_id: LabelId,
     new_vec: bool,
 ) {
     if new_vec {
-        poll_map.insert(category_id, Vec::new());
+        poll_map.insert(label_id, Vec::new());
     }
 
-    let poll_id_frames = poll_map.get_mut(&category_id).unwrap();
+    let poll_id_frames = poll_map.get_mut(&label_id).unwrap();
 
     let num_polls = poll_ids_to_add.len() * 1;
     if num_polls <= 1024 {

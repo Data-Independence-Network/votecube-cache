@@ -1,8 +1,8 @@
 use common::model::timezone::NUM_TIMEZONES;
 
-use super::category_index_map::CategoryIndexMap;
-use super::category_poll_rankings::CategoryPollRankings;
-use super::location_category_index_map::LocationCategoryIndexMap;
+use super::label_index_map::LabelIndexMap;
+use super::label_poll_rankings::LabelPollRankings;
+use super::location_label_index_map::LocationLabelIndexMap;
 use super::locations_poll_rankings::LocationsPollRankings;
 use super::location_index_map::LocationIndexMap;
 use super::model::CachePeriodIds;
@@ -11,7 +11,7 @@ use super::model::ThreeDPoll;
 use super::model::TwoDPoll;
 use super::poll_id_byte_counts::PollIdByteCounts;
 use super::polls::Polls;
-use super::polls_by_category::PollsByCategory;
+use super::polls_by_label::PollsByLabel;
 use super::polls_by_location::PollsByLocation;
 use super::time_period_ids::TimePeriodIds;
 
@@ -20,7 +20,7 @@ pub trait CacheReader {
     /**
      * Ids of currently cached time periods, across all timezones
      */
-    fn get_category_cache_period_ids(&self) -> &CachePeriodIds;
+    fn get_label_cache_period_ids(&self) -> &CachePeriodIds;
     
     /**
      * Ids of currently cached time periods, per timezone
@@ -40,31 +40,31 @@ pub trait CacheReader {
     fn get_time_zone_modification_flags(&self) -> &[bool; NUM_TIMEZONES as usize];
 
     /**
-     *  Random access Category Id map, needed by initial lookup from clients.
+     *  Random access Label Id map, needed by initial lookup from clients.
      */
-    fn get_category_index_map(&self) -> &CategoryIndexMap;
+    fn get_label_index_map(&self) -> &LabelIndexMap;
     /**
-     *  Random access Location + Category Id map, needed by initial lookup from clients.
+     *  Random access Location + Label Id map, needed by initial lookup from clients.
      */
-    fn get_location_category_index_map(&self) -> &LocationCategoryIndexMap;
+    fn get_location_label_index_map(&self) -> &LocationLabelIndexMap;
     /**
      *  Random access Location Id map, needed by initial lookup from clients.
      */
     fn get_location_index_map(&self) -> &LocationIndexMap;
 
     /**
-     * Poll rankings by Category (past & present).
+     * Poll rankings by Label (past & present).
      */
-    fn get_category_poll_rankings(&self) -> &CategoryPollRankings;
+    fn get_label_poll_rankings(&self) -> &LabelPollRankings;
     /**
      * Poll rankings by Location (past & present).
      */
     fn get_location_poll_rankings(&self) -> &LocationsPollRankings;
 
     /**
-     *  Future PollIds by Category.
+     *  Future PollIds by Label.
      */
-    fn get_future_polls_by_category(&self) -> &PollsByCategory;
+    fn get_future_polls_by_label(&self) -> &PollsByLabel;
     /**
      *  Future PollIds by Location.
      */

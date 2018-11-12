@@ -9,32 +9,32 @@ use std::collections::HashMap;
 use int_hash::IntBuildHasher;
 use int_hash::IntHashMap;
 
-use common::model::types::CategoryId;
+use common::model::types::LabelId;
 use common::model::types::DayId;
 use common::model::types::PollId;
 //use common::model::types::MonthId;
 //use common::model::types::WeekId;
 
-use super::super::logic::add::polls::add_polls_to_per_category_map;
+use super::super::logic::add::polls::add_polls_to_per_label_map;
 
 pub struct DayPollAddition {
     pub vc_day_id: DayId,
     pub global_poll_id: PollId,
-    pub global_category_ids: Vec<CategoryId>,
+    pub global_label_ids: Vec<LabelId>,
 }
 
-pub struct CategoryPollAddition {
-    pub category_id: CategoryId,
+pub struct LabelPollAddition {
+    pub label_id: LabelId,
     pub poll_ids: Vec<PollId>,
 }
 
 /**
- *  Future period prepend data structures for per category access.
- *      By:     categoryId
+ *  Future period prepend data structures for per label access.
+ *      By:     labelId
  *  Contain only the prepended Poll Ids in an Vector of equal size blocks (1024 each), hence
  *  a Vec<Vec<PollId>>
  *
- *  Polls can be added to per-category lists on a given day until 9PM PST/PDT.  At that point
+ *  Polls can be added to per-label lists on a given day until 9PM PST/PDT.  At that point
  *  "day after tomorrow" polls roll into "tomorrow"s.  "tomorrow"'s polls are dropped, since it's the
  *  location specific datastructures that are used to build the past&present counts.
 
@@ -53,15 +53,15 @@ pub struct CategoryPollAddition {
  *  This does require more memory writes and will likely cause fragmentation of memory.  A
  *  trade-off would be to have an extra dimension with arrays 2 dimensional array of vectors
  *  (because vector is the final interface anyway).  The array dimensions being 1024*1024
- *  this would require 8KB per category.  Alternatively ALL vectors could be stored in a
+ *  this would require 8KB per label.  Alternatively ALL vectors could be stored in a
  *  flat array, per period.  So given that no more than 1B polls are created per period
  *  we could have 8MB + 5 periods - only 40MB worth of pointers with a flat structure.
- *  Though that does not work because each category get's its own Vector frames and these
+ *  Though that does not work because each label get's its own Vector frames and these
  *  frames are not shared between categories.  But given that the data itself would not be
  *  accessed directly, we can afford a 2d array there 1MB*1KB*frame, thus allowing for
  *  a trillion of frames across all categories, per time period, at the same flat cost
  *  of 40MB worth of pointers.
- *  Alternatively the global (per period) storage array can store the per-category Vec<Vec>s.
+ *  Alternatively the global (per period) storage array can store the per-label Vec<Vec>s.
  *  This would allow for the flexibility of Vec<Vec> with the global storage and &Vec<Vec>s
  *  in the evmaps of categories (which solves the copying problem of evmap) - current solution.
  *  We can even hedge the bet by instead of using an array using a Vec with initial capacity
@@ -71,33 +71,33 @@ pub struct CategoryPollAddition {
  *  We do have to maintain per time period underlying data Vecs because their lifecycles are
  *  maintained at difference cadence.
 
-pub struct PollsByCategory {
+pub struct PollsByLabel {
     pub next_month_data: Vec<Vec<Vec<PollId>>>,
-    pub next_month_r: ReadHandle<CategoryId, &'static Vec<Vec<PollId>>, (), RandomState>,
-    pub next_month_w: ReadHandle<CategoryId, &'static Vec<Vec<PollId>>, (), RandomState>,
+    pub next_month_r: ReadHandle<LabelId, &'static Vec<Vec<PollId>>, (), RandomState>,
+    pub next_month_w: ReadHandle<LabelId, &'static Vec<Vec<PollId>>, (), RandomState>,
 
     pub next_week_data: Vec<Vec<Vec<PollId>>>,
-    pub next_week_r: ReadHandle<CategoryId, &'static Vec<Vec<PollId>>, (), RandomState>,
-    pub next_week_w: ReadHandle<CategoryId, &'static Vec<Vec<PollId>>, (), RandomState>,
+    pub next_week_r: ReadHandle<LabelId, &'static Vec<Vec<PollId>>, (), RandomState>,
+    pub next_week_w: ReadHandle<LabelId, &'static Vec<Vec<PollId>>, (), RandomState>,
 
     pub tomorrow_data: Vec<Vec<Vec<PollId>>>,
-    pub tomorrow_r: ReadHandle<CategoryId, &'static Vec<Vec<PollId>>, (), RandomState>,
-    pub tomorrow_w: ReadHandle<CategoryId, &'static Vec<Vec<PollId>>, (), RandomState>,
+    pub tomorrow_r: ReadHandle<LabelId, &'static Vec<Vec<PollId>>, (), RandomState>,
+    pub tomorrow_w: ReadHandle<LabelId, &'static Vec<Vec<PollId>>, (), RandomState>,
 
     pub day_after_tomorrow_data: Vec<Vec<Vec<PollId>>>,
-    pub day_after_tomorrow_r: ReadHandle<CategoryId, &'static Vec<Vec<PollId>>, (), RandomState>,
-    pub day_after_tomorrow_w: ReadHandle<CategoryId, &'static Vec<Vec<PollId>>, (), RandomState>,
+    pub day_after_tomorrow_r: ReadHandle<LabelId, &'static Vec<Vec<PollId>>, (), RandomState>,
+    pub day_after_tomorrow_w: ReadHandle<LabelId, &'static Vec<Vec<PollId>>, (), RandomState>,
 }
 
-impl PollsByCategory {
-    pub fn new() -> PollsByCategory {
+impl PollsByLabel {
+    pub fn new() -> PollsByLabel {
 
         let (next_month_r, next_month_w) = evmap::Options::default()
             .with_capacity(512000)
             .with_hasher(IntBuildHasher::default())
             .construct();
 
-        PollsByCategory {
+        PollsByLabel {
             next_month_data: Vec::with_capacity(1024000),
             next_month_r,
             next_month_w,
@@ -124,21 +124,22 @@ impl PollsByCategory {
     ReadHandle<K, V, (), RandomState>,
     WriteHandle<K, V, (), RandomState>,
  */
-pub struct PollsByCategory {
-    pub next_month: IntHashMap<CategoryId, Vec<Vec<PollId>>>,
+pub struct PollsByLabel {
+    // Map by label id of a Vec of Frames (each also a vec of ?1024? poll ids)
+    pub next_month: IntHashMap<LabelId, Vec<Vec<PollId>>>,
     pub next_month_rehash: bool,
-    pub next_week: IntHashMap<CategoryId, Vec<Vec<PollId>>>,
+    pub next_week: IntHashMap<LabelId, Vec<Vec<PollId>>>,
     pub next_week_rehash: bool,
-    pub tomorrow: IntHashMap<CategoryId, Vec<Vec<PollId>>>,
+    pub tomorrow: IntHashMap<LabelId, Vec<Vec<PollId>>>,
     pub tomorrow_rehash: bool,
-    pub day_after_tomorrow: IntHashMap<CategoryId, Vec<Vec<PollId>>>,
+    pub day_after_tomorrow: IntHashMap<LabelId, Vec<Vec<PollId>>>,
     pub day_after_tomorrow_rehash: bool,
 }
 
-impl PollsByCategory {
-    pub fn new() -> PollsByCategory {
+impl PollsByLabel {
+    pub fn new() -> PollsByLabel {
 //        evmap::new();
-        PollsByCategory {
+        PollsByLabel {
             next_month: HashMap::with_capacity_and_hasher(1000000, IntBuildHasher::default()),
             next_month_rehash: false,
             next_week: HashMap::with_capacity_and_hasher(1000000, IntBuildHasher::default()),
@@ -152,37 +153,37 @@ impl PollsByCategory {
 
     pub fn add_tomorrows_polls(
         &mut self,
-        category_ids: Vec<CategoryId>,
+        label_ids: Vec<LabelId>,
         poll_ids: Vec<Vec<PollId>>,
     ) {
-        add_polls_to_per_category_map(&mut self.tomorrow, &mut self.tomorrow_rehash,
-                                      category_ids, poll_ids);
+        add_polls_to_per_label_map(&mut self.tomorrow, &mut self.tomorrow_rehash,
+                                      label_ids, poll_ids);
     }
 
     pub fn add_day_after_tomorrows_polls(
         &mut self,
-        category_ids: Vec<CategoryId>,
+        label_ids: Vec<LabelId>,
         poll_ids: Vec<Vec<PollId>>,
     ) {
-        add_polls_to_per_category_map(&mut self.day_after_tomorrow, &mut self.day_after_tomorrow_rehash,
-                                      category_ids, poll_ids);
+        add_polls_to_per_label_map(&mut self.day_after_tomorrow, &mut self.day_after_tomorrow_rehash,
+                                      label_ids, poll_ids);
     }
 
     pub fn add_next_weeks_polls(
         &mut self,
-        category_ids: Vec<CategoryId>,
+        label_ids: Vec<LabelId>,
         poll_ids: Vec<Vec<PollId>>,
     ) {
-        add_polls_to_per_category_map(&mut self.next_week, &mut self.next_week_rehash,
-                                      category_ids, poll_ids);
+        add_polls_to_per_label_map(&mut self.next_week, &mut self.next_week_rehash,
+                                      label_ids, poll_ids);
     }
 
     pub fn add_next_months_polls(
         &mut self,
-        category_ids: Vec<CategoryId>,
+        label_ids: Vec<LabelId>,
         poll_ids: Vec<Vec<PollId>>,
     ) {
-        add_polls_to_per_category_map(&mut self.next_month, &mut self.next_month_rehash,
-                                      category_ids, poll_ids);
+        add_polls_to_per_label_map(&mut self.next_month, &mut self.next_month_rehash,
+                                      label_ids, poll_ids);
     }
 }

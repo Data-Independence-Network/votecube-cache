@@ -7,9 +7,9 @@ use super::model::LocationPollRankings;
  *      Timezone Id
  *          Location Id
  *  Internally each LocationPollRanking contains another array by:
- *      Category Id
+ *      Label Id
  *
- *  Location and Location+Category Ids are initially looked up via the Random Access maps.
+ *  Location and Location+Label Ids are initially looked up via the Random Access maps.
  *  Subsequently, the client knows the time period specific ids and uses them for direct access.
  */
 pub struct LocationsPollRankings {
