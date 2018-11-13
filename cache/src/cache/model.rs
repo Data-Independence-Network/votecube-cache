@@ -12,6 +12,8 @@ use common::model::types::MonthId;
 use common::model::types::PollId;
 use common::model::types::WeekId;
 
+use super::super::logic::add::polls::add_polls_to_per_label_map;
+
 pub struct CachePeriodIds {
     pub day_after_tomorrows_vc_day_id: DayId,
     pub day_b4_yesterdays_vc_day_id: DayId,
@@ -55,12 +57,12 @@ impl LabelPeriodPollRankings {
     pub fn new(
         max_poll_number_bytes: u8,
         num_polls_in_period: u32,
-        num_categories_in_period: usize,
+        num_labels_in_period: usize,
     ) -> LabelPeriodPollRankings {
         LabelPeriodPollRankings {
             max_poll_number_bytes,
             num_polls_in_period,
-            vote_counts_by_label_index: Vec::with_capacity(num_categories_in_period),
+            vote_counts_by_label_index: Vec::with_capacity(num_labels_in_period),
         }
     }
 }
@@ -78,12 +80,12 @@ pub struct LocationPeriodIds {
 impl LocationPeriodIds {
     pub fn new(
         location_cache_index: LocationCacheIndex,
-        num_categories: usize,
+        num_labels: usize,
     ) -> LocationPeriodIds {
         LocationPeriodIds {
             location_cache_index,
             location_label_cache_index_map: HashMap::with_capacity_and_hasher(
-                num_categories, IntBuildHasher::default()),
+                num_labels, IntBuildHasher::default()),
         }
     }
 }
@@ -111,11 +113,62 @@ pub struct LocationPollRankings {
  *         and a map/tree (by Global Label Id) of time ordered polls for location+label
  */
 pub struct LocationPollPrependLists {
+
     // Inner vector is a page/frame (Ex: capped @ 1024) and outer vector grows
     pub location: Vec<Vec<PollId>>,
-    // Custom fast no rehashing, fast insert datastructure
-    // for managing an unknown number of categories in a given location
+
+    // PollId in frames of 1024 by LabelId
+    /*
+    When the update thread is running, it is possible for the poll id page request to be
+    failed because the the hashmap must be re-hashed.
+    */
     pub label_locations: IntHashMap<LabelId, Vec<Vec<PollId>>>,
+
+    // True if the label_locations map is currently being rehashed
+    pub label_locations_rehashing: bool,
+
+}
+
+impl LocationPollPrependLists {
+
+
+
+    pub fn add_tomorrows_polls(
+        &mut self,
+        label_ids: Vec<LabelId>,
+        poll_ids: Vec<Vec<PollId>>,
+    ) {
+        add_polls_to_per_label_map(&mut self.tomorrow, &mut self.tomorrow_rehash,
+                                   label_ids, poll_ids);
+    }
+
+    pub fn add_day_after_tomorrows_polls(
+        &mut self,
+        label_ids: Vec<LabelId>,
+        poll_ids: Vec<Vec<PollId>>,
+    ) {
+        add_polls_to_per_label_map(&mut self.day_after_tomorrow, &mut self.day_after_tomorrow_rehash,
+                                   label_ids, poll_ids);
+    }
+
+    pub fn add_next_weeks_polls(
+        &mut self,
+        label_ids: Vec<LabelId>,
+        poll_ids: Vec<Vec<PollId>>,
+    ) {
+        add_polls_to_per_label_map(&mut self.next_week, &mut self.next_week_rehash,
+                                   label_ids, poll_ids);
+    }
+
+    pub fn add_next_months_polls(
+        &mut self,
+        label_ids: Vec<LabelId>,
+        poll_ids: Vec<Vec<PollId>>,
+    ) {
+        add_polls_to_per_label_map(&mut self.next_month, &mut self.next_month_rehash,
+                                   label_ids, poll_ids);
+    }
+
 }
 
 

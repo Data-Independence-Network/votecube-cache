@@ -14,7 +14,7 @@ use super::model::VoteCount;
  * 3)  Maintain only previous period rankings (doable now) - Implementing
  *
  * 3a)  Actually, today's label rankings can be made available after UTC-8 (West Coast) passes
- * its poll add deadline (9pm) for the next day.  At that point there are still 10-11 hours left
+ * its poll add deadline (8pm) for the next day.  At that point there are still 11-12 hours left
  * in the next day in Japan (depending on daylight savings).
  */
 pub struct LabelPollRankings {

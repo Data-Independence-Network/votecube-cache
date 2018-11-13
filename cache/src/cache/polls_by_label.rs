@@ -34,7 +34,7 @@ pub struct LabelPollAddition {
  *  Contain only the prepended Poll Ids in an Vector of equal size blocks (1024 each), hence
  *  a Vec<Vec<PollId>>
  *
- *  Polls can be added to per-label lists on a given day until 9PM PST/PDT.  At that point
+ *  Polls can be added to per-label lists on a given day until 8PM PST/PDT.  At that point
  *  "day after tomorrow" polls roll into "tomorrow"s.  "tomorrow"'s polls are dropped, since it's the
  *  location specific datastructures that are used to build the past&present counts.
 
@@ -57,13 +57,13 @@ pub struct LabelPollAddition {
  *  flat array, per period.  So given that no more than 1B polls are created per period
  *  we could have 8MB + 5 periods - only 40MB worth of pointers with a flat structure.
  *  Though that does not work because each label get's its own Vector frames and these
- *  frames are not shared between categories.  But given that the data itself would not be
+ *  frames are not shared between labels.  But given that the data itself would not be
  *  accessed directly, we can afford a 2d array there 1MB*1KB*frame, thus allowing for
- *  a trillion of frames across all categories, per time period, at the same flat cost
+ *  a trillion of frames across all labels, per time period, at the same flat cost
  *  of 40MB worth of pointers.
  *  Alternatively the global (per period) storage array can store the per-label Vec<Vec>s.
  *  This would allow for the flexibility of Vec<Vec> with the global storage and &Vec<Vec>s
- *  in the evmaps of categories (which solves the copying problem of evmap) - current solution.
+ *  in the evmaps of labels (which solves the copying problem of evmap) - current solution.
  *  We can even hedge the bet by instead of using an array using a Vec with initial capacity
  *  of 1M.  Then if it does grow it's not as much of an issue and fragmentation is also not
  *  that bad, given the 8MB worth of memory freed in a single block (and it's unlikely one-time

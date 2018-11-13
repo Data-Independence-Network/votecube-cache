@@ -1,3 +1,6 @@
+use std::time::Duration;
+use std::thread;
+
 use int_hash::IntHashMap;
 
 use common::model::types::LabelId;
@@ -7,6 +10,11 @@ use common::model::types::LabelId;
 use common::model::types::PollId;
 //use common::model::types::WeekId;
 
+/**
+    The timeout needed for any existing requests to finish
+    before rehashing starts.  Assuming very fast requests.
+ */
+const NUM_MILLIS_TO_SLEEP_BEFORE_HASHMAP_REHASH: u64 = 10;
 
 //use super::super::super::cache::cache::Cache;
 
@@ -17,7 +25,7 @@ use common::model::types::PollId;
  *  Batching poll entries to reduce rehashing:
  *
  *    what are the chances of polls coming in for multiple
- *    categories at the same time - very high
+ *    labels at the same time - very high
  *
  *    what are the chances of polls coming in for the same
  *    label in the same location at the same time
@@ -135,13 +143,14 @@ pub fn add_polls_to_per_label_map(
         i += 1;
     }
 
-    let num_missing_categories = missing_label_ids.len();
-    if num_missing_categories == 0 {
+    let num_missing_labels = missing_label_ids.len();
+    if num_missing_labels == 0 {
         return;
     }
 
     let spare_poll_map_capacity = poll_map.capacity() - poll_map.len();
-    if spare_poll_map_capacity < num_missing_categories {
+    if spare_poll_map_capacity < num_missing_labels {
+        std::thread::sleep(Duration::from_millis(NUM_MILLIS_TO_SLEEP_BEFORE_HASHMAP_REHASH));
         *rehash = true;
     }
 
